@@ -2,17 +2,17 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-    <artifactId>mavenproject1</artifactId>
+    <artifactId>easy-planning</artifactId>
     <groupId>com.mycompany</groupId>
     <version>1.0-SNAPSHOT</version>
   </parent>
 
     <groupId>com.mycompany</groupId>
-    <artifactId>mavenproject1-ear</artifactId>
+    <artifactId>easy-planning-ear</artifactId>
     <version>1.0-SNAPSHOT</version>
     <packaging>ear</packaging>
 
-    <name>mavenproject1-ear</name>
+    <name>easy-planning-ear</name>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -43,13 +43,13 @@
     <dependencies>
         <dependency>
             <groupId>com.mycompany</groupId>
-            <artifactId>mavenproject1-ejb</artifactId>
+            <artifactId>easy-planning-ejb</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>ejb</type>
         </dependency>
         <dependency>
             <groupId>com.mycompany</groupId>
-            <artifactId>mavenproject1-web</artifactId>
+            <artifactId>easy-planning-web</artifactId>
             <version>1.0-SNAPSHOT</version>
             <type>war</type>
         </dependency>
