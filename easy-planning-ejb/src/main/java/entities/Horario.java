@@ -29,6 +29,25 @@ public class Horario implements Serializable {
     
     @ManyToOne
     private Seccion seccion;
+    
+    @ManyToOne
+    private Profesor profesor;
+
+    public Profesor getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
+    }
+
+    public Seccion getSeccion() {
+        return seccion;
+    }
+
+    public void setSeccion(Seccion seccion) {
+        this.seccion = seccion;
+    }
 
     public String getBloque() {
         return bloque;

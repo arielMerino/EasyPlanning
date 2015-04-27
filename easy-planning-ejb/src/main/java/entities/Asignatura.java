@@ -6,12 +6,12 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 
 /**
@@ -19,40 +19,67 @@ import javax.persistence.OneToMany;
  * @author jano
  */
 @Entity
-public class Seccion implements Serializable {
-    @OneToMany(mappedBy = "seccion")
-    private List<Horario> horarios;
+public class Asignatura implements Serializable {
+    @OneToMany(mappedBy = "asignatura")
+    private List<Coordinacion> coordinaciones;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String codigo;
+    private String nombre;
+    private int nivel;
+    private String planEstudio;
+
+    @OneToMany
+    private ArrayList<Asignatura> prerequisitos; 
+
+    public List<Coordinacion> getCoordinaciones() {
+        return coordinaciones;
+    }
+
+    public void setCoordinaciones(List<Coordinacion> coordinaciones) {
+        this.coordinaciones = coordinaciones;
+    }
+
+    public ArrayList<Asignatura> getPrerequisitos() {
+        return prerequisitos;
+    }
+
+    public void setPrerequisitos(ArrayList<Asignatura> prerequisitos) {
+        this.prerequisitos = prerequisitos;
+    }
     
-    @ManyToOne
-    private Coordinacion coordinacion;
-
-    public List<Horario> getHorarios() {
-        return horarios;
-    }
-
-    public void setHorarios(List<Horario> horarios) {
-        this.horarios = horarios;
-    }
-
-    public Coordinacion getCoordinacion() {
-        return coordinacion;
-    }
-
-    public void setCoordinacion(Coordinacion coordinacion) {
-        this.coordinacion = coordinacion;
-    }
-
     public String getCodigo() {
         return codigo;
     }
 
     public void setCodigo(String codigo) {
         this.codigo = codigo;
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+
+    public String getPlanEstudio() {
+        return planEstudio;
+    }
+
+    public void setPlanEstudio(String planEstudio) {
+        this.planEstudio = planEstudio;
     }
 
     public Long getId() {
@@ -73,10 +100,10 @@ public class Seccion implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Seccion)) {
+        if (!(object instanceof Asignatura)) {
             return false;
         }
-        Seccion other = (Seccion) object;
+        Asignatura other = (Asignatura) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -85,7 +112,7 @@ public class Seccion implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.seccion[ id=" + id + " ]";
+        return "entities.Asignatura[ id=" + id + " ]";
     }
-    
+
 }
