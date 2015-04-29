@@ -30,7 +30,7 @@ public class Asignatura implements Serializable {
     private String planEstudio;
 
     @OneToMany
-    private ArrayList<Asignatura> prerequisitos; 
+    private List<Asignatura> prerequisitos; 
 
     public int getTeoria() {
         return teoria;
@@ -64,11 +64,11 @@ public class Asignatura implements Serializable {
         this.coordinaciones = coordinaciones;
     }
 
-    public ArrayList<Asignatura> getPrerequisitos() {
+    public List getPrerequisitos() {
         return prerequisitos;
     }
 
-    public void setPrerequisitos(ArrayList<Asignatura> prerequisitos) {
+    public void setPrerequisitos(List prerequisitos) {
         this.prerequisitos = prerequisitos;
     }
     

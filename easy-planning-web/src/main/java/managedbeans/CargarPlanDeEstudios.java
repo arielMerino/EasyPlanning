@@ -9,9 +9,12 @@ import entities.Asignatura;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import javax.ejb.EJB;
+import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
@@ -25,6 +28,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.primefaces.model.UploadedFile;
+import sessionbeans.AsignaturaFacadeLocal;
 
 /**
  *
@@ -33,8 +37,10 @@ import org.primefaces.model.UploadedFile;
 @Named(value = "cargarPlanDeEstudios")
 //@Dependent
 @RequestScoped
-public class CargarPlanDeEstudios {
+public class CargarPlanDeEstudios implements Serializable {
 
+    @EJB
+    private AsignaturaFacadeLocal ejbFacade;
     private String ruta;
     private HSSFWorkbook workbook;
     //private Asignatura asignatura; //TODO interfaces para la persistencia
@@ -43,7 +49,9 @@ public class CargarPlanDeEstudios {
     public CargarPlanDeEstudios() {
     }
     
-    
+    private AsignaturaFacadeLocal getFacade(){
+        return ejbFacade;
+    }
 
     public String getAux() {
         return aux;
@@ -97,10 +105,24 @@ public class CargarPlanDeEstudios {
         asignatura.setLaboratorio((int) cell.getNumericCellValue());
         cell = (Cell) list.get(5);
         asignatura.setNivel((int) cell.getNumericCellValue());
+        asignatura.setPrerequisitos(new ArrayList());
         //aux = cell.getStringCellValue();
         //int num = (int) cell.getNumericCellValue();
         //aux = num+"";
-        aux = asignatura.toString();
+        //aux = asignatura.toString();
+        persist(asignatura);
         
+    }
+    
+    public void persist(Asignatura asignatura){
+        try{
+            getFacade().edit(asignatura);
+        }
+        catch(EJBException ex){
+            Throwable cause = ex.getCause();
+            if (cause != null) {
+                aux = cause.getLocalizedMessage();
+            }
+        }
     }
 }
