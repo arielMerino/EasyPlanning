@@ -31,6 +31,7 @@ public class Coordinacion implements Serializable {
     private int cantAlumnosReal;
     private int cantAlumnosEstimado;
 
+
     @ManyToOne
     private Asignatura asignatura;
 

@@ -1,11 +1,13 @@
 package managedbeans;
 
+import entities.Horario;
 import entities.Profesor;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.ProfesorFacadeLocal;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -18,6 +20,7 @@ import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
+import sessionbeans.HorarioFacadeLocal;
 
 @Named("profesorController")
 @SessionScoped
@@ -25,6 +28,8 @@ public class ProfesorController implements Serializable {
 
     @EJB
     private ProfesorFacadeLocal ejbFacade;
+    @EJB
+    private HorarioFacadeLocal horarioFacade;
     private List<Profesor> items = null;
     private Profesor selected;
 
@@ -47,6 +52,14 @@ public class ProfesorController implements Serializable {
 
     private ProfesorFacadeLocal getFacade() {
         return ejbFacade;
+    }    
+
+    public HorarioFacadeLocal getHorarioFacade() {
+        return horarioFacade;
+    }
+
+    public void setHorarioFacade(HorarioFacadeLocal horarioFacade) {
+        this.horarioFacade = horarioFacade;
     }
 
     public Profesor prepareCreate() {
@@ -119,6 +132,22 @@ public class ProfesorController implements Serializable {
 
     public List<Profesor> getItemsAvailableSelectOne() {
         return getFacade().findAll();
+    }
+    
+    /*
+        Función que retorna una lista con los bloques horarios disponibles de un profesor
+    */
+    public ArrayList<Horario> getDisponibles(long profesorId){
+        List<Horario> horarios = this.horarioFacade.findAll();
+        ArrayList<Horario> disponibles = new ArrayList<>();
+        for (int i = 0; i < horarios.size(); i++) {
+            if (profesorId == horarios.get(i).getProfesor().getId()) {
+                if (horarios.get(i).getSeccion()==null) {
+                    disponibles.add(horarios.get(i));
+                }
+            }
+        }
+        return disponibles;
     }
 
     @FacesConverter(forClass = Profesor.class)

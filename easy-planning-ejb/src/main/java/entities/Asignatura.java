@@ -6,7 +6,6 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -32,7 +31,7 @@ public class Asignatura implements Serializable {
     private String planEstudio;
 
     @OneToMany
-    private ArrayList<Asignatura> prerequisitos; 
+    private List<Asignatura> prerequisitos; 
 
     public List<Coordinacion> getCoordinaciones() {
         return coordinaciones;
@@ -42,11 +41,11 @@ public class Asignatura implements Serializable {
         this.coordinaciones = coordinaciones;
     }
 
-    public ArrayList<Asignatura> getPrerequisitos() {
+    public List<Asignatura> getPrerequisitos() {
         return prerequisitos;
     }
 
-    public void setPrerequisitos(ArrayList<Asignatura> prerequisitos) {
+    public void setPrerequisitos(List<Asignatura> prerequisitos) {
         this.prerequisitos = prerequisitos;
     }
     
