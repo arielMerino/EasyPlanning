@@ -5,12 +5,14 @@
  */
 package managedbeans;
 
+import business.AsignaturasLocal;
 import entities.Asignatura;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
@@ -41,6 +43,10 @@ public class CargarPlanDeEstudios implements Serializable {
 
     @EJB
     private AsignaturaFacadeLocal ejbFacade;
+    
+    @EJB
+    private AsignaturasLocal asignaturas;
+    
     private String ruta;
     private HSSFWorkbook workbook;
     private String nombrePlan;
@@ -49,7 +55,7 @@ public class CargarPlanDeEstudios implements Serializable {
 
     public CargarPlanDeEstudios() {
     }
-
+    
     public String getNombrePlan() {
         return nombrePlan;
     }
@@ -118,8 +124,59 @@ public class CargarPlanDeEstudios implements Serializable {
             asignatura.setLaboratorio((int) cell.getNumericCellValue());
             cell = (Cell) list.get(5);
             asignatura.setNivel((int) cell.getNumericCellValue());
-            asignatura.setPrerequisitos(new ArrayList());
             asignatura.setPlanEstudio(nombrePlan);
+            cell = (Cell) list.get(6);
+            /*if(cell.getStringCellValue().equals("Ingreso") || cell.getStringCellValue().equals("")){
+                asignatura.setPrerequisitos(new ArrayList());
+            }
+            else{
+                String[] prerequisitos = cell.getStringCellValue().split(",");
+                List lista = new ArrayList<>();
+                lista.addAll(Arrays.asList(prerequisitos)); 
+                asignatura.setPrerequisitos(lista);
+            }*/
+            try{
+                switch(cell.getCellType()){
+                    case Cell.CELL_TYPE_STRING:{
+                        if(cell.getStringCellValue().equals("Ingreso") || cell.getStringCellValue().equals("")){
+                            asignatura.setPrerequisitos(new ArrayList());
+                        }
+                        else {
+                            String[] prerequisitos = cell.getStringCellValue().split(", "); 
+                            //aux = Arrays.toString(prerequisitos);
+                            if(prerequisitos.length > 1)
+                                aux = prerequisitos[0];
+                            //aux = cell.getStringCellValue() + " - Celda de tipo String";
+                            List lista = new ArrayList();
+                            //for (String prerequisito : prerequisitos) {
+                            for (int i=0; i<prerequisitos.length; i++){
+                                lista.add(getBusiness().findByCodigo(prerequisitos[i]));
+                                //aux = getAsignatura(prerequisito).toString();
+                                //lista.add(getBusiness().findByCodigo(prerequisito));
+                            }
+                            //lista.addAll(Arrays.asList(prerequisitos)); 
+                            asignatura.setPrerequisitos(lista);
+                        }
+                        break;
+                    }
+                    case Cell.CELL_TYPE_NUMERIC:{
+                        List lista = new ArrayList();
+                        //lista.add(getAsignatura((int) cell.getNumericCellValue()+""));
+                        //aux = getBusiness().findByCodigo((int) cell.getNumericCellValue() +"").toString();
+                        aux = (int) cell.getNumericCellValue() +" - Celda de tipo numérica";
+                        asignatura.setPrerequisitos(lista);
+                        //lista.add((int) cell.getNumericCellValue() +"");
+                        lista.add(getBusiness().findByCodigo((int) cell.getNumericCellValue() +""));
+                    }
+                }
+            }
+            catch(EJBException ex){
+                Throwable cause = ex.getCause();
+                if (cause != null) {
+                    //aux = cause.getLocalizedMessage();
+                }
+            }
+            
             persist(asignatura);
         }
         aux = "Archivo cargado con éxito";
@@ -135,5 +192,15 @@ public class CargarPlanDeEstudios implements Serializable {
                 aux = cause.getLocalizedMessage();
             }
         }
+    }
+    
+    /*
+    public Asignatura getAsignatura(String codigo) {
+        return getFacade().find(codigo);
+    }
+    */
+    
+    public AsignaturasLocal getBusiness(){
+        return asignaturas;
     }
 }
