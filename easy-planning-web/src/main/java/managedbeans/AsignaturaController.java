@@ -144,4 +144,12 @@ public class AsignaturaController implements Serializable {
         }
         return nom;
     }
+    
+    public Integer bloquesTotales(Long asignaturaId){
+        Integer teoria = getFacade().find(asignaturaId).getTeoria();
+        Integer ejercicios = getFacade().find(asignaturaId).getEjercicios();
+        Integer lab = getFacade().find(asignaturaId).getLaboratorio();
+        Integer totalHoras = teoria+ejercicios+lab;
+        return totalHoras;
+    }
 }
