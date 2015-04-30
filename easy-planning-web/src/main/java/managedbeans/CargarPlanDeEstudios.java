@@ -43,11 +43,21 @@ public class CargarPlanDeEstudios implements Serializable {
     private AsignaturaFacadeLocal ejbFacade;
     private String ruta;
     private HSSFWorkbook workbook;
+    private String nombrePlan;
     //private Asignatura asignatura; //TODO interfaces para la persistencia
     private String aux;
 
     public CargarPlanDeEstudios() {
     }
+
+    public String getNombrePlan() {
+        return nombrePlan;
+    }
+
+    public void setNombrePlan(String nombrePlan) {
+        this.nombrePlan = nombrePlan;
+    }
+    
     
     private AsignaturaFacadeLocal getFacade(){
         return ejbFacade;
@@ -73,7 +83,8 @@ public class CargarPlanDeEstudios implements Serializable {
         List sheetData = new ArrayList();
         
         String[] aux2 = ruta.split("=", 5);
-        aux = aux2[2].split(", size")[0];
+        //aux = aux2[2].split(", size")[0];
+        aux = nombrePlan;
         
         FileInputStream file = new FileInputStream(aux2[2].split(", size")[0]);
         workbook = new HSSFWorkbook(file);
@@ -90,33 +101,33 @@ public class CargarPlanDeEstudios implements Serializable {
             }
             sheetData.add(data);
         }
-        Asignatura asignatura = new Asignatura();
-        List list = (List) sheetData.get(0);
-        Cell cell = (Cell) list.get(0);
-        int num = (int) cell.getNumericCellValue();
-        asignatura.setCodigo(num+"");
-        cell = (Cell) list.get(1);
-        asignatura.setNombre(cell.getStringCellValue());
-        cell = (Cell) list.get(2);
-        asignatura.setTeoria((int) cell.getNumericCellValue());
-        cell = (Cell) list.get(3);
-        asignatura.setEjercicios((int) cell.getNumericCellValue());
-        cell = (Cell) list.get(4);
-        asignatura.setLaboratorio((int) cell.getNumericCellValue());
-        cell = (Cell) list.get(5);
-        asignatura.setNivel((int) cell.getNumericCellValue());
-        asignatura.setPrerequisitos(new ArrayList());
-        //aux = cell.getStringCellValue();
-        //int num = (int) cell.getNumericCellValue();
-        //aux = num+"";
-        //aux = asignatura.toString();
-        persist(asignatura);
         
+        for (Object sheetData1 : sheetData) {
+            Asignatura asignatura = new Asignatura();
+            List list = (List) sheetData1;
+            Cell cell = (Cell) list.get(0);
+            int num = (int) cell.getNumericCellValue();
+            asignatura.setCodigo(num+"");
+            cell = (Cell) list.get(1);
+            asignatura.setNombre(cell.getStringCellValue());
+            cell = (Cell) list.get(2);
+            asignatura.setTeoria((int) cell.getNumericCellValue());
+            cell = (Cell) list.get(3);
+            asignatura.setEjercicios((int) cell.getNumericCellValue());
+            cell = (Cell) list.get(4);
+            asignatura.setLaboratorio((int) cell.getNumericCellValue());
+            cell = (Cell) list.get(5);
+            asignatura.setNivel((int) cell.getNumericCellValue());
+            asignatura.setPrerequisitos(new ArrayList());
+            asignatura.setPlanEstudio(nombrePlan);
+            persist(asignatura);
+        }
+        aux = "Archivo cargado con éxito";
     }
     
     public void persist(Asignatura asignatura){
         try{
-            getFacade().edit(asignatura);
+            getFacade().create(asignatura);
         }
         catch(EJBException ex){
             Throwable cause = ex.getCause();

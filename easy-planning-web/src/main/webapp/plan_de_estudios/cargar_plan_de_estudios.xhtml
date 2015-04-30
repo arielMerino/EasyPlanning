@@ -10,6 +10,9 @@
     </h:head>
     <h:body>
         <h:form enctype='multipart/form-data'>
+            <h:outputLabel value="Nombre plan de estudios: "></h:outputLabel>
+            <h:inputText label="Nombre plan de estudios" value="#{cargarPlanDeEstudios.nombrePlan}"></h:inputText>
+            <br />
             <h:inputFile label="Seleccionar archivo" value="#{cargarPlanDeEstudios.ruta}"></h:inputFile>
             <br />
             <h:commandButton value="Cargar" action="#{cargarPlanDeEstudios.cargarArchivo()}"></h:commandButton>
