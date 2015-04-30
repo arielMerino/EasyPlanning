@@ -25,7 +25,7 @@ public class Horario implements Serializable {
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     private String bloque;
-    
+    private String tipo;
     
     @ManyToOne
     private Seccion seccion;
@@ -65,6 +65,15 @@ public class Horario implements Serializable {
     public void setId(Long id) {
         this.id = id;
     }
+
+    public String getTipo() {
+        return tipo;
+    }
+
+    public void setTipo(String tipo) {
+        this.tipo = tipo;
+    }
+    
 
     @Override
     public int hashCode() {
