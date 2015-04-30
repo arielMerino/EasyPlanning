@@ -5,7 +5,7 @@
  */
 package sessionbeans;
 
-import entities.Asignatura;
+import entities.Checklist;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author ariel-linux
  */
 @Stateless
-public class AsignaturaFacade extends AbstractFacade<Asignatura> implements AsignaturaFacadeLocal {
+public class ChecklistFacade extends AbstractFacade<Checklist> implements ChecklistFacadeLocal {
     @PersistenceContext(unitName = "cl.G2Pingeso_easy-planning-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -24,8 +24,8 @@ public class AsignaturaFacade extends AbstractFacade<Asignatura> implements Asig
         return em;
     }
 
-    public AsignaturaFacade() {
-        super(Asignatura.class);
+    public ChecklistFacade() {
+        super(Checklist.class);
     }
     
 }
