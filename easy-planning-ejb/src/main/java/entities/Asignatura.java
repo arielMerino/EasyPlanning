@@ -11,6 +11,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToMany;
 import javax.persistence.OneToMany;
 
 /**
@@ -31,7 +32,14 @@ public class Asignatura implements Serializable {
     private String planEstudio;
 
     @OneToMany
-    private List<Asignatura> prerequisitos; 
+    private List<Asignatura> prerequisitos;
+    
+    @ManyToMany
+    private List<Profesor> profesores;
+
+    public List<Profesor> getProfesores() {
+        return profesores;
+    }
 
     public List<Coordinacion> getCoordinaciones() {
         return coordinaciones;

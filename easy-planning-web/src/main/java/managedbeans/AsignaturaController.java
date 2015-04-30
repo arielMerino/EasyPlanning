@@ -6,6 +6,9 @@
 package managedbeans;
 
 import entities.Asignatura;
+import entities.Coordinacion;
+import entities.Profesor;
+import entities.Seccion;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -13,6 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import sessionbeans.AsignaturaFacadeLocal;
+import sessionbeans.SeccionFacadeLocal;
 
 /**
  *
@@ -23,7 +27,8 @@ import sessionbeans.AsignaturaFacadeLocal;
 public class AsignaturaController implements Serializable {
     @EJB
     private AsignaturaFacadeLocal ejbFacade;
-    
+    @EJB
+    private SeccionFacadeLocal seccionFacade;
     private List<Asignatura> items = null;
     private Asignatura selected;
     
@@ -33,6 +38,10 @@ public class AsignaturaController implements Serializable {
     public AsignaturaController() {
     }
 
+    public SeccionFacadeLocal getSeccionFacade() {
+        return seccionFacade;
+    }
+    
     public AsignaturaFacadeLocal getFacade() {
         return ejbFacade;
     }
@@ -88,6 +97,42 @@ public class AsignaturaController implements Serializable {
             }
         }
         return asignaturasPorNivel;
+    }
+    
+    /*
+    retorna un ArrayList con todos los profesores asociados a una asignatura
+    */
+    public ArrayList<Profesor> getProfesoresAsignatura(long idAsignatura){
+        List<Profesor> p = getFacade().find(idAsignatura).getProfesores();
+        ArrayList<Profesor> profesores = new ArrayList<>();
+        for (Profesor prof : p) {
+            profesores.add(prof);
+        }
+        return profesores;
+    }
+    
+    /*
+    obtiene una ArrayList con todas las secciones asociadas a una asignatura, en un año y semestre específico
+    */
+    public ArrayList<Seccion> getSecciones(long idAsignatura, int ano, int semestre){
+        ArrayList<Seccion> seccionesCoordinacion = new ArrayList<>();
+        List<Coordinacion> coordinaciones = getFacade().find(idAsignatura).getCoordinaciones();
+        List<Seccion> secciones = getSeccionFacade().findAll();
+        Coordinacion coordinacion = null;
+        for( Coordinacion item : coordinaciones){
+            if(item.getAño() == ano && item.getSemestre() == semestre){
+                coordinacion = item;
+                break;
+            }
+        }
+        if(coordinacion != null){
+            for(Seccion seccion : secciones){
+                if (seccion.getCoordinacion().getId() == coordinacion.getId()) {
+                    seccionesCoordinacion.add(seccion);
+                }
+            }
+        }
+        return seccionesCoordinacion;
     }
     
     public String nombres(ArrayList<Asignatura> asignaturas){
