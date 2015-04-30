@@ -10,7 +10,10 @@
         Asignación Horaria
     </ui:define>
         <ui:define name="body">
-            <div>#{asignaturaController.asignaturas}</div>
+            <div style="visibility: hidden">#{asignaturaController.asignaturas}</div>
+            <h:selectOneMenu>
+                
+            </h:selectOneMenu>
             <h:form id="mostrar_asignaturas">
                 <p:panel header="Asignaturas">
                     <p:dataTable id="tablaAsignaturas" value="#{asignaturaController.items}" var="item"

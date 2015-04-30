@@ -5,7 +5,7 @@
  */
 package sessionbeans;
 
-import entities.Asignatura;
+import entities.Encuesta;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,19 +14,19 @@ import javax.ejb.Local;
  * @author ariel-linux
  */
 @Local
-public interface AsignaturaFacadeLocal {
+public interface EncuestaFacadeLocal {
 
-    void create(Asignatura asignatura);
+    void create(Encuesta encuesta);
 
-    void edit(Asignatura asignatura);
+    void edit(Encuesta encuesta);
 
-    void remove(Asignatura asignatura);
+    void remove(Encuesta encuesta);
 
-    Asignatura find(Object id);
+    Encuesta find(Object id);
 
-    List<Asignatura> findAll();
+    List<Encuesta> findAll();
 
-    List<Asignatura> findRange(int[] range);
+    List<Encuesta> findRange(int[] range);
 
     int count();
     

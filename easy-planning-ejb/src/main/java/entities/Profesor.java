@@ -20,6 +20,8 @@ import javax.persistence.OneToMany;
  */
 @Entity
 public class Profesor implements Serializable {
+    @OneToMany(mappedBy = "profesor")
+    private List<Encuesta> encuestas;
     @ManyToMany(mappedBy = "profesores")
     private List<Asignatura> asignaturas;
     @OneToMany(mappedBy = "profesor")
@@ -39,6 +41,22 @@ public class Profesor implements Serializable {
 
     public List<Horario> getDisponibilidad() {
         return disponibilidad;
+    }
+
+    public List<Encuesta> getEncuestas() {
+        return encuestas;
+    }
+
+    public void setEncuestas(List<Encuesta> encuestas) {
+        this.encuestas = encuestas;
+    }
+
+    public List<Asignatura> getAsignaturas() {
+        return asignaturas;
+    }
+
+    public void setAsignaturas(List<Asignatura> asignaturas) {
+        this.asignaturas = asignaturas;
     }
 
     public void setDisponibilidad(List<Horario> disponibilidad) {

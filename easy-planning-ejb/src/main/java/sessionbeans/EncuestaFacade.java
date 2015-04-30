@@ -5,7 +5,7 @@
  */
 package sessionbeans;
 
-import entities.Asignatura;
+import entities.Encuesta;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -15,7 +15,7 @@ import javax.persistence.PersistenceContext;
  * @author ariel-linux
  */
 @Stateless
-public class AsignaturaFacade extends AbstractFacade<Asignatura> implements AsignaturaFacadeLocal {
+public class EncuestaFacade extends AbstractFacade<Encuesta> implements EncuestaFacadeLocal {
     @PersistenceContext(unitName = "cl.G2Pingeso_easy-planning-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -24,8 +24,8 @@ public class AsignaturaFacade extends AbstractFacade<Asignatura> implements Asig
         return em;
     }
 
-    public AsignaturaFacade() {
-        super(Asignatura.class);
+    public EncuestaFacade() {
+        super(Encuesta.class);
     }
     
 }

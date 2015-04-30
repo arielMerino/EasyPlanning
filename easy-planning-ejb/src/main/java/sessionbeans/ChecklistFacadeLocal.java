@@ -5,7 +5,7 @@
  */
 package sessionbeans;
 
-import entities.Asignatura;
+import entities.Checklist;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,19 +14,19 @@ import javax.ejb.Local;
  * @author ariel-linux
  */
 @Local
-public interface AsignaturaFacadeLocal {
+public interface ChecklistFacadeLocal {
 
-    void create(Asignatura asignatura);
+    void create(Checklist checklist);
 
-    void edit(Asignatura asignatura);
+    void edit(Checklist checklist);
 
-    void remove(Asignatura asignatura);
+    void remove(Checklist checklist);
 
-    Asignatura find(Object id);
+    Checklist find(Object id);
 
-    List<Asignatura> findAll();
+    List<Checklist> findAll();
 
-    List<Asignatura> findRange(int[] range);
+    List<Checklist> findRange(int[] range);
 
     int count();
     
