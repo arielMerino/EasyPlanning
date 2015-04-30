@@ -12,6 +12,7 @@ import javax.ejb.Local;
 /**
  *
  * @author ariel-linux
+ * @author jano
  */
 @Local
 public interface AsignaturaFacadeLocal {

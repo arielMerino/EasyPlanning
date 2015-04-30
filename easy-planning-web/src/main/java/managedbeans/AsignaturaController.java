@@ -91,9 +91,11 @@ public class AsignaturaController implements Serializable {
     public ArrayList<Asignatura> getAsignaturasPorNivel(int nivel){
         getAsignaturas();
         ArrayList<Asignatura> asignaturasPorNivel = new ArrayList<>();
-        for (Asignatura item : items) {
-            if (item.getNivel() == nivel) {
-                asignaturasPorNivel.add(item);
+        if(items != null){
+            for (Asignatura item : items) {
+                if (item.getNivel() == nivel) {
+                    asignaturasPorNivel.add(item);
+                }
             }
         }
         return asignaturasPorNivel;

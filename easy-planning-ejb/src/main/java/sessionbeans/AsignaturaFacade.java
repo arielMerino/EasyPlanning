@@ -13,6 +13,7 @@ import javax.persistence.PersistenceContext;
 /**
  *
  * @author ariel-linux
+ * @author jano
  */
 @Stateless
 public class AsignaturaFacade extends AbstractFacade<Asignatura> implements AsignaturaFacadeLocal {

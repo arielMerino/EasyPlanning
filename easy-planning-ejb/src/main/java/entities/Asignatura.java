@@ -1,8 +1,3 @@
-/*
- * To change this license header, choose License Headers in Project Properties.
- * To change this template file, choose Tools | Templates
- * and open the template in the editor.
- */
 package entities;
 
 import java.io.Serializable;
@@ -29,8 +24,11 @@ public class Asignatura implements Serializable {
     private String codigo;
     private String nombre;
     private int nivel;
+    private int teoria;
+    private int ejercicios;
+    private int laboratorio;
     private String planEstudio;
-
+    
     @OneToMany
     private List<Asignatura> prerequisitos;
     
@@ -41,6 +39,30 @@ public class Asignatura implements Serializable {
         return profesores;
     }
 
+    public int getTeoria() {
+        return teoria;
+    }
+
+    public void setTeoria(int teoria) {
+        this.teoria = teoria;
+    }
+
+    public int getEjercicios() {
+        return ejercicios;
+    }
+
+    public void setEjercicios(int ejercicios) {
+        this.ejercicios = ejercicios;
+    }
+
+    public int getLaboratorio() {
+        return laboratorio;
+    }
+
+    public void setLaboratorio(int laboratorio) {
+        this.laboratorio = laboratorio;
+    }
+
     public List<Coordinacion> getCoordinaciones() {
         return coordinaciones;
     }
@@ -48,7 +70,6 @@ public class Asignatura implements Serializable {
     public void setCoordinaciones(List<Coordinacion> coordinaciones) {
         this.coordinaciones = coordinaciones;
     }
-
     public List<Asignatura> getPrerequisitos() {
         return prerequisitos;
     }
@@ -119,7 +140,7 @@ public class Asignatura implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Asignatura[ id=" + id + " ]";
+        return "entities.Asignatura[ id=" + id + ", codigo= "+codigo+", nombre= "+nombre+", nivel= "+nivel+",T= "+teoria+", E= "+ejercicios+", L= "+laboratorio+"  ]";
     }
 
 }
