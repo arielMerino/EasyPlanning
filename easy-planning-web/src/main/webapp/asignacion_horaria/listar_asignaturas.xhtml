@@ -10,13 +10,18 @@
         Asignación Horaria
     </ui:define>
         <ui:define name="body">
-            <div style="visibility: hidden">#{asignaturaController.asignaturas}</div>
-            <h:selectOneMenu>
-                
-            </h:selectOneMenu>
+            <div>#{asignaturaController.planesDeEstudio}</div>
             <h:form id="mostrar_asignaturas">
+                <h:selectOneMenu id="plan" value="">
+                    <h:outputLabel>Seleccionar plan de estudios</h:outputLabel>
+                    <f:selectItem  />
+                </h:selectOneMenu>
+                <br/>
+                <h:selectOneMenu>
+                    <h:outputLabel>Seleccionar nivel</h:outputLabel>
+                </h:selectOneMenu>
                 <p:panel header="Asignaturas">
-                    <p:dataTable id="tablaAsignaturas" value="#{asignaturaController.items}" var="item"
+                    <p:dataTable id="tablaAsignaturas" value="#{asignaturaController.listaAsignaturas}" var="item"
                                  selectionMode="single" selection="#{asignaturaController.selected}"
                                      paginator="true"
                                      rowKey="#{item.nivel}"

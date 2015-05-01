@@ -73,6 +73,11 @@ public class AsignaturaController implements Serializable {
         } 
     }
     
+    public List<Asignatura> getListaAsignaturas(){
+        List<Asignatura> asg = getFacade().findAll();
+        return asg;
+    }
+    
     /*
     retorna un ArrayList de asignatura, donde cada una es prerrequisito de la entrada
     */
@@ -151,5 +156,39 @@ public class AsignaturaController implements Serializable {
         Integer lab = getFacade().find(asignaturaId).getLaboratorio();
         Integer totalHoras = teoria+ejercicios+lab;
         return totalHoras;
+    }
+    
+    public ArrayList<Asignatura> getAsignaturasByPlan(String plan){
+        ArrayList<Asignatura> asignaturasByPlan = new ArrayList<>();
+        for (Asignatura asg : items) {
+            if (asg.getPlanEstudio().equals(plan)) {
+                asignaturasByPlan.add(asg);
+            }
+        }
+        return asignaturasByPlan;
+    }
+    
+    /*
+    retorna un ArrayList con todas las asignaturas de un nivel específico
+    */
+    public ArrayList<Asignatura> getAsignaturasPorNivel(ArrayList<Asignatura> asignaturas, int nivel){
+        ArrayList<Asignatura> asignaturasPorNivel = new ArrayList<>();
+        for (Asignatura item : asignaturas) {
+            if (item.getNivel() == nivel) {
+                asignaturasPorNivel.add(item);
+            }
+        }
+        return asignaturasPorNivel;
+    }
+    
+    public ArrayList<String> getPlanesDeEstudio(){
+        ArrayList<String> planesEstudio = new ArrayList<>();
+        List<Asignatura> asignaturas = getFacade().findAll();
+        for (Asignatura asg : asignaturas){
+            if(!planesEstudio.contains(asg.getPlanEstudio())){
+                planesEstudio.add(asg.getPlanEstudio());
+            }
+        }
+        return planesEstudio;
     }
 }
