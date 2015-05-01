@@ -7,6 +7,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
@@ -14,6 +16,10 @@ import javax.persistence.OneToMany;
  * @author jano
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name="Asignatura.findByCodigoAndPlan", 
+            query="SELECT a FROM Asignatura a WHERE a.codigo = :codigo AND a.planEstudio = :plan")
+})
 public class Asignatura implements Serializable {
     @OneToMany(mappedBy = "asignatura")
     private List<Coordinacion> coordinaciones;
