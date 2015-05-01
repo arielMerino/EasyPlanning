@@ -15,6 +15,7 @@ import javax.ejb.Local;
 @Local
 public interface AsignaturasLocal {
     
-    Asignatura findByCodigo(String codigo);
+    public Asignatura findByCodigoAndPlan(String codigo, String plan);
+
     
 }

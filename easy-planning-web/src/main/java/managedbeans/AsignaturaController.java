@@ -73,6 +73,11 @@ public class AsignaturaController implements Serializable {
         } 
     }
     
+    public List<Asignatura> getListaAsignaturas(){
+        List<Asignatura> asg = getFacade().findAll();
+        return asg;
+    }
+    
     /*
     retorna un ArrayList de asignatura, donde cada una es prerrequisito de la entrada
     */

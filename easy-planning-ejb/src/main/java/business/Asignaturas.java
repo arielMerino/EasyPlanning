@@ -22,8 +22,9 @@ public class Asignaturas implements AsignaturasLocal {
     private EntityManager em;
     
     @Override
-    public Asignatura findByCodigo(String codigo) {
-        Query query = em.createNamedQuery("Asignatura.findByCodigo").setParameter("codigo", codigo);
+    public Asignatura findByCodigoAndPlan(String codigo, String plan) {
+        Query query = em.createNamedQuery("Asignatura.findByCodigoAndPlan").setParameter("codigo", codigo);
+        query.setParameter("plan", plan);
         return (entities.Asignatura) query.getSingleResult();
     }
 

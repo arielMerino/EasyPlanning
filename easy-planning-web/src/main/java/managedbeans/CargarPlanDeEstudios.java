@@ -52,12 +52,22 @@ public class CargarPlanDeEstudios implements Serializable {
     private String nombrePlan;
     //private Asignatura asignatura; //TODO interfaces para la persistencia
     private String aux;
+    private boolean cargados = false;
+    private List<Asignatura> asignaturasAñadidas = new ArrayList();
 
     public CargarPlanDeEstudios() {
     }
     
     public String getNombrePlan() {
         return nombrePlan;
+    }
+
+    public boolean isCargados() {
+        return cargados;
+    }
+
+    public void setCargados(boolean cargados) {
+        this.cargados = cargados;
     }
 
     public void setNombrePlan(String nombrePlan) {
@@ -150,7 +160,7 @@ public class CargarPlanDeEstudios implements Serializable {
                             List lista = new ArrayList();
                             //for (String prerequisito : prerequisitos) {
                             for (int i=0; i<prerequisitos.length; i++){
-                                lista.add(getBusiness().findByCodigo(prerequisitos[i]));
+                                lista.add(getBusiness().findByCodigoAndPlan(prerequisitos[i], nombrePlan));
                                 //aux = getAsignatura(prerequisito).toString();
                                 //lista.add(getBusiness().findByCodigo(prerequisito));
                             }
@@ -166,7 +176,7 @@ public class CargarPlanDeEstudios implements Serializable {
                         aux = (int) cell.getNumericCellValue() +" - Celda de tipo numérica";
                         asignatura.setPrerequisitos(lista);
                         //lista.add((int) cell.getNumericCellValue() +"");
-                        lista.add(getBusiness().findByCodigo((int) cell.getNumericCellValue() +""));
+                        lista.add(getBusiness().findByCodigoAndPlan((int) cell.getNumericCellValue() +"", nombrePlan));
                     }
                 }
             }
@@ -176,10 +186,11 @@ public class CargarPlanDeEstudios implements Serializable {
                     //aux = cause.getLocalizedMessage();
                 }
             }
-            
+            asignaturasAñadidas.add(asignatura);
             persist(asignatura);
         }
         aux = "Archivo cargado con éxito";
+        cargados = true;
     }
     
     public void persist(Asignatura asignatura){
@@ -192,6 +203,10 @@ public class CargarPlanDeEstudios implements Serializable {
                 aux = cause.getLocalizedMessage();
             }
         }
+    }
+    
+    public List<Asignatura> getAsignaturasAñadidas(){
+        return asignaturasAñadidas;
     }
     
     /*
