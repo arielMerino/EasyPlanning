@@ -35,6 +35,9 @@ public class Asignatura implements Serializable {
     private int laboratorio;
     private String planEstudio;
     
+    public Asignatura(){        
+    }
+    
     @OneToMany
     private List<Asignatura> prerequisitos;
     
