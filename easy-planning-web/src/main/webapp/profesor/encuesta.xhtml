@@ -39,90 +39,198 @@
                                 </p:row>
 
                             </f:facet>
-                            <p:selectManyCheckbox value="">
+                            <h:selectManyCheckbox value="#{profesorController.horariosSeleccionados}">
                                 <p:row>:
                                     <p:column class="horario-encuesta">1. 8:00-9:30</p:column>
-                                    <f:selectItem itemLabel="L1" itemValue="L"/>
-                                    <f:selectItem itemValue="M"/>
-                                    <f:selectItem itemValue="W"/>
-                                    <f:selectItem itemValue="J"/>
-                                    <f:selectItem itemValue="V"/>
-                                    <f:selectItem itemValue="S"/>
+                                    <p:column>
+                                        <f:selectItem itemLabel="L1" itemValue="L1"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="M1" itemValue="M1"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="W1" itemValue="W1"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="J1" itemValue="J1"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="V1" itemValue="V1"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="S1" itemValue="S1"/>
+                                    </p:column>
                                 </p:row>
                                 <p:row>
                                     <p:column class="horario-encuesta">2. 9:40-11:10</p:column>
-                                    <p:column>L2</p:column>
-                                    <p:column>M2</p:column>
-                                    <p:column>W2</p:column>
-                                    <p:column>J2</p:column>
-                                    <p:column>V2</p:column>
-                                    <p:column>S2</p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="L2" itemValue="L2"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="M2" itemValue="M2"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="W2" itemValue="W2"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="J2" itemValue="J2"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="V2" itemValue="V2"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="S2" itemValue="S2"/>
+                                    </p:column>
                                 </p:row>
                                 <p:row>
                                     <p:column class="horario-encuesta">3. 11:20-12:50</p:column>
-                                    <p:column>L3</p:column>
-                                    <p:column>M3</p:column>
-                                    <p:column>W3</p:column>
-                                    <p:column>J3</p:column>
-                                    <p:column>V3</p:column>
-                                    <p:column>S3</p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="L3" itemValue="L3"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="M3" itemValue="M3"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="W3" itemValue="W3"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="J3" itemValue="J3"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="V3" itemValue="V3"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="S3" itemValue="S3"/>
+                                    </p:column>
                                 </p:row>
                                 <p:row>
                                     <p:column class="horario-encuesta">4. 13:50-15:20</p:column>
-                                    <p:column>L4</p:column>
-                                    <p:column>M4</p:column>
-                                    <p:column>W4</p:column>
-                                    <p:column>J4</p:column>
-                                    <p:column>V4</p:column>
-                                    <p:column>S4</p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="L4" itemValue="L4"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="M4" itemValue="M4"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="W4" itemValue="W4"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="J4" itemValue="J4"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="V4" itemValue="V4"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="S4" itemValue="S4"/>
+                                    </p:column>
                                 </p:row>
                                 <p:row>
                                     <p:column class="horario-encuesta">5. 15:30-17:00</p:column>
-                                    <p:column>L5</p:column>
-                                    <p:column>M5</p:column>
-                                    <p:column>W5</p:column>
-                                    <p:column>J5</p:column>
-                                    <p:column>V5</p:column>
-                                    <p:column>S5</p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="L5" itemValue="L5"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="M5" itemValue="M5"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="W5" itemValue="W5"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="J5" itemValue="J5"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="V5" itemValue="V5"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="S5" itemValue="S5"/>
+                                    </p:column>
                                 </p:row>
                                 <p:row>
                                     <p:column class="horario-encuesta">6. 17:10-18:40</p:column>
-                                    <p:column>L6</p:column>
-                                    <p:column>M6</p:column>
-                                    <p:column>W6</p:column>
-                                    <p:column>J6</p:column>
-                                    <p:column>V6</p:column>
-                                    <p:column>S6</p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="L6" itemValue="L6"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="M6" itemValue="M6"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="W6" itemValue="W6"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="J6" itemValue="J6"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="V6" itemValue="V6"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="S6" itemValue="S6"/>
+                                    </p:column>
                                 </p:row>
                                 <p:row>
                                     <p:column class="horario-encuesta">7. 19:00-20:10</p:column>
-                                    <p:column>L7</p:column>
-                                    <p:column>M7</p:column>
-                                    <p:column>W7</p:column>
-                                    <p:column>J7</p:column>
-                                    <p:column>V7</p:column>
-                                    <p:column>S7</p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="L7" itemValue="L7"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="M7" itemValue="M7"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="W7" itemValue="W7"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="J7" itemValue="J7"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="V7" itemValue="V7"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="S7" itemValue="S7"/>
+                                    </p:column>
                                 </p:row>
                                 <p:row>
                                     <p:column class="horario-encuesta">8. 20:20-22:00</p:column>
-                                    <p:column>L8</p:column>
-                                    <p:column>M8</p:column>
-                                    <p:column>W8</p:column>
-                                    <p:column>J8</p:column>
-                                    <p:column>V8</p:column>
-                                    <p:column>S8</p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="L8" itemValue="L8"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="M8" itemValue="M8"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="W8" itemValue="W8"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="J8" itemValue="J8"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="V8" itemValue="V8"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="S8" itemValue="S8"/>
+                                    </p:column>
                                 </p:row>
                                 <p:row>
                                     <p:column class="horario-encuesta">9. 22:00-23:00</p:column>
-                                    <p:column>L9</p:column>
-                                    <p:column>M9</p:column>
-                                    <p:column>W9</p:column>
-                                    <p:column>J9</p:column>
-                                    <p:column>V9</p:column>
-                                    <p:column>S9</p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="L9" itemValue="L9"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="M9" itemValue="M9"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="W9" itemValue="W9"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="J9" itemValue="J9"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="V9" itemValue="V9"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:selectItem itemLabel="S9" itemValue="S9"/>
+                                    </p:column>
                                 </p:row>
 
-                            </p:selectManyCheckbox>
+                            </h:selectManyCheckbox>
                                                         
                         </p:panelGrid>
                     </p:layoutUnit>
