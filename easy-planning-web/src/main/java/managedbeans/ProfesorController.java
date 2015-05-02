@@ -3,6 +3,7 @@ package managedbeans;
 import entities.Horario;
 import entities.Profesor;
 import entities.Asignatura;
+import entities.Encuesta;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.ProfesorFacadeLocal;
@@ -10,6 +11,7 @@ import sessionbeans.ProfesorFacadeLocal;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -23,6 +25,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import sessionbeans.HorarioFacadeLocal;
 import sessionbeans.AsignaturaFacadeLocal;
+import sessionbeans.EncuestaFacadeLocal;
 
 @Named("profesorController")
 @SessionScoped
@@ -34,6 +37,8 @@ public class ProfesorController implements Serializable {
     private HorarioFacadeLocal horarioFacade;
     @EJB
     private AsignaturaFacadeLocal asignaturaFacade;
+    @EJB
+    private EncuestaFacadeLocal encuestaFacade;
     private List<Profesor> items = null;
     private Profesor selected;
 
@@ -162,6 +167,17 @@ public class ProfesorController implements Serializable {
             asignaturas.add(asig);
         }
         return asignaturas;
+    }
+    
+    public String comentarioEncuestaProfesor(Long profesorid){
+        List<Encuesta> encuestas = encuestaFacade.findAll();
+        Encuesta encuesta = new Encuesta();
+        for(Encuesta e : encuestas){
+            if(Objects.equals(e.getProfesor().getId(), profesorid)){
+                encuesta = e;
+            }
+        }
+        return encuesta.getComentario();
     }
 
     @FacesConverter(forClass = Profesor.class)

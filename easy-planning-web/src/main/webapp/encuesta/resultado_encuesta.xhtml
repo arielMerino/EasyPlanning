@@ -5,19 +5,31 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core">
     <h:head>
-        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
-        <link href="#{request.contextPath}/js/libs/twitter-bootstrap/css/bootstrap.css" type="text/css" rel="stylesheet"/>
-        <link href="#{request.contextPath}/js/libs/twitter-bootstrap/css/bootstrap-theme.css" type="text/css" rel="stylesheet"/>
-        <h:outputStylesheet name="./css/style.css"/>
         <title>Facelet Title</title>
     </h:head>
     <h:body>
-        Hello from Facelets
-        <button type="button" class="btn btn-primary">Primary</button>
+        Encuesta Profesor <h:outputText value="#{profesorController.getProfesor(param.id).nombre} #{profesorController.getProfesor(param.id).apellido}" />
+        <br/>
+        <br/>
+        Asignaturas:
+        <br/>
         <br/>
         <c:forEach  var="item" items="#{profesorController.asignaturasProfesor(param.id)}"> 
-            <h:selectBooleanCheckbox /><h:outputText value="#{item.nombre}" /><br/>
+            <!--<h:selectBooleanCheckbox /><h:outputText value="#{item.nombre}" /><br/>-->
+            - <h:outputText value="#{item.nombre}" /><br/>
         </c:forEach>
+        
+        <br/>
+        <br/>
+        Horarios disponibles:
+        <br/>
+        <c:forEach var="item" items="#{profesorController.getDisponibles(param.id)}">
+            <h:outputText value="#{item.bloque} " />
+        </c:forEach>
+        <br/>
+        <br/>
+        Comentario:
+        <p><h:outputText value="#{profesorController.comentarioEncuestaProfesor(param.id)}" /></p>
     </h:body>
 </html>
 
