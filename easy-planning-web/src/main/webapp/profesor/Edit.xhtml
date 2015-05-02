@@ -13,11 +13,13 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{profesorController.selected != null}">
                         <p:outputLabel value="#{bundle.EditProfesorLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{profesorController.selected.nombre}" title="#{bundle.EditProfesorTitle_nombre}" />
+                        <p:inputText id="nombre" value="#{profesorController.selected.nombre}" title="#{bundle.EditProfesorTitle_nombre}" required="true" requiredMessage="Debe ingresar el nombre del profesor"/>
                         <p:outputLabel value="#{bundle.EditProfesorLabel_apellido}" for="apellido" />
-                        <p:inputText id="apellido" value="#{profesorController.selected.apellido}" title="#{bundle.EditProfesorTitle_apellido}" />
+                        <p:inputText id="apellido" value="#{profesorController.selected.apellido}" title="#{bundle.EditProfesorTitle_apellido}" required="true" requiredMessage="Debe ingresar el nombre del profesor" />
                         <p:outputLabel value="#{bundle.EditProfesorLabel_mail}" for="mail" />
-                        <p:inputText id="mail" value="#{profesorController.selected.mail}" title="#{bundle.EditProfesorTitle_mail}" />
+                        <p:inputText id="mail" value="#{profesorController.selected.mail}" title="#{bundle.CreateProfesorTitle_mail}" validatorMessage="El email no es válido">
+                            <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                        </p:inputText>
                         <p:outputLabel value="#{bundle.EditProfesorLabel_rut}" for="rut" />
                         <p:inputText id="rut" value="#{profesorController.selected.rut}" title="#{bundle.EditProfesorTitle_rut}" />
                     </p:panelGrid>
