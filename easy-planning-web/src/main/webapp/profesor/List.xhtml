@@ -29,9 +29,12 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListProfesorTitle_nombre}"/>
+                                <h:outputText value="#{bundle.ListProfesorTitle_nombre}"/>                                
                             </f:facet>
-                            <h:outputText value="#{item.nombre}"/>
+                            
+                            <h:link outcome="/encuesta/resultado_encuesta" value="#{item.nombre}">
+                                <f:param name="id" value="#{item.id}" />
+                            </h:link>
                         </p:column>
                         <p:column>
                             <f:facet name="header">
