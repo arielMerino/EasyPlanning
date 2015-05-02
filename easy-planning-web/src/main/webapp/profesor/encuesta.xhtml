@@ -1,0 +1,135 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Encuesta - Easy Planning"></h:outputText>
+            <h:outputStylesheet library="css" name="style.css"/>
+        </ui:define>
+        <ui:define name="body">
+            <h:form>
+                <p:layout>
+
+                    <p:layoutUnit position="east" resizable="true" minSize="400">
+                        <p:panel header="Asignaturas">
+
+                        </p:panel>
+                        <p:panel header="Comentario">
+                            <h:inputTextarea cols="50" rows="5"/>
+                        </p:panel>
+                    </p:layoutUnit>
+
+                    <p:layoutUnit position="center" header="Horario">
+                        <p:panelGrid  style="width: 100%;">
+                            <f:facet name="header">
+                                <p:row >
+                                    <p:column colspan="1" style="width: 22%;">MÓDULO</p:column>
+                                    <p:column colspan="1" style="width: 13%;">lUNES</p:column>
+                                    <p:column colspan="1" style="width: 13%;">MARTES</p:column>
+                                    <p:column colspan="1" style="width: 13%;">MIÉRCOLES</p:column>
+                                    <p:column colspan="1" style="width: 13%;">JUEVES</p:column>
+                                    <p:column colspan="1" style="width: 13%;">VIERNES</p:column>
+                                    <p:column colspan="1" style="width: 13%;">SÁBADO</p:column>
+                                    
+                                </p:row>
+
+                            </f:facet>
+                            <p:selectManyCheckbox value="">
+                                <p:row>:
+                                    <p:column class="horario-encuesta">1. 8:00-9:30</p:column>
+                                    <f:selectItem itemLabel="L1" itemValue="L"/>
+                                    <f:selectItem itemValue="M"/>
+                                    <f:selectItem itemValue="W"/>
+                                    <f:selectItem itemValue="J"/>
+                                    <f:selectItem itemValue="V"/>
+                                    <f:selectItem itemValue="S"/>
+                                </p:row>
+                                <p:row>
+                                    <p:column class="horario-encuesta">2. 9:40-11:10</p:column>
+                                    <p:column>L2</p:column>
+                                    <p:column>M2</p:column>
+                                    <p:column>W2</p:column>
+                                    <p:column>J2</p:column>
+                                    <p:column>V2</p:column>
+                                    <p:column>S2</p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column class="horario-encuesta">3. 11:20-12:50</p:column>
+                                    <p:column>L3</p:column>
+                                    <p:column>M3</p:column>
+                                    <p:column>W3</p:column>
+                                    <p:column>J3</p:column>
+                                    <p:column>V3</p:column>
+                                    <p:column>S3</p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column class="horario-encuesta">4. 13:50-15:20</p:column>
+                                    <p:column>L4</p:column>
+                                    <p:column>M4</p:column>
+                                    <p:column>W4</p:column>
+                                    <p:column>J4</p:column>
+                                    <p:column>V4</p:column>
+                                    <p:column>S4</p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column class="horario-encuesta">5. 15:30-17:00</p:column>
+                                    <p:column>L5</p:column>
+                                    <p:column>M5</p:column>
+                                    <p:column>W5</p:column>
+                                    <p:column>J5</p:column>
+                                    <p:column>V5</p:column>
+                                    <p:column>S5</p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column class="horario-encuesta">6. 17:10-18:40</p:column>
+                                    <p:column>L6</p:column>
+                                    <p:column>M6</p:column>
+                                    <p:column>W6</p:column>
+                                    <p:column>J6</p:column>
+                                    <p:column>V6</p:column>
+                                    <p:column>S6</p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column class="horario-encuesta">7. 19:00-20:10</p:column>
+                                    <p:column>L7</p:column>
+                                    <p:column>M7</p:column>
+                                    <p:column>W7</p:column>
+                                    <p:column>J7</p:column>
+                                    <p:column>V7</p:column>
+                                    <p:column>S7</p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column class="horario-encuesta">8. 20:20-22:00</p:column>
+                                    <p:column>L8</p:column>
+                                    <p:column>M8</p:column>
+                                    <p:column>W8</p:column>
+                                    <p:column>J8</p:column>
+                                    <p:column>V8</p:column>
+                                    <p:column>S8</p:column>
+                                </p:row>
+                                <p:row>
+                                    <p:column class="horario-encuesta">9. 22:00-23:00</p:column>
+                                    <p:column>L9</p:column>
+                                    <p:column>M9</p:column>
+                                    <p:column>W9</p:column>
+                                    <p:column>J9</p:column>
+                                    <p:column>V9</p:column>
+                                    <p:column>S9</p:column>
+                                </p:row>
+
+                            </p:selectManyCheckbox>
+                                                        
+                        </p:panelGrid>
+                    </p:layoutUnit>
+
+                </p:layout>
+            </h:form>
+            
+        </ui:define>
+    </ui:composition>
+</html>
