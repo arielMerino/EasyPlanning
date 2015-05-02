@@ -20,8 +20,6 @@
                         <p:inputText id="mail" value="#{profesorController.selected.mail}" title="#{bundle.EditProfesorTitle_mail}" />
                         <p:outputLabel value="#{bundle.EditProfesorLabel_rut}" for="rut" />
                         <p:inputText id="rut" value="#{profesorController.selected.rut}" title="#{bundle.EditProfesorTitle_rut}" />
-                        <p:outputLabel value="#{bundle.EditProfesorLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{profesorController.selected.id}" title="#{bundle.EditProfesorTitle_id}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{profesorController.update}" value="#{bundle.Save}" update="display,:ProfesorListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ProfesorEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ProfesorEditDialog.hide()"/>

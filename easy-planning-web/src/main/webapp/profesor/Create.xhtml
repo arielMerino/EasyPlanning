@@ -20,8 +20,6 @@
                         <p:inputText id="mail" value="#{profesorController.selected.mail}" title="#{bundle.CreateProfesorTitle_mail}" />
                         <p:outputLabel value="#{bundle.CreateProfesorLabel_rut}" for="rut" />
                         <p:inputText id="rut" value="#{profesorController.selected.rut}" title="#{bundle.CreateProfesorTitle_rut}" />
-                        <p:outputLabel value="#{bundle.CreateProfesorLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{profesorController.selected.id}" title="#{bundle.CreateProfesorTitle_id}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{profesorController.create}" value="#{bundle.Save}" update="display,:ProfesorListForm:datalist,:growl" oncomplete="handleSubmit(args,'ProfesorCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ProfesorCreateDialog.hide()"/>
