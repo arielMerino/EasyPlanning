@@ -4,24 +4,38 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      
+      >
+      
     <ui:composition template="/template.xhtml">
     <ui:define name="title">
-        Asignación Horaria
+        Asignaturas
     </ui:define>
         <ui:define name="body">
-            <div style="visibility: hidden">#{asignaturaController.asignaturas}</div>
-            <h:selectOneMenu>
-                
-            </h:selectOneMenu>
             <h:form id="mostrar_asignaturas">
-                <p:panel header="Asignaturas">
-                    <p:dataTable id="tablaAsignaturas" value="#{asignaturaController.items}" var="item"
-                                 selectionMode="single" selection="#{asignaturaController.selected}"
-                                     paginator="true"
-                                     rowKey="#{item.nivel}"
-                                     rows="20"
-                                     rowsPerPageTemplate="10,20,30,40,50">
+                <p>Seleccionar plan de estudios</p>
+                <p:selectOneMenu id="plan" value="#{asignaturaController.planEstudios}" >
+                    <f:selectItem itemValue="todos los planes" itemLabel="todos"/>
+                    <f:selectItems value="#{asignaturaController.planesDeEstudio}" />
+                    <p:ajax process="@this" update="nivel, tablaAsignaturas, tituloPanel" />
+                </p:selectOneMenu>
+                <br/>
+                <p>Seleccionar Nivel</p>
+                <p:selectOneMenu id="nivel" value="#{asignaturaController.nivel}">
+                    <f:selectItem itemValue="0" itemLabel="todos"/>
+                    <f:selectItems value="#{asignaturaController.getMaxNivel(asignaturaController.getAsignaturasByPlan(asignaturaController.planEstudios,asignaturaController.nivel))}"/>
+                    <p:ajax process="@this" update="tablaAsignaturas" />
+                </p:selectOneMenu>
+                <p:panel id="tituloPanel" header="Plan: #{asignaturaController.planEstudios}">
+                    <p:dataTable id="tablaAsignaturas" value="#{asignaturaController.getAsignaturasByPlan(asignaturaController.planEstudios,asignaturaController.nivel)}" var="item"
+                        selectionMode="single" selection="#{asignaturaController.selected}"
+                        sortBy="#{item.nivel}"        
+                        paginator="true"
+                        rowKey="#{item.id}"
+                        rows="50"
+                        rowsPerPageTemplate="50,60,70,80"
+                        >
                         <p:column>
                             <f:facet name="header">
                                 <h:outputText value="Código"/>

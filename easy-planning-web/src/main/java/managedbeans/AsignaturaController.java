@@ -31,6 +31,8 @@ public class AsignaturaController implements Serializable {
     private SeccionFacadeLocal seccionFacade;
     private List<Asignatura> items = null;
     private Asignatura selected;
+    private String planEstudios = "todos los planes";
+    private int nivel = 0;
     
     /**
      * Creates a new instance of AsignaturaController
@@ -41,6 +43,15 @@ public class AsignaturaController implements Serializable {
     public SeccionFacadeLocal getSeccionFacade() {
         return seccionFacade;
     }
+
+    public String getPlanEstudios() {
+        return planEstudios;
+    }
+
+    public void setPlanEstudios(String planEstudios) {
+        this.planEstudios = planEstudios;
+    }
+    
     
     public AsignaturaFacadeLocal getFacade() {
         return ejbFacade;
@@ -71,6 +82,20 @@ public class AsignaturaController implements Serializable {
         } catch (Exception e) {
             return false;
         } 
+    }
+
+    public int getNivel() {
+        return nivel;
+    }
+
+    public void setNivel(int nivel) {
+        this.nivel = nivel;
+    }
+    
+    
+    public List<Asignatura> getListaAsignaturas(){
+        List<Asignatura> asg = getFacade().findAll();
+        return asg;
     }
     
     /*
@@ -151,5 +176,66 @@ public class AsignaturaController implements Serializable {
         Integer lab = getFacade().find(asignaturaId).getLaboratorio();
         Integer totalHoras = teoria+ejercicios+lab;
         return totalHoras;
+    }
+    
+    public ArrayList<Asignatura> getAsignaturasByPlan(String plan, int nivel){
+        ArrayList<Asignatura> asignaturasByPlan = new ArrayList<>();
+        List<Asignatura> asignaturas = getListaAsignaturas();
+        if (plan.equalsIgnoreCase("todos los planes")) {
+            for (Asignatura asignatura : asignaturas) {
+                asignaturasByPlan.add(asignatura);
+            }
+            if (nivel != 0) {
+                asignaturasByPlan = getAsignaturasPorNivel(asignaturasByPlan, nivel);
+            }
+            return asignaturasByPlan;
+        }
+        for (Asignatura asg : asignaturas) {
+            if (asg.getPlanEstudio().equals(plan)) {
+                asignaturasByPlan.add(asg);
+            }
+            if (nivel != 0) {
+                asignaturasByPlan = getAsignaturasPorNivel(asignaturasByPlan, nivel);
+            }
+        }
+        return asignaturasByPlan;
+    }
+    
+    /*
+    retorna un ArrayList con todas las asignaturas de un nivel específico
+    */
+    public ArrayList<Asignatura> getAsignaturasPorNivel(ArrayList<Asignatura> asignaturas, int nivel){
+        ArrayList<Asignatura> asignaturasPorNivel = new ArrayList<>();
+        for (Asignatura item : asignaturas) {
+            if (item.getNivel() == nivel) {
+                asignaturasPorNivel.add(item);
+            }
+        }
+        return asignaturasPorNivel;
+    }
+    
+    public ArrayList<String> getPlanesDeEstudio(){
+        ArrayList<String> planesEstudio = new ArrayList<>();
+        List<Asignatura> asignaturas = getFacade().findAll();
+        for (Asignatura asg : asignaturas){
+            if(!planesEstudio.contains(asg.getPlanEstudio())){
+                planesEstudio.add(asg.getPlanEstudio());
+            }
+        }
+        return planesEstudio;
+    }
+    
+    public ArrayList<Integer> getMaxNivel(ArrayList<Asignatura> asignaturas){
+        int nivel = 0;
+        ArrayList<Integer> niveles = new ArrayList<>();
+        for( Asignatura asg : asignaturas){
+            if(asg.getNivel() > nivel){
+                nivel = asg.getNivel();
+            }
+        }
+        for (int i = 0; i < nivel; i++) {
+            niveles.add(i+1);
+        }
+        return niveles;
     }
 }

@@ -17,7 +17,8 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name="Asignatura.findByCodigo", query="SELECT a FROM Asignatura a WHERE a.codigo = :codigo")
+    @NamedQuery(name="Asignatura.findByCodigoAndPlan", 
+            query="SELECT a FROM Asignatura a WHERE a.codigo = :codigo AND a.planEstudio = :plan")
 })
 public class Asignatura implements Serializable {
     @OneToMany(mappedBy = "asignatura")
@@ -33,6 +34,9 @@ public class Asignatura implements Serializable {
     private int ejercicios;
     private int laboratorio;
     private String planEstudio;
+    
+    public Asignatura(){        
+    }
     
     @OneToMany
     private List<Asignatura> prerequisitos;
