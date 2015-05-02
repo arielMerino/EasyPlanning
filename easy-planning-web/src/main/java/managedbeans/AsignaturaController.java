@@ -110,21 +110,6 @@ public class AsignaturaController implements Serializable {
         return prerrequisitos;
     }   
     
-    /*
-    retorna un ArrayList con todas las asignaturas de un nivel específico
-    */
-    public ArrayList<Asignatura> getAsignaturasPorNivel(int nivel){
-        getAsignaturas();
-        ArrayList<Asignatura> asignaturasPorNivel = new ArrayList<>();
-        if(items != null){
-            for (Asignatura item : items) {
-                if (item.getNivel() == nivel) {
-                    asignaturasPorNivel.add(item);
-                }
-            }
-        }
-        return asignaturasPorNivel;
-    }
     
     /*
     retorna un ArrayList con todos los profesores asociados a una asignatura
@@ -225,11 +210,19 @@ public class AsignaturaController implements Serializable {
         return planesEstudio;
     }
     
-    public ArrayList<Integer> getMaxNivel(ArrayList<Asignatura> asignaturas){
+    public ArrayList<Integer> getMaxNivel(){
         int nivel = 0;
         ArrayList<Integer> niveles = new ArrayList<>();
+        List<Asignatura> asignaturas = getListaAsignaturas();
+        if(getPlanEstudios().equalsIgnoreCase("todos los planes")){
+            for( Asignatura asg : asignaturas){
+                if(asg.getNivel() > nivel){
+                    nivel = asg.getNivel();
+                }
+            }
+        }
         for( Asignatura asg : asignaturas){
-            if(asg.getNivel() > nivel){
+            if(asg.getNivel() > nivel && asg.getPlanEstudio().equals(getPlanEstudios())){
                 nivel = asg.getNivel();
             }
         }
