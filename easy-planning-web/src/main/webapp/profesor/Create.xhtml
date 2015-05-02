@@ -13,15 +13,15 @@
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{profesorController.selected != null}">
                         <p:outputLabel value="#{bundle.CreateProfesorLabel_nombre}" for="nombre" />
-                        <p:inputText id="nombre" value="#{profesorController.selected.nombre}" title="#{bundle.CreateProfesorTitle_nombre}" />
+                        <p:inputText id="nombre" value="#{profesorController.selected.nombre}" title="#{bundle.CreateProfesorTitle_nombre}" required="true" requiredMessage="Debe ingresar el nombre del profesor" />
                         <p:outputLabel value="#{bundle.CreateProfesorLabel_apellido}" for="apellido" />
-                        <p:inputText id="apellido" value="#{profesorController.selected.apellido}" title="#{bundle.CreateProfesorTitle_apellido}" />
+                        <p:inputText id="apellido" value="#{profesorController.selected.apellido}" title="#{bundle.CreateProfesorTitle_apellido}" required="true" requiredMessage="Debe ingresar el apellido del profesor"/>
                         <p:outputLabel value="#{bundle.CreateProfesorLabel_mail}" for="mail" />
-                        <p:inputText id="mail" value="#{profesorController.selected.mail}" title="#{bundle.CreateProfesorTitle_mail}" />
+                        <p:inputText id="mail" value="#{profesorController.selected.mail}" title="#{bundle.CreateProfesorTitle_mail}" validatorMessage="El email no es válido">
+                            <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                        </p:inputText>
                         <p:outputLabel value="#{bundle.CreateProfesorLabel_rut}" for="rut" />
                         <p:inputText id="rut" value="#{profesorController.selected.rut}" title="#{bundle.CreateProfesorTitle_rut}" />
-                        <p:outputLabel value="#{bundle.CreateProfesorLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{profesorController.selected.id}" title="#{bundle.CreateProfesorTitle_id}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{profesorController.create}" value="#{bundle.Save}" update="display,:ProfesorListForm:datalist,:growl" oncomplete="handleSubmit(args,'ProfesorCreateDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="ProfesorCreateDialog.hide()"/>

@@ -24,8 +24,8 @@
                 <p>Seleccionar Nivel</p>
                 <p:selectOneMenu id="nivel" value="#{asignaturaController.nivel}">
                     <f:selectItem itemValue="0" itemLabel="todos"/>
-                    <f:selectItems value="#{asignaturaController.getMaxNivel(asignaturaController.getAsignaturasByPlan(asignaturaController.planEstudios,asignaturaController.nivel))}"/>
-                    <p:ajax process="@this" update="tablaAsignaturas" />
+                    <f:selectItems value="#{asignaturaController.getMaxNivel()}"/>
+                    <p:ajax process="@this" update="tablaAsignaturas, nivel" />
                 </p:selectOneMenu>
                 <p:panel id="tituloPanel" header="Plan: #{asignaturaController.planEstudios}">
                     <p:dataTable id="tablaAsignaturas" value="#{asignaturaController.getAsignaturasByPlan(asignaturaController.planEstudios,asignaturaController.nivel)}" var="item"
