@@ -6,6 +6,7 @@
 package managedbeans;
 
 import java.io.Serializable;
+import java.io.UnsupportedEncodingException;
 import java.util.Properties;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
@@ -34,7 +35,7 @@ public class EmailController implements Serializable {
     @Inject
     ProfesorController profesorController;
 
-    public void enviarEmail(String origen, String pass, String destino, String asunto, String contenido) {
+    public void enviarEmail(String origen, String pass, String destino, String asunto, String contenido) throws UnsupportedEncodingException {
         Properties props = System.getProperties();
         props.put("mail.smtp.starttls.enable", true); // added this line
         props.put("mail.smtp.host", "smtp.gmail.com");
@@ -46,52 +47,37 @@ public class EmailController implements Serializable {
         Session session = Session.getInstance(props,null);
         MimeMessage message = new MimeMessage(session);
         
-        System.out.println("Port: "+session.getProperty("mail.smtp.port"));
-        
         try {
-        InternetAddress from = new InternetAddress(origen);
-        message.setSubject(asunto);   //asunto del correo
+        
+        // Direccion origen
+        InternetAddress from = new InternetAddress(origen, "PAMELA AGUIRRE GUZMÁN");
+        
         message.setFrom(from);
+        
+        // Direccion destino
         message.addRecipients(Message.RecipientType.TO, InternetAddress.parse(destino));
+        
+        // Asunto del email
+        message.setSubject(asunto);
+        
+        Multipart mp = new MimeMultipart();
+        
+        // Contenido del email
+        MimeBodyPart htmlPart = new MimeBodyPart();
+        htmlPart.setContent(contenido, "text/html");
+        mp.addBodyPart(htmlPart);
+        message.setContent(mp);
 
-        // Create a multi-part to combine the parts
-        Multipart multipart = new MimeMultipart("alternative");
-
-        // Create your text message part
-        BodyPart messageBodyPart = new MimeBodyPart();
-        messageBodyPart.setText("some text to send");
-
-        // Add the text part to the multipart
-        multipart.addBodyPart(messageBodyPart);
-
-        // Create the html part
-        messageBodyPart = new MimeBodyPart();
-        String htmlMessage = contenido;
-        messageBodyPart.setContent(htmlMessage, "text/html");
-
-
-        // Add html part to multi part
-        multipart.addBodyPart(messageBodyPart);
-
-        // Associate multi-part with message
-        message.setContent(multipart);
-
-        // Send message
+        // Enviar mensaje
         Transport transport = session.getTransport("smtp");
         transport.connect("smtp.gmail.com", origen, pass);
-        System.out.println("Transport: "+transport.toString());
         transport.sendMessage(message, message.getAllRecipients());
 
-
-    } catch (AddressException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    } catch (MessagingException e) {
-        // TODO Auto-generated catch block
-        e.printStackTrace();
-    }
-        
-        System.out.println("Enviar Email");
+        } catch (AddressException e) {
+            e.printStackTrace();
+        } catch (MessagingException e) {
+            e.printStackTrace();
+        }
     }
     
     public void enviarNotificacion() throws Exception {
@@ -105,11 +91,8 @@ public class EmailController implements Serializable {
             String contenido = "Profesor" + " " + profesor + " " + "conteste la encuesta de disponibilidad horaria, por favor.";
             
             enviarEmail(origen, pass, emailProfesor, asunto, contenido);
-            JsfUtil.addSuccessMessage("El mensaje ha sido enviado exitosamente.");
+            JsfUtil.addSuccessMessage("El mensaje se ha enviado.");
             
         }
-        
-        
-        System.out.println("Hola");
     }
 }
