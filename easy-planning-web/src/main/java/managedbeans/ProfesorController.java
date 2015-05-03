@@ -41,8 +41,17 @@ public class ProfesorController implements Serializable {
     private EncuestaFacadeLocal encuestaFacade;
     private List<Profesor> items = null;
     private Profesor selected;
+    private String[] horariosSeleccionados = {"L1"};
 
     public ProfesorController() {
+    }
+
+    public String[] getHorariosSeleccionados() {
+        return horariosSeleccionados;
+    }
+
+    public void setHorariosSeleccionados(String[] horariosSeleccionados) {
+        this.horariosSeleccionados = horariosSeleccionados;
     }
 
     public Profesor getSelected() {
