@@ -52,10 +52,80 @@ public class asignacionHoraria implements Serializable {
     private ArrayList<Asignatura> asignaturasPlan = new ArrayList<>();
     private ArrayList<Asignatura> asignaturasNivel = new ArrayList<>();
     private ArrayList<Profesor> profesoresAsignatura = new ArrayList<>();
-    private ArrayList<String> bloques = new ArrayList<>();
+    private ArrayList<Seccion> seccionesAsignatura = new ArrayList<>();
+    private String [] horariosSeleccionados;
+    private int lastAño = 0;
+    private int lastSemestre = 0;
 
+    public ArrayList<Seccion> getSeccionesAsignatura() {
+        setSeccionesAsignatura();
+        return seccionesAsignatura;
+    }
+
+    public void setSeccionesAsignatura() {
+        this.seccionesAsignatura = new ArrayList<>();
+        if(getCoordinacionSelected() != null){
+            for (Seccion sec : getCoordinacionSelected().getSecciones()) {
+                this.seccionesAsignatura.add(sec);
+            }
+        }
+    }
+
+    public int getLastAño() {
+        setLastAño();
+        return lastAño;
+    }
+    
+    public int getLastAño2(){
+        return lastAño;
+    }
+
+    public boolean setLastAño() {
+        if (getAsignaturasPlan().size() > 0) {
+            lastAño = 0;
+            List<Coordinacion> coordinaciones = getAsignaturasPlan().get(0).getCoordinaciones();
+            for(Coordinacion cord : coordinaciones){
+                if(cord.getAño()>lastAño){
+                    lastAño = cord.getAño();
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+
+    public int getLastSemestre() {
+        setLastSemestre();
+        return lastSemestre;
+    }
+
+    public boolean setLastSemestre() {
+        if (getAsignaturasPlan().size() > 0){
+            this.lastSemestre = 0;
+            List<Coordinacion> coordinaciones = getAsignaturasPlan().get(0).getCoordinaciones();
+            getLastAño();
+            for (Coordinacion cord : coordinaciones) {
+                if (cord.getAño() == getLastAño2()) {
+                    if(cord.getSemestre() > this.lastSemestre){
+                        this.lastSemestre = cord.getSemestre();
+                    }
+                }
+            }
+            return true;
+        }
+        return false;
+    }
+    
     public AsignaturaFacadeLocal getAsignaturaFacade() {
         return asignaturaFacade;
+    }
+    
+    public String[] getHorariosSeleccionados() {
+        return horariosSeleccionados;
+    }
+
+    public void setHorariosSeleccionados(String[] horariosSeleccionados) {
+        this.horariosSeleccionados = horariosSeleccionados;
     }
 
     public ProfesorFacadeLocal getProfesorFacade() {
@@ -111,11 +181,24 @@ public class asignacionHoraria implements Serializable {
     }
 
     public Coordinacion getCoordinacionSelected() {
+        setCoordinacionSelected();
         return coordinacionSelected;
     }
 
-    public void setCoordinacionSelected(Coordinacion coordinacionSelected) {
-        this.coordinacionSelected = coordinacionSelected;
+    public void setCoordinacionSelected() {
+        if(getAsignaturaSelected()!=null){
+            List<Coordinacion> coordinaciones = getAsignaturaSelected().getCoordinaciones();
+            int sem = getLastSemestre();
+            int año = getLastAño2();
+            for (Coordinacion cord : coordinaciones) {
+                if(cord.getAño() == año && cord.getSemestre() == sem){
+                    this.coordinacionSelected = cord;
+                }
+            }
+        }
+        else{
+            this.coordinacionSelected = null;
+        }
     }
 
     public Seccion getSeccionSelected() {
@@ -152,24 +235,6 @@ public class asignacionHoraria implements Serializable {
                 }
             }
         }
-    }
-    
-    public void setBloques(){
-        bloques = new ArrayList<>();
-        int contador = 1;
-        for (int i = 0; i < 63; i++) {
-            if (i%7==0) {
-                bloques.add(contador+"");
-                contador++;
-            }
-            else{
-                bloques.add("ingresar");
-            }
-        }
-    }
-    public ArrayList<String> getBloques(){
-        setBloques();
-        return bloques;
     }
     
     public void setAsignaturasNivel(){
