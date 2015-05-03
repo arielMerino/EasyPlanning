@@ -6,7 +6,8 @@
       xmlns:p="http://primefaces.org/ui">
 
     <h:head>
-        <title><ui:insert name="title">Default Title</ui:insert></title>
+        <title><ui:insert name="title">Easy Planning</ui:insert></title>
+        <link rel="shortcut icon" href="#{resource['images/easyplanning_favicon.png']}" type="image/png"/>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
     </h:head>
@@ -16,7 +17,7 @@
         <p:growl id="growl" life="3000" />
 
         <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="65" header="#{bundle.AppName}">
+            <p:layoutUnit position="north" size="65" header="Easy Planning">
                 <h:form id="menuForm">
                     <p:menubar>
                         <p:menuitem value="#{bundle.Home}" outcome="/index" icon="ui-icon-home"/>
@@ -28,6 +29,8 @@
                         </p:submenu>
                         <p:menuitem value="Agregar Plan de Estudios" outcome="/plan_de_estudios/cargar_plan_de_estudios.xhtml" />
                         <p:menuitem value="Asignaturas" outcome="/asignaturas/listar_asignaturas.xhtml" />
+                        <p:menuitem value="Encuesta Profesor" outcome="/profesor/encuesta.xhtml"/>
+                        
                     </p:menubar>
                 </h:form>
             </p:layoutUnit>

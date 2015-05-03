@@ -29,7 +29,7 @@
 
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListProfesorTitle_nombre}"/>
+                                <h:outputText value="#{bundle.ListProfesorTitle_nombre}"/>                                
                             </f:facet>
                             <h:outputText value="#{item.nombre}"/>
                         </p:column>
@@ -53,9 +53,13 @@
                         </p:column>
                         <p:column>
                             <f:facet name="header">
-                                <h:outputText value="#{bundle.ListProfesorTitle_id}"/>
+                                <!--<h:outputText value="#{bundle.ListProfesorTitle_id}"/>-->
+                                <h:outputText value="Ver Encuesta" />
                             </f:facet>
-                            <h:outputText value="#{item.id}"/>
+                            <!--<h:outputText value="#{item.id}"/>-->
+                            <h:link outcome="/encuesta/resultado_encuesta" value="Ver Encuesta" >
+                                <f:param name="id" value="#{item.id}" />
+                            </h:link>
                         </p:column>
                         <f:facet name="footer">
                             <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{profesorController.prepareCreate}" update=":ProfesorCreateForm" oncomplete="PF('ProfesorCreateDialog').show()"/>
