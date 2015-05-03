@@ -17,7 +17,7 @@
         <p:growl id="growl" life="3000" />
 
         <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="65" header="#{bundle.AppName}">
+            <p:layoutUnit position="north" size="65" header="Easy Planning">
                 <h:form id="menuForm">
                     <p:menubar>
                         <p:menuitem value="#{bundle.Home}" outcome="/index" icon="ui-icon-home"/>
@@ -26,6 +26,8 @@
                         </p:submenu>
                         <p:menuitem value="Agregar Plan de Estudios" outcome="/plan_de_estudios/cargar_plan_de_estudios.xhtml" />
                         <p:menuitem value="Asignaturas" outcome="/asignaturas/listar_asignaturas.xhtml" />
+                        <p:menuitem value="Encuesta Profesor" outcome="/profesor/encuesta.xhtml"/>
+                        
                     </p:menubar>
                 </h:form>
             </p:layoutUnit>
