@@ -147,14 +147,6 @@ public class AsignaturaController implements Serializable {
         return seccionesCoordinacion;
     }
     
-    public String nombres(ArrayList<Asignatura> asignaturas){
-        String nom = "";
-        for(Asignatura item : asignaturas){
-            nom = nom + "\n" + item.getNombre();
-        }
-        return nom;
-    }
-    
     public Integer bloquesTotales(Long asignaturaId){
         Integer teoria = getFacade().find(asignaturaId).getTeoria();
         Integer ejercicios = getFacade().find(asignaturaId).getEjercicios();
@@ -198,6 +190,7 @@ public class AsignaturaController implements Serializable {
         }
         return asignaturasPorNivel;
     }
+    
     
     public ArrayList<String> getPlanesDeEstudio(){
         ArrayList<String> planesEstudio = new ArrayList<>();
