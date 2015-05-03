@@ -35,7 +35,7 @@ public class EmailController implements Serializable {
     @Inject
     ProfesorController profesorController;
 
-    public void enviarEmail(String origen, String pass, String destino, String asunto, String contenido) throws UnsupportedEncodingException {
+    public void enviarEmail(String origen, String nombre, String pass, String destino, String asunto, String contenido) throws UnsupportedEncodingException {
         Properties props = System.getProperties();
         props.put("mail.smtp.starttls.enable", true); // added this line
         props.put("mail.smtp.host", "smtp.gmail.com");
@@ -50,7 +50,7 @@ public class EmailController implements Serializable {
         try {
         
         // Direccion origen
-        InternetAddress from = new InternetAddress(origen, "PAMELA AGUIRRE GUZMÁN");
+        InternetAddress from = new InternetAddress(origen, nombre);
         
         message.setFrom(from);
         
@@ -86,11 +86,12 @@ public class EmailController implements Serializable {
         
         if(profesorController.getSelected() != null) {
             String emailProfesor = profesorController.getSelected().getMail();
+            String nombre = "PAMELA AGUIRRE GUZMÁN";
             String profesor = profesorController.getSelected().getNombre() + " " + profesorController.getSelected().getApellido();
             String asunto = "Encuesta de disponibilidad horaria";
             String contenido = "Profesor" + " " + profesor + " " + "conteste la encuesta de disponibilidad horaria, por favor.";
             
-            enviarEmail(origen, pass, emailProfesor, asunto, contenido);
+            enviarEmail(origen, nombre, pass, emailProfesor, asunto, contenido);
             JsfUtil.addSuccessMessage("El mensaje se ha enviado.");
             
         }
