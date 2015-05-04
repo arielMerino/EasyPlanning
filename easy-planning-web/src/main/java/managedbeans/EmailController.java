@@ -89,7 +89,7 @@ public class EmailController implements Serializable {
             String nombre = "PAMELA AGUIRRE GUZMÁN";
             String profesor = profesorController.getSelected().getNombre() + " " + profesorController.getSelected().getApellido();
             String asunto = "Encuesta de disponibilidad horaria";
-            String contenido = "Profesor" + " " + profesor + " " + "conteste la encuesta de disponibilidad horaria, por favor.";
+            String contenido = "Profesor" + " " + profesor + " " + "conteste la encuesta de disponibilidad horaria, por favor. http://localhost:8080/easy-planning-web/faces/profesor/encuesta.xhtml";
             
             enviarEmail(origen, nombre, pass, emailProfesor, asunto, contenido);
             JsfUtil.addSuccessMessage("El mensaje se ha enviado.");
