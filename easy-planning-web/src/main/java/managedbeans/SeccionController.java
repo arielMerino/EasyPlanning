@@ -74,7 +74,7 @@ public class SeccionController implements Serializable {
         return seccionFacade;
     }
     
-    public boolean generarSeccionesBasicas(String plan, int semestre, int ano){
+    public void generarSeccionesBasicas(String plan, int semestre, int ano){
         List<Asignatura> asignaturas = asignaturaFacade.findAll();
         ArrayList<Asignatura> asignaturasPlan = new ArrayList<>();
         try {
@@ -118,9 +118,9 @@ public class SeccionController implements Serializable {
                     }
                 }
             }
-            return true;
+            System.out.println("creación de secciones completada");
         }catch (Exception e) {
-            return false;
+            System.out.println("creación de secciones terminada con errores");
         }
     }
     /**
