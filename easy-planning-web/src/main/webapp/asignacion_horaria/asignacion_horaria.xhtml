@@ -19,13 +19,13 @@
                     <p:selectOneMenu id="plan" value="#{asignacionHoraria.planEstudioSelected}" class="ui-grid-col-3">
                         <f:selectItem itemValue="none" itemLabel="Seleccione un plan de estudio"/>
                         <f:selectItems value="#{asignaturaController.planesDeEstudio}"/>
-                        <p:ajax process="@this" update="nivel, asignaturas, secciones, profesores" />
+                        <p:ajax process="@this" update="nivel, asignaturas" />
                     </p:selectOneMenu>
                     <div class="ui-grid-col-1" style="text-align: center">Nivel: </div>
                     <p:selectOneMenu id="nivel" value="#{asignacionHoraria.nivelSelected}" class="ui-grid-col-3">
                         <f:selectItem itemValue="0"  itemLabel="Seleccione un nivel" />
                         <f:selectItems value="#{asignacionHoraria.niveles}"/>
-                        <p:ajax process="@this" update="asignaturas, secciones, profesores"/>
+                        <p:ajax process="@this" update="asignaturas"/>
                     </p:selectOneMenu>
                 </div>
                 <div class="ui-grid-row">
@@ -35,7 +35,7 @@
                                          selectionMode="single"
                                          selection="#{asignacionHoraria.asignaturaSelected}"
                                          rowKey="#{item}"
-                                         rows="5"
+                                         rows="6"
                                          sortBy="#{item.codigo}"
                                         >
                                 <f:facet name="header">
@@ -72,24 +72,34 @@
                                     <h:outputText value="#{item.getLaboratorio()}" />
                                 </p:column>
                             </p:dataTable>
-                            <p:commandButton value="Seleccionar" update="secciones, profesores"/>
+                            <p:commandButton value="Seleccionar" update="selecciónHorarios,set"/>
                         </p:panel>
-                        <div class="ui-grid-col-3">
-                            <p:panel>
-                                <p:selectOneMenu id="secciones" value="#{asignacionHoraria.seccionSelected}" style="width: 100%">
-                                    <f:selectItem itemValue="" itemLabel="Seleccionar Sección" />
-                                    <f:selectItems value="#{asignacionHoraria.getSeccionesAsignatura()}" var="sec" itemLabel="#{sec.codigo}"/>
-                                </p:selectOneMenu>
-                            </p:panel>
-                            <p:panel>
-                                <p:selectOneMenu id="profesores" value="#{asignacionHoraria.profesorSelected}" style="width: 100%">
-                                    <f:selectItem itemValue="" itemLabel="Seleccionar profesor" />
-                                    <f:selectItems value="#{asignacionHoraria.profesoresAsignatura}" var="prof" itemLabel="#{prof.nombre} #{prof.apellido}"/>
-                                </p:selectOneMenu>
-                            </p:panel>
-                        </div>
                     </div>
                 </div>
+            </h:form>
+            <h:form id="set">
+                #{asignacionHoraria.setDisponibilidadProfesor()}
+            </h:form>
+            <h:form id="selecciónHorarios">
+                <div class="ui-grid-row">
+                    <p:panel class="ui-grid-col-3">
+                        <p:selectOneMenu id="secciones" value="#{asignacionHoraria.seccionId}" immediate="true" style="width: 100%" required="true" requiredMessage="debe seleccionar una sección">
+                            <f:selectItem itemValue="" itemLabel="Seleccionar Sección" noSelectionOption="true"/>
+                            <f:selectItems value="#{asignacionHoraria.seccionesIds}" var="sec" itemLabel="#{asignacionHoraria.seccionFacade.find(sec).codigo}" />
+                            
+                        </p:selectOneMenu>
+                    </p:panel>
+                    <p:panel class="ui-grid-col-3">
+                        <p:selectOneMenu id="profesores" value="#{asignacionHoraria.profesorSelected}" style="width: 100%" >
+                            <f:selectItem itemValue="" itemLabel="Seleccionar profesor" />
+                            <f:selectItems value="#{asignacionHoraria.profesoresAsignatura}" var="prof" itemLabel="#{prof.nombre} #{prof.apellido}" />
+                            <p:ajax event="valueChange" update="set" />
+                        </p:selectOneMenu>
+                    </p:panel>
+                    <p:commandButton update="seleccionBloque" value="Siguiente" immediate="true" onclick="submit();" />
+                </div>
+            </h:form>
+            <h:form id="seleccionBloque">
                 <p:layout>
                     <p:layoutUnit position="center" header="Asignar bloques">
                         <p:panelGrid  style="width: 100%;">
@@ -106,102 +116,127 @@
                                 </p:row>
 
                             </f:facet>
-                                <p:row>:
-                                    <p:column class="horario-encuesta">1. 8:00-9:30</p:column>
-                                    <p:column rowspan="9" colspan="6" >
-                                        <p:selectManyCheckbox id="basic" value="#{asignacionHoraria.horariosSeleccionados}" layout="grid" columns="6" style="width: 100%;">
-                                            <f:selectItem itemLabel="L1" itemValue="L1"/>
-                                            <f:selectItem itemLabel="M1" itemValue="M1"/>
-                                            <f:selectItem itemLabel="W1" itemValue="W1"/>                     
-                                            <f:selectItem itemLabel="J1" itemValue="J1"/>
-                                            <f:selectItem itemLabel="V1" itemValue="V1"/>
-                                            <f:selectItem itemLabel="S1" itemValue="S1"/>
+                            <p:row>:
+                                <p:column class="horario-encuesta">1. 8:00-9:30</p:column>
+                                <p:column rowspan="9" colspan="6" >
+                                    <p:selectOneRadio id="horarios" value="#{asignacionHoraria.horarioSelected}" layout="grid" columns="6" style="width: 100%;">
+                                        
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('L1')}" itemValue="L1"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('M1')}" itemValue="M1"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('W1')}" itemValue="W1"/>                     
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('J1')}" itemValue="J1"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('V1')}" itemValue="V1"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('S1')}" itemValue="S1"/>
 
-                                            <f:selectItem itemLabel="L2" itemValue="L2"/>
-                                            <f:selectItem itemLabel="M2" itemValue="M2"/>
-                                            <f:selectItem itemLabel="W2" itemValue="W2"/>
-                                            <f:selectItem itemLabel="J2" itemValue="J2"/>
-                                            <f:selectItem itemLabel="V2" itemValue="V2"/>
-                                            <f:selectItem itemLabel="S2" itemValue="S2"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('L2')}" itemValue="L2"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('M2')}" itemValue="M2"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('W2')}" itemValue="W2"/>                     
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('J2')}" itemValue="J2"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('V2')}" itemValue="V2"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('S2')}" itemValue="S2"/>
 
-                                            <f:selectItem itemLabel="L3" itemValue="L3"/>
-                                            <f:selectItem itemLabel="M3" itemValue="M3"/>
-                                            <f:selectItem itemLabel="W3" itemValue="W3"/>
-                                            <f:selectItem itemLabel="J3" itemValue="J3"/>
-                                            <f:selectItem itemLabel="V3" itemValue="V3"/>
-                                            <f:selectItem itemLabel="S3" itemValue="S3"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('L3')}" itemValue="L3"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('M3')}" itemValue="M3"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('W3')}" itemValue="W3"/>                     
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('J3')}" itemValue="J3"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('V3')}" itemValue="V3"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('S3')}" itemValue="S3"/>
 
-                                            <f:selectItem itemLabel="L4" itemValue="L4"/>
-                                            <f:selectItem itemLabel="M4" itemValue="M4"/>
-                                            <f:selectItem itemLabel="W4" itemValue="W4"/>
-                                            <f:selectItem itemLabel="J4" itemValue="J4"/>
-                                            <f:selectItem itemLabel="V4" itemValue="V4"/>
-                                            <f:selectItem itemLabel="S4" itemValue="S4"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('L4')}" itemValue="L4"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('M4')}" itemValue="M4"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('W4')}" itemValue="W4"/>                     
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('J4')}" itemValue="J4"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('V4')}" itemValue="V4"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('S4')}" itemValue="S4"/>
 
-                                            <f:selectItem itemLabel="L5" itemValue="L5"/>
-                                            <f:selectItem itemLabel="M5" itemValue="M5"/>
-                                            <f:selectItem itemLabel="W5" itemValue="W5"/>
-                                            <f:selectItem itemLabel="J5" itemValue="J5"/>
-                                            <f:selectItem itemLabel="V5" itemValue="V5"/>
-                                            <f:selectItem itemLabel="S5" itemValue="S5"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('L5')}" itemValue="L5"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('M5')}" itemValue="M5"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('W5')}" itemValue="W5"/>                     
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('J5')}" itemValue="J5"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('V5')}" itemValue="V5"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('S5')}" itemValue="S5"/>
 
-                                            <f:selectItem itemLabel="L6" itemValue="L6"/>
-                                            <f:selectItem itemLabel="M6" itemValue="M6"/>
-                                            <f:selectItem itemLabel="W6" itemValue="W6"/>
-                                            <f:selectItem itemLabel="J6" itemValue="J6"/>
-                                            <f:selectItem itemLabel="V6" itemValue="V6"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('L6')}" itemValue="L6"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('M6')}" itemValue="M6"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('W6')}" itemValue="W6"/>                     
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('J6')}" itemValue="J6"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('V6')}" itemValue="V6"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('S6')}" itemValue="S6"/>
 
-                                            <f:selectItem itemLabel="L7" itemValue="L7"/>
-                                            <f:selectItem itemLabel="M7" itemValue="M7"/>
-                                            <f:selectItem itemLabel="W7" itemValue="W7"/>
-                                            <f:selectItem itemLabel="J7" itemValue="J7"/>
-                                            <f:selectItem itemLabel="V7" itemValue="V7"/>
-                                            <f:selectItem itemLabel="S7" itemValue="S7"/>
-                                            <f:selectItem itemLabel="S6" itemValue="S6"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('L7')}" itemValue="L7"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('M7')}" itemValue="M7"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('W7')}" itemValue="W7"/>                     
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('J7')}" itemValue="J7"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('V7')}" itemValue="V7"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('S7')}" itemValue="S7"/>
 
-                                            <f:selectItem itemLabel="L8" itemValue="L8"/>
-                                            <f:selectItem itemLabel="M8" itemValue="M8"/>
-                                            <f:selectItem itemLabel="W8" itemValue="W8"/>
-                                            <f:selectItem itemLabel="J8" itemValue="J8"/>
-                                            <f:selectItem itemLabel="V8" itemValue="V8"/>
-                                            <f:selectItem itemLabel="S8" itemValue="S8"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('L8')}" itemValue="L8"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('M8')}" itemValue="M8"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('W8')}" itemValue="W8"/>                     
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('J8')}" itemValue="J8"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('V8')}" itemValue="V8"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('S8')}" itemValue="S8"/>
 
-                                            <f:selectItem itemLabel="L9" itemValue="L9"/>
-                                            <f:selectItem itemLabel="M9" itemValue="M9"/>
-                                            <f:selectItem itemLabel="W9" itemValue="W9"/>
-                                            <f:selectItem itemLabel="J9" itemValue="J9"/>
-                                            <f:selectItem itemLabel="V9" itemValue="V9"/>
-                                            <f:selectItem itemLabel="S9" itemValue="S9"/>
-                                        </p:selectManyCheckbox>
-                                    </p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column class="horario-encuesta">2. 9:40-11:10</p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column class="horario-encuesta">3. 11:20-12:50</p:column>                                    
-                                </p:row>
-                                <p:row>
-                                    <p:column class="horario-encuesta">4. 13:50-15:20</p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column class="horario-encuesta">5. 15:30-17:00</p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column class="horario-encuesta">6. 17:10-18:40</p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column class="horario-encuesta">7. 19:00-20:10</p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column class="horario-encuesta">8. 20:20-22:00</p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column class="horario-encuesta">9. 22:00-23:00</p:column>
-                                </p:row>               
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('L9')}" itemValue="L9"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('M9')}" itemValue="M9"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('W9')}" itemValue="W9"/>                     
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('J9')}" itemValue="J9"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('V9')}" itemValue="V9"/>
+                                        <f:selectItem itemLabel="#{asignacionHoraria.compararDisponibilidad('S9')}" itemValue="S9"/>
+                                    </p:selectOneRadio>
+                                </p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column class="horario-encuesta">2. 9:40-11:10</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column class="horario-encuesta">3. 11:20-12:50</p:column>                                    
+                            </p:row>
+                            <p:row>
+                                <p:column class="horario-encuesta">4. 13:50-15:20</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column class="horario-encuesta">5. 15:30-17:00</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column class="horario-encuesta">6. 17:10-18:40</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column class="horario-encuesta">7. 19:00-20:10</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column class="horario-encuesta">8. 20:20-22:00</p:column>
+                            </p:row>
+                            <p:row>
+                                <p:column class="horario-encuesta">9. 22:00-23:00</p:column>
+                            </p:row>               
                         </p:panelGrid>
+                        <p:commandButton value="Asignar horario" update="displayProfe, displayBloque, displayAsignatura" onclick="PF('dlg').show();" icon="ui-icon-check" />
+                        <p:commandButton value="Liberar horario" update="displayLiberar" onclick="PF('liberar').show();" icon="ui-icon-close"/>
                     </p:layoutUnit>
                 </p:layout>
+                <p:dialog header="Confirmación Horarios" widgetVar="dlg" resizable="false" >
+                    <p:outputPanel id="displayBloque">
+                        <h:outputText value="#{asignacionHoraria.horarioSelected}"/>
+                    </p:outputPanel>
+                    <p:outputPanel id="displayProfe">
+                        <h:outputText value="#{asignacionHoraria.profesorSelected.nombre} #{asignacionHoraria.profesorSelected.apellido}"/>
+                    </p:outputPanel>
+                    <p:outputPanel id="displayAsignatura">
+                        <h:outputText value="#{asignacionHoraria.asignaturaSelected.codigo}-#{asignacionHoraria.seccionFacade.find(asignacionHoraria.seccionId).codigo}"/>
+                        <br/>
+                        <h:outputText value="#{asignacionHoraria.asignaturaSelected.nombre}"/>
+                    </p:outputPanel>
+                    <p:commandButton value="aceptar" onclick="submit();" action="#{asignacionHoraria.updateHorario()}" update="horarios"/>
+                    <p:commandButton value="cancelar" onclick="PF('dlg').hide();" />
+                </p:dialog>
+                <p:dialog header="Confirmación Liberación" widgetVar="liberar" resizable="false">
+                    <p:outputPanel id="displayLiberar">
+                        <h:outputText value="Liberar el bloque #{asignacionHoraria.horarioSelected} para el profesor #{asignacionHoraria.profesorSelected.nombre} #{asignacionHoraria.profesorSelected.apellido}"/>
+                    </p:outputPanel>
+                    <p:commandButton value="aceptar" onclick="submit();" action="#{asignacionHoraria.liberarHorario()}" update="horarios"/>
+                    <p:commandButton value="cancelar" onclick="PF('liberar').hide();" />
+                </p:dialog>
             </h:form>
         </ui:define>
     </ui:composition>
