@@ -20,12 +20,6 @@
                         <p:panel header="Asignaturas">
                             <p>Marca las asignaturas que deseas continuar impartiendo</p>
                             <!-- por ahora se dejara esto en datos duro -->
-                            <c:forEach  var="item" items="#{profesorController.asignaturasProfesor(1)}"> 
-                            <label for="a#{item.id}">#{item.nombre}</label>
-                            <input type="checkbox" id="a#{item.id}" value=""/>
-                            <br/>
-                            </c:forEach>
-                            <p:commandButton id="btnConfirmar" value="Confirmar"/>
                         </p:panel>
                         <p:panel header="Comentario">
                             <h:inputTextarea cols="50" rows="5"/>

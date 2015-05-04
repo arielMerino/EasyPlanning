@@ -101,8 +101,7 @@ public class CargarPlanDeEstudios implements Serializable {
         List sheetData = new ArrayList();
         
         String[] aux2 = ruta.split("=", 5);
-        //aux = aux2[2].split(", size")[0];
-        //aux = nombrePlan;
+        boolean flag = false;
         
         try{
             FileInputStream file = new FileInputStream(aux2[2].split(", size")[0]);
@@ -125,29 +124,28 @@ public class CargarPlanDeEstudios implements Serializable {
                 Asignatura asignatura = new Asignatura();
                 List list = (List) sheetData1;
                 Cell cell = (Cell) list.get(0);
-                int num = (int) cell.getNumericCellValue();
-                asignatura.setCodigo(num+"");
-                cell = (Cell) list.get(1);
-                asignatura.setNombre(cell.getStringCellValue());
-                cell = (Cell) list.get(2);
-                asignatura.setTeoria((int) cell.getNumericCellValue());
-                cell = (Cell) list.get(3);
-                asignatura.setEjercicios((int) cell.getNumericCellValue());
-                cell = (Cell) list.get(4);
-                asignatura.setLaboratorio((int) cell.getNumericCellValue());
-                cell = (Cell) list.get(5);
-                asignatura.setNivel((int) cell.getNumericCellValue());
-                asignatura.setPlanEstudio(nombrePlan);
-                cell = (Cell) list.get(6);
-                /*if(cell.getStringCellValue().equals("Ingreso") || cell.getStringCellValue().equals("")){
-                    asignatura.setPrerequisitos(new ArrayList());
+                try{
+                    int num = (int) cell.getNumericCellValue();
+                    asignatura.setCodigo(num+"");
+                    cell = (Cell) list.get(1);
+                    asignatura.setNombre(cell.getStringCellValue());
+                    cell = (Cell) list.get(2);
+                    asignatura.setTeoria((int) cell.getNumericCellValue());
+                    cell = (Cell) list.get(3);
+                    asignatura.setEjercicios((int) cell.getNumericCellValue());
+                    cell = (Cell) list.get(4);
+                    asignatura.setLaboratorio((int) cell.getNumericCellValue());
+                    cell = (Cell) list.get(5);
+                    asignatura.setNivel((int) cell.getNumericCellValue());
+                    asignatura.setPlanEstudio(nombrePlan);
+                    cell = (Cell) list.get(6);
                 }
-                else{
-                    String[] prerequisitos = cell.getStringCellValue().split(",");
-                    List lista = new ArrayList<>();
-                    lista.addAll(Arrays.asList(prerequisitos)); 
-                    asignatura.setPrerequisitos(lista);
-                }*/
+                catch(IllegalStateException ex5){
+                    aux = "El archivo no contiene los campos requeridos o estos no se encuentran en el orden correcto. Los campos requeridos son código asignatura, nombre asignatura, teoría, ejercicio, laboratorio, nivel y requisitos, en ese mismo orden.";
+                    flag = true;
+                    break;
+                }
+                
                 try{
                     switch(cell.getCellType()){
                         case Cell.CELL_TYPE_STRING:{
@@ -156,29 +154,17 @@ public class CargarPlanDeEstudios implements Serializable {
                             }
                             else {
                                 String[] prerequisitos = cell.getStringCellValue().split(", "); 
-                                //aux = Arrays.toString(prerequisitos);
-                                //if(prerequisitos.length > 1)
-                                    //aux = prerequisitos[0];
-                                //aux = cell.getStringCellValue() + " - Celda de tipo String";
                                 List lista = new ArrayList();
-                                //for (String prerequisito : prerequisitos) {
                                 for (int i=0; i<prerequisitos.length; i++){
                                     lista.add(getBusiness().findByCodigoAndPlan(prerequisitos[i], nombrePlan));
-                                    //aux = getAsignatura(prerequisito).toString();
-                                    //lista.add(getBusiness().findByCodigo(prerequisito));
                                 }
-                                //lista.addAll(Arrays.asList(prerequisitos)); 
                                 asignatura.setPrerequisitos(lista);
                             }
                             break;
                         }
                         case Cell.CELL_TYPE_NUMERIC:{
                             List lista = new ArrayList();
-                            //lista.add(getAsignatura((int) cell.getNumericCellValue()+""));
-                            //aux = getBusiness().findByCodigo((int) cell.getNumericCellValue() +"").toString();
-                            //aux = (int) cell.getNumericCellValue() +" - Celda de tipo numérica";
                             asignatura.setPrerequisitos(lista);
-                            //lista.add((int) cell.getNumericCellValue() +"");
                             lista.add(getBusiness().findByCodigoAndPlan((int) cell.getNumericCellValue() +"", nombrePlan));
                         }
                     }
@@ -189,25 +175,25 @@ public class CargarPlanDeEstudios implements Serializable {
                         aux = cause.getLocalizedMessage();
                     }
                 }
-                asignaturasAñadidas.add(asignatura);
-                persist(asignatura);
+                if(!flag){
+                    asignaturasAñadidas.add(asignatura);
+                    persist(asignatura);
+                }
             }
-            aux = "Archivo cargado con éxito";
-            cargados = true;
+            if(!flag){
+                aux = "Archivo cargado con éxito";
+                cargados = true;                
+            }
         }
         catch(NotOLE2FileException ex){
             aux = ex.getMessage();
-            boolean flag = false;
             String linea;
             BufferedReader buffer = new BufferedReader(new FileReader(aux2[2].split(", size")[0]));
             try{
-                int k = 0;
                 while((linea = buffer.readLine()) != null){
-                    k++;
-                    
                     String[] elementos = linea.split(",");
                     Asignatura asignatura = new Asignatura();
-                    asignatura.setCodigo(elementos[0]);
+                    asignatura.setCodigo(elementos[0]);                    
                     try{
                         asignatura.setNombre(elementos[1]);
                         asignatura.setTeoria(Integer.parseInt(elementos[2]));
@@ -230,7 +216,6 @@ public class CargarPlanDeEstudios implements Serializable {
                             else if(elementos.length > 9){
                                 lista.add(getBusiness().findByCodigoAndPlan(elementos[6].substring(1), nombrePlan));
                                 int i = 7;
-                                //aux = "cago todo D:";
                                 while(i<elementos.length-2){
                                     lista.add(getBusiness().findByCodigoAndPlan(elementos[i].substring(1), nombrePlan));
                                     i++;
@@ -241,13 +226,20 @@ public class CargarPlanDeEstudios implements Serializable {
                             asignatura.setPrerequisitos(lista);
                         }
                     }
-                    catch(ArrayIndexOutOfBoundsException | NumberFormatException ex3){
-                        aux = "El archivo tiene problemas internos de codificación. Por favor, ábralo con su editor de texto, guardelo como un archivo csv o xls y vuelva a intentarlo.";
+                    catch(ArrayIndexOutOfBoundsException ex3){
+                        aux = "El archivo tiene problemas internos de codificación o no corresponde con los formatos adecuados (CSV o XLS). Si el formato del archivo es el adecuado, por favor, ábralo con su editor de texto, guárdelo como un archivo csv o xls y vuelva a intentarlo.";
                         flag = true;
                         break;
                     }
-                    asignaturasAñadidas.add(asignatura);
-                    persist(asignatura);
+                    catch(IllegalStateException | NumberFormatException ex5){
+                        aux = "El archivo no contiene los campos requeridos o estos no se encuentran en el orden correcto. Los campos requeridos son código asignatura, nombre asignatura, teoría, ejercicio, laboratorio, nivel y requisitos, en ese mismo orden.";
+                        flag = true;
+                        break;
+                    }
+                    if(!flag){
+                        asignaturasAñadidas.add(asignatura);
+                        persist(asignatura);
+                    }
                     
                 }
                 if(!flag){
@@ -256,10 +248,7 @@ public class CargarPlanDeEstudios implements Serializable {
                 }
             }            
             catch(EJBException ex2){
-                Throwable cause = ex2.getCause();
-                if (cause != null) {
-                    //aux = cause.getLocalizedMessage();
-                }
+                
             }
             
         }        
@@ -280,12 +269,6 @@ public class CargarPlanDeEstudios implements Serializable {
     public List<Asignatura> getAsignaturasAñadidas(){
         return asignaturasAñadidas;
     }
-    
-    /*
-    public Asignatura getAsignatura(String codigo) {
-        return getFacade().find(codigo);
-    }
-    */
     
     public AsignaturasLocal getBusiness(){
         return asignaturas;
