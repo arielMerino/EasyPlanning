@@ -18,14 +18,13 @@
 
                     <p:layoutUnit position="east" resizable="true" minSize="400">
                         <p:panel header="Asignaturas">
-                            <p>Marca las asignaturas que deseas continuar impartiendo</p>
-                            <!-- por ahora se dejara esto en datos duro -->
-                            <c:forEach  var="item" items="#{profesorController.asignaturasProfesor(1)}"> 
-                            <label for="a#{item.id}">#{item.nombre}</label>
-                            <input type="checkbox" id="a#{item.id}" value=""/>
-                            <br/>
+                            <h:outputText value="Marca las asignaturas que deseas continuar impartiendo"></h:outputText>
+                            <p:selectManyCheckbox value="#{encuestaController.listaContinuidad}">
+                            <c:forEach  var="item" items="#{profesorController.asignaturasProfesor(1)}">
+                                <f:selectItem itemLabel="#{item.nombre}" itemValue="#{item.id}" />
                             </c:forEach>
-                            <p:commandButton id="btnConfirmar" value="Confirmar"/>
+                            </p:selectManyCheckbox> 
+                            <p:commandButton value="Confirmar" actionListener="#{encuestaController.crearEncuesta}"/>
                         </p:panel>
                         <p:panel header="Comentario">
                             <h:inputTextarea cols="50" rows="5"/>
