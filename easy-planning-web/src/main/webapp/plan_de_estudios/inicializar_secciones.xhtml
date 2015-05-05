@@ -18,14 +18,25 @@
                     <f:selectItems value="#{asignaturaController.planesDeEstudio}"/>
                 </p:selectOneMenu>
                 <br />
+                <br />
                 <h:outputLabel value="Año a inicializar: "></h:outputLabel>
-                <h:inputText label="ingrese Año a inicializar" value="#{seccionController.ano}" required="true" requiredMessage="Debe ingresar el año a inicializar"></h:inputText>
+                <p:selectOneMenu id="console" value="#{seccionController.ano}" required="true" requiredMessage="Debe seleccionar el año a inicializar">
+                    <f:selectItem itemLabel="Elija un año" itemValue="" />
+                    <f:selectItem itemLabel="2015" itemValue="2015" />
+                    <f:selectItem itemLabel="2016" itemValue="2016" />
+                    <f:selectItem itemLabel="2017" itemValue="2017" />
+                </p:selectOneMenu>
+                <br />
                 <br />
                 <h:outputLabel value="Semestre a inicializar: "></h:outputLabel>
-                <h:inputText label="ingrese semestre a inicializar" value="#{seccionController.semestre}" required="true" requiredMessage="Debe ingresar el semestre a inicializar"></h:inputText>
+                <p:selectOneListbox value="#{seccionController.ano}" required="true" requiredMessage="Debe indicar el semestre a inicializar">
+                    <f:selectItem itemLabel="1er Semestre" itemValue="1" />
+                    <f:selectItem itemLabel="2do Semestre" itemValue="2" />
+                </p:selectOneListbox>
                 <br />
                 <h:commandButton value="Cargar" action="#{seccionController.generarSeccionesBasicas(seccionController.planEstudio, seccionController.semestre, seccionController.ano)}"></h:commandButton>
             </h:form>
+            <p:outputLabel value="#{seccionController.mensaje}"></p:outputLabel>
         </ui:define>
     </ui:composition>
 </html>

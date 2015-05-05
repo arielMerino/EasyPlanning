@@ -186,7 +186,6 @@ public class CargarPlanDeEstudios implements Serializable {
             }
         }
         catch(NotOLE2FileException ex){
-            aux = ex.getMessage();
             String linea;
             BufferedReader buffer = new BufferedReader(new FileReader(aux2[2].split(", size")[0]));
             try{
@@ -248,7 +247,7 @@ public class CargarPlanDeEstudios implements Serializable {
                 }
             }            
             catch(EJBException ex2){
-                
+                aux = "Ya existe un Plan de Estudios con el nombre '"+nombrePlan+"'";
             }
             
         }        

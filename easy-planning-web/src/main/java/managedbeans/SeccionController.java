@@ -33,9 +33,19 @@ public class SeccionController implements Serializable {
     private SeccionFacadeLocal seccionFacade;
     
     String planEstudio;
+    String mensaje;
     int Semestre;
     int ano;
 
+    public String getMensaje() {
+        return mensaje;
+    }
+
+    public void setMensaje(String mensaje) {
+        this.mensaje = mensaje;
+    }
+
+    
     public String getPlanEstudio() {
         return planEstudio;
     }
@@ -119,6 +129,7 @@ public class SeccionController implements Serializable {
                 }
             }
             System.out.println("creación de secciones completada");
+            mensaje = "Secciones creadas con éxito";
         }catch (Exception e) {
             System.out.println("creación de secciones terminada con errores");
         }
