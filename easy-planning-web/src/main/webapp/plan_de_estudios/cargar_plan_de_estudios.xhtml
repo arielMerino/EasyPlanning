@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
@@ -13,12 +14,12 @@
         </ui:define>
         <ui:define name="body">
             <h:form enctype='multipart/form-data'>
-                <h:outputLabel value="Nombre plan de estudios: "></h:outputLabel>
-                <h:inputText label="Nombre plan de estudios" value="#{cargarPlanDeEstudios.nombrePlan}" required="true" requiredMessage="Debe ingresar el nombre del Plan de Estudios"></h:inputText>
+                <p:outputLabel value="Nombre plan de estudios: "></p:outputLabel>
+                <p:inputText label="Nombre plan de estudios" value="#{cargarPlanDeEstudios.nombrePlan}" required="true" requiredMessage="Debe ingresar el nombre del Plan de Estudios"></p:inputText>
                 <br />
-                <h:inputFile label="Seleccionar archivo" value="#{cargarPlanDeEstudios.ruta}" required="true" requiredMessage="Debe seleccionar un archivo"></h:inputFile>
+                <h:inputFile styleClass="ui-button-text ui-c ui-state-default ui-widget-content ui-widget-header" label="Seleccionar archivo" value="#{cargarPlanDeEstudios.ruta}" required="true" requiredMessage="Debe seleccionar un archivo"></h:inputFile>
                 <br />
-                <h:commandButton value="Cargar" action="#{cargarPlanDeEstudios.cargarArchivo()}"></h:commandButton>
+                <h:commandButton styleClass="ui-button-text ui-c ui-state-default ui-widget-content ui-widget-header" value="Cargar" actionListener="#{cargarPlanDeEstudios.cargarArchivo()}"></h:commandButton>
             </h:form>
             <h:outputText value="#{cargarPlanDeEstudios.aux}"></h:outputText>
             <p:panel header="Plan de Estudios #{cargarPlanDeEstudios.nombrePlan} registrado" rendered="#{cargarPlanDeEstudios.cargados}" >

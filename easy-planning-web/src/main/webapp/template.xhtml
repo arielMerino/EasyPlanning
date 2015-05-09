@@ -1,6 +1,7 @@
 <?xml version='1.0' encoding='UTF-8' ?>
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:p="http://primefaces.org/ui">
@@ -9,42 +10,67 @@
         <title><ui:insert name="title">Easy Planning</ui:insert></title>
         <link rel="shortcut icon" href="#{resource['images/easyplanning_favicon.png']}" type="image/png"/>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
+        <h:outputStylesheet library="css" name="bootstrap.min.css"/>
         <h:outputScript library="js" name="jsfcrud.js"/>
+        <h:outputScript library="js" name="bootstrap.min.js"/>
+        <h:outputStylesheet library="css" name="style.css"/>
+        <h:outputScript library="js" name="main.js"/>
     </h:head>
 
     <h:body>
 
         <p:growl id="growl" life="3000" />
 
-        <p:layout fullPage="true">
-            <p:layoutUnit position="north" size="65" header="Easy Planning">
-                <h:form id="menuForm">
-                    <p:menubar>
-                        <p:menuitem value="#{bundle.Home}" outcome="/index" icon="ui-icon-home"/>
-                        <p:submenu label="Profesores">
-                            <p:menuitem value="Ver Profesores" outcome="/profesor/List.xhtml" />     
-                            <p:menuitem value="Encuesta Profesor" outcome="/profesor/encuesta.xhtml"/>                        
-                        </p:submenu>
-                        <p:submenu label="Asignaturas">
-                            <p:menuitem value="Ver Asignaturas" outcome="/asignaturas/listar_asignaturas.xhtml" />
-                            <p:menuitem value="Agregar Plan de Estudios" outcome="/plan_de_estudios/cargar_plan_de_estudios.xhtml" />
-                            <p:menuitem value="Inicializar Secciones" outcome="/plan_de_estudios/inicializar_secciones.xhtml" />
-                        </p:submenu>
-                        <p:menuitem value="Asignación horaria" outcome="/asignacion_horaria/asignacion_horaria.xhtml"/>                        
-                    </p:menubar>
-                </h:form>
-            </p:layoutUnit>
+        <p:layout fullPage="true" >
 
-            <p:layoutUnit position="south" size="60">
-                <ui:insert name="footer"/>
-            </p:layoutUnit>
 
-            <p:layoutUnit position="center">
+            <p:layoutUnit position="center" styleClass="new-body">
+                <div class="container-fluid">
+                    <div class="row">
+                        <div class="col-md-2">
+                            <img src="#{resource['images/easyplanning_logo.png']}" class="img-responsive img-rounded img"/>
+                        </div>
+                        <div class="col-md-7">
+                            <br />
+                            <br />
+                            <br />
+                            <h1 class="text-left"><strong>Easy Planning</strong></h1>
+                        </div>
+                        <div class="col-md-2 col-md-offset-1">
+                            <img src="#{resource['images/UDS CNRJ.png']}" class="img-responsive img-rounded img"></img>
+                        </div>
+                    </div>
+                </div>
+                <nav id="navbar" class="navbar navbar-default navbar-static-top menu-nav ">
+                    <div class="container-fluid">
+                        <ul class="nav navbar-nav menu-nav">
+                            <li><a href="/easy-planning-web/faces/index.xhtml"><span class="glyphicon glyphicon-home" aria-hidden="true" ></span> Inicio</a></li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Profesores<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                  <li><a href="/easy-planning-web/faces/profesor/List.xhtml">Ver Profesores</a></li>
+                                  <li class="divider"></li>
+                                  <li><a href="/easy-planning-web/faces/profesor/encuesta.xhtml">Encuesta Profesor</a></li>
+                                </ul>
+                            </li>
+                            <li class="dropdown">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Asignaturas<span class="caret"></span></a>
+                                <ul class="dropdown-menu" role="menu">
+                                  <li><a href="/easy-planning-web/faces/asignaturas/listar_asignaturas.xhtml">Ver Asignaturas</a></li>
+                                  <li class="divider"></li>
+                                  <li><a href="/easy-planning-web/faces/plan_de_estudios/cargar_plan_de_estudios.xhtml">Agregar Plan de Estudios</a></li>
+                                  <li class="divider"></li>
+                                  <li><a href="/easy-planning-web/faces/plan_de_estudios/inicializar_secciones.xhtml">Inicializar secciones</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="/easy-planning-web/faces/asignacion_horaria/asignacion_horaria.xhtml">Asignación horaria</a></li>
+                        </ul>
+                    </div>
+                </nav>
                 <ui:insert name="body"/>
             </p:layoutUnit>
 
-        </p:layout>
-
+        </p:layout>   
     </h:body>
 
 </html>

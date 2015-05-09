@@ -34,7 +34,7 @@
                     <f:selectItem itemLabel="2do Semestre" itemValue="2" />
                 </p:selectOneListbox>
                 <br />
-                <h:commandButton value="Cargar" action="#{seccionController.generarSeccionesBasicas(seccionController.planEstudio, seccionController.semestre, seccionController.ano)}"></h:commandButton>
+                <p:commandButton value="Cargar" action="#{seccionController.generarSeccionesBasicas(seccionController.planEstudio, seccionController.semestre, seccionController.ano)}"></p:commandButton>
             </h:form>
             <p:outputLabel value="#{seccionController.mensaje}"></p:outputLabel>
         </ui:define>

@@ -111,6 +111,14 @@ public class ProfesorController implements Serializable {
         }
         return items;
     }
+    
+    public void editProfesor(Profesor profesor){
+        selected = profesor;
+    }
+    
+    public void deleteProfesor(Profesor profesor){
+        selected = profesor;
+    }
 
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
