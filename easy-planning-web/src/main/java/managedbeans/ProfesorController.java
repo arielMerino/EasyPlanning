@@ -42,8 +42,17 @@ public class ProfesorController implements Serializable {
     private List<Profesor> items = null;
     private Profesor selected;
     private String[] horariosSeleccionados;
+    private List<Profesor> profesoresFiltrados;
 
     public ProfesorController() {
+    }
+
+    public List<Profesor> getProfesoresFiltrados() {
+        return profesoresFiltrados;
+    }
+
+    public void setProfesoresFiltrados(List<Profesor> profesoresFiltrados) {
+        this.profesoresFiltrados = profesoresFiltrados;
     }
 
     public String[] getHorariosSeleccionados() {

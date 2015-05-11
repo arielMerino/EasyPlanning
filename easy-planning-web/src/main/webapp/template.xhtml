@@ -25,51 +25,66 @@
 
 
             <p:layoutUnit position="center" styleClass="new-body">
-                <div class="container-fluid">
+                <div class="container-fluid" id="wraper">
+                    <div class="banner">
+                        <div class="row">
+                            <div class="col-md-2">
+                                <img src="#{resource['images/easyplanning_logo_blanco.png']}" class="img-responsive img-rounded img"/>
+                            </div>
+                            <div class="col-md-7">
+                                <br />
+                                <br />
+                                <br />
+                                <h1 class="text-left"><strong>Easy Planning</strong></h1>
+                            </div>
+                            <div class="col-md-2 col-md-offset-1">
+                                <img src="#{resource['images/UDS CGRS.png']}" class="img-responsive img-rounded img"></img>
+                            </div>
+                        </div>
+                        <nav id="navbar" class="navbar navbar-default navbar-static-top menu-nav ">
+                            <div class="container-fluid">
+                                <ul class="nav navbar-nav menu-nav">
+                                    <li><a href="/easy-planning-web/faces/index.xhtml"><span class="glyphicon glyphicon-home" aria-hidden="true" ></span> Inicio</a></li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Profesores<span class="caret"></span></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                          <li><a href="/easy-planning-web/faces/profesor/List.xhtml">Ver Profesores</a></li>
+                                          <li class="divider"></li>
+                                          <li><a href="/easy-planning-web/faces/profesor/encuesta.xhtml">Encuesta Profesor</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="dropdown">
+                                        <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Asignaturas<span class="caret"></span></a>
+                                        <ul class="dropdown-menu" role="menu">
+                                          <li><a href="/easy-planning-web/faces/asignaturas/listar_asignaturas.xhtml">Ver Asignaturas</a></li>
+                                          <li class="divider"></li>
+                                          <li><a href="/easy-planning-web/faces/plan_de_estudios/cargar_plan_de_estudios.xhtml">Agregar Plan de Estudios</a></li>
+                                          <li class="divider"></li>
+                                          <li><a href="/easy-planning-web/faces/plan_de_estudios/inicializar_secciones.xhtml">Inicializar secciones</a></li>
+                                        </ul>
+                                    </li>
+                                    <li><a href="/easy-planning-web/faces/asignacion_horaria/asignacion_horaria.xhtml">Asignación horaria</a></li>
+                                </ul>
+                            </div>
+                        </nav>
+                    </div>
                     <div class="row">
-                        <div class="col-md-2">
-                            <img src="#{resource['images/easyplanning_logo.png']}" class="img-responsive img-rounded img"/>
-                        </div>
-                        <div class="col-md-7">
-                            <br />
-                            <br />
-                            <br />
-                            <h1 class="text-left"><strong>Easy Planning</strong></h1>
-                        </div>
-                        <div class="col-md-2 col-md-offset-1">
-                            <img src="#{resource['images/UDS CNRJ.png']}" class="img-responsive img-rounded img"></img>
-                        </div>
+                        <ui:insert name="body"/>
                     </div>
+                    <!--div class="container-fluid"-->
+                        
+                    <!--/div-->
+                
                 </div>
-                <nav id="navbar" class="navbar navbar-default navbar-static-top menu-nav ">
-                    <div class="container-fluid">
-                        <ul class="nav navbar-nav menu-nav">
-                            <li><a href="/easy-planning-web/faces/index.xhtml"><span class="glyphicon glyphicon-home" aria-hidden="true" ></span> Inicio</a></li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Profesores<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                  <li><a href="/easy-planning-web/faces/profesor/List.xhtml">Ver Profesores</a></li>
-                                  <li class="divider"></li>
-                                  <li><a href="/easy-planning-web/faces/profesor/encuesta.xhtml">Encuesta Profesor</a></li>
-                                </ul>
-                            </li>
-                            <li class="dropdown">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Asignaturas<span class="caret"></span></a>
-                                <ul class="dropdown-menu" role="menu">
-                                  <li><a href="/easy-planning-web/faces/asignaturas/listar_asignaturas.xhtml">Ver Asignaturas</a></li>
-                                  <li class="divider"></li>
-                                  <li><a href="/easy-planning-web/faces/plan_de_estudios/cargar_plan_de_estudios.xhtml">Agregar Plan de Estudios</a></li>
-                                  <li class="divider"></li>
-                                  <li><a href="/easy-planning-web/faces/plan_de_estudios/inicializar_secciones.xhtml">Inicializar secciones</a></li>
-                                </ul>
-                            </li>
-                            <li><a href="/easy-planning-web/faces/asignacion_horaria/asignacion_horaria.xhtml">Asignación horaria</a></li>
-                        </ul>
+                <!--footer class="footer col-md-10 col-md-offset-1" id="footer">
+                    <div class="container">
+                        <p>Universidad de Santiago de Chile. Avenida Ecuador #3659. Estación Central, Santiago de Chile.</p>
+                        <p>Teléfono (562) 2 718 09 00 - Correo: contacto@informatica.usach.cl</p>
                     </div>
-                </nav>
-                <ui:insert name="body"/>
+                </footer-->
             </p:layoutUnit>
-
+                
+                
         </p:layout>   
     </h:body>
 

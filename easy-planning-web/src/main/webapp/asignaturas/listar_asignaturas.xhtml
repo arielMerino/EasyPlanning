@@ -35,20 +35,23 @@
                         rowKey="#{item.id}"
                         rows="50"
                         rowsPerPageTemplate="50,60,70,80"
+                        widgetVar="asignaturasTable"
+                        filteredValue="#{asignaturaController.asignaturasFiltradas}"
+                        emptyMessage="No se han encontrado asignaturas según los parámetros indicados"
                         >
-                        <p:column>
+                        <p:column filterBy="#{item.codigo}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="Código"/>
                             </f:facet>
                             <h:outputText value="#{item.codigo}"/>
                         </p:column>
-                        <p:column>
+                        <p:column filterBy="#{item.nombre}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="Asignatura"/>
                             </f:facet>
                             <h:outputText value="#{item.nombre}"/>
                         </p:column>
-                        <p:column>
+                        <p:column filterBy="#{item.nivel}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="Nivel"/>
                             </f:facet>

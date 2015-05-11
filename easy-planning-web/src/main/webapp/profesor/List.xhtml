@@ -20,30 +20,32 @@
                     <p:dataTable id="datalist" value="#{profesorController.items}" var="item"
                                  selectionMode="single" selection="#{profesorController.selected}"
                                  rowKey="#{item.id}"
-                                 class="table table-striped table-hover">
+                                 widgetVar="profesoresTable"
+                                 filteredValue="#{profesorController.profesoresFiltrados}"
+                                 emptyMessage="No se han encontrado asignaturas según los parámetros indicados">
 
                         <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton emailButton"/>
                         <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton emailButton"/>
 
-                        <p:column>
+                        <p:column filterBy="#{item.nombre}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListProfesorTitle_nombre}"/>                                
                             </f:facet>
                             <h:outputText value="#{item.nombre}"/>
                         </p:column>
-                        <p:column>
+                        <p:column filterBy="#{item.apellido}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListProfesorTitle_apellido}"/>
                             </f:facet>
                             <h:outputText value="#{item.apellido}"/>
                         </p:column>
-                        <p:column>
+                        <p:column filterBy="#{item.mail}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListProfesorTitle_mail}"/>
                             </f:facet>
                             <h:outputText value="#{item.mail}"/>
                         </p:column>
-                        <p:column>
+                        <p:column filterBy="#{item.rut}" filterMatchMode="contains">
                             <f:facet name="header">
                                 <h:outputText value="#{bundle.ListProfesorTitle_rut}"/>
                             </f:facet>

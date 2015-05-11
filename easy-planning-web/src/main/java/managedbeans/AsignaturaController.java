@@ -33,11 +33,20 @@ public class AsignaturaController implements Serializable {
     private Asignatura selected;
     private String planEstudios = "todos los planes";
     private int nivel = 0;
+    private List<Asignatura> asignaturasFiltradas;
     
     /**
      * Creates a new instance of AsignaturaController
      */
     public AsignaturaController() {
+    }
+
+    public List<Asignatura> getAsignaturasFiltradas() {
+        return asignaturasFiltradas;
+    }
+
+    public void setAsignaturasFiltradas(List<Asignatura> asignaturasFiltradas) {
+        this.asignaturasFiltradas = asignaturasFiltradas;
     }
 
     public SeccionFacadeLocal getSeccionFacade() {
