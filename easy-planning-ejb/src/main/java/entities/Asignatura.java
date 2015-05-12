@@ -7,6 +7,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -18,7 +19,13 @@ import javax.persistence.OneToMany;
 @Entity
 @NamedQueries({
     @NamedQuery(name="Asignatura.findByCodigoAndPlan", 
-            query="SELECT a FROM Asignatura a WHERE a.codigo = :codigo AND a.planEstudio = :plan")
+            query="SELECT a FROM Asignatura a WHERE a.codigo = :codigo AND a.planEstudio = :plan"),
+    @NamedQuery (name="Asignatura.findByCarreraAndPlan",
+            query="SELECT a FROM Asignatura a WHERE a.carrera.nombre = :carrera AND a.planEstudio = :plan"),
+    @NamedQuery (name="Asignatura.findByNivelAndCarreraAndPlan",
+            query="SELECT a FROM Asignatura a WHERE a.nivel = :nivel AND a.carrera.nombre = :carrera AND a.planEstudio = :plan"),
+    @NamedQuery (name="Asignatura.findByCarreraAndCodigoAndPlan",
+            query="SELECT a FROM Asignatura a WHERE a.carrera.codigo = :carrera AND a.planEstudio = :plan AND a.codigo = :codigo")
 })
 public class Asignatura implements Serializable {
     @OneToMany(mappedBy = "asignatura")
@@ -27,6 +34,8 @@ public class Asignatura implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    @ManyToOne
+    private Carrera carrera;
     private String codigo;
     private String nombre;
     private int nivel;
@@ -34,6 +43,7 @@ public class Asignatura implements Serializable {
     private int ejercicios;
     private int laboratorio;
     private String planEstudio;
+    
     
     public Asignatura(){        
     }
@@ -48,6 +58,14 @@ public class Asignatura implements Serializable {
         return profesores;
     }
 
+    public Carrera getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(Carrera carrera) {
+        this.carrera = carrera;
+    }
+    
     public int getTeoria() {
         return teoria;
     }
@@ -146,6 +164,7 @@ public class Asignatura implements Serializable {
         }
         return true;
     }
+
 
     @Override
     public String toString() {

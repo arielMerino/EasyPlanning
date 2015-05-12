@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
@@ -19,6 +21,12 @@ import javax.persistence.OneToMany;
  * @author jano
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Coordinacion.findByAsignaturaAndAñoAndSemestre",
+            query = "SELECT c FROM Coordinacion c WHERE c.asignatura = :asg AND c.año = :año AND c.semestre = :sem"),
+    @NamedQuery(name = "Coordinacion.findByCarreraAndPlanAndAñoAndSemestre",
+            query = "SELECT c FROM Coordinacion c WHERE c.asignatura.carrera.codigo = :carrera AND c.asignatura.planEstudio = :plan AND c.año = :año AND c.semestre = :semestre")
+})
 public class Coordinacion implements Serializable {
     @OneToMany(mappedBy = "coordinacion")
     private List<Seccion> secciones;

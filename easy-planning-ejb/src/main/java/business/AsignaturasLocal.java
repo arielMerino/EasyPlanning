@@ -6,6 +6,7 @@
 package business;
 
 import entities.Asignatura;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -16,6 +17,10 @@ import javax.ejb.Local;
 public interface AsignaturasLocal {
     
     public Asignatura findByCodigoAndPlan(String codigo, String plan);
-
     
+    public List<Asignatura> findByCarreraAndPlan(String carrera, String plan);
+    
+    public List<Asignatura> findByNivelAndCarreraAndPlan(int nivel, String carrera, String plan);
+    
+    public Asignatura findByCarreraAndCodigoAndPlan(int carrera, String codigo, String plan);
 }

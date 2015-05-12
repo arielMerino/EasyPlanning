@@ -7,56 +7,61 @@ package entities;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
  *
- * @author jano
+ * @author ariel-linux
  */
 @Entity
-public class Seccion implements Serializable {
-    @OneToMany(mappedBy = "seccion")
-    private List<Horario> horarios;
+@NamedQueries({
+    @NamedQuery(name="Carrera.findByNombre",query="SELECT a FROM Carrera a WHERE a.nombre = :nombre"),
+    @NamedQuery(name="Carrera.findByCodigo",query="SELECT c FROM Carrera c WHERE c.codigo = :codigo")
+})
+public class Carrera implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private String codigo;
     
-    @ManyToOne
-    private Coordinacion coordinacion;
+    @OneToMany(mappedBy = "carrera")
+    private List<Asignatura> asignaturas;
+    @Column(unique = true)
+    private String nombre;
+    @Column(unique = true)
+    private int codigo;
 
-    public List<Horario> getHorarios() {
-        return horarios;
+    public List<Asignatura> getAsignaturas() {
+        return asignaturas;
     }
 
-    public void setHorarios(List<Horario> horarios) {
-        this.horarios = horarios;
+    public void setAsignaturas(List<Asignatura> asignaturas) {
+        this.asignaturas = asignaturas;
     }
 
-    public Coordinacion getCoordinacion() {
-        return coordinacion;
+    public String getNombre() {
+        return nombre;
     }
 
-    public void setCoordinacion(Coordinacion coordinacion) {
-        this.coordinacion = coordinacion;
+    public void setNombre(String nombre) {
+        this.nombre = nombre;
     }
 
-    public String getCodigo() {
+    public int getCodigo() {
         return codigo;
     }
 
-    public void setCodigo(String codigo) {
+    public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
-
+    
     public Long getId() {
         return id;
     }
@@ -75,10 +80,10 @@ public class Seccion implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Seccion)) {
+        if (!(object instanceof Carrera)) {
             return false;
         }
-        Seccion other = (Seccion) object;
+        Carrera other = (Carrera) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -87,7 +92,7 @@ public class Seccion implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.seccion[ id=" + id + " ]";
+        return "entities.Carrera[ id=" + id + " ]";
     }
     
 }
