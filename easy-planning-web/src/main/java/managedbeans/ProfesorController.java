@@ -17,6 +17,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.el.ELException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -193,6 +194,16 @@ public class ProfesorController implements Serializable {
             asignaturas.add(asig);
         }
         return asignaturas;
+    }
+    
+    public List<Asignatura> getAsignaturasProfesor(Long profesorid){
+        try{
+            return getFacade().find(profesorid).getAsignaturas();
+        }
+        catch(EJBException | ELException e){
+            return new ArrayList();
+        }
+        
     }
     
     public String comentarioEncuestaProfesor(Long profesorid){

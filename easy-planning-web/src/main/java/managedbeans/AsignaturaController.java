@@ -15,6 +15,8 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.ejb.EJBException;
+import javax.el.ELException;
 import sessionbeans.AsignaturaFacadeLocal;
 import sessionbeans.SeccionFacadeLocal;
 
@@ -103,8 +105,8 @@ public class AsignaturaController implements Serializable {
     
     
     public List<Asignatura> getListaAsignaturas(){
-        List<Asignatura> asg = getFacade().findAll();
-        return asg;
+        return getFacade().findAll();
+        
     }
     
     /*
@@ -130,6 +132,15 @@ public class AsignaturaController implements Serializable {
             profesores.add(prof);
         }
         return profesores;
+    }
+    
+    public List<Profesor> getProfesoresAsignatura2(long idAsignatura){
+        try{
+            return getFacade().find(idAsignatura).getProfesores();
+        }
+        catch(EJBException | ELException e){
+            return new ArrayList();
+        }
     }
     
     /*

@@ -79,12 +79,21 @@ html .ui-layout-container{
     color: #fff;
     text-shadow: none;
 }
+.ui-state-highlight a, .ui-widget-content .ui-state-highlight a, .ui-widget-header .ui-state-highlight a {
+    color: #fff;
+}
 .ui-datatable-odd {
     background: none repeat scroll 0 0 #eee;
 }
 .ui-state-hover, .ui-widget-content .ui-state-hover{
     background: #ff7319 -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0.6)), to(rgba(255,255,255,0))) !important;
     color: #fff;
+}
+.ui-state-hover a{
+    color: #fff !important;
+}
+.ui-state-hover a:hover{
+    text-decoration: underline;
 }
 .img{
     height: 10em;

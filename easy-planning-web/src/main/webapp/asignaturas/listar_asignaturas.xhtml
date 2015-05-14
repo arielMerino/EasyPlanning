@@ -18,17 +18,18 @@
                 <p:selectOneMenu id="plan" value="#{asignaturaController.planEstudios}" >
                     <f:selectItem itemValue="todos los planes" itemLabel="todos"/>
                     <f:selectItems value="#{asignaturaController.planesDeEstudio}" />
-                    <p:ajax process="@this" update="nivel, tablaAsignaturas, tituloPanel" />
+                    <p:ajax process="@this" update="tablaAsignaturas, tituloPanel" />
                 </p:selectOneMenu>
                 <br/>
-                <p>Seleccionar Nivel</p>
-                <p:selectOneMenu id="nivel" value="#{asignaturaController.nivel}">
+                <!--p>Seleccionar Nivel</p>
+                <p:selectOneMenu id="nivel" value="#//{asignaturaController.nivel}">
                     <f:selectItem itemValue="0" itemLabel="todos"/>
-                    <f:selectItems value="#{asignaturaController.getMaxNivel()}"/>
-                    <p:ajax process="@this" update="tablaAsignaturas, nivel" />
-                </p:selectOneMenu>
+                    <f:selectItems value="#//{asignaturaController.getMaxNivel()}"/>
+                    <p:ajax process="@this" update="tablaAsignaturas" />
+                </p:selectOneMenu-->
                 <p:panel id="tituloPanel" header="Plan: #{asignaturaController.planEstudios}">
-                    <p:dataTable id="tablaAsignaturas" value="#{asignaturaController.getAsignaturasByPlan(asignaturaController.planEstudios,asignaturaController.nivel)}" var="item"
+                    <p:dataTable id="tablaAsignaturas" value="#{asignaturaController.getAsignaturasByPlan(asignaturaController.planEstudios,asignaturaController.nivel)}" 
+                        var="item"
                         selectionMode="single" selection="#{asignaturaController.selected}"
                         sortBy="#{item.nivel}"        
                         paginator="true"
