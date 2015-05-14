@@ -5,6 +5,9 @@
  */
 package managedbeans;
 
+import business.AsignaturasLocal;
+import business.CarrerasLocal;
+import business.CoordinacionesLocal;
 import entities.Asignatura;
 import entities.Coordinacion;
 import entities.Seccion;
@@ -15,6 +18,8 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import sessionbeans.AsignaturaFacadeLocal;
+import sessionbeans.CarreraFacade;
+import sessionbeans.CarreraFacadeLocal;
 import sessionbeans.CoordinacionFacadeLocal;
 import sessionbeans.SeccionFacadeLocal;
 
@@ -31,12 +36,53 @@ public class SeccionController implements Serializable {
     private CoordinacionFacadeLocal coordinacionFacade;
     @EJB
     private SeccionFacadeLocal seccionFacade;
+    @EJB
+    private AsignaturasLocal asignaturaBusiness;
+    @EJB
+    private CoordinacionesLocal coordinacionBusiness;
+    @EJB
+    private CarreraFacadeLocal carreraFacade;
+    @EJB
+    private CarrerasLocal carreraBusiness;
     
+    int carrera;
     String planEstudio;
     String mensaje;
     int Semestre;
     int ano;
 
+    public int getCarrera() {
+        return carrera;
+    }
+
+    public CarrerasLocal getCarreraBusiness() {
+        return carreraBusiness;
+    }
+
+    public void setCarreraBusiness(CarrerasLocal carreraBusiness) {
+        this.carreraBusiness = carreraBusiness;
+    }
+
+    public void setCarrera(int carrera) {
+        this.carrera = carrera;
+    }
+
+    public CarreraFacadeLocal getCarreraFacade() {
+        return carreraFacade;
+    }
+
+    public void setCarreraFacade(CarreraFacadeLocal carreraFacade) {
+        this.carreraFacade = carreraFacade;
+    }
+    
+    public AsignaturasLocal getAsignaturaBusiness() {
+        return asignaturaBusiness;
+    }
+
+    public void setAsignaturaBusiness(AsignaturasLocal asignaturaBusiness) {
+        this.asignaturaBusiness = asignaturaBusiness;
+    }
+    
     public String getMensaje() {
         return mensaje;
     }
@@ -48,6 +94,14 @@ public class SeccionController implements Serializable {
     
     public String getPlanEstudio() {
         return planEstudio;
+    }
+
+    public CoordinacionesLocal getCoordinacionBusiness() {
+        return coordinacionBusiness;
+    }
+
+    public void setCoordinacionBusiness(CoordinacionesLocal coordinacionBusiness) {
+        this.coordinacionBusiness = coordinacionBusiness;
     }
 
     public void setPlanEstudio(String planEstudio) {
@@ -84,13 +138,15 @@ public class SeccionController implements Serializable {
         return seccionFacade;
     }
     
-    public void generarSeccionesBasicas(String plan, int semestre, int ano){
-        List<Asignatura> asignaturas = asignaturaFacade.findAll();
-        ArrayList<Asignatura> asignaturasPlan = new ArrayList<>();
+    public void generarSeccionesBasicas(int carrera, String plan, int semestre, int ano){
+        List<Asignatura> asignaturas;
         try {
+            asignaturas = asignaturaBusiness.findByCarreraAndPlan(carreraBusiness.findByCodigo(carrera).getNombre(), plan);
+            boolean seguir = true;
             for(Asignatura asg : asignaturas){
-                if(asg.getPlanEstudio().equals(plan)){
-                    asignaturasPlan.add(asg);
+                //para que no hayan 2 coordinaciones para el mismo ramo en el mismo semestre
+                
+                if(coordinacionBusiness.findByAsignaturaAndAñoAndSemestre(asg, ano, semestre) == null){
                     Coordinacion cord = new Coordinacion();
                     cord.setAsignatura(asg);
                     cord.setAño(ano);
@@ -98,15 +154,20 @@ public class SeccionController implements Serializable {
                     cord.setCantAlumnosEstimado(0);
                     cord.setCantAlumnosReal(0);
                     coordinacionFacade.create(cord);
+                } 
+                else{
+                    seguir = false;
+                    break;
                 }
             }
-            for(Asignatura asg : asignaturasPlan){
-                int t = asg.getTeoria();
-                int e = asg.getEjercicios();
-                int l = asg.getLaboratorio();
-                List<Coordinacion> coordinaciones = asg.getCoordinaciones();
-                for (Coordinacion cord : coordinaciones) {
-                    if(cord.getAño()==ano && cord.getSemestre()==semestre){
+            if (seguir == true){
+                for(Asignatura asg : asignaturas){
+                    Coordinacion cord = coordinacionBusiness.findByAsignaturaAndAñoAndSemestre(asg, ano, semestre);
+                    if (cord != null){
+                        int t = asg.getTeoria();
+                        int e = asg.getEjercicios();
+                        int l = asg.getLaboratorio();
+
                         if(t>0){
                             Seccion teo = new Seccion();
                             teo.setCodigo("A1");
@@ -127,9 +188,11 @@ public class SeccionController implements Serializable {
                         }
                     }
                 }
+                mensaje = "Secciones creadas con éxito";
             }
-            System.out.println("creación de secciones completada");
-            mensaje = "Secciones creadas con éxito";
+            else{
+                mensaje = "No se han creado secciones";
+            }
         }catch (Exception e) {
             System.out.println("creación de secciones terminada con errores");
         }

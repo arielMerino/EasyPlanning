@@ -72,11 +72,16 @@ public class EmailController implements Serializable {
         Transport transport = session.getTransport("smtp");
         transport.connect("smtp.gmail.com", origen, pass);
         transport.sendMessage(message, message.getAllRecipients());
-
+        
+        JsfUtil.addSuccessMessage("El mensaje se ha enviado");
         } catch (AddressException e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
+            JsfUtil.addSuccessMessage("AddressException");
         } catch (MessagingException e) {
             e.printStackTrace();
+            System.out.println(e.getMessage());
+            JsfUtil.addErrorMessage("Error en la red");
         }
     }
     
@@ -92,8 +97,6 @@ public class EmailController implements Serializable {
             String contenido = "Profesor" + " " + profesor + " " + "conteste la encuesta de disponibilidad horaria, por favor. http://localhost:8080/easy-planning-web/faces/profesor/encuesta.xhtml";
             
             enviarEmail(origen, nombre, pass, emailProfesor, asunto, contenido);
-            JsfUtil.addSuccessMessage("El mensaje se ha enviado.");
-            
         }
     }
 }

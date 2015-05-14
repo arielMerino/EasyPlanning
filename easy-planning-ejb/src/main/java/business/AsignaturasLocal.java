@@ -17,6 +17,14 @@ import javax.ejb.Local;
 public interface AsignaturasLocal {
     
     public Asignatura findByCodigoAndPlan(String codigo, String plan);
+<<<<<<< HEAD
     public List<Asignatura> getAllProfesorAsignatura();
+=======
+>>>>>>> a85907af41db33985c452e485f431bafb93c7bfa
     
+    public List<Asignatura> findByCarreraAndPlan(String carrera, String plan);
+    
+    public List<Asignatura> findByNivelAndCarreraAndPlan(int nivel, String carrera, String plan);
+    
+    public Asignatura findByCarreraAndCodigoAndPlan(int carrera, String codigo, String plan);
 }

@@ -6,7 +6,9 @@
 package managedbeans;
 
 import business.AsignaturasLocal;
+import business.CarrerasLocal;
 import entities.Asignatura;
+import entities.Carrera;
 import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -33,6 +35,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.NotOLE2FileException;
 import org.apache.poi.ss.usermodel.Cell;
 import sessionbeans.AsignaturaFacadeLocal;
+import sessionbeans.CarreraFacadeLocal;
 
 /**
  *
@@ -49,6 +52,13 @@ public class CargarPlanDeEstudios implements Serializable {
     @EJB
     private AsignaturasLocal asignaturas;
     
+    @EJB
+    private CarreraFacadeLocal carreraFacade;
+    
+    @EJB
+    private CarrerasLocal carreraBusiness;
+    
+    private int carreraSelected;
     private String ruta;
     private HSSFWorkbook workbook;
     private String nombrePlan;
@@ -68,6 +78,22 @@ public class CargarPlanDeEstudios implements Serializable {
         return cargados;
     }
 
+    public int getCarreraSelected() {
+        return carreraSelected;
+    }
+
+    public void setCarreraSelected(int carreraSelected) {
+        this.carreraSelected = carreraSelected;
+    }
+    
+    public CarreraFacadeLocal getCarreraFacade() {
+        return carreraFacade;
+    }
+
+    public void setCarreraFacade(CarreraFacadeLocal carreraFacade) {
+        this.carreraFacade = carreraFacade;
+    }
+    
     public void setCargados(boolean cargados) {
         this.cargados = cargados;
     }
@@ -96,12 +122,23 @@ public class CargarPlanDeEstudios implements Serializable {
     public void setRuta(String Ruta) {
         this.ruta = Ruta;
     }
+
+    public CarrerasLocal getCarreraBusiness() {
+        return carreraBusiness;
+    }
+
+    public void setCarreraBusiness(CarrerasLocal carreraBusiness) {
+        this.carreraBusiness = carreraBusiness;
+    }
+    
+    
     
     public void cargarArchivo() throws FileNotFoundException, IOException{
         List sheetData = new ArrayList();
         
         String[] aux2 = ruta.split("=", 5);
         boolean flag = false;
+        
         
         try{
             FileInputStream file = new FileInputStream(aux2[2].split(", size")[0]);
@@ -139,6 +176,7 @@ public class CargarPlanDeEstudios implements Serializable {
                     asignatura.setNivel((int) cell.getNumericCellValue());
                     asignatura.setPlanEstudio(nombrePlan);
                     cell = (Cell) list.get(6);
+                    asignatura.setCarrera(carreraBusiness.findByCodigo(carreraSelected));
                 }
                 catch(IllegalStateException ex5){
                     aux = "El archivo no contiene los campos requeridos o estos no se encuentran en el orden correcto. Los campos requeridos son código asignatura, nombre asignatura, teoría, ejercicio, laboratorio, nivel y requisitos, en ese mismo orden.";
@@ -156,7 +194,10 @@ public class CargarPlanDeEstudios implements Serializable {
                                 String[] prerequisitos = cell.getStringCellValue().split(", "); 
                                 List lista = new ArrayList();
                                 for (int i=0; i<prerequisitos.length; i++){
-                                    lista.add(getBusiness().findByCodigoAndPlan(prerequisitos[i], nombrePlan));
+                                    Asignatura aux = getBusiness().findByCarreraAndCodigoAndPlan(carreraSelected,prerequisitos[i], nombrePlan);
+                                    if(aux != null){
+                                        lista.add(aux);
+                                    }
                                 }
                                 asignatura.setPrerequisitos(lista);
                             }
@@ -165,7 +206,11 @@ public class CargarPlanDeEstudios implements Serializable {
                         case Cell.CELL_TYPE_NUMERIC:{
                             List lista = new ArrayList();
                             asignatura.setPrerequisitos(lista);
-                            lista.add(getBusiness().findByCodigoAndPlan((int) cell.getNumericCellValue() +"", nombrePlan));
+                            
+                            Asignatura aux = getBusiness().findByCarreraAndCodigoAndPlan(carreraSelected,(int) cell.getNumericCellValue() +"", nombrePlan);
+                            if(aux != null){
+                                lista.add(aux);
+                            }
                         }
                     }
                 }
@@ -206,20 +251,33 @@ public class CargarPlanDeEstudios implements Serializable {
                         else{
                             List lista = new ArrayList();
                             if(elementos.length == 8){
-                                lista.add(getBusiness().findByCodigoAndPlan(elementos[6], nombrePlan));
+                                Asignatura aux = getBusiness().findByCarreraAndCodigoAndPlan(carreraSelected,elementos[6], nombrePlan);
+                                if (aux != null)
+                                    lista.add(aux);
                             }
                             else if(elementos.length == 9){
-                                lista.add(getBusiness().findByCodigoAndPlan(elementos[6].substring(1), nombrePlan));
-                                lista.add(getBusiness().findByCodigoAndPlan(elementos[7].substring(1, elementos[7].length()-1), nombrePlan));
+                                Asignatura aux = getBusiness().findByCarreraAndCodigoAndPlan(carreraSelected,elementos[6].substring(1), nombrePlan);
+                                
+                                if(aux != null)
+                                    lista.add(aux);
+                                Asignatura aux3 = getBusiness().findByCarreraAndCodigoAndPlan(carreraSelected,elementos[7].substring(1, elementos[7].length()-1), nombrePlan);
+                                if(aux3 != null)
+                                    lista.add(aux3);
                             }
                             else if(elementos.length > 9){
-                                lista.add(getBusiness().findByCodigoAndPlan(elementos[6].substring(1), nombrePlan));
+                                Asignatura aux = getBusiness().findByCarreraAndCodigoAndPlan(carreraSelected,elementos[6].substring(1), nombrePlan);
+                                if (aux != null)
+                                    lista.add(aux);
                                 int i = 7;
                                 while(i<elementos.length-2){
-                                    lista.add(getBusiness().findByCodigoAndPlan(elementos[i].substring(1), nombrePlan));
+                                    Asignatura aux3 = getBusiness().findByCarreraAndCodigoAndPlan(carreraSelected,elementos[i].substring(1), nombrePlan);
+                                    if (aux3 != null)
+                                        lista.add(aux3);
                                     i++;
                                 }
-                                lista.add(getBusiness().findByCodigoAndPlan(elementos[i].substring(1, elementos[i].length()-1), nombrePlan));                            
+                                Asignatura aux3 = getBusiness().findByCarreraAndCodigoAndPlan(carreraSelected,elementos[i].substring(1, elementos[i].length()-1), nombrePlan);
+                                if (aux3 != null)
+                                    lista.add(aux3);                            
                             }
 
                             asignatura.setPrerequisitos(lista);
