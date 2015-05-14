@@ -90,6 +90,37 @@ html .ui-layout-container{
     height: 10em;
     width: 10em;
 }
+
+#horarioAsignacion{
+    margin-left: 1%;
+    padding-left: 1%;
+}
+
+.headerBloque{
+    background-color: lightgrey;
+    height: 45px;
+    margin: 0;
+    margin-right: 1px;
+    text-align: center;
+}
+.horarioBloque{
+    background-color: #ff7319;
+    height: 60px;
+    margin-right: 0;
+    margin-top: 0;
+    margin-bottom: 0;
+    text-align: center;
+    vertical-align: central;
+}
+.bloque{
+    background-color: whitesmoke;
+    height: 60px;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+    margin-bottom: 0;
+    white-space: normal;
+}
 #footer{
     background-color: #0052cc;
     color: #fff;

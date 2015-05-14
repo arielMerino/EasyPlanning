@@ -66,4 +66,28 @@ public class Asignaturas implements AsignaturasLocal {
         query.setParameter("plan", plan);
         return (List<Asignatura>) query.getResultList();
     }
+    
+    @Override
+    public List<String> findPlanesByCodigoCarrera(int codigo){
+        Query query = em.createNamedQuery("Asignatura.findPlanesByCarrera").setParameter("carrera", codigo);
+        try{
+            return (List<String>) query.getResultList();
+        }catch(NoResultException e){
+            return new ArrayList<>();
+        }
+    }
+    
+    @Override
+    public List<Integer> findNivelesByCodigoCarreraAndPlan(int codigoCarrera, String plan){
+        Query query = em.createNamedQuery("Asignatura.findNivelesByCodigoCarreraAndPlan").setParameter("codigoCarrera", codigoCarrera);
+        query.setParameter("plan", plan);
+        try{
+            List<Integer> salida = (List<Integer>) query.getResultList();
+            salida.sort(null);
+            return salida;
+            
+        }catch(NoResultException e){
+            return new ArrayList<>();
+        }
+    }
 }

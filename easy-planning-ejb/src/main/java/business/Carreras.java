@@ -34,7 +34,11 @@ public class Carreras implements CarrerasLocal {
     @Override
     public Carrera findByCodigo(int codigo){
         Query query = em.createNamedQuery("Carrera.findByCodigo").setParameter("codigo", codigo);
-        return (entities.Carrera) query.getSingleResult();
+        try{
+            return (entities.Carrera) query.getSingleResult();
+        }catch(NoResultException e){
+            return null;
+        }
     }
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

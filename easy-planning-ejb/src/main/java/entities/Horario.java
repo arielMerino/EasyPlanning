@@ -6,19 +6,23 @@
 package entities;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author jano
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Horario.findBybloqueCarreraPlanNivelAñoYSemestre",
+            query = "SELECT h FROM Horario h WHERE h.bloque = :bloque AND h.seccion.coordinacion.asignatura.carrera.codigo = :codigo AND h.seccion.coordinacion.asignatura.planEstudio = :plan AND h.seccion.coordinacion.asignatura.nivel = :nivel AND h.seccion.coordinacion.año = :año AND h.seccion.coordinacion.semestre = :semestre")
+})
 public class Horario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id

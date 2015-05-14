@@ -23,4 +23,8 @@ public interface AsignaturasLocal {
     public List<Asignatura> findByNivelAndCarreraAndPlan(int nivel, String carrera, String plan);
     
     public Asignatura findByCarreraAndCodigoAndPlan(int carrera, String codigo, String plan);
+    
+    public List<String> findPlanesByCodigoCarrera(int codigo);
+    
+    public List<Integer> findNivelesByCodigoCarreraAndPlan(int codigoCarrera, String plan);
 }

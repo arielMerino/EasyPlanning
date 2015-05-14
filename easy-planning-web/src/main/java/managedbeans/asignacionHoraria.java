@@ -5,9 +5,12 @@
  */
 package managedbeans;
 
-import com.sun.org.apache.bcel.internal.generic.AALOAD;
+import business.AsignaturasLocal;
+import business.CarrerasLocal;
+import business.CoordinacionesLocal;
+import business.HorariosLocal;
+import business.SeccionesLocal;
 import entities.Asignatura;
-import entities.Checklist;
 import entities.Coordinacion;
 import entities.Horario;
 import entities.Profesor;
@@ -16,10 +19,11 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Calendar;
 import java.util.List;
 import javax.ejb.EJB;
 import sessionbeans.AsignaturaFacadeLocal;
+import sessionbeans.CarreraFacadeLocal;
 import sessionbeans.ChecklistFacadeLocal;
 import sessionbeans.CoordinacionFacadeLocal;
 import sessionbeans.HorarioFacadeLocal;
@@ -46,10 +50,23 @@ public class asignacionHoraria implements Serializable {
     private HorarioFacadeLocal horarioFacade;
     @EJB
     private ChecklistFacadeLocal checklistFacade;
-    
+    @EJB
+    private AsignaturasLocal asignaturasBusiness;
+    @EJB
+    private CarrerasLocal carrerasBusiness;
+    @EJB
+    private CarreraFacadeLocal carreraFacade;
+    @EJB
+    private HorariosLocal horariosBusiness;
+    @EJB
+    private SeccionesLocal seccionesBusiness;
+    @EJB
+    private CoordinacionesLocal coordinacionesBusiness; 
+           
+    private int carreraSelected = 0;
     private String planEstudioSelected = "none";
     private int nivelSelected = 0;
-    private Asignatura asignaturaSelected = null;
+    private long asignaturaSelected;
     private Coordinacion coordinacionSelected = null;
     private Seccion seccionSelected = new Seccion();
     private Long seccionId = 0L;
@@ -62,18 +79,72 @@ public class asignacionHoraria implements Serializable {
     private ArrayList<Long> seccionesIds = new ArrayList<>();
     private ArrayList<Horario> disponibilidadProfesor = new ArrayList<>();
     private String [] horariosSeleccionados;
-    private int lastAño = 0;
-    private int lastSemestre = 0;
+    private int añoSelected = Calendar.getInstance().get(Calendar.YEAR);
+    private int semestreSelected = 1;
 
+    public int getCarreraSelected() {
+        return carreraSelected;
+    }
+
+    public void setCarreraSelected(int carreraSelected) {
+        this.carreraSelected = carreraSelected;
+    }
+
+    public HorariosLocal getHorariosBusiness() {
+        return horariosBusiness;
+    }
+
+    public void setHorariosBusiness(HorariosLocal horariosBusiness) {
+        this.horariosBusiness = horariosBusiness;
+    }
+    
     public Long getSeccionId() {
         return seccionId;
     }
 
+    public CarreraFacadeLocal getCarreraFacade() {
+        return carreraFacade;
+    }
+
+    public CoordinacionesLocal getCoordinacionesBusiness() {
+        return coordinacionesBusiness;
+    }
+
+    public void setCoordinacionesBusiness(CoordinacionesLocal coordinacionesBusiness) {
+        this.coordinacionesBusiness = coordinacionesBusiness;
+    }
+
+    public SeccionesLocal getSeccionesBusiness() {
+        return seccionesBusiness;
+    }
+
+    public void setSeccionesBusiness(SeccionesLocal seccionesBusiness) {
+        this.seccionesBusiness = seccionesBusiness;
+    }
+
+    public void setCarreraFacade(CarreraFacadeLocal carreraFacade) {
+        this.carreraFacade = carreraFacade;
+    }
+    
     public void setSeccionId(Long seccionId) {
         this.seccionId = seccionId;
     }
-    
-    
+
+    public AsignaturasLocal getAsignaturasBusiness() {
+        return asignaturasBusiness;
+    }
+
+    public void setAsignaturasBusiness(AsignaturasLocal asignaturasBusiness) {
+        this.asignaturasBusiness = asignaturasBusiness;
+    }
+
+    public CarrerasLocal getCarrerasBusiness() {
+        return carrerasBusiness;
+    }
+
+    public void setCarrerasBusiness(CarrerasLocal carrerasBusiness) {
+        this.carrerasBusiness = carrerasBusiness;
+    }
 
     public CoordinacionFacadeLocal getCoordinacionFacade() {
         return coordinacionFacade;
@@ -143,11 +214,11 @@ public class asignacionHoraria implements Serializable {
         this.nivelSelected = nivelSelected;
     }
 
-    public Asignatura getAsignaturaSelected() {
+    public long getAsignaturaSelected() {
         return asignaturaSelected;
     }
 
-    public void setAsignaturaSelected(Asignatura asignaturaSelected) {
+    public void setAsignaturaSelected(long asignaturaSelected) {
         this.asignaturaSelected = asignaturaSelected;
     }
 
@@ -184,23 +255,14 @@ public class asignacionHoraria implements Serializable {
         return asignaturasPlan;
     }
     
-    public ArrayList<Profesor> getProfesoresAsignatura(){
-        setProfesoresAsignatura();
-        return profesoresAsignatura;
-    }
-    
     public String getNombreCompleto(Profesor profesor){
         return profesor.getNombre()+" "+profesor.getApellido();
     }
     
-    public int getLastAño() {
-        setLastAño();
-        return lastAño;
+    public int getAñoSelected() {
+        return añoSelected;
     }
-    
-    public int getLastAño2(){
-        return lastAño;
-    }
+
 
     public void setAsignaturasPlan(){
         asignaturasPlan = new ArrayList<>();
@@ -225,76 +287,20 @@ public class asignacionHoraria implements Serializable {
          }
     }
     
-    public void setProfesoresAsignatura(){
-        profesoresAsignatura = new ArrayList<>();
-        if(getAsignaturaSelected() != null){
-            List<Checklist> checklists = checklistFacade.findAll();
-            if(checklists.isEmpty()){
-            }else{
-                for (Checklist ch : checklists) {
-                    if(ch.getAsignatura().getId()==getAsignaturaSelected().getId()){
-                        profesoresAsignatura.add(ch.getEncuesta().getProfesor());
-                    }
-                }
-            }
-        }
-    }
-    
-    public boolean setLastAño() {
-        if (getAsignaturasPlan().size() > 0) {
-            lastAño = 0;
-            List<Coordinacion> coordinaciones = getAsignaturasPlan().get(0).getCoordinaciones();
-            for(Coordinacion cord : coordinaciones){
-                if(cord.getAño()>lastAño){
-                    lastAño = cord.getAño();
-                }
-            }
-            return true;
-        }
-        return false;
+    public void setAñoSelected(int añoSelected) {
+        this.añoSelected = añoSelected;
     }
 
-    public int getLastSemestre() {
-        setLastSemestre();
-        return lastSemestre;
+    public int getSemestreSelected() {
+        return this.semestreSelected;
     }
 
-    public boolean setLastSemestre() {
-        if (getAsignaturasPlan().size() > 0){
-            this.lastSemestre = 0;
-            List<Coordinacion> coordinaciones = getAsignaturasPlan().get(0).getCoordinaciones();
-            getLastAño();
-            for (Coordinacion cord : coordinaciones) {
-                if (cord.getAño() == getLastAño2()) {
-                    if(cord.getSemestre() > this.lastSemestre){
-                        this.lastSemestre = cord.getSemestre();
-                    }
-                }
-            }
-            return true;
-        }
-        return false;
+    public void setSemestreSelected(int semestreSelected) {
+        this.semestreSelected = semestreSelected;
     }
     
     public Coordinacion getCoordinacionSelected() {
-        setCoordinacionSelected();
         return coordinacionSelected;
-    }
-
-    public void setCoordinacionSelected() {
-        if(getAsignaturaSelected()!=null){
-            List<Coordinacion> coordinaciones = getAsignaturaSelected().getCoordinaciones();
-            int sem = getLastSemestre();
-            int año = getLastAño2();
-            for (Coordinacion cord : coordinaciones) {
-                if(cord.getAño() == año && cord.getSemestre() == sem){
-                    this.coordinacionSelected = cord;
-                }
-            }
-        }
-        else{
-            this.coordinacionSelected = null;
-        }
     }
     
     public ArrayList<Seccion> getSeccionesAsignatura() {
@@ -310,6 +316,11 @@ public class asignacionHoraria implements Serializable {
             }
         }
     }
+
+    public void setCoordinacionSelected(Coordinacion coordinacionSelected) {
+        this.coordinacionSelected = coordinacionSelected;
+    }
+    
 
     public ArrayList<Long> getSeccionesIds() {
         cargarSeccionesIds();
@@ -417,10 +428,71 @@ public class asignacionHoraria implements Serializable {
             }
         }
     }
+    
+    public List<Integer> añosDisponibles(){
+        Calendar fecha = Calendar.getInstance();
+        List<Integer> años = new ArrayList<>();
+        for (int i = 0; i < 3; i++) {
+            años.add(i + fecha.get(Calendar.YEAR));
+        }
+        return años;
+    }
+    
+    public String getCodigoAsgSeccionByBloque(String bloque){
+        try{
+            Horario result = horariosBusiness.findBybloqueCarreraPlanNivelAñoYSemestre(bloque, carreraSelected, planEstudioSelected, nivelSelected, añoSelected, semestreSelected);
+            if (result == null)
+                return "";
+            return result.getSeccion().getCoordinacion().getAsignatura().getCodigo()+"-"+result.getSeccion().getCodigo();
+        }catch(NullPointerException e){
+            return "";
+        }
+    }
+    
+    public void verificarSecciones(int carrera, String plan, int año, int semestre){
+        List<Seccion> seccionesSemestre = seccionesBusiness.findBySemestreAñoCarreraPlan(carrera, plan, año, semestre);
+        if (seccionesSemestre.size() == 0){
+            List<Asignatura> asignaturasPlan = asignaturasBusiness.findByCarreraAndPlan(carrerasBusiness.findByCodigo(carrera).getNombre(), plan);
+            if (asignaturasPlan.size() > 0){
+                for (Asignatura asg : asignaturasPlan){
+                    Coordinacion c = new Coordinacion();
+                    c.setAsignatura(asg);
+                    c.setAño(año);
+                    c.setSemestre(semestre);
+                    c.setCantAlumnosEstimado(0);
+                    c.setCantAlumnosReal(0);
+                    c.setSecciones(null);
+                    coordinacionFacade.create(c);
+                }
+                for (Asignatura asg : asignaturasPlan){
+                    Coordinacion c = coordinacionesBusiness.findByAsignaturaAndAñoAndSemestre(asg, año, semestre);
+                    if (asg.getTeoria() > 0){
+                        Seccion s = new Seccion();
+                        s.setCoordinacion(c);
+                        s.setCodigo("A1");
+                        seccionFacade.create(s);
+                    }
+                    if (asg.getEjercicios() > 0 ){
+                        Seccion s = new Seccion();
+                        s.setCoordinacion(c);
+                        s.setCodigo("E1");
+                        seccionFacade.create(s);
+                    }
+                    if (asg.getLaboratorio() > 0){
+                        Seccion s= new Seccion();
+                        s.setCoordinacion(c);
+                        s.setCodigo("L1");
+                        seccionFacade.create(s);
+                    }
+                 }
+            }
+        }
+    }
+    
     /**
      * Creates a new instance of asignacionHoraria
      */
-    public asignacionHoraria() {
-    }
     
+    public asignacionHoraria() {
+    }    
 }

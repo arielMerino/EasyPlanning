@@ -21,6 +21,10 @@ import javax.persistence.OneToMany;
  * @author jano
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name = "Seccion.findByCarreraPlanAñoSemestre",
+            query = "SELECT s FROM Seccion s WHERE s.coordinacion.asignatura.carrera.codigo = :codigo AND s.coordinacion.asignatura.planEstudio = :plan AND s.coordinacion.año = :año AND s.coordinacion.semestre = :semestre")
+})
 public class Seccion implements Serializable {
     @OneToMany(mappedBy = "seccion")
     private List<Horario> horarios;

@@ -25,7 +25,11 @@ import javax.persistence.OneToMany;
     @NamedQuery (name="Asignatura.findByNivelAndCarreraAndPlan",
             query="SELECT a FROM Asignatura a WHERE a.nivel = :nivel AND a.carrera.nombre = :carrera AND a.planEstudio = :plan"),
     @NamedQuery (name="Asignatura.findByCarreraAndCodigoAndPlan",
-            query="SELECT a FROM Asignatura a WHERE a.carrera.codigo = :carrera AND a.planEstudio = :plan AND a.codigo = :codigo")
+            query="SELECT a FROM Asignatura a WHERE a.carrera.codigo = :carrera AND a.planEstudio = :plan AND a.codigo = :codigo"),
+    @NamedQuery (name = "Asignatura.findPlanesByCarrera",
+            query="SELECT DISTINCT a.planEstudio FROM Asignatura a WHERE a.carrera.codigo = :carrera"),
+    @NamedQuery (name="Asignatura.findNivelesByCodigoCarreraAndPlan",
+            query="SELECT DISTINCT a.nivel FROM Asignatura a WHERE a.carrera.codigo = :codigoCarrera AND a.planEstudio = :plan")
 })
 public class Asignatura implements Serializable {
     @OneToMany(mappedBy = "asignatura")
