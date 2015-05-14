@@ -11,6 +11,8 @@ import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import javax.persistence.criteria.CriteriaBuilder;
+import javax.persistence.criteria.CriteriaQuery;
 
 /**
  *
@@ -26,6 +28,14 @@ public class Asignaturas implements AsignaturasLocal {
         Query query = em.createNamedQuery("Asignatura.findByCodigoAndPlan").setParameter("codigo", codigo);
         query.setParameter("plan", plan);
         return (entities.Asignatura) query.getSingleResult();
+    }
+
+    @Override
+    public List<Asignatura> getAllProfesorAsignatura() {
+        //CriteriaBuilder cb = em.getCriteriaBuilder();
+        //CriteriaQuery<Asignatura> query = (CriteriaQuery<Asignatura>) query.from(Asignatura.class);
+        Query query = em.createNamedQuery("Asignatura.getAllProfesorAsignatura");
+        return query.getResultList();
     }
 
     
