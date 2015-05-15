@@ -5,17 +5,19 @@
  */
 package sessionbeans;
 
-import entities.ParamSemestreAño;
+import entities.ParamSemestreAno;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
  * @author jano
  */
 @Stateless
-public class ParamSemestreAñoFacade extends AbstractFacade<ParamSemestreAño> implements ParamSemestreAñoFacadeLocal {
+public class ParamSemestreAñoFacade extends AbstractFacade<ParamSemestreAno> implements ParamSemestreAñoFacadeLocal {
     @PersistenceContext(unitName = "cl.G2Pingeso_easy-planning-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -25,7 +27,18 @@ public class ParamSemestreAñoFacade extends AbstractFacade<ParamSemestreAño> i
     }
 
     public ParamSemestreAñoFacade() {
-        super(ParamSemestreAño.class);
+        super(ParamSemestreAno.class);
+    }
+
+    @Override
+    public ParamSemestreAno findById(Long id) {
+        Query query = em.createNamedQuery("ParamSemestreAno.findById").setParameter("id", id);
+        try{
+            return (ParamSemestreAno) query.getSingleResult();
+        }
+        catch(NoResultException e){
+            return null;
+        }
     }
     
 }
