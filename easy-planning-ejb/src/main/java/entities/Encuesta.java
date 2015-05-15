@@ -29,6 +29,24 @@ public class Encuesta implements Serializable {
     @OneToMany(mappedBy = "encuesta")
     private List<Checklist> asignaturasAceptadas;
     private String comentario;
+    private int año;
+    private int semestre;
+
+    public int getAño() {
+        return año;
+    }
+
+    public void setAño(int año) {
+        this.año = año;
+    }
+
+    public int getSemestre() {
+        return semestre;
+    }
+
+    public void setSemestre(int semestre) {
+        this.semestre = semestre;
+    }
 
     public Long getId() {
         return id;

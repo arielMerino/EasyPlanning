@@ -11,7 +11,7 @@
         <ui:define name="title">
             <h:outputText value="Encuesta - Easy Planning"></h:outputText>
         </ui:define>
-        <ui:define name="body">
+        <ui:define name="body" class="new-bod">
             <h:form>
                 <p:layout>
 
@@ -19,7 +19,7 @@
                         <p:panel header="Asignaturas">
                             <h:outputText value="Marca las asignaturas que deseas continuar impartiendo"></h:outputText>
                             <p:selectManyCheckbox value="#{encuestaController.listaContinuidad}">
-                            <c:forEach  var="item" items="#{profesorController.asignaturasProfesor(1)}">
+                            <c:forEach  var="item" items="#{profesorController.getAsignaturasProfesor(params.id)}">
                                 <f:selectItem itemLabel="#{item.nombre}" itemValue="#{item.id}" />
                             </c:forEach>
                             </p:selectManyCheckbox> 
