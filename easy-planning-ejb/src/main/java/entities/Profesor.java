@@ -37,7 +37,7 @@ public class Profesor implements Serializable {
     
     private String mail;
     
-    private int rut;
+    private String rut;
 
     public List<Horario> getDisponibilidad() {
         return disponibilidad;
@@ -87,11 +87,11 @@ public class Profesor implements Serializable {
         this.mail = mail;
     }
 
-    public int getRut() {
+    public String getRut() {
         return rut;
     }
 
-    public void setRut(int rut) {
+    public void setRut(String rut) {
         this.rut = rut;
     }
 

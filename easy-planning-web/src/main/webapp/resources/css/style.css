@@ -75,7 +75,9 @@ html .ui-layout-container{
 }
 .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight{
     border: 1px solid #eee;
+    background: #ff7319 linear-gradient(top, rgba(0,0,0,0.25), rgba(0,0,0,0));
     background: #ff7319 -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0.25)), to(rgba(0,0,0,0)));
+    background: #ff7319 -moz-linear-gradient(top, rgba(0,0,0,0.25), rgba(0,0,0,0));
     color: #fff;
     text-shadow: none;
 }
@@ -86,7 +88,9 @@ html .ui-layout-container{
     background: none repeat scroll 0 0 #eee;
 }
 .ui-state-hover, .ui-widget-content .ui-state-hover{
-    background: #ff7319 -webkit-gradient(linear, left top, left bottom, from(rgba(255,255,255,0.6)), to(rgba(255,255,255,0))) !important;
+    background: #ff7319 linear-gradient(top, rgba(0,0,0,0.25), rgba(0,0,0,0));
+    background: #ff7319 -webkit-gradient(linear, left top, left bottom, from(rgba(0,0,0,0.25)), to(rgba(0,0,0,0)));
+    background: #ff7319 -moz-linear-gradient(top, rgba(0,0,0,0.25), rgba(0,0,0,0));
     color: #fff;
 }
 .ui-state-hover a{

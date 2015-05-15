@@ -196,6 +196,7 @@ public class CargarPlanDeEstudios implements Serializable {
                                 for (int i=0; i<prerequisitos.length; i++){
                                     Asignatura aux = getBusiness().findByCarreraAndCodigoAndPlan(carreraSelected,prerequisitos[i], nombrePlan);
                                     if(aux != null){
+                                        System.out.println(aux.toString());
                                         lista.add(aux);
                                     }
                                 }

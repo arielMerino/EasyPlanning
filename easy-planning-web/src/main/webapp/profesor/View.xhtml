@@ -8,22 +8,20 @@
 
     <ui:composition>
 
-        <p:dialog id="ProfesorViewDlg" widgetVar="ProfesorViewDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.ViewProfesorTitle}">
+        <p:dialog id="ProfesorViewDlg" widgetVar="ProfesorViewDialog" modal="true" resizable="false" appendTo="@(body)" header="Ver Profesor">
             <h:form id="ProfesorViewForm">
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{profesorController.selected != null}">
-                        <h:outputText value="#{bundle.ViewProfesorLabel_nombre}"/>
+                        <h:outputText value="Nombre"/>
                         <h:outputText value="#{profesorController.selected.nombre}" title="#{bundle.ViewProfesorTitle_nombre}"/>
-                        <h:outputText value="#{bundle.ViewProfesorLabel_apellido}"/>
+                        <h:outputText value="Apellido"/>
                         <h:outputText value="#{profesorController.selected.apellido}" title="#{bundle.ViewProfesorTitle_apellido}"/>
-                        <h:outputText value="#{bundle.ViewProfesorLabel_mail}"/>
+                        <h:outputText value="E-mail"/>
                         <h:outputText value="#{profesorController.selected.mail}" title="#{bundle.ViewProfesorTitle_mail}"/>
-                        <h:outputText value="#{bundle.ViewProfesorLabel_rut}"/>
+                        <h:outputText value="RUT"/>
                         <h:outputText value="#{profesorController.selected.rut}" title="#{bundle.ViewProfesorTitle_rut}"/>
-                        <h:outputText value="#{bundle.ViewProfesorLabel_id}"/>
-                        <h:outputText value="#{profesorController.selected.id}" title="#{bundle.ViewProfesorTitle_id}"/>
                     </p:panelGrid>
-                    <p:commandButton value="#{bundle.Close}" onclick="ProfesorViewDialog.hide()"/>
+                    <p:commandButton value="Cerrar" onclick="ProfesorViewDialog.hide()"/>
                 </h:panelGroup>
             </h:form>
         </p:dialog>
