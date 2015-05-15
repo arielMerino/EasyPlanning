@@ -5,6 +5,9 @@
  */
 package managedbeans;
 
+import business.ProfesoresLocal;
+import entities.Profesor;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.faces.application.FacesMessage;
@@ -20,8 +23,11 @@ import javax.faces.validator.ValidatorException;
  */
 @FacesValidator("ValidadorRut")
 public class ValidadorRut implements Validator{
+    
+    @EJB
+    private ProfesoresLocal ejbFacade;
 
-    public boolean comprobarRut(String rut){
+    public boolean compruebaRut(String rut){
         boolean validacion = false;
         rut = rut.toUpperCase();
         rut = rut.replace(".", "");
@@ -45,11 +51,29 @@ public class ValidadorRut implements Validator{
         return validacion;
     }
     
+    public boolean compruebaExistencia(String rut){
+        rut = rut.toUpperCase();
+        
+        return ejbFacade.findByRut(rut) != null;
+    }
+    
+    public boolean compruebaFormato(String rut){
+        return rut.matches("\\d{2}\\.\\d{3}\\.\\d{3}\\-[K|k|0-9]");
+    }
+    
     @Override
     public void validate(FacesContext context, UIComponent component, Object value) throws ValidatorException {
-        if(!comprobarRut(value.toString())) {
+        if(!compruebaRut(value.toString())) {
             throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, value + " no es un Rut válido", 
                 value + " no es un Rut válido"));
+        }
+        if(compruebaExistencia(value.toString())){
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, value + " ya está registrado", 
+                value + " ya está registrado"));
+        }
+        if(!compruebaFormato(value.toString())){
+            throw new ValidatorException(new FacesMessage(FacesMessage.SEVERITY_ERROR, value + " no tiene el formato adecuado. RUT debe contener puntos y guión", 
+                value + " no tiene el formato adecuado. RUT debe contener puntos y guión"));
         }
     }
 }

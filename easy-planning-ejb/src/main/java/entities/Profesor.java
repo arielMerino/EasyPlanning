@@ -7,11 +7,14 @@ package entities;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToMany;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
@@ -19,6 +22,10 @@ import javax.persistence.OneToMany;
  * @author ariel-linux
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(name="Profesor.findByRut",
+            query="SELECT p FROM Profesor p WHERE p.rut = :rut")
+})
 public class Profesor implements Serializable {
     @OneToMany(mappedBy = "profesor")
     private List<Encuesta> encuestas;
@@ -37,6 +44,7 @@ public class Profesor implements Serializable {
     
     private String mail;
     
+    @Column(unique=true)
     private String rut;
 
     public List<Horario> getDisponibilidad() {
