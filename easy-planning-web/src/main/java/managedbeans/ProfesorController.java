@@ -159,7 +159,12 @@ public class ProfesorController implements Serializable {
     }
 
     public Profesor getProfesor(java.lang.Long id) {
-        return getFacade().find(id);
+        try{
+            return getFacade().find(id);
+        }
+        catch (Exception e){
+            return new Profesor();
+        }
     }
 
     public List<Profesor> getItemsAvailableSelectMany() {
