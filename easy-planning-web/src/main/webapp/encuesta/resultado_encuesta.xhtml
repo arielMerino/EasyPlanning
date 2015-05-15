@@ -18,10 +18,10 @@
             </c:if>
             <c:if test="#{not empty param}">
                 <c:set var="profesor" value="#{profesorController.getProfesor(param.id)}" scope="request"/>
-                <c:if test="#{empty profesor.nombre}">
+                <c:if test="#{empty profesor}">
                     No existe tal profesor
                 </c:if>
-                <c:if test="#{not empty profesor.nombre}">            
+                <c:if test="#{not empty profesor}">
                     Encuesta Profesor <h:outputText value="#{profesor.nombre} #{profesor.apellido}" />
                     <br/>
                     <br/>
@@ -30,8 +30,8 @@
                     <br/>
                     <c:forEach  var="item" items="#{profesorController.asignaturasProfesor(param.id)}">                     
                         - <h:outputText value="#{item.nombre}" /><br/>
-                    </c:forEach>
-
+                    </c:forEach>                    
+                    
                     <br/>
                     <br/>
                     Horarios disponibles:
