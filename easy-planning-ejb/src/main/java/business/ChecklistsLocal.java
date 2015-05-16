@@ -5,7 +5,6 @@
  */
 package business;
 
-import entities.Seccion;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -14,8 +13,6 @@ import javax.ejb.Local;
  * @author ariel-linux
  */
 @Local
-public interface SeccionesLocal {
-    public List<Seccion> findBySemestreAñoCarreraPlan(int codCarrera, String plan, int año, int semestre);
-    
-    public List<Seccion> findByAsignaturaAñoYSemestre(long asg, int año, int semestre);
+public interface ChecklistsLocal {
+    public List<Long> findProfesorByAsgAñoSemestre(long asg, int año, int semestre);
 }

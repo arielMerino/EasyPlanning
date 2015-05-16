@@ -66,128 +66,169 @@
                     <div id="Asignatura" class="col-xs-3">
                         <br/>
                         <h:outputLabel style="white-space: normal;">Seleccionar Asignatura:</h:outputLabel>
-                        <p:selectOneMenu id="asignaturas" value="#{asignacionHoraria.asignaturaSelected}" style="width: 100%" immediate="true">
+                        <p:selectOneMenu id="asignaturas" value="#{asignacionHoraria.asignaturaSelected}" required="true" requiredMessage="Debe seleccionar una asignatura" style="width: 100%" immediate="true">
                             <f:selectItem itemLabel="Asignatura" noSelectionOption="true" />
                             <f:selectItems value="#{asignacionHoraria.asignaturasBusiness.findByNivelAndCarreraAndPlan(asignacionHoraria.nivelSelected, asignacionHoraria.carrerasBusiness.findByCodigo(asignacionHoraria.carreraSelected).getNombre(), asignacionHoraria.planEstudioSelected)}" var="asg" itemLabel="#{asg.nombre} - #{asg.codigo}" itemValue="#{asg.id}"/>
+                            <p:ajax process="@this" update=":form2:selSeccionProfesor" />
                         </p:selectOneMenu>
                     </div>
                 </div>
                 <br/>
                 <h4 style="padding-left: 1%;">Asignación de horarios</h4>
                 <div id="horarioAsignacion">
-                    <div class="row" style="height: 50px;">
+                    <div class="row">
                         <p:panel class="col-xs-2 headerBloque">
-                            Bloque
+                            <p class="horario-title">Bloque</p>
                         </p:panel>  
                         <p:panel class="col-xs-1 headerBloque">
-                            Lunes
+                            <p class="horario-title">Lunes</p>
                         </p:panel>
                         <p:panel class="col-xs-1 headerBloque">
-                            Martes
+                            <p class="horario-title">Martes</p>
                         </p:panel>
                         <p:panel class="col-xs-1 headerBloque">
-                            Miércoles
+                            <p class="horario-title">Miércoles</p>
                         </p:panel>
                         <p:panel class="col-xs-1 headerBloque">
-                            Jueves
+                            <p class="horario-title">Jueve</p>
                         </p:panel>
                         <p:panel class="col-xs-1 headerBloque">
-                            Viernes
+                            <p class="horario-title">Viernes</p>
                         </p:panel>
                         <p:panel class="col-xs-1 headerBloque">
-                            Sábado
+                            <p class="horario-title">Sábado</p>
                         </p:panel>
                     </div>
                 
                     <div class="row">
                         <p:panel class="col-xs-2 horarioBloque">
-                            1 - 08:00 - 09:30
+                            <p class="horario-title"> 1 - 08:00 - 09:30</p>
                         </p:panel>  
-                        <p:button class="col-xs-1 btn btn-default bloque" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('L1')}"/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('L1')}"/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('L1')}"/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('L1')}"/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('L1')}"/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('L1')}"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('L1')} #{asignacionHoraria.getProfesorByBloque('L1')}" action="#{asignacionHoraria.setBloqueSelected('L1')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('M1')} #{asignacionHoraria.getProfesorByBloque('M1')}" action="#{asignacionHoraria.setBloqueSelected('M1')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('W1')} #{asignacionHoraria.getProfesorByBloque('W1')}" action="#{asignacionHoraria.setBloqueSelected('W1')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('J1')} #{asignacionHoraria.getProfesorByBloque('J1')}" action="#{asignacionHoraria.setBloqueSelected('J1')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('V1')} #{asignacionHoraria.getProfesorByBloque('V1')}" action="#{asignacionHoraria.setBloqueSelected('V1')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('S1')} #{asignacionHoraria.getProfesorByBloque('S1')}" action="#{asignacionHoraria.setBloqueSelected('S1')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
                     </div>
                     <div class="row">
                         <p:panel class="col-xs-2 horarioBloque">
-                            1 - 08:00 - 09:30
+                            <p class="horario-title"> 2 - 09:40 - 11:10</p>
                         </p:panel>  
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('L2')} #{asignacionHoraria.getProfesorByBloque('L2')}" action="#{asignacionHoraria.setBloqueSelected('L2')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('M2')} #{asignacionHoraria.getProfesorByBloque('M2')}" action="#{asignacionHoraria.setBloqueSelected('M2')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('W2')} #{asignacionHoraria.getProfesorByBloque('W2')}" action="#{asignacionHoraria.setBloqueSelected('W2')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('J2')} #{asignacionHoraria.getProfesorByBloque('J2')}" action="#{asignacionHoraria.setBloqueSelected('J2')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('V2')} #{asignacionHoraria.getProfesorByBloque('V2')}" action="#{asignacionHoraria.setBloqueSelected('V2')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('S2')} #{asignacionHoraria.getProfesorByBloque('S2')}" action="#{asignacionHoraria.setBloqueSelected('S2')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
                     </div>
                     <div class="row">
                         <p:panel class="col-xs-2 horarioBloque">
-                            1 - 08:00 - 09:30
+                            <p class="horario-title"> 3 - 11:20 - 12:50</p>
                         </p:panel>  
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('L3')} #{asignacionHoraria.getProfesorByBloque('L3')}" action="#{asignacionHoraria.setBloqueSelected('L3')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('M3')} #{asignacionHoraria.getProfesorByBloque('M3')}" action="#{asignacionHoraria.setBloqueSelected('M3')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('W3')} #{asignacionHoraria.getProfesorByBloque('W3')}" action="#{asignacionHoraria.setBloqueSelected('W3')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('J3')} #{asignacionHoraria.getProfesorByBloque('J3')}" action="#{asignacionHoraria.setBloqueSelected('J3')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('V3')} #{asignacionHoraria.getProfesorByBloque('V3')}" action="#{asignacionHoraria.setBloqueSelected('V3')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('S3')} #{asignacionHoraria.getProfesorByBloque('S3')}" action="#{asignacionHoraria.setBloqueSelected('S3')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
                     </div>
                     <div class="row">
                         <p:panel class="col-xs-2 horarioBloque">
-                            1 - 08:00 - 09:30
-                        </p:panel>  
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
+                            <p class="horario-title"> 4 - 13:50 - 15:20</p>
+                        </p:panel> 
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('L4')} #{asignacionHoraria.getProfesorByBloque('L4')}" action="#{asignacionHoraria.setBloqueSelected('L4')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('M4')} #{asignacionHoraria.getProfesorByBloque('M4')}" action="#{asignacionHoraria.setBloqueSelected('M4')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('W4')} #{asignacionHoraria.getProfesorByBloque('W4')}" action="#{asignacionHoraria.setBloqueSelected('W4')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('J4')} #{asignacionHoraria.getProfesorByBloque('J4')}" action="#{asignacionHoraria.setBloqueSelected('J4')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('V4')} #{asignacionHoraria.getProfesorByBloque('V4')}" action="#{asignacionHoraria.setBloqueSelected('V4')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('S4')} #{asignacionHoraria.getProfesorByBloque('S4')}" action="#{asignacionHoraria.setBloqueSelected('S4')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
                     </div>
                     <div class="row">
                         <p:panel class="col-xs-2 horarioBloque">
-                            1 - 08:00 - 09:30
-                        </p:panel>  
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
+                            <p class="horario-title"> 5 - 15:30 - 17:00</p>
+                        </p:panel> 
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('L5')} #{asignacionHoraria.getProfesorByBloque('L5')}" action="#{asignacionHoraria.setBloqueSelected('L5')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('M5')} #{asignacionHoraria.getProfesorByBloque('M5')}" action="#{asignacionHoraria.setBloqueSelected('M5')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('W5')} #{asignacionHoraria.getProfesorByBloque('W5')}" action="#{asignacionHoraria.setBloqueSelected('W5')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('J5')} #{asignacionHoraria.getProfesorByBloque('J5')}" action="#{asignacionHoraria.setBloqueSelected('J5')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('V5')} #{asignacionHoraria.getProfesorByBloque('V5')}" action="#{asignacionHoraria.setBloqueSelected('V5')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('S5')} #{asignacionHoraria.getProfesorByBloque('S5')}" action="#{asignacionHoraria.setBloqueSelected('S5')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
                     </div>
                     <div class="row">
                         <p:panel class="col-xs-2 horarioBloque">
-                            1 - 08:00 - 09:30
+                            <p class="horario-title"> 6 - 17:10 - 18:40</p>
                         </p:panel>  
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('L6')} #{asignacionHoraria.getProfesorByBloque('L6')}" action="#{asignacionHoraria.setBloqueSelected('L6')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('M6')} #{asignacionHoraria.getProfesorByBloque('M6')}" action="#{asignacionHoraria.setBloqueSelected('M6')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('W6')} #{asignacionHoraria.getProfesorByBloque('W6')}" action="#{asignacionHoraria.setBloqueSelected('W6')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('J6')} #{asignacionHoraria.getProfesorByBloque('J6')}" action="#{asignacionHoraria.setBloqueSelected('J6')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('V6')} #{asignacionHoraria.getProfesorByBloque('V6')}" action="#{asignacionHoraria.setBloqueSelected('V6')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('S6')} #{asignacionHoraria.getProfesorByBloque('S6')}" action="#{asignacionHoraria.setBloqueSelected('S6')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
                     </div>
                     <div class="row">
                         <p:panel class="col-xs-2 horarioBloque">
-                            1 - 08:00 - 09:30
-                        </p:panel>  
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
+                            <p class="horario-title"> 7 - 19:00 - 20:10</p>
+                        </p:panel> 
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('L7')} #{asignacionHoraria.getProfesorByBloque('L7')}" action="#{asignacionHoraria.setBloqueSelected('L7')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('M7')} #{asignacionHoraria.getProfesorByBloque('M7')}" action="#{asignacionHoraria.setBloqueSelected('M7')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('W7')} #{asignacionHoraria.getProfesorByBloque('W7')}" action="#{asignacionHoraria.setBloqueSelected('W7')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('J7')} #{asignacionHoraria.getProfesorByBloque('J7')}" action="#{asignacionHoraria.setBloqueSelected('J7')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('V7')} #{asignacionHoraria.getProfesorByBloque('V7')}" action="#{asignacionHoraria.setBloqueSelected('V7')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('S7')} #{asignacionHoraria.getProfesorByBloque('S7')}" action="#{asignacionHoraria.setBloqueSelected('S7')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
                     </div>
                     <div class="row">
                         <p:panel class="col-xs-2 horarioBloque">
-                            1 - 08:00 - 09:30
+                            <p class="horario-title"> 8 - 20:20 - 22:00</p>
                         </p:panel>  
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
-                        <p:button class="col-xs-1 btn btn-default bloque" value=""/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('L8')} #{asignacionHoraria.getProfesorByBloque('L8')}" action="#{asignacionHoraria.setBloqueSelected('L8')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('M8')} #{asignacionHoraria.getProfesorByBloque('M8')}" action="#{asignacionHoraria.setBloqueSelected('M8')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('W8')} #{asignacionHoraria.getProfesorByBloque('W8')}" action="#{asignacionHoraria.setBloqueSelected('W8')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('J8')} #{asignacionHoraria.getProfesorByBloque('J8')}" action="#{asignacionHoraria.setBloqueSelected('J8')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('V8')} #{asignacionHoraria.getProfesorByBloque('V8')}" action="#{asignacionHoraria.setBloqueSelected('V8')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('S8')} #{asignacionHoraria.getProfesorByBloque('S8')}" action="#{asignacionHoraria.setBloqueSelected('S8')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                    </div>
+                    <div class="row">
+                        <p:panel class="col-xs-2 horarioBloque">
+                            <p class="horario-title"> 9 - 22:00 - 23:00</p>
+                        </p:panel>  
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('L9')} #{asignacionHoraria.getProfesorByBloque('L9')}" action="#{asignacionHoraria.setBloqueSelected('L9')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('M9')} #{asignacionHoraria.getProfesorByBloque('M9')}" action="#{asignacionHoraria.setBloqueSelected('M9')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('W9')} #{asignacionHoraria.getProfesorByBloque('W9')}" action="#{asignacionHoraria.setBloqueSelected('W9')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('J9')} #{asignacionHoraria.getProfesorByBloque('J9')}" action="#{asignacionHoraria.setBloqueSelected('J9')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('V9')} #{asignacionHoraria.getProfesorByBloque('V9')}" action="#{asignacionHoraria.setBloqueSelected('V1')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
+                        <p:commandButton class="col-xs-1 btn btn-default bloque" onclick="submit();" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('S9')} #{asignacionHoraria.getProfesorByBloque('S9')}" action="#{asignacionHoraria.setBloqueSelected('S9')}" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
                     </div>
                 </div>
+            </h:form>
+            <h:form id="form2">
+                <p:dialog class="panel panel-default" widgetVar="seccionProfesor" id="selSeccionProfesor" width="800px" modal="true" appendTo="@(body)" >
+                    <f:facet name="header">#{asignacionHoraria.asignaturaFacade.find(asignacionHoraria.asignaturaSelected).getNombre()}</f:facet>
+                    <div class="row" style="padding-left: 2%; padding-right: 2%; max-height: 400px;min-height: 400px;">
+                        <div class="panel panel-default col-xs-6" style="min-height: 350px;">
+                            <h:outputLabel style="width: 100%">Seleccionar sección:</h:outputLabel>
+                            <p:selectOneMenu value="#{asignacionHoraria.seccionId}" id="secciones" required="true" requiredMessage="Debe seleccionar una sección" immediate="true" style="width: 50%">
+                                <f:selectItem itemValue="0L" itemLabel="ninguna" noSelectionOption="true" />
+                                <f:selectItems value="#{asignacionHoraria.seccionesBusiness.findByAsignaturaAñoYSemestre(asignacionHoraria.asignaturaSelected, asignacionHoraria.añoSelected, asignacionHoraria.semestreSelected)}" var="sec" itemLabel="#{sec.codigo}" itemValue="#{sec.id}" />
+                            </p:selectOneMenu>
+                        </div>
+                        <div class="panel panel-default col-xs-6" style="min-height: 350px;">
+                            <h:outputLabel style="width: 100%">Selecconar profesor:</h:outputLabel>
+                            <p:selectOneMenu value="#{asignacionHoraria.profesorSelected}" id="profesores" required="false" immediate="true" style="width: 100%">
+                                <f:selectItem itemValue="0L" itemLabel="nadie"/>
+                                <f:selectItems value="#{asignacionHoraria.getProfesoresDisponibles()}" var="prof" itemLabel="#{prof.nombre} #{prof.apellido}" itemValue="#{prof.id}" />
+                            </p:selectOneMenu>
+                            <br/>
+                            <br/>
+                            <h:outputLabel style="width: 100%">Todos los profesores</h:outputLabel>
+                            <p:selectOneMenu value="#{asignacionHoraria.profesorSelected}" id="Allprofesores" required="false" immediate="true" style="width: 100%">
+                                <f:selectItem itemValue="0L" itemLabel="nadie"/>
+                                <f:selectItems value="#{asignacionHoraria.profesorFacade.findAll()}" var="prof" itemLabel="#{prof.nombre} #{prof.apellido}" itemValue="#{prof.id}" />
+                            </p:selectOneMenu>
+                        </div>
+                        <p:commandButton class="col-xs-3 btn btn-default" value="Cancelar" oncomplete="PF('seccionProfesor').hide();" style="height: 50px;padding: 0px;" />
+                    </div>
+                </p:dialog>
             </h:form>
         </ui:define>
     </ui:composition>

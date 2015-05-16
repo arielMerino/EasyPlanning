@@ -23,7 +23,9 @@ import javax.persistence.OneToMany;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Seccion.findByCarreraPlanAñoSemestre",
-            query = "SELECT s FROM Seccion s WHERE s.coordinacion.asignatura.carrera.codigo = :codigo AND s.coordinacion.asignatura.planEstudio = :plan AND s.coordinacion.año = :año AND s.coordinacion.semestre = :semestre")
+            query = "SELECT s FROM Seccion s WHERE s.coordinacion.asignatura.carrera.codigo = :codigo AND s.coordinacion.asignatura.planEstudio = :plan AND s.coordinacion.año = :año AND s.coordinacion.semestre = :semestre"),
+    @NamedQuery(name = "Seccion.findByAsignaturaAñoYSemestre",
+            query = "SELECT s FROM Seccion s WHERE s.coordinacion.asignatura.id = :idAsg AND s.coordinacion.año = :año AND s.coordinacion.semestre = :semestre ")
 })
 public class Seccion implements Serializable {
     @OneToMany(mappedBy = "seccion")

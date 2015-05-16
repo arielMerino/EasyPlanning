@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
@@ -19,6 +21,8 @@ import javax.persistence.OneToMany;
  * @author ariel-linux
  */
 @Entity
+@NamedQueries({
+})
 public class Encuesta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -29,6 +33,8 @@ public class Encuesta implements Serializable {
     @OneToMany(mappedBy = "encuesta")
     private List<Checklist> asignaturasAceptadas;
     private String comentario;
+    private int año;
+    private int semestre;
 
     public Long getId() {
         return id;
@@ -36,6 +42,22 @@ public class Encuesta implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getAño() {
+        return año;
+    }
+
+    public void setAño(int año) {
+        this.año = año;
+    }
+
+    public int getSemestre() {
+        return semestre;
+    }
+
+    public void setSemestre(int semestre) {
+        this.semestre = semestre;
     }
 
     public Profesor getProfesor() {

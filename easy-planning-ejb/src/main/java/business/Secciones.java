@@ -35,4 +35,16 @@ public class Secciones implements SeccionesLocal {
             return new ArrayList<>();
         }
     }
+    
+    @Override
+    public List<Seccion> findByAsignaturaAñoYSemestre(long asg, int año, int semestre){
+        Query query = em.createNamedQuery("Seccion.findByAsignaturaAñoYSemestre").setParameter("idAsg", asg);
+        query.setParameter("año", año);
+        query.setParameter("semestre", semestre);
+        try{
+            return (List<Seccion>) query.getResultList();
+        }catch(NoResultException e){
+            return new ArrayList<>();
+        }
+    }
 }

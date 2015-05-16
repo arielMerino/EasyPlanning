@@ -7,6 +7,7 @@ package managedbeans;
 
 import business.AsignaturasLocal;
 import business.CarrerasLocal;
+import business.ChecklistsLocal;
 import business.CoordinacionesLocal;
 import business.HorariosLocal;
 import business.SeccionesLocal;
@@ -18,6 +19,7 @@ import entities.Seccion;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -61,26 +63,27 @@ public class asignacionHoraria implements Serializable {
     @EJB
     private SeccionesLocal seccionesBusiness;
     @EJB
-    private CoordinacionesLocal coordinacionesBusiness; 
+    private CoordinacionesLocal coordinacionesBusiness;
+    @EJB
+    private ChecklistsLocal checklistBusiness;
            
     private int carreraSelected = 0;
     private String planEstudioSelected = "none";
     private int nivelSelected = 0;
-    private long asignaturaSelected;
+    private long asignaturaSelected = 0L;
     private Coordinacion coordinacionSelected = null;
     private Seccion seccionSelected = new Seccion();
     private Long seccionId = 0L;
     private String horarioSelected = "";
-    private Profesor profesorSelected = null;
+    private Long profesorSelected = 0L;
     private ArrayList<Asignatura> asignaturasPlan = new ArrayList<>();
     private ArrayList<Asignatura> asignaturasNivel = new ArrayList<>();
-    private ArrayList<Profesor> profesoresAsignatura = new ArrayList<>();
     private ArrayList<Seccion> seccionesAsignatura = new ArrayList<>();
     private ArrayList<Long> seccionesIds = new ArrayList<>();
-    private ArrayList<Horario> disponibilidadProfesor = new ArrayList<>();
     private String [] horariosSeleccionados;
     private int añoSelected = Calendar.getInstance().get(Calendar.YEAR);
     private int semestreSelected = 1;
+    private String bloqueSelected;
 
     public int getCarreraSelected() {
         return carreraSelected;
@@ -96,6 +99,31 @@ public class asignacionHoraria implements Serializable {
 
     public void setHorariosBusiness(HorariosLocal horariosBusiness) {
         this.horariosBusiness = horariosBusiness;
+    }
+
+    public ChecklistsLocal getChecklistBusiness() {
+        return checklistBusiness;
+    }
+
+    public void setChecklistBusiness(ChecklistsLocal checklistBusiness) {
+        this.checklistBusiness = checklistBusiness;
+    }
+
+    public Long getProfesorSelected() {
+        return profesorSelected;
+    }
+
+    public void setProfesorSelected(Long profesorSelected) {
+        this.profesorSelected = profesorSelected;
+    }
+
+    public String getBloqueSelected() {
+        return bloqueSelected;
+    }
+
+    public void setBloqueSelected(String bloqueSelected) {
+        this.bloqueSelected = bloqueSelected;
+        System.out.println(this.bloqueSelected);
     }
     
     public Long getSeccionId() {
@@ -238,11 +266,7 @@ public class asignacionHoraria implements Serializable {
         this.horarioSelected = horarioSelected;
     }
 
-    public Profesor getProfesorSelected() {
-        return profesorSelected;
-    }
-
-    public void setProfesorSelected(Profesor profesorSelected) {
+    public void setProfesorSelected(long profesorSelected) {
         this.profesorSelected = profesorSelected;
     }
     
@@ -358,40 +382,6 @@ public class asignacionHoraria implements Serializable {
         return niveles;
     }
     
-    public void setDisponibilidadProfesor(){
-        try{
-            System.out.println(this.coordinacionSelected.getAsignatura().getNombre());
-            if(!getProfesorSelected().getDisponibilidad().isEmpty()){
-                this.disponibilidadProfesor = new ArrayList<>();
-                for (Horario h : getProfesorSelected().getDisponibilidad()) {
-                    this.disponibilidadProfesor.add(h);
-                }
-            }
-        }catch(Exception e){
-            System.out.println("disponibilidad imposible de setear");
-        }
-    }
-    
-    public ArrayList<Horario> getDisponibilidadProfesor(){
-        setDisponibilidadProfesor();
-        return this.disponibilidadProfesor;
-    }
-    
-    public String compararDisponibilidad(String bloque){
-        if(this.disponibilidadProfesor.isEmpty()){
-            return "";
-        }
-        for(Horario h : this.disponibilidadProfesor){
-            if(h.getBloque().equals(bloque)){
-                if(h.getSeccion()!=null)
-                    return h.getSeccion().getCoordinacion().getAsignatura().getCodigo()+"-"+h.getSeccion().getCodigo();
-                return "Disponible";
-            }
-        }
-        System.out.println("no se encontró nada");
-        return "__________";
-    }
-    
     public void asignarHoras(String[] bloques){
         if(bloques != null)
             System.out.println("bloques: ");
@@ -403,30 +393,6 @@ public class asignacionHoraria implements Serializable {
         if(bloque.charAt(0)=='T')
             return "teoría";
         return "ejercicios";
-    }
-    
-    public void updateHorario(){
-        for(Horario h : this.disponibilidadProfesor){
-            if(h.getBloque().equals(this.horarioSelected)){
-                h.setSeccion(seccionFacade.find(this.seccionId));
-                h.setTipo(getTipo(this.horarioSelected));
-                horarioFacade.edit(h);
-                System.out.println("se ha actualizado correctamente el bloque horario");
-                break;
-            }
-        }
-        System.out.println("no se ha encontrado ningun bloque disponible");
-    }
-    
-    public void liberarHorario(){
-        for(Horario h : this.disponibilidadProfesor){
-            if(h.getBloque().equals(this.horarioSelected)){
-                h.setSeccion(null);
-                h.setTipo(null);
-                horarioFacade.edit(h);
-                break;
-            }
-        }
     }
     
     public List<Integer> añosDisponibles(){
@@ -449,49 +415,39 @@ public class asignacionHoraria implements Serializable {
         }
     }
     
-    public void verificarSecciones(int carrera, String plan, int año, int semestre){
-        List<Seccion> seccionesSemestre = seccionesBusiness.findBySemestreAñoCarreraPlan(carrera, plan, año, semestre);
-        if (seccionesSemestre.size() == 0){
-            List<Asignatura> asignaturasPlan = asignaturasBusiness.findByCarreraAndPlan(carrerasBusiness.findByCodigo(carrera).getNombre(), plan);
-            if (asignaturasPlan.size() > 0){
-                for (Asignatura asg : asignaturasPlan){
-                    Coordinacion c = new Coordinacion();
-                    c.setAsignatura(asg);
-                    c.setAño(año);
-                    c.setSemestre(semestre);
-                    c.setCantAlumnosEstimado(0);
-                    c.setCantAlumnosReal(0);
-                    c.setSecciones(null);
-                    coordinacionFacade.create(c);
-                }
-                for (Asignatura asg : asignaturasPlan){
-                    Coordinacion c = coordinacionesBusiness.findByAsignaturaAndAñoAndSemestre(asg, año, semestre);
-                    if (asg.getTeoria() > 0){
-                        Seccion s = new Seccion();
-                        s.setCoordinacion(c);
-                        s.setCodigo("A1");
-                        seccionFacade.create(s);
-                    }
-                    if (asg.getEjercicios() > 0 ){
-                        Seccion s = new Seccion();
-                        s.setCoordinacion(c);
-                        s.setCodigo("E1");
-                        seccionFacade.create(s);
-                    }
-                    if (asg.getLaboratorio() > 0){
-                        Seccion s= new Seccion();
-                        s.setCoordinacion(c);
-                        s.setCodigo("L1");
-                        seccionFacade.create(s);
-                    }
-                 }
-            }
+    public List<Profesor> getProfesoresDisponibles(){
+        List<Long> ids = new ArrayList<>();
+        if (asignaturaSelected != 0L){
+            ids = checklistBusiness.findProfesorByAsgAñoSemestre(asignaturaSelected, añoSelected, semestreSelected);
+        }
+        List<Profesor> profesores = new ArrayList<>();
+        for (long id : ids){
+            profesores.add(profesorFacade.find(id));
+        }
+        return profesores;
+    }
+    
+    public String getProfesorByBloque(String bloque){
+        try{
+            Horario result = horariosBusiness.findBybloqueCarreraPlanNivelAñoYSemestre(bloque, carreraSelected, planEstudioSelected, nivelSelected, añoSelected, semestreSelected);
+            if (result == null)
+                return "";
+            return "- "+result.getProfesor().getNombre()+" "+result.getProfesor().getApellido();            
+        }catch(NullPointerException e){
+            return "";
         }
     }
     
-    /**
-     * Creates a new instance of asignacionHoraria
-     */
+    public void asignar(){
+        System.out.println("1");
+        Horario h = horariosBusiness.findBybloqueCarreraPlanNivelAñoYSemestre(bloqueSelected, carreraSelected, planEstudioSelected, nivelSelected, añoSelected, semestreSelected);
+        if (h == null){
+            System.out.println("h no sexiste");
+        }
+        else{
+            System.out.println("h existe");
+        }
+    }
     
     public asignacionHoraria() {
     }    
