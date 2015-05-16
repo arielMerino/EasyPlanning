@@ -27,7 +27,7 @@ public class Encuesta implements Serializable {
     @ManyToOne
     private Profesor profesor;
     @OneToMany(mappedBy = "encuesta")
-    private List<Checklist> asignaturasAceptadas;
+    private List<Checklist> listaAsignaturas;
     private String comentario;
     private int año;
     private int semestre;
@@ -64,12 +64,12 @@ public class Encuesta implements Serializable {
         this.profesor = profesor;
     }
 
-    public List<Checklist> getAsignaturasAceptadas() {
-        return asignaturasAceptadas;
+    public List<Checklist> getListaAsignaturas() {
+        return listaAsignaturas;
     }
 
-    public void setAsignaturasAceptadas(List<Checklist> asignaturasAceptadas) {
-        this.asignaturasAceptadas = asignaturasAceptadas;
+    public void setListaAsignaturas(List<Checklist> listaAsignaturas) {
+        this.listaAsignaturas = listaAsignaturas;
     }
 
     public String getComentario() {

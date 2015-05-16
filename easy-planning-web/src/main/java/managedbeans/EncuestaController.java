@@ -107,17 +107,22 @@ public class EncuestaController implements Serializable {
         }
     }
     
-    public ArrayList<Asignatura> asignaturasEncuesta(String encuestaid){
-        Long id = Long.parseLong(encuestaid);
-        List<Checklist> aux = getFacade().find(id).getAsignaturasAceptadas();
-        
-        ArrayList<Asignatura> asignaturas = new ArrayList<>();
-        
-        for(Checklist check : aux){
-            asignaturas.add(check.getAsignatura());
+    public ArrayList<Asignatura> getAsignaturasAceptadas(String encuestaId){
+        try{
+            Long id = Long.parseLong(encuestaId);
+            List<Checklist> aux = getFacade().find(id).getListaAsignaturas();
+
+            ArrayList<Asignatura> asignaturas = new ArrayList<>();
+
+            for(Checklist check : aux){
+                if(check.isAceptado())            
+                    asignaturas.add(check.getAsignatura());
+            }
+
+            return asignaturas;
+        }catch (Exception e){
+            return null;
         }
-        
-        return asignaturas;
     }
     
     public void resultadoEncuesta(int id_profesor){
