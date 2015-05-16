@@ -50,15 +50,15 @@ public class Asignatura implements Serializable {
     private int laboratorio;
     private String planEstudio;
     
-    
-    public Asignatura(){        
-    }
-    
     @OneToMany
     private List<Asignatura> prerequisitos;
     
     @ManyToMany
     private List<Profesor> profesores;
+    
+    public Asignatura(){        
+    }
+    
 
     public List<Profesor> getProfesores() {
         return profesores;

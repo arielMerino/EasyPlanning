@@ -158,8 +158,14 @@ public class ProfesorController implements Serializable {
         }
     }
 
-    public Profesor getProfesor(java.lang.Long id) {
-        return getFacade().find(id);
+    public Profesor getProfesor(String profesorId) {
+        try{
+            Long id = Long.parseLong(profesorId);
+            return getFacade().find(id);
+        }
+        catch (Exception e){
+            return null;
+        }
     }
 
     public List<Profesor> getItemsAvailableSelectMany() {
@@ -227,7 +233,7 @@ public class ProfesorController implements Serializable {
             }
             ProfesorController controller = (ProfesorController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "profesorController");
-            return controller.getProfesor(getKey(value));
+            return controller.getProfesor(value);
         }
 
         java.lang.Long getKey(String value) {

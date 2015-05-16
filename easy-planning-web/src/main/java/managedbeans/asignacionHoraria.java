@@ -73,7 +73,7 @@ public class asignacionHoraria implements Serializable {
     private long asignaturaSelected = 0L;
     private Coordinacion coordinacionSelected = null;
     private Seccion seccionSelected = new Seccion();
-    private Long seccionId = 0L;
+    private Long seccionId=0L;
     private String horarioSelected = "";
     private Long profesorSelected = 0L;
     private ArrayList<Asignatura> asignaturasPlan = new ArrayList<>();
@@ -84,6 +84,7 @@ public class asignacionHoraria implements Serializable {
     private int añoSelected = Calendar.getInstance().get(Calendar.YEAR);
     private int semestreSelected = 1;
     private String bloqueSelected;
+    private int asignar = 0;
 
     public int getCarreraSelected() {
         return carreraSelected;
@@ -124,6 +125,14 @@ public class asignacionHoraria implements Serializable {
     public void setBloqueSelected(String bloqueSelected) {
         this.bloqueSelected = bloqueSelected;
         System.out.println(this.bloqueSelected);
+    }
+
+    public int getAsignar() {
+        return asignar;
+    }
+
+    public void setAsignar(int asignar) {
+        this.asignar = asignar;
     }
     
     public Long getSeccionId() {
@@ -381,6 +390,17 @@ public class asignacionHoraria implements Serializable {
         }
         return niveles;
     }
+    public boolean validarAsignatura(){
+        System.out.println(this.asignaturaSelected);
+        if (this.asignaturaSelected == 0L){
+            return false;
+        }
+        return true;
+    }
+    
+    public long resetAsignatura(){
+        return 0L;
+    }
     
     public void asignarHoras(String[] bloques){
         if(bloques != null)
@@ -438,14 +458,41 @@ public class asignacionHoraria implements Serializable {
         }
     }
     
+    public void limpiarBloqueYprofesor(){
+        this.profesorSelected = 0L;
+        this.seccionId = 0L;
+        this.seccionSelected = null;
+    }
+    
     public void asignar(){
-        System.out.println("1");
         Horario h = horariosBusiness.findBybloqueCarreraPlanNivelAñoYSemestre(bloqueSelected, carreraSelected, planEstudioSelected, nivelSelected, añoSelected, semestreSelected);
-        if (h == null){
-            System.out.println("h no sexiste");
+        if (this.asignar != 0){
+            if (h == null){
+                System.out.println("h no sexiste");
+                h = new Horario();
+                h.setSeccion(seccionFacade.find(seccionId));
+                h.setBloque(bloqueSelected);
+                if (seccionFacade.find(seccionId).getCodigo().charAt(0)=='E')
+                    h.setTipo("E");
+                if (seccionFacade.find(seccionId).getCodigo().charAt(0)=='L')
+                    h.setTipo("L");
+                else
+                    h.setTipo("T");
+                if (profesorSelected != 0L)
+                    h.setProfesor(profesorFacade.find(profesorSelected));
+                horarioFacade.create(h);
+                this.asignar = 0;
+                limpiarBloqueYprofesor();
+            }
+            else{
+                System.out.println("h existe");
+                this.asignar = 0;
+                limpiarBloqueYprofesor();
+            }
         }
         else{
-            System.out.println("h existe");
+            System.out.println("no funka");
+            limpiarBloqueYprofesor();
         }
     }
     

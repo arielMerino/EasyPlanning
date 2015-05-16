@@ -5,9 +5,12 @@
  */
 package managedbeans;
 
+import entities.Encuesta;
+import entities.ParamSemestreAno;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,6 +26,8 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import managedbeans.util.JsfUtil;
+import sessionbeans.EncuestaFacadeLocal;
+import sessionbeans.ParamSemestreAñoFacadeLocal;
 
 /**
  *
@@ -34,7 +39,28 @@ import managedbeans.util.JsfUtil;
 public class EmailController implements Serializable {
     @Inject
     ProfesorController profesorController;
+    
+    @EJB
+    private ParamSemestreAñoFacadeLocal ejbSemAño;
+    @EJB
+    private EncuestaFacadeLocal ejbEncuesta;
 
+    public EncuestaFacadeLocal getEjbEncuesta() {
+        return ejbEncuesta;
+    }
+
+    public void setEjbEncuesta(EncuestaFacadeLocal ejbEncuesta) {
+        this.ejbEncuesta = ejbEncuesta;
+    }
+
+    public ParamSemestreAñoFacadeLocal getEjbSemAño() {
+        return ejbSemAño;
+    }
+
+    public void setEjbSemAño(ParamSemestreAñoFacadeLocal ejbSemAño) {
+        this.ejbSemAño = ejbSemAño;
+    }
+    
     public void enviarEmail(String origen, String nombre, String pass, String destino, String asunto, String contenido) throws UnsupportedEncodingException {
         Properties props = System.getProperties();
         props.put("mail.smtp.starttls.enable", true); // added this line
@@ -95,6 +121,15 @@ public class EmailController implements Serializable {
             String profesor = profesorController.getSelected().getNombre() + " " + profesorController.getSelected().getApellido();
             String asunto = "Encuesta de disponibilidad horaria";
             String contenido = "Profesor" + " " + profesor + " " + "conteste la encuesta de disponibilidad horaria, por favor. http://localhost:8080/easy-planning-web/faces/profesor/encuesta.xhtml";
+            
+            Encuesta encuesta = new Encuesta();
+            encuesta.setProfesor(profesorController.getSelected());
+            ParamSemestreAno semAnho = getEjbSemAño().find(Long.parseLong(1+""));
+            encuesta.setAño(semAnho.getAnoActual());
+            encuesta.setSemestre(semAnho.getSemestreActual());
+            //encuesta.setAño(2015);
+            //encuesta.setSemestre(2);
+            getEjbEncuesta().create(encuesta);
             
             enviarEmail(origen, nombre, pass, emailProfesor, asunto, contenido);
         }

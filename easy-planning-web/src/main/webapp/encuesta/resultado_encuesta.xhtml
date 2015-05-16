@@ -8,34 +8,44 @@
     
     <ui:composition template="/template.xhtml">
     
-    <ui:define name="title">
-        Easy planning - Encuesta
-    </ui:define>
-        
-    <ui:define name="body">
-        Encuesta Profesor <h:outputText value="#{profesorController.getProfesor(param.id).nombre} #{profesorController.getProfesor(param.id).apellido}" />
-        <br/>
-        <br/>
-        Asignaturas:
-        <br/>
-        <br/>
-        <c:forEach  var="item" items="#{profesorController.asignaturasProfesor(param.id)}"> 
-            <!--<h:selectBooleanCheckbox /><h:outputText value="#{item.nombre}" /><br/>-->
-            - <h:outputText value="#{item.nombre}" /><br/>
-        </c:forEach>
-        
-        <br/>
-        <br/>
-        Horarios disponibles:
-        <br/>
-        <c:forEach var="item" items="#{profesorController.getDisponibles(param.id)}">
-            <h:outputText value="#{item.bloque} " />
-        </c:forEach>
-        <br/>
-        <br/>
-        Comentario:
-        <p><h:outputText value="#{profesorController.comentarioEncuestaProfesor(param.id)}" /></p>
-    </ui:define>
+        <ui:define name="title">
+            Easy planning - Encuesta
+        </ui:define>
+
+        <ui:define name="body">
+            <c:if test="#{empty param}">
+                No has seleccionado ningun profesor
+            </c:if>
+            <c:if test="#{not empty param}">
+                <c:set var="profesor" value="#{profesorController.getProfesor(param.id)}" scope="request"/>
+                <c:if test="#{empty profesor}">
+                    No existe tal profesor
+                </c:if>
+                <c:if test="#{not empty profesor}">
+                    Encuesta Profesor <h:outputText value="#{profesor.nombre} #{profesor.apellido}" />
+                    <br/>
+                    <br/>
+                    Asignaturas:
+                    <br/>
+                    <br/>
+                    <c:forEach  var="item" items="#{profesorController.asignaturasProfesor(param.id)}">                     
+                        - <h:outputText value="#{item.nombre}" /><br/>
+                    </c:forEach>                    
+                    
+                    <br/>
+                    <br/>
+                    Horarios disponibles:
+                    <br/>
+                    <c:forEach var="item" items="#{profesorController.getDisponibles(param.id)}">
+                        <h:outputText value="#{item.bloque} " />
+                    </c:forEach>
+                    <br/>
+                    <br/>
+                    Comentario:
+                    <p><h:outputText value="#{profesorController.comentarioEncuestaProfesor(param.id)}" /></p>
+                </c:if>
+            </c:if>
+        </ui:define>
     </ui:composition>
 </html>
 
