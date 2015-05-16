@@ -53,8 +53,17 @@ public class ProfesorController implements Serializable {
     private Profesor selected;
     private String[] horariosSeleccionados;
     private List<Profesor> profesoresFiltrados;
+    private Long idProfesor;
 
     public ProfesorController() {
+    }
+
+    public Long getIdProfesor() {
+        return idProfesor;
+    }
+
+    public void setIdProfesor(Long idProfesor) {
+        this.idProfesor = idProfesor;
     }
 
     public List<Profesor> getProfesoresFiltrados() {
@@ -234,10 +243,14 @@ public class ProfesorController implements Serializable {
     
     public List<Checklist> getAsignaturasChecklist(int id){
         ParamSemestreAno semAño = ejbParam.find(Long.parseLong(1+""));
-        Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAño(Long.parseLong(id+""), semAño.getSemestreActual(), semAño.getAnoActual());
-       
-        return encuesta.getAsignaturasAceptadas();
-        //return new ArrayList();
+        //Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAño(Long.parseLong(id+""), semAño.getSemestreActual(), semAño.getAnoActual());
+        Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAño(getIdProfesor(), semAño.getSemestreActual(), semAño.getAnoActual());
+        try{
+            return encuesta.getListaAsignaturas();
+        }
+        catch(NullPointerException e){
+            return null;
+        }
     }
     
     @FacesConverter(forClass = Profesor.class)

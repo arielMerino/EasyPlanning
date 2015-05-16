@@ -42,6 +42,7 @@ public class Profesores implements ProfesoresLocal{
             return (Encuesta) query.getSingleResult();            
         }
         catch(NoResultException e){
+            System.out.println(e.getLocalizedMessage());
             return null;
         }
     }
