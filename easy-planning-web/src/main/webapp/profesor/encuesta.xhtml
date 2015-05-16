@@ -17,19 +17,16 @@
 
                     <p:layoutUnit position="east" resizable="true" minSize="400">
                         <p:panel header="Asignaturas">
-                            <h:outputText value="Marca las asignaturas que deseas continuar impartiendo"></h:outputText>
-                            <p:selectManyCheckbox value="#{encuestaController.listaContinuidad}">
-                            <c:forEach  var="item" items="#{profesorController.getAsignaturasProfesor(params.id)}">
-                                <f:selectItem itemLabel="#{item.nombre}" itemValue="#{item.id}" />
-                            </c:forEach>
-                            </p:selectManyCheckbox> 
-                            <p:commandButton value="Confirmar" actionListener="#{encuestaController.crearEncuesta}"/>
+                            <h:outputText value="Seleccione las asignaturas que desee continuar impartiendo"/>
+                            <p:selectManyCheckbox value="#{encuestaController.asignaturas}" layout="grid" columns="1">
+                                <f:selectItems value="#{profesorController.getAsignaturasChecklist(param.id)}" var="check" itemLabel="#{check.asignatura.nombre}" itemValue="#{check}"/>
+                            </p:selectManyCheckbox>
                         </p:panel>
                         <p:panel header="Comentario">
                             <h:inputTextarea cols="50" rows="5"/>
                         </p:panel>
                         <br />
-                        <h:commandButton value="Enviar"/>
+                        <p:commandButton value="Enviar" action="#{encuestaController.resultadoEncuesta(param.id)}"/>
                     </p:layoutUnit>
 
                     <p:layoutUnit position="center" header="Horario">
@@ -50,7 +47,7 @@
                                 <p:row>:
                                     <p:column class="horario-encuesta">1. 8:00-9:30</p:column>
                                     <p:column rowspan="9" colspan="6" >
-                                        <p:selectManyCheckbox id="basic" value="#{profesorController.horariosSeleccionados}" layout="grid" columns="6" style="width: 100%;">
+                                        <p:selectManyCheckbox id="basic" value="#{encuestaController.horariosSeleccionados}" layout="grid" columns="6" style="width: 100%;">
                                             <f:selectItem itemLabel="L1" itemValue="L1"/>
                                             <f:selectItem itemLabel="M1" itemValue="M1"/>
                                             <f:selectItem itemLabel="W1" itemValue="W1"/>                     

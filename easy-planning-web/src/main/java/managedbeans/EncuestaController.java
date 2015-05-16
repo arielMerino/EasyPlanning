@@ -1,8 +1,10 @@
 package managedbeans;
 
+import business.ProfesoresLocal;
 import entities.Asignatura;
 import entities.Encuesta;
 import entities.Checklist;
+import entities.ParamSemestreAno;
 
 import sessionbeans.EncuestaFacadeLocal;
 import sessionbeans.AsignaturaFacadeLocal;
@@ -14,6 +16,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import sessionbeans.ParamSemestreAñoFacadeLocal;
 
 /**
  *
@@ -29,10 +32,33 @@ public class EncuestaController implements Serializable {
     private AsignaturaFacadeLocal asignaturaFacade;
     @EJB
     private ChecklistFacadeLocal checklistFacade;
+    @EJB
+    private ProfesoresLocal profesorBusiness;
+    @EJB
+    private ParamSemestreAñoFacadeLocal ejbParam;
+    
     private List<String> listaContinuidad;    
     private String comentario;
+    private List<Checklist> asignaturas;
+    private String[] horariosSeleccionados;
     
     public EncuestaController() {
+    }
+
+    public String[] getHorariosSeleccionados() {
+        return horariosSeleccionados;
+    }
+
+    public void setHorariosSeleccionados(String[] horariosSeleccionados) {
+        this.horariosSeleccionados = horariosSeleccionados;
+    }
+
+    public List<Checklist> getAsignaturas() {
+        return asignaturas;
+    }
+
+    public void setAsignaturas(List<Checklist> asignaturas) {
+        this.asignaturas = asignaturas;
     }
 
     public EncuestaFacadeLocal getFacade() {
@@ -92,6 +118,15 @@ public class EncuestaController implements Serializable {
         }
         
         return asignaturas;
+    }
+    
+    public void resultadoEncuesta(int id_profesor){
+        Long id = Long.parseLong(id_profesor+"");
+        ParamSemestreAno semAño = ejbParam.find(Long.parseLong(1+""));
+        Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAño(Long.parseLong(id+""), semAño.getSemestreActual(), semAño.getAnoActual());
+        for (Checklist asignatura : asignaturas) {
+            
+        }
     }
     
 }

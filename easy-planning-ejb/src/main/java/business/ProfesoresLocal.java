@@ -5,6 +5,7 @@
  */
 package business;
 
+import entities.Encuesta;
 import entities.Profesor;
 import javax.ejb.Local;
 
@@ -15,4 +16,6 @@ import javax.ejb.Local;
 @Local
 public interface ProfesoresLocal {
     public Profesor findByRut(String rut);
+    
+    public Encuesta getEncuestaBySemestreAndAño(Long id, int semestre, int año);
 }
