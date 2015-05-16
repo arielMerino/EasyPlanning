@@ -243,14 +243,12 @@ public class ProfesorController implements Serializable {
     
     public List<Checklist> getAsignaturasChecklist(int id){
         ParamSemestreAno semAño = ejbParam.find(Long.parseLong(1+""));
-        //Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAño(Long.parseLong(id+""), semAño.getSemestreActual(), semAño.getAnoActual());
-        Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAño(getIdProfesor(), semAño.getSemestreActual(), semAño.getAnoActual());
         try{
+            Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAño(getIdProfesor(), semAño.getSemestreActual(), semAño.getAnoActual());
             return encuesta.getListaAsignaturas();
         }
-        catch(NullPointerException e){
-            //System.out.println(e.getLocalizedMessage()+" --> ProfesorController");
-            JsfUtil.addErrorMessage("Problema en el profesorController");
+        catch(Exception e){
+            JsfUtil.addErrorMessage("Aún no posee encuesta");
             return null;
         }
     }

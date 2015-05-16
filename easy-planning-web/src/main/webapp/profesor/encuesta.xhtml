@@ -14,13 +14,24 @@
         <ui:define name="body">
             <div class="container-fluid" id="growl">
                 <h:form>
+                    <c:set var="id" scope="request" value="#{param['id']}"/>
+                    <c:if test="#{id != 0}">
+                        #{profesorController.setIdProfesor(id)}
+                    </c:if>
+                    
+                    <c:if test="#{profesorController.getAsignaturasChecklist(profesorController.idProfesor) == null}">
+                        <br />
+                        <div class="alert alert-danger text-center">
+                            <strong>Usted aún no tiene una encuesta asignada</strong>
+                            <p>
+                                Por favor contáctese con su Coordinador Docente para que le envíe la encuesta y solucione el problema
+                            </p>
+                        </div>
+                    </c:if>
                     <p:layout>
 
                         <p:layoutUnit position="east" resizable="true" minSize="400">
-                            <c:set var="id" scope="request" value="#{param['id']}"/>
-                            <c:if test="#{id != 0}">
-                                #{profesorController.setIdProfesor(id)}
-                            </c:if>
+                            
                             <p:panel header="Asignaturas">
                                 <h:outputText value="Seleccione las asignaturas que desee continuar impartiendo"/>
                                 <p:selectManyCheckbox value="#{encuestaController.asignaturas}" layout="grid" columns="1">
