@@ -5,6 +5,8 @@
  */
 package managedbeans;
 
+import entities.Asignatura;
+import entities.Checklist;
 import entities.Encuesta;
 import entities.ParamSemestreAno;
 import java.io.Serializable;
@@ -26,6 +28,7 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import managedbeans.util.JsfUtil;
+import sessionbeans.ChecklistFacadeLocal;
 import sessionbeans.EncuestaFacadeLocal;
 import sessionbeans.ParamSemestreAñoFacadeLocal;
 
@@ -44,6 +47,8 @@ public class EmailController implements Serializable {
     private ParamSemestreAñoFacadeLocal ejbSemAño;
     @EJB
     private EncuestaFacadeLocal ejbEncuesta;
+    @EJB
+    private ChecklistFacadeLocal ejbCheck;
 
     public EncuestaFacadeLocal getEjbEncuesta() {
         return ejbEncuesta;
@@ -128,6 +133,14 @@ public class EmailController implements Serializable {
             encuesta.setAño(semAnho.getAnoActual());
             encuesta.setSemestre(semAnho.getSemestreActual());
             getEjbEncuesta().create(encuesta);
+            
+            for(Asignatura asignatura : profesorController.getAsignaturasProfesor(profesorController.getSelected().getId())){
+                Checklist check = new Checklist();
+                check.setAceptado(false);
+                check.setAsignatura(asignatura);
+                check.setEncuesta(encuesta);
+                ejbCheck.create(check);
+            }
             
             enviarEmail(origen, nombre, pass, emailProfesor, asunto, contenido);
         }

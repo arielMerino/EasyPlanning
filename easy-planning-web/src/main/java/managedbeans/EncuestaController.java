@@ -17,6 +17,7 @@ import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.EJB;
 import javax.faces.context.FacesContext;
 import managedbeans.util.JsfUtil;
@@ -145,6 +146,7 @@ public class EncuestaController implements Serializable {
             encuestaFacade.edit(encuesta);
         }
         catch(NullPointerException e){
+            //System.out.println(e.getLocalizedMessage()+" --> EncuestaController1");
             JsfUtil.addErrorMessage("Ha ocurrido un error");
         }
         try{
@@ -154,19 +156,44 @@ public class EncuestaController implements Serializable {
                 checklistFacade.edit(check);
                 
             }
+            setFalseChecklist(id);
             for(String bloque : horariosSeleccionados){
                 Horario horario = new Horario();
                 horario.setBloque(bloque);
                 horario.setProfesor(ejbProfesor.find(id));
                 ejbHorario.create(horario);
             }
+            //System.out.println("EEEEEEEEEXITO");
             JsfUtil.addSuccessMessage("Encuesta registrada con éxito");
             
         }
         catch(Exception e){
+            //System.out.println(e.getLocalizedMessage()+" --> EncuestaController2");
             JsfUtil.addErrorMessage("Ha ocurrido un error");
         }
         
+    }
+    
+    public void setFalseChecklist(Long id_profesor){
+        ParamSemestreAno semAño = ejbParam.find(Long.parseLong(1+""));
+        Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAño(id_profesor, semAño.getSemestreActual(), semAño.getAnoActual());
+        List<Checklist> noSeleccionadas = new ArrayList();
+        boolean flag;        
+        for(Checklist todas : encuesta.getListaAsignaturas()){
+            flag = false;
+            for(Long seleccionada : asignaturas){
+                if(Objects.equals(seleccionada, todas.getId())){
+                    flag = true;
+                }
+            }
+            if(!flag){
+                noSeleccionadas.add(todas);
+            }
+        }
+        for(Checklist noSelect : noSeleccionadas){
+            noSelect.setAceptado(false);
+            checklistFacade.edit(noSelect);
+        }
     }
     
 }
