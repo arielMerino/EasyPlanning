@@ -21,7 +21,9 @@ import javax.persistence.NamedQuery;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Horario.findBybloqueCarreraPlanNivelAñoYSemestre",
-            query = "SELECT h FROM Horario h WHERE h.bloque = :bloque AND h.seccion.coordinacion.asignatura.carrera.codigo = :codigo AND h.seccion.coordinacion.asignatura.planEstudio = :plan AND h.seccion.coordinacion.asignatura.nivel = :nivel AND h.seccion.coordinacion.año = :año AND h.seccion.coordinacion.semestre = :semestre")
+            query = "SELECT h FROM Horario h WHERE h.bloque = :bloque AND h.seccion.coordinacion.asignatura.carrera.codigo = :codigo AND h.seccion.coordinacion.asignatura.planEstudio = :plan AND h.seccion.coordinacion.asignatura.nivel = :nivel AND h.seccion.coordinacion.año = :año AND h.seccion.coordinacion.semestre = :semestre"),
+    @NamedQuery(name="Horario.findByBloqueAndProfesor",
+            query = "SELECT h FROM Horario h WHERE h.bloque = :bloque AND h.profesor = :idProfesor")
 })
 public class Horario implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -88,7 +90,6 @@ public class Horario implements Serializable {
 
     @Override
     public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
         if (!(object instanceof Horario)) {
             return false;
         }

@@ -49,7 +49,7 @@ public class ProfesorController implements Serializable {
     @EJB
     private ParamSemestreAñoFacadeLocal ejbParam;
     
-    private List<Profesor> items = null;
+    private List<Profesor> items;
     private Profesor selected;
     private String[] horariosSeleccionados;
     private List<Profesor> profesoresFiltrados;
@@ -248,7 +248,6 @@ public class ProfesorController implements Serializable {
             return encuesta.getListaAsignaturas();
         }
         catch(Exception e){
-            JsfUtil.addErrorMessage("Aún no posee encuesta");
             return null;
         }
     }

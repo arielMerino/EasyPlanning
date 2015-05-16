@@ -1,5 +1,6 @@
 package managedbeans;
 
+import business.HorariosLocal;
 import business.ProfesoresLocal;
 import entities.Asignatura;
 import entities.Encuesta;
@@ -47,6 +48,8 @@ public class EncuestaController implements Serializable {
     private ParamSemestreAñoFacadeLocal ejbParam;
     @EJB
     private HorarioFacadeLocal ejbHorario;
+    @EJB
+    private HorariosLocal ejbHorarioBusiness;
     
     private List<String> listaContinuidad;    
     private String comentario = "";
@@ -138,18 +141,12 @@ public class EncuestaController implements Serializable {
     
     public void resultadoEncuesta(int id_profesor){
         Long id = Long.parseLong(id_profesor+"");
-        //Long id = id_profesor;
         ParamSemestreAno semAño = ejbParam.find(Long.parseLong(1+""));
         try{
             Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAño(id, semAño.getSemestreActual(), semAño.getAnoActual());
             encuesta.setComentario(comentario);
             encuestaFacade.edit(encuesta);
-        }
-        catch(NullPointerException e){
-            //System.out.println(e.getLocalizedMessage()+" --> EncuestaController1");
-            JsfUtil.addErrorMessage("Ha ocurrido un error");
-        }
-        try{
+            
             for (Long asignatura : asignaturas) {
                 Checklist check = checklistFacade.find(asignatura);
                 check.setAceptado(true);
@@ -158,17 +155,17 @@ public class EncuestaController implements Serializable {
             }
             setFalseChecklist(id);
             for(String bloque : horariosSeleccionados){
-                Horario horario = new Horario();
-                horario.setBloque(bloque);
-                horario.setProfesor(ejbProfesor.find(id));
-                ejbHorario.create(horario);
+                if(ejbHorarioBusiness.findByBloqueAndProfesor(bloque, id) == null){                    
+                    Horario horario = new Horario();
+                    horario.setBloque(bloque);
+                    horario.setProfesor(ejbProfesor.find(id));
+                    ejbHorario.edit(horario);
+                }
             }
-            //System.out.println("EEEEEEEEEXITO");
             JsfUtil.addSuccessMessage("Encuesta registrada con éxito");
             
         }
         catch(Exception e){
-            //System.out.println(e.getLocalizedMessage()+" --> EncuestaController2");
             JsfUtil.addErrorMessage("Ha ocurrido un error");
         }
         

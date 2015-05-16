@@ -38,5 +38,17 @@ public class Horarios implements HorariosLocal {
             return null;
         }
     }
+
+    @Override
+    public Horario findByBloqueAndProfesor(String bloque, Long idProfesor) {
+        Query query = em.createNamedQuery("Horario.findByBloqueAndProfesor").setParameter("bloque", bloque);
+        query.setParameter("idProfesor", idProfesor);
+        try{
+            return (entities.Horario) query.getSingleResult();
+        }
+        catch(NoResultException e){
+            return null;
+        }
+    }
     
 }

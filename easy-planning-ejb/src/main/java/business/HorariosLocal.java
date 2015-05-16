@@ -15,4 +15,6 @@ import javax.ejb.Local;
 @Local
 public interface HorariosLocal {
     public Horario findBybloqueCarreraPlanNivelAñoYSemestre(String bloque, int codigo, String plan, int nivel, int año, int semestre);
+    
+    public Horario findByBloqueAndProfesor(String bloque, Long idProfesor);
 }
