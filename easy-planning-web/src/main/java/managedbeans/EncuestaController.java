@@ -1,8 +1,12 @@
 package managedbeans;
 
+import business.ProfesoresLocal;
 import entities.Asignatura;
 import entities.Encuesta;
 import entities.Checklist;
+import entities.Horario;
+import entities.ParamSemestreAno;
+import java.io.IOException;
 
 import sessionbeans.EncuestaFacadeLocal;
 import sessionbeans.AsignaturaFacadeLocal;
@@ -14,6 +18,11 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
+import managedbeans.util.JsfUtil;
+import sessionbeans.HorarioFacadeLocal;
+import sessionbeans.ParamSemestreAñoFacadeLocal;
+import sessionbeans.ProfesorFacadeLocal;
 
 /**
  *
@@ -29,10 +38,37 @@ public class EncuestaController implements Serializable {
     private AsignaturaFacadeLocal asignaturaFacade;
     @EJB
     private ChecklistFacadeLocal checklistFacade;
+    @EJB
+    private ProfesoresLocal profesorBusiness;
+    @EJB
+    private ProfesorFacadeLocal ejbProfesor;
+    @EJB
+    private ParamSemestreAñoFacadeLocal ejbParam;
+    @EJB
+    private HorarioFacadeLocal ejbHorario;
+    
     private List<String> listaContinuidad;    
-    private String comentario;
+    private String comentario = "";
+    private Long[] asignaturas;
+    private String[] horariosSeleccionados;
     
     public EncuestaController() {
+    }
+
+    public String[] getHorariosSeleccionados() {
+        return horariosSeleccionados;
+    }
+
+    public void setHorariosSeleccionados(String[] horariosSeleccionados) {
+        this.horariosSeleccionados = horariosSeleccionados;
+    }
+
+    public Long[] getAsignaturas() {
+        return asignaturas;
+    }
+
+    public void setAsignaturas(Long[] asignaturas) {
+        this.asignaturas = asignaturas;
     }
 
     public EncuestaFacadeLocal getFacade() {
@@ -97,6 +133,40 @@ public class EncuestaController implements Serializable {
         }catch (Exception e){
             return null;
         }
+    }
+    
+    public void resultadoEncuesta(int id_profesor){
+        Long id = Long.parseLong(id_profesor+"");
+        //Long id = id_profesor;
+        ParamSemestreAno semAño = ejbParam.find(Long.parseLong(1+""));
+        try{
+            Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAño(id, semAño.getSemestreActual(), semAño.getAnoActual());
+            encuesta.setComentario(comentario);
+            encuestaFacade.edit(encuesta);
+        }
+        catch(NullPointerException e){
+            JsfUtil.addErrorMessage("Ha ocurrido un error");
+        }
+        try{
+            for (Long asignatura : asignaturas) {
+                Checklist check = checklistFacade.find(asignatura);
+                check.setAceptado(true);
+                checklistFacade.edit(check);
+                
+            }
+            for(String bloque : horariosSeleccionados){
+                Horario horario = new Horario();
+                horario.setBloque(bloque);
+                horario.setProfesor(ejbProfesor.find(id));
+                ejbHorario.create(horario);
+            }
+            JsfUtil.addSuccessMessage("Encuesta registrada con éxito");
+            
+        }
+        catch(Exception e){
+            JsfUtil.addErrorMessage("Ha ocurrido un error");
+        }
+        
     }
     
 }

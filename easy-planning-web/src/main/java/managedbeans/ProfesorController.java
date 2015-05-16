@@ -1,9 +1,12 @@
 package managedbeans;
 
+import business.ProfesoresLocal;
 import entities.Horario;
 import entities.Profesor;
 import entities.Asignatura;
+import entities.Checklist;
 import entities.Encuesta;
+import entities.ParamSemestreAno;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.ProfesorFacadeLocal;
@@ -27,6 +30,7 @@ import javax.faces.convert.FacesConverter;
 import sessionbeans.HorarioFacadeLocal;
 import sessionbeans.AsignaturaFacadeLocal;
 import sessionbeans.EncuestaFacadeLocal;
+import sessionbeans.ParamSemestreAñoFacadeLocal;
 
 @Named("profesorController")
 @SessionScoped
@@ -40,12 +44,26 @@ public class ProfesorController implements Serializable {
     private AsignaturaFacadeLocal asignaturaFacade;
     @EJB
     private EncuestaFacadeLocal encuestaFacade;
+    @EJB
+    private ProfesoresLocal profesoresBusiness;
+    @EJB
+    private ParamSemestreAñoFacadeLocal ejbParam;
+    
     private List<Profesor> items = null;
     private Profesor selected;
     private String[] horariosSeleccionados;
     private List<Profesor> profesoresFiltrados;
+    private Long idProfesor;
 
     public ProfesorController() {
+    }
+
+    public Long getIdProfesor() {
+        return idProfesor;
+    }
+
+    public void setIdProfesor(Long idProfesor) {
+        this.idProfesor = idProfesor;
     }
 
     public List<Profesor> getProfesoresFiltrados() {
@@ -222,7 +240,19 @@ public class ProfesorController implements Serializable {
         }
         return encuesta.getComentario();
     }
-
+    
+    public List<Checklist> getAsignaturasChecklist(int id){
+        ParamSemestreAno semAño = ejbParam.find(Long.parseLong(1+""));
+        //Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAño(Long.parseLong(id+""), semAño.getSemestreActual(), semAño.getAnoActual());
+        Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAño(getIdProfesor(), semAño.getSemestreActual(), semAño.getAnoActual());
+        try{
+            return encuesta.getListaAsignaturas();
+        }
+        catch(NullPointerException e){
+            return null;
+        }
+    }
+    
     @FacesConverter(forClass = Profesor.class)
     public static class ProfesorControllerConverter implements Converter {
 

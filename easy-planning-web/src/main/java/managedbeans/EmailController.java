@@ -127,8 +127,6 @@ public class EmailController implements Serializable {
             ParamSemestreAno semAnho = getEjbSemAño().find(Long.parseLong(1+""));
             encuesta.setAño(semAnho.getAnoActual());
             encuesta.setSemestre(semAnho.getSemestreActual());
-            //encuesta.setAño(2015);
-            //encuesta.setSemestre(2);
             getEjbEncuesta().create(encuesta);
             
             enviarEmail(origen, nombre, pass, emailProfesor, asunto, contenido);

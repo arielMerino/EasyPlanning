@@ -5,6 +5,7 @@
  */
 package business;
 
+import entities.Encuesta;
 import entities.Profesor;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
@@ -28,6 +29,20 @@ public class Profesores implements ProfesoresLocal{
             return (Profesor) query.getSingleResult();
         }
         catch(NoResultException e){
+            return null;
+        }
+    }
+
+    @Override
+    public Encuesta getEncuestaBySemestreAndAño(Long id, int semestre, int año) {
+        Query query = em.createNamedQuery("Profesor.getEncuestaBySemestreAndAño").setParameter("semestre", semestre);
+        query.setParameter("año", año);
+        query.setParameter("id", id);
+        try{
+            return (Encuesta) query.getSingleResult();            
+        }
+        catch(NoResultException e){
+            System.out.println(e.getLocalizedMessage());
             return null;
         }
     }
