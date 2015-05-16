@@ -249,6 +249,8 @@ public class ProfesorController implements Serializable {
             return encuesta.getListaAsignaturas();
         }
         catch(NullPointerException e){
+            //System.out.println(e.getLocalizedMessage()+" --> ProfesorController");
+            JsfUtil.addErrorMessage("Problema en el profesorController");
             return null;
         }
     }
