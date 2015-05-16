@@ -10,26 +10,32 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author jano
  */
 @Entity
-public class ParamSemestreAño implements Serializable {
+@NamedQueries({
+    @NamedQuery(name="ParamSemestreAno.findById",
+            query="SELECT p FROM ParamSemestreAno p WHERE p.id = :id")
+})
+public class ParamSemestreAno implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private int añoActual;
+    private int anoActual;
     private int semestreActual;
 
-    public int getAñoActual() {
-        return añoActual;
+    public int getAnoActual() {
+        return anoActual;
     }
 
-    public void setAñoActual(int añoActual) {
-        this.añoActual = añoActual;
+    public void setAnoActual(int anoActual) {
+        this.anoActual = anoActual;
     }
 
     public int getSemestreActual() {
@@ -58,10 +64,10 @@ public class ParamSemestreAño implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof ParamSemestreAño)) {
+        if (!(object instanceof ParamSemestreAno)) {
             return false;
         }
-        ParamSemestreAño other = (ParamSemestreAño) object;
+        ParamSemestreAno other = (ParamSemestreAno) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }

@@ -5,7 +5,7 @@
  */
 package sessionbeans;
 
-import entities.ParamSemestreAño;
+import entities.ParamSemestreAno;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -16,18 +16,20 @@ import javax.ejb.Local;
 @Local
 public interface ParamSemestreAñoFacadeLocal {
 
-    void create(ParamSemestreAño paramSemestreAño);
+    void create(ParamSemestreAno paramSemestreAño);
 
-    void edit(ParamSemestreAño paramSemestreAño);
+    void edit(ParamSemestreAno paramSemestreAño);
 
-    void remove(ParamSemestreAño paramSemestreAño);
+    void remove(ParamSemestreAno paramSemestreAño);
 
-    ParamSemestreAño find(Object id);
+    ParamSemestreAno find(Object id);
 
-    List<ParamSemestreAño> findAll();
+    List<ParamSemestreAno> findAll();
 
-    List<ParamSemestreAño> findRange(int[] range);
+    List<ParamSemestreAno> findRange(int[] range);
 
     int count();
+    
+    ParamSemestreAno findById(Long id);
     
 }
