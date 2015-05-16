@@ -159,7 +159,7 @@ public class EncuestaController implements Serializable {
                     Horario horario = new Horario();
                     horario.setBloque(bloque);
                     horario.setProfesor(ejbProfesor.find(id));
-                    ejbHorario.edit(horario);
+                    ejbHorario.create(horario);
                 }
             }
             JsfUtil.addSuccessMessage("Encuesta registrada con éxito");
