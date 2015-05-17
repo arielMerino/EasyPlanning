@@ -24,10 +24,10 @@ public class Secciones implements SeccionesLocal {
     private EntityManager em;
     
     @Override
-    public List<Seccion> findBySemestreAñoCarreraPlan(int codCarrera, String plan, int año, int semestre){
-        Query query = em.createNamedQuery("Seccion.findByCarreraPlanAñoSemestre").setParameter("codigo", codCarrera);
+    public List<Seccion> findBySemestreAnioCarreraPlan(int codCarrera, String plan, int anio, int semestre){
+        Query query = em.createNamedQuery("Seccion.findByCarreraPlanAnioSemestre").setParameter("codigo", codCarrera);
         query.setParameter("plan", plan);
-        query.setParameter("año", año);
+        query.setParameter("anio", anio);
         query.setParameter("semestre", semestre);
         try{
             return (List<Seccion>) query.getResultList();
@@ -37,9 +37,9 @@ public class Secciones implements SeccionesLocal {
     }
     
     @Override
-    public List<Seccion> findByAsignaturaAñoYSemestre(long asg, int año, int semestre){
-        Query query = em.createNamedQuery("Seccion.findByAsignaturaAñoYSemestre").setParameter("idAsg", asg);
-        query.setParameter("año", año);
+    public List<Seccion> findByAsignaturaAnioYSemestre(long asg, int anio, int semestre){
+        Query query = em.createNamedQuery("Seccion.findByAsignaturaAnioYSemestre").setParameter("idAsg", asg);
+        query.setParameter("anio", anio);
         query.setParameter("semestre", semestre);
         try{
             return (List<Seccion>) query.getResultList();

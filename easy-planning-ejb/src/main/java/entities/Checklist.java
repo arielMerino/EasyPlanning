@@ -22,8 +22,8 @@ import javax.persistence.OneToOne;
 @Entity
 @NamedQueries({
     @NamedQuery(
-            name = "Checklist.findProfesoresByAsgAñoAndSemestre",
-            query = "SELECT DISTINCT c.encuesta.profesor.id FROM Checklist c WHERE c.asignatura.id = :asg AND c.encuesta.año = :año AND c.encuesta.semestre = :semestre AND c.aceptado = 'true'"
+            name = "Checklist.findProfesoresByAsgnioAndSemestre",
+            query = "SELECT DISTINCT c.encuesta.profesor.id FROM Checklist c WHERE c.asignatura.id = :asg AND c.encuesta.anio = :anio AND c.encuesta.semestre = :semestre AND c.aceptado = 'true'"
     )
 })
 public class Checklist implements Serializable {

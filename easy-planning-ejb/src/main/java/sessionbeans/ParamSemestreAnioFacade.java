@@ -17,7 +17,7 @@ import javax.persistence.Query;
  * @author jano
  */
 @Stateless
-public class ParamSemestreAñoFacade extends AbstractFacade<ParamSemestreAno> implements ParamSemestreAñoFacadeLocal {
+public class ParamSemestreAnioFacade extends AbstractFacade<ParamSemestreAno> implements ParamSemestreAnioFacadeLocal {
     @PersistenceContext(unitName = "cl.G2Pingeso_easy-planning-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -26,7 +26,7 @@ public class ParamSemestreAñoFacade extends AbstractFacade<ParamSemestreAno> im
         return em;
     }
 
-    public ParamSemestreAñoFacade() {
+    public ParamSemestreAnioFacade() {
         super(ParamSemestreAno.class);
     }
 

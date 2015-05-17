@@ -152,7 +152,7 @@ public class AsignaturaController implements Serializable {
         List<Seccion> secciones = getSeccionFacade().findAll();
         Coordinacion coordinacion = null;
         for( Coordinacion item : coordinaciones){
-            if(item.getAño() == ano && item.getSemestre() == semestre){
+            if(item.getAnio() == ano && item.getSemestre() == semestre){
                 coordinacion = item;
                 break;
             }

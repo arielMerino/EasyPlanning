@@ -34,9 +34,9 @@ public class Profesores implements ProfesoresLocal{
     }
 
     @Override
-    public Encuesta getEncuestaBySemestreAndAño(Long id, int semestre, int año) {
-        Query query = em.createNamedQuery("Profesor.getEncuestaBySemestreAndAño").setParameter("semestre", semestre);
-        query.setParameter("año", año);
+    public Encuesta getEncuestaBySemestreAndAnio(Long id, int semestre, int anio) {
+        Query query = em.createNamedQuery("Profesor.getEncuestaBySemestreAndAnio").setParameter("semestre", semestre);
+        query.setParameter("anio", anio);
         query.setParameter("id", id);
         try{
             return (Encuesta) query.getSingleResult();            

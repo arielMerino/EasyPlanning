@@ -17,5 +17,5 @@ import javax.ejb.Local;
 public interface ProfesoresLocal {
     public Profesor findByRut(String rut);
     
-    public Encuesta getEncuestaBySemestreAndAño(Long id, int semestre, int año);
+    public Encuesta getEncuestaBySemestreAndAnio(Long id, int semestre, int anio);
 }

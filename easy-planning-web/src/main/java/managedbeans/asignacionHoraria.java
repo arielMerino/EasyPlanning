@@ -81,7 +81,7 @@ public class asignacionHoraria implements Serializable {
     private ArrayList<Seccion> seccionesAsignatura = new ArrayList<>();
     private ArrayList<Long> seccionesIds = new ArrayList<>();
     private String [] horariosSeleccionados;
-    private int añoSelected = Calendar.getInstance().get(Calendar.YEAR);
+    private int anioSelected = Calendar.getInstance().get(Calendar.YEAR);
     private int semestreSelected = 1;
     private String bloqueSelected;
     private int asignar = 0;
@@ -292,8 +292,8 @@ public class asignacionHoraria implements Serializable {
         return profesor.getNombre()+" "+profesor.getApellido();
     }
     
-    public int getAñoSelected() {
-        return añoSelected;
+    public int getAnioSelected() {
+        return anioSelected;
     }
 
 
@@ -320,8 +320,8 @@ public class asignacionHoraria implements Serializable {
          }
     }
     
-    public void setAñoSelected(int añoSelected) {
-        this.añoSelected = añoSelected;
+    public void setAnioSelected(int anioSelected) {
+        this.anioSelected = anioSelected;
     }
 
     public int getSemestreSelected() {
@@ -415,18 +415,18 @@ public class asignacionHoraria implements Serializable {
         return "ejercicios";
     }
     
-    public List<Integer> añosDisponibles(){
+    public List<Integer> aniosDisponibles(){
         Calendar fecha = Calendar.getInstance();
-        List<Integer> años = new ArrayList<>();
+        List<Integer> anios = new ArrayList<>();
         for (int i = 0; i < 3; i++) {
-            años.add(i + fecha.get(Calendar.YEAR));
+            anios.add(i + fecha.get(Calendar.YEAR));
         }
-        return años;
+        return anios;
     }
     
     public String getCodigoAsgSeccionByBloque(String bloque){
         try{
-            Horario result = horariosBusiness.findBybloqueCarreraPlanNivelAñoYSemestre(bloque, carreraSelected, planEstudioSelected, nivelSelected, añoSelected, semestreSelected);
+            Horario result = horariosBusiness.findBybloqueCarreraPlanNivelAnioYSemestre(bloque, carreraSelected, planEstudioSelected, nivelSelected, anioSelected, semestreSelected);
             if (result == null)
                 return "";
             return result.getSeccion().getCoordinacion().getAsignatura().getCodigo()+"-"+result.getSeccion().getCodigo();
@@ -438,7 +438,7 @@ public class asignacionHoraria implements Serializable {
     public List<Profesor> getProfesoresDisponibles(){
         List<Long> ids = new ArrayList<>();
         if (asignaturaSelected != 0L){
-            ids = checklistBusiness.findProfesorByAsgAñoSemestre(asignaturaSelected, añoSelected, semestreSelected);
+            ids = checklistBusiness.findProfesorByAsgAnioSemestre(asignaturaSelected, anioSelected, semestreSelected);
         }
         List<Profesor> profesores = new ArrayList<>();
         for (long id : ids){
@@ -449,7 +449,7 @@ public class asignacionHoraria implements Serializable {
     
     public String getProfesorByBloque(String bloque){
         try{
-            Horario result = horariosBusiness.findBybloqueCarreraPlanNivelAñoYSemestre(bloque, carreraSelected, planEstudioSelected, nivelSelected, añoSelected, semestreSelected);
+            Horario result = horariosBusiness.findBybloqueCarreraPlanNivelAnioYSemestre(bloque, carreraSelected, planEstudioSelected, nivelSelected, anioSelected, semestreSelected);
             if (result == null)
                 return "";
             return "- "+result.getProfesor().getNombre()+" "+result.getProfesor().getApellido();            
@@ -465,7 +465,7 @@ public class asignacionHoraria implements Serializable {
     }
     
     public void asignar(){
-        Horario h = horariosBusiness.findBybloqueCarreraPlanNivelAñoYSemestre(bloqueSelected, carreraSelected, planEstudioSelected, nivelSelected, añoSelected, semestreSelected);
+        Horario h = horariosBusiness.findBybloqueCarreraPlanNivelAnioYSemestre(bloqueSelected, carreraSelected, planEstudioSelected, nivelSelected, anioSelected, semestreSelected);
         if (this.asignar != 0){
             if (h == null){
                 System.out.println("h no sexiste");

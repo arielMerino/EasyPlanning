@@ -33,7 +33,7 @@ public class Encuesta implements Serializable {
     @OneToMany(mappedBy = "encuesta")
     private List<Checklist> listaAsignaturas;
     private String comentario;
-    private int año;
+    private int anio;
     private int semestre;
 
     public Long getId() {
@@ -44,12 +44,12 @@ public class Encuesta implements Serializable {
         this.id = id;
     }
 
-    public int getAño() {
-        return año;
+    public int getAnio() {
+        return anio;
     }
 
-    public void setAño(int año) {
-        this.año = año;
+    public void setAnio(int anio) {
+        this.anio = anio;
     }
 
     public int getSemestre() {

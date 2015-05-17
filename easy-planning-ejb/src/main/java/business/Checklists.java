@@ -23,9 +23,9 @@ public class Checklists implements ChecklistsLocal {
     private EntityManager em;
     
     @Override
-    public List<Long> findProfesorByAsgAñoSemestre(long asg, int año, int semestre){
-        Query query = em.createNamedQuery("Checklist.findProfesoresByAsgAñoAndSemestre").setParameter("asg", asg);
-        query.setParameter("año", año);
+    public List<Long> findProfesorByAsgAnioSemestre(long asg, int anio, int semestre){
+        Query query = em.createNamedQuery("Checklist.findProfesoresByAsgAnioAndSemestre").setParameter("asg", asg);
+        query.setParameter("anio", anio);
         query.setParameter("semestre", semestre);
         try{
             return (List<Long>) query.getResultList();

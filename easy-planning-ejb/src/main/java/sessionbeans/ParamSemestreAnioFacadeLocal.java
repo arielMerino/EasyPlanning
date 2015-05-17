@@ -14,13 +14,13 @@ import javax.ejb.Local;
  * @author jano
  */
 @Local
-public interface ParamSemestreAñoFacadeLocal {
+public interface ParamSemestreAnioFacadeLocal {
 
-    void create(ParamSemestreAno paramSemestreAño);
+    void create(ParamSemestreAno paramSemestreAnio);
 
-    void edit(ParamSemestreAno paramSemestreAño);
+    void edit(ParamSemestreAno paramSemestreAnio);
 
-    void remove(ParamSemestreAno paramSemestreAño);
+    void remove(ParamSemestreAno paramSemestreAnio);
 
     ParamSemestreAno find(Object id);
 
