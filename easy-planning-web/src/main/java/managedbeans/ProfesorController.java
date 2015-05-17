@@ -201,9 +201,11 @@ public class ProfesorController implements Serializable {
         List<Horario> horarios = this.horarioFacade.findAll();
         ArrayList<Horario> disponibles = new ArrayList<>();
         for (int i = 0; i < horarios.size(); i++) {
-            if (profesorId == horarios.get(i).getProfesor().getId()) {
-                if (horarios.get(i).getSeccion()==null) {
-                    disponibles.add(horarios.get(i));
+            if (horarios.get(i).getProfesor() != null){
+                if (profesorId == horarios.get(i).getProfesor().getId()) {
+                    if (horarios.get(i).getSeccion()==null) {
+                        disponibles.add(horarios.get(i));
+                    }
                 }
             }
         }
