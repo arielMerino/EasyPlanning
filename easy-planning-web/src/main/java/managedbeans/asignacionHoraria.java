@@ -134,7 +134,12 @@ public class asignacionHoraria implements Serializable {
 
     public void setBloqueSelected(String bloqueSelected) {
         this.bloqueSelected = bloqueSelected;
-        System.out.println(this.bloqueSelected);
+        Horario h = horariosBusiness.findBybloqueCarreraPlanNivelAnioYSemestre(bloqueSelected, carreraSelected, planEstudioSelected, nivelSelected, anioSelected, semestreSelected);
+        if (h != null){
+            if(h.getProfesor() != null)
+                profesorSelected = h.getProfesor().getId();
+            seccionId = h.getSeccion().getId();
+        }
     }
 
     public int getAsignar() {
@@ -457,6 +462,10 @@ public class asignacionHoraria implements Serializable {
         return profesores;
     }
     
+    public long anularProfesor(){
+        return 0L;
+    }
+    
     public String getProfesorByBloque(String bloque){
         try{
             Horario result = horariosBusiness.findBybloqueCarreraPlanNivelAnioYSemestre(bloque, carreraSelected, planEstudioSelected, nivelSelected, anioSelected, semestreSelected);
@@ -469,7 +478,17 @@ public class asignacionHoraria implements Serializable {
     }
     
     public List<Profesor> getDisponiblesByBloque(String bloque){
-        return profesoresBusiness.findDisponiblesByBloque(bloque);
+        List<Profesor> disponiblesBloque = profesoresBusiness.findDisponiblesByBloque(bloque);
+        List<Profesor> disponiblesFinal = new ArrayList<>();
+        if (asignaturaSelected != 0L){
+            List<Long> disponiblesPorAsignatura = checklistBusiness.findProfesorByAsgAnioSemestre(asignaturaSelected, anioSelected, semestreSelected);
+            for (long id : disponiblesPorAsignatura){
+                Profesor aux = profesorFacade.find(id);
+                if (disponiblesBloque.contains(aux))
+                    disponiblesFinal.add(aux);
+            }
+        }
+        return disponiblesFinal;
     }
     
     
@@ -477,7 +496,13 @@ public class asignacionHoraria implements Serializable {
     public void limpiarBloqueYprofesor(){
         this.profesorSelected = 0L;
         this.seccionId = 0L;
-        this.seccionSelected = null;
+    }
+    
+    public void eliminarHorario(){
+        Horario h = horariosBusiness.findBybloqueCarreraPlanNivelAnioYSemestre(bloqueSelected, carreraSelected, planEstudioSelected, nivelSelected, anioSelected, semestreSelected);
+        if (h != null)
+            horarioFacade.remove(h);
+        limpiarBloqueYprofesor();
     }
     
     public void asignar(){
@@ -494,14 +519,34 @@ public class asignacionHoraria implements Serializable {
                     h.setTipo("L");
                 else
                     h.setTipo("T");
-                if (profesorSelected != 0L)
-                    h.setProfesor(profesorFacade.find(profesorSelected));
+                if (profesorSelected != null){
+                    if (profesorSelected != 0L)
+                        h.setProfesor(profesorFacade.find(profesorSelected));
+                }
                 horarioFacade.create(h);
                 this.asignar = 0;
                 limpiarBloqueYprofesor();
             }
             else{
                 System.out.println("h existe");
+                h.setBloque(bloqueSelected);
+                h.setSeccion(seccionFacade.find(seccionId));
+                if (seccionFacade.find(seccionId).getCodigo().charAt(0)=='E')
+                    h.setTipo("E");
+                if (seccionFacade.find(seccionId).getCodigo().charAt(0)=='L')
+                    h.setTipo("L");
+                else
+                    h.setTipo("T");
+                if (profesorSelected != null){
+                    if (profesorSelected != 0L)
+                        h.setProfesor(profesorFacade.find(profesorSelected));
+                    if (profesorSelected == 0L)
+                        h.setProfesor(null);
+                }
+                if (profesorSelected == null){
+                    h.setProfesor(null);
+                }
+                horarioFacade.edit(h);
                 this.asignar = 0;
                 limpiarBloqueYprofesor();
             }

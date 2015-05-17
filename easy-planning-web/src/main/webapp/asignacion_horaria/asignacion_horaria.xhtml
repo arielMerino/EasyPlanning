@@ -29,7 +29,7 @@
                             <f:selectItem itemLabel="Semestre" noSelectionOption="true" />
                             <f:selectItem itemValue="1" itemLabel="1er semestre" />
                             <f:selectItem itemValue="2" itemLabel="2do semestre" />
-                            <p:ajax process="@this" update="horarioAsignacion" />
+                            <p:ajax process="@this" update="horarioAsignacion, asignaturasSemestre" />
                         </p:selectOneMenu>
                     </div>
                 </div>
@@ -58,7 +58,7 @@
                         <p:selectOneMenu id="niveles" value="#{asignacionHoraria.nivelSelected}" style="width: 100%" immediate="true">
                             <f:selectItem itemLabel="Nivel" noSelectionOption="true" />
                             <f:selectItems value="#{asignacionHoraria.asignaturasBusiness.findNivelesByCodigoCarreraAndPlan(asignacionHoraria.carreraSelected, asignacionHoraria.planEstudioSelected)}" var="nivel" itemLabel="nivel #{nivel}" itemValue="#{nivel}"/>
-                            <p:ajax process="@this" update="asignaturas, horarioAsignacion" />
+                            <p:ajax process="@this" update="asignaturas, horarioAsignacion, asignaturasSemestre" />
                         </p:selectOneMenu>
                     </div>
                 </div>
@@ -199,12 +199,21 @@
                         <p:commandButton class="col-xs-1 btn btn-default bloque" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('V9')} #{asignacionHoraria.getProfesorByBloque('V9')}" action="#{asignacionHoraria.setBloqueSelected('V1')}" update=":form2" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
                         <p:commandButton class="col-xs-1 btn btn-default bloque" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('S9')} #{asignacionHoraria.getProfesorByBloque('S9')}" action="#{asignacionHoraria.setBloqueSelected('S9')}" update=":form2" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
                     </div>
-                </p:panel>>
+                </p:panel>
+                <p:dataTable id="asignaturasSemestre" var="asign" value="#{asignacionHoraria.asignaturasBusiness.findByNivelAndCarreraAndPlan(asignacionHoraria.nivelSelected, asignacionHoraria.carrerasBusiness.findByCodigo(asignacionHoraria.carreraSelected).getNombre(), asignacionHoraria.planEstudioSelected)}">
+                    <f:facet name="header">Asignaturas</f:facet>
+                    <p:column headerText="Código">
+                        <h:outputText value="#{asign.codigo}"/>
+                    </p:column>
+                    <p:column headerText="Asignatura">
+                        <h:outputText value="#{asign.nombre}"/>
+                    </p:column>
+                    <p:column headerText="T-E-L" >
+                        <h:outputText value="#{asign.teoria}-#{asign.ejercicios}-#{asign.laboratorio}" />
+                    </p:column>
+                </p:dataTable>
             </h:form>
-                
-            
             <ui:include src="asociarHorario.xhtml"/>
-            
         </ui:define>
     </ui:composition>
 </html>
