@@ -25,9 +25,9 @@ public class Coordinaciones implements CoordinacionesLocal {
     private EntityManager em;
     
     @Override
-    public Coordinacion findByAsignaturaAndAñoAndSemestre(Asignatura asignatura, int año, int semestre) {
-        Query query = em.createNamedQuery("Coordinacion.findByAsignaturaAndAñoAndSemestre").setParameter("asg", asignatura);
-        query.setParameter("año", año);
+    public Coordinacion findByAsignaturaAndAnioAndSemestre(Asignatura asignatura, int anio, int semestre) {
+        Query query = em.createNamedQuery("Coordinacion.findByAsignaturaAndAnioAndSemestre").setParameter("asg", asignatura);
+        query.setParameter("anio", anio);
         query.setParameter("sem",semestre);
         try{
             return (entities.Coordinacion) query.getSingleResult();
@@ -37,10 +37,10 @@ public class Coordinaciones implements CoordinacionesLocal {
     }
     
     @Override
-    public List<Coordinacion> findByCarreraAndPlanAndAñoAndSemestre(int carrera, String plan, int año, int semestre){
-        Query query = em.createNamedQuery("Coordinacion.findByCarreraAndPlanAndAñoAndSemestre").setParameter("carrera", carrera);
+    public List<Coordinacion> findByCarreraAndPlanAndAnioAndSemestre(int carrera, String plan, int anio, int semestre){
+        Query query = em.createNamedQuery("Coordinacion.findByCarreraAndPlanAndAnioAndSemestre").setParameter("carrera", carrera);
         query.setParameter("plan", plan);
-        query.setParameter("año", año);
+        query.setParameter("anio", anio);
         query.setParameter("semestre", semestre);
         try{
             return (List<Coordinacion>) query.getResultList();

@@ -30,7 +30,7 @@ import javax.faces.convert.FacesConverter;
 import sessionbeans.HorarioFacadeLocal;
 import sessionbeans.AsignaturaFacadeLocal;
 import sessionbeans.EncuestaFacadeLocal;
-import sessionbeans.ParamSemestreAñoFacadeLocal;
+import sessionbeans.ParamSemestreAnioFacadeLocal;
 
 @Named("profesorController")
 @SessionScoped
@@ -47,7 +47,7 @@ public class ProfesorController implements Serializable {
     @EJB
     private ProfesoresLocal profesoresBusiness;
     @EJB
-    private ParamSemestreAñoFacadeLocal ejbParam;
+    private ParamSemestreAnioFacadeLocal ejbParam;
     
     private List<Profesor> items;
     private Profesor selected;
@@ -242,9 +242,9 @@ public class ProfesorController implements Serializable {
     }
     
     public List<Checklist> getAsignaturasChecklist(int id){
-        ParamSemestreAno semAño = ejbParam.find(Long.parseLong(1+""));
+        ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
         try{
-            Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAño(getIdProfesor(), semAño.getSemestreActual(), semAño.getAnoActual());
+            Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(getIdProfesor(), semAnio.getSemestreActual(), semAnio.getAnoActual());
             return encuesta.getListaAsignaturas();
         }
         catch(Exception e){

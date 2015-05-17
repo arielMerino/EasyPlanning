@@ -27,11 +27,11 @@ public class Horarios implements HorariosLocal {
     private EntityManager em;
     
     @Override
-    public Horario findBybloqueCarreraPlanNivelAñoYSemestre(String bloque, int codigo, String plan, int nivel, int año, int semestre){
-        Query query = em.createNamedQuery("Horario.findBybloqueCarreraPlanNivelAñoYSemestre").setParameter("codigo", codigo);
+    public Horario findBybloqueCarreraPlanNivelAnioYSemestre(String bloque, int codigo, String plan, int nivel, int anio, int semestre){
+        Query query = em.createNamedQuery("Horario.findBybloqueCarreraPlanNivelAnioYSemestre").setParameter("codigo", codigo);
         query.setParameter("plan", plan);
         query.setParameter("nivel", nivel);
-        query.setParameter("año", año);
+        query.setParameter("anio", anio);
         query.setParameter("semestre",semestre);
         query.setParameter("bloque", bloque);
         try{

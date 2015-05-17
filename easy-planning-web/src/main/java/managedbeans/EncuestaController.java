@@ -21,7 +21,7 @@ import java.util.Objects;
 import javax.ejb.EJB;
 import managedbeans.util.JsfUtil;
 import sessionbeans.HorarioFacadeLocal;
-import sessionbeans.ParamSemestreAñoFacadeLocal;
+import sessionbeans.ParamSemestreAnioFacadeLocal;
 import sessionbeans.ProfesorFacadeLocal;
 
 /**
@@ -43,7 +43,7 @@ public class EncuestaController implements Serializable {
     @EJB
     private ProfesorFacadeLocal ejbProfesor;
     @EJB
-    private ParamSemestreAñoFacadeLocal ejbParam;
+    private ParamSemestreAnioFacadeLocal ejbParam;
     @EJB
     private HorarioFacadeLocal ejbHorario;
     @EJB
@@ -139,9 +139,9 @@ public class EncuestaController implements Serializable {
     
     public void resultadoEncuesta(int id_profesor){
         Long id = Long.parseLong(id_profesor+"");
-        ParamSemestreAno semAño = ejbParam.find(Long.parseLong(1+""));
+        ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
         try{
-            Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAño(id, semAño.getSemestreActual(), semAño.getAnoActual());
+            Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(id, semAnio.getSemestreActual(), semAnio.getAnoActual());
             encuesta.setComentario(comentario);
             encuestaFacade.edit(encuesta);
             
@@ -170,8 +170,8 @@ public class EncuestaController implements Serializable {
     }
     
     public void setFalseChecklist(Long id_profesor){
-        ParamSemestreAno semAño = ejbParam.find(Long.parseLong(1+""));
-        Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAño(id_profesor, semAño.getSemestreActual(), semAño.getAnoActual());
+        ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
+        Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(id_profesor, semAnio.getSemestreActual(), semAnio.getAnoActual());
         List<Checklist> noSeleccionadas = new ArrayList();
         boolean flag;        
         for(Checklist todas : encuesta.getListaAsignaturas()){

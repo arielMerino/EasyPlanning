@@ -30,7 +30,7 @@ import javax.mail.internet.MimeMultipart;
 import managedbeans.util.JsfUtil;
 import sessionbeans.ChecklistFacadeLocal;
 import sessionbeans.EncuestaFacadeLocal;
-import sessionbeans.ParamSemestreAñoFacadeLocal;
+import sessionbeans.ParamSemestreAnioFacadeLocal;
 
 /**
  *
@@ -44,7 +44,7 @@ public class EmailController implements Serializable {
     ProfesorController profesorController;
     
     @EJB
-    private ParamSemestreAñoFacadeLocal ejbSemAño;
+    private ParamSemestreAnioFacadeLocal ejbSemAnio;
     @EJB
     private EncuestaFacadeLocal ejbEncuesta;
     @EJB
@@ -58,12 +58,12 @@ public class EmailController implements Serializable {
         this.ejbEncuesta = ejbEncuesta;
     }
 
-    public ParamSemestreAñoFacadeLocal getEjbSemAño() {
-        return ejbSemAño;
+    public ParamSemestreAnioFacadeLocal getEjbSemAnio() {
+        return ejbSemAnio;
     }
 
-    public void setEjbSemAño(ParamSemestreAñoFacadeLocal ejbSemAño) {
-        this.ejbSemAño = ejbSemAño;
+    public void setEjbSemAnio(ParamSemestreAnioFacadeLocal ejbSemAnio) {
+        this.ejbSemAnio = ejbSemAnio;
     }
     
     public void enviarEmail(String origen, String nombre, String pass, String destino, String asunto, String contenido) throws UnsupportedEncodingException {
@@ -129,8 +129,8 @@ public class EmailController implements Serializable {
             
             Encuesta encuesta = new Encuesta();
             encuesta.setProfesor(profesorController.getSelected());
-            ParamSemestreAno semAnho = getEjbSemAño().find(Long.parseLong(1+""));
-            encuesta.setAño(semAnho.getAnoActual());
+            ParamSemestreAno semAnho = getEjbSemAnio().find(Long.parseLong(1+""));
+            encuesta.setAnio(semAnho.getAnoActual());
             encuesta.setSemestre(semAnho.getSemestreActual());
             getEjbEncuesta().create(encuesta);
             
