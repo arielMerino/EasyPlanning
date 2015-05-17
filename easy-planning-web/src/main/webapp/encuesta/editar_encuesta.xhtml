@@ -1,0 +1,74 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Cargar Plan de Estudios - Easy Planning"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <br/>
+            
+            <h3>Seleccione las asignaturas que se mostrarán al profesor en su encuesta:</h3>
+            
+            <br/>
+            <h:form>
+                
+                
+                <p:panel id="tituloPanel" header="Profesor: #{profesorController.getProfesor(param.id).nombre} #{profesorController.getProfesor(param.id).apellido}">   
+                    <p:commandButton value="Guardar encuesta" actionListener="#{asignaturaController.asignaturasParaEncuestas()}"/>
+                    <p:dataTable id="tablaAsignaturas" value="#{asignaturaController.getAsignaturasByPlan(asignaturaController.planEstudios,asignaturaController.nivel)}" 
+                        var="item"
+                        sortBy="#{item.nivel}" 
+                        selection="#{asignaturaController.asignaturaEncuestas}"
+                        paginator="true"
+                        rowKey="#{item.id}"
+                        rows="20"
+                        rowsPerPageTemplate="20,30,40,50,60,70,80"
+                        widgetVar="asignaturasTable"
+                        filteredValue="#{asignaturaController.asignaturasFiltradas}"
+                        emptyMessage="No se han encontrado asignaturas según los parámetros indicados"
+                        >
+                        
+                        <p:column style="text-align: center" width="10%" selectionMode="multiple">
+                            
+                        </p:column>
+                        
+                        <p:column filterBy="#{item.nombre}" filterMatchMode="contains" width="50%" >
+                            <f:facet name="header">
+                                <h:outputText value="Asignatura"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombre}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.planEstudio}" filterMatchMode="contains" style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="Plan"/>
+                            </f:facet>
+                            <h:outputText value="#{item.planEstudio}"/>
+                        </p:column>
+                        <p:column filterBy="#{item.carrera.nombre}" filterMatchMode="contains" style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="Carrera"/>
+                            </f:facet>
+                            <h:outputText value="#{item.carrera.nombre}"/>
+                        </p:column>
+                    </p:dataTable>
+                </p:panel>
+            
+            
+            </h:form>
+            
+            <br/>
+            <br/>
+        </ui:define>
+    </ui:composition>
+    
+</html>
+
+

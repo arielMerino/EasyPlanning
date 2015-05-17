@@ -36,6 +36,15 @@ public class AsignaturaController implements Serializable {
     private String planEstudios = "todos los planes";
     private int nivel = 0;
     private List<Asignatura> asignaturasFiltradas;
+    private List<Asignatura> asignaturaEncuestas;
+
+    public List<Asignatura> getAsignaturaEncuestas() {
+        return asignaturaEncuestas;
+    }
+
+    public void setAsignaturaEncuestas(List<Asignatura> asignaturaEncuestas) {
+        this.asignaturaEncuestas = asignaturaEncuestas;
+    }
     
     /**
      * Creates a new instance of AsignaturaController
@@ -243,5 +252,11 @@ public class AsignaturaController implements Serializable {
             niveles.add(i+1);
         }
         return niveles;
+    }
+    
+    public void asignaturasParaEncuestas(){
+        
+            System.out.println(asignaturaEncuestas.size());
+                    
     }
 }
