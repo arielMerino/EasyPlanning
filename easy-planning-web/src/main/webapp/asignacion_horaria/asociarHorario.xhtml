@@ -26,7 +26,7 @@
                             <h:outputLabel style="white-space: normal;width: 50%">Seleccionar profesor:</h:outputLabel>
                             <p:selectOneMenu value="#{asignacionHoraria.profesorSelected}" style="width: 50%">
                                 <f:selectItem itemLabel="profesor" noSelectionOption="true" />
-                                <f:selectItems value="#{asignacionHoraria.profesoresDisponibles}" var="prof" itemLabel="#{prof.nombre} #{prof.apellido}" itemValue="#{prof.id}"/>
+                                <f:selectItems value="#{asignacionHoraria.getDisponiblesByBloque(asignacionHoraria.bloqueSelected)}" var="prof" itemLabel="#{prof.nombre} #{prof.apellido}" itemValue="#{prof.id}"/>
                             </p:selectOneMenu>
                         </div>
                         <div>

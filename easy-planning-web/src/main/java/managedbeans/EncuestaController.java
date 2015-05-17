@@ -7,7 +7,6 @@ import entities.Encuesta;
 import entities.Checklist;
 import entities.Horario;
 import entities.ParamSemestreAno;
-import java.io.IOException;
 
 import sessionbeans.EncuestaFacadeLocal;
 import sessionbeans.AsignaturaFacadeLocal;
@@ -20,7 +19,6 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import javax.ejb.EJB;
-import javax.faces.context.FacesContext;
 import managedbeans.util.JsfUtil;
 import sessionbeans.HorarioFacadeLocal;
 import sessionbeans.ParamSemestreAñoFacadeLocal;

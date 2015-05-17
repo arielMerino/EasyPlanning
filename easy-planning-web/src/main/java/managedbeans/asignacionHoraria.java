@@ -10,6 +10,7 @@ import business.CarrerasLocal;
 import business.ChecklistsLocal;
 import business.CoordinacionesLocal;
 import business.HorariosLocal;
+import business.ProfesoresLocal;
 import business.SeccionesLocal;
 import entities.Asignatura;
 import entities.Coordinacion;
@@ -19,7 +20,6 @@ import entities.Seccion;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.AbstractList;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
@@ -66,6 +66,8 @@ public class asignacionHoraria implements Serializable {
     private CoordinacionesLocal coordinacionesBusiness;
     @EJB
     private ChecklistsLocal checklistBusiness;
+    @EJB
+    private ProfesoresLocal profesoresBusiness;
            
     private int carreraSelected = 0;
     private String planEstudioSelected = "none";
@@ -96,6 +98,14 @@ public class asignacionHoraria implements Serializable {
 
     public HorariosLocal getHorariosBusiness() {
         return horariosBusiness;
+    }
+
+    public ProfesoresLocal getProfesoresBusiness() {
+        return profesoresBusiness;
+    }
+
+    public void setProfesoresBusiness(ProfesoresLocal profesoresBusiness) {
+        this.profesoresBusiness = profesoresBusiness;
     }
 
     public void setHorariosBusiness(HorariosLocal horariosBusiness) {
@@ -457,6 +467,12 @@ public class asignacionHoraria implements Serializable {
             return "";
         }
     }
+    
+    public List<Profesor> getDisponiblesByBloque(String bloque){
+        return profesoresBusiness.findDisponiblesByBloque(bloque);
+    }
+    
+    
     
     public void limpiarBloqueYprofesor(){
         this.profesorSelected = 0L;
