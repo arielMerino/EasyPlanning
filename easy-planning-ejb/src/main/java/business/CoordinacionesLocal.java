@@ -16,7 +16,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface CoordinacionesLocal {
-    public Coordinacion findByAsignaturaAndAñoAndSemestre(Asignatura asignatura, int año, int semestre);
+    public Coordinacion findByAsignaturaAndAnioAndSemestre(Asignatura asignatura, int anio, int semestre);
     
-    public List<Coordinacion> findByCarreraAndPlanAndAñoAndSemestre(int carrera, String plan, int año, int semestre);
+    public List<Coordinacion> findByCarreraAndPlanAndAnioAndSemestre(int carrera, String plan, int anio, int semestre);
 }

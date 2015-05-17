@@ -24,7 +24,13 @@ import javax.persistence.OneToMany;
 @Entity
 @NamedQueries({
     @NamedQuery(name="Profesor.findByRut",
-            query="SELECT p FROM Profesor p WHERE p.rut = :rut")
+            query="SELECT p FROM Profesor p WHERE p.rut = :rut"),
+
+    @NamedQuery(name="Profesor.findDisponiblesByBloque",
+            query="SELECT h.profesor FROM Horario h WHERE h.bloque = :bloque AND h.seccion IS NULL AND h.profesor IS NOT NULL"),
+    
+    @NamedQuery(name="Profesor.getEncuestaBySemestreAndAnio",
+            query="SELECT e FROM Encuesta e WHERE e.profesor.id = :id AND e.anio = :anio AND e.semestre = :semestre")
 })
 public class Profesor implements Serializable {
     @OneToMany(mappedBy = "profesor")

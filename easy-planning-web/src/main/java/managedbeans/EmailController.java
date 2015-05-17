@@ -5,9 +5,14 @@
  */
 package managedbeans;
 
+import entities.Asignatura;
+import entities.Checklist;
+import entities.Encuesta;
+import entities.ParamSemestreAno;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
+import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
@@ -23,6 +28,9 @@ import javax.mail.internet.MimeBodyPart;
 import javax.mail.internet.MimeMessage;
 import javax.mail.internet.MimeMultipart;
 import managedbeans.util.JsfUtil;
+import sessionbeans.ChecklistFacadeLocal;
+import sessionbeans.EncuestaFacadeLocal;
+import sessionbeans.ParamSemestreAnioFacadeLocal;
 
 /**
  *
@@ -34,7 +42,30 @@ import managedbeans.util.JsfUtil;
 public class EmailController implements Serializable {
     @Inject
     ProfesorController profesorController;
+    
+    @EJB
+    private ParamSemestreAnioFacadeLocal ejbSemAnio;
+    @EJB
+    private EncuestaFacadeLocal ejbEncuesta;
+    @EJB
+    private ChecklistFacadeLocal ejbCheck;
 
+    public EncuestaFacadeLocal getEjbEncuesta() {
+        return ejbEncuesta;
+    }
+
+    public void setEjbEncuesta(EncuestaFacadeLocal ejbEncuesta) {
+        this.ejbEncuesta = ejbEncuesta;
+    }
+
+    public ParamSemestreAnioFacadeLocal getEjbSemAnio() {
+        return ejbSemAnio;
+    }
+
+    public void setEjbSemAnio(ParamSemestreAnioFacadeLocal ejbSemAnio) {
+        this.ejbSemAnio = ejbSemAnio;
+    }
+    
     public void enviarEmail(String origen, String nombre, String pass, String destino, String asunto, String contenido) throws UnsupportedEncodingException {
         Properties props = System.getProperties();
         props.put("mail.smtp.starttls.enable", true); // added this line
@@ -95,6 +126,21 @@ public class EmailController implements Serializable {
             String profesor = profesorController.getSelected().getNombre() + " " + profesorController.getSelected().getApellido();
             String asunto = "Encuesta de disponibilidad horaria";
             String contenido = "Profesor" + " " + profesor + " " + "conteste la encuesta de disponibilidad horaria, por favor. http://localhost:8080/easy-planning-web/faces/profesor/encuesta.xhtml";
+            
+            Encuesta encuesta = new Encuesta();
+            encuesta.setProfesor(profesorController.getSelected());
+            ParamSemestreAno semAnho = getEjbSemAnio().find(Long.parseLong(1+""));
+            encuesta.setAnio(semAnho.getAnoActual());
+            encuesta.setSemestre(semAnho.getSemestreActual());
+            getEjbEncuesta().create(encuesta);
+            
+            for(Asignatura asignatura : profesorController.getAsignaturasProfesor(profesorController.getSelected().getId())){
+                Checklist check = new Checklist();
+                check.setAceptado(false);
+                check.setAsignatura(asignatura);
+                check.setEncuesta(encuesta);
+                ejbCheck.create(check);
+            }
             
             enviarEmail(origen, nombre, pass, emailProfesor, asunto, contenido);
         }

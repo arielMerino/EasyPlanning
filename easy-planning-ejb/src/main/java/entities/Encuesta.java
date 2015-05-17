@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
@@ -19,6 +21,8 @@ import javax.persistence.OneToMany;
  * @author ariel-linux
  */
 @Entity
+@NamedQueries({
+})
 public class Encuesta implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
@@ -27,8 +31,10 @@ public class Encuesta implements Serializable {
     @ManyToOne
     private Profesor profesor;
     @OneToMany(mappedBy = "encuesta")
-    private List<Checklist> asignaturasAceptadas;
+    private List<Checklist> listaAsignaturas;
     private String comentario;
+    private int anio;
+    private int semestre;
 
     public Long getId() {
         return id;
@@ -36,6 +42,22 @@ public class Encuesta implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public int getAnio() {
+        return anio;
+    }
+
+    public void setAnio(int anio) {
+        this.anio = anio;
+    }
+
+    public int getSemestre() {
+        return semestre;
+    }
+
+    public void setSemestre(int semestre) {
+        this.semestre = semestre;
     }
 
     public Profesor getProfesor() {
@@ -46,12 +68,12 @@ public class Encuesta implements Serializable {
         this.profesor = profesor;
     }
 
-    public List<Checklist> getAsignaturasAceptadas() {
-        return asignaturasAceptadas;
+    public List<Checklist> getListaAsignaturas() {
+        return listaAsignaturas;
     }
 
-    public void setAsignaturasAceptadas(List<Checklist> asignaturasAceptadas) {
-        this.asignaturasAceptadas = asignaturasAceptadas;
+    public void setListaAsignaturas(List<Checklist> listaAsignaturas) {
+        this.listaAsignaturas = listaAsignaturas;
     }
 
     public String getComentario() {

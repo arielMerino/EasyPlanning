@@ -5,7 +5,9 @@
  */
 package business;
 
+import entities.Encuesta;
 import entities.Profesor;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -15,4 +17,8 @@ import javax.ejb.Local;
 @Local
 public interface ProfesoresLocal {
     public Profesor findByRut(String rut);
+        
+    public List<Profesor> findDisponiblesByBloque(String bloque);
+    
+    public Encuesta getEncuestaBySemestreAndAnio(Long id, int semestre, int anio);
 }

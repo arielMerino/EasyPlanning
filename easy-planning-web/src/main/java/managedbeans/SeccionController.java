@@ -146,10 +146,10 @@ public class SeccionController implements Serializable {
             for(Asignatura asg : asignaturas){
                 //para que no hayan 2 coordinaciones para el mismo ramo en el mismo semestre
                 
-                if(coordinacionBusiness.findByAsignaturaAndAñoAndSemestre(asg, ano, semestre) == null){
+                if(coordinacionBusiness.findByAsignaturaAndAnioAndSemestre(asg, ano, semestre) == null){
                     Coordinacion cord = new Coordinacion();
                     cord.setAsignatura(asg);
-                    cord.setAño(ano);
+                    cord.setAnio(ano);
                     cord.setSemestre(semestre);
                     cord.setCantAlumnosEstimado(0);
                     cord.setCantAlumnosReal(0);
@@ -162,7 +162,7 @@ public class SeccionController implements Serializable {
             }
             if (seguir == true){
                 for(Asignatura asg : asignaturas){
-                    Coordinacion cord = coordinacionBusiness.findByAsignaturaAndAñoAndSemestre(asg, ano, semestre);
+                    Coordinacion cord = coordinacionBusiness.findByAsignaturaAndAnioAndSemestre(asg, ano, semestre);
                     if (cord != null){
                         int t = asg.getTeoria();
                         int e = asg.getEjercicios();

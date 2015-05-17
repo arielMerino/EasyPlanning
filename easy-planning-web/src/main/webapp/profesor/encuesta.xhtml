@@ -12,141 +12,158 @@
             <h:outputText value="Encuesta - Easy Planning"></h:outputText>
         </ui:define>
         <ui:define name="body">
-            <h:form>
-                <p:layout>
-
-                    <p:layoutUnit position="east" resizable="true" minSize="400">
-                        <p:panel header="Asignaturas">
-                            <h:outputText value="Marca las asignaturas que deseas continuar impartiendo"></h:outputText>
-                            <p:selectManyCheckbox value="#{encuestaController.listaContinuidad}">
-                            <c:forEach  var="item" items="#{profesorController.asignaturasProfesor(1)}">
-                                <f:selectItem itemLabel="#{item.nombre}" itemValue="#{item.id}" />
-                            </c:forEach>
-                            </p:selectManyCheckbox> 
-                            <p:commandButton value="Confirmar" actionListener="#{encuestaController.crearEncuesta}"/>
-                        </p:panel>
-                        <p:panel header="Comentario">
-                            <h:inputTextarea cols="50" rows="5"/>
-                        </p:panel>
+            <div class="container-fluid" id="growl">
+                <h:form>
+                    <c:set var="id" scope="request" value="#{param['id']}"/>
+                    <c:if test="#{id != 0}">
+                        #{profesorController.setIdProfesor(id)}
+                    </c:if>
+                    
+                    <c:if test="#{profesorController.getAsignaturasChecklist(profesorController.idProfesor) == null}">
                         <br />
-                        <h:commandButton value="Enviar"/>
-                    </p:layoutUnit>
+                        <div class="alert alert-danger text-center">
+                            <strong>Usted aún no tiene una encuesta asignada</strong>
+                            <p>
+                                Por favor contáctese con su Coordinador Docente para que le envíe la encuesta y solucione el problema
+                            </p>
+                        </div>
+                    </c:if>
+                    <p:layout>
 
-                    <p:layoutUnit position="center" header="Horario">
-                        <p:panelGrid  style="width: 100%;">
-                            <f:facet name="header">
-                                <p:row >
-                                    <p:column colspan="1" style="width: 22%;">MÓDULO</p:column>
-                                    <p:column colspan="1" style="width: 13%;">lUNES</p:column>
-                                    <p:column colspan="1" style="width: 13%;">MARTES</p:column>
-                                    <p:column colspan="1" style="width: 13%;">MIÉRCOLES</p:column>
-                                    <p:column colspan="1" style="width: 13%;">JUEVES</p:column>
-                                    <p:column colspan="1" style="width: 13%;">VIERNES</p:column>
-                                    <p:column colspan="1" style="width: 13%;">SÁBADO</p:column>
-                                    
-                                </p:row>
-
-                            </f:facet>
-                                <p:row>:
-                                    <p:column class="horario-encuesta">1. 8:00-9:30</p:column>
-                                    <p:column rowspan="9" colspan="6" >
-                                        <p:selectManyCheckbox id="basic" value="#{profesorController.horariosSeleccionados}" layout="grid" columns="6" style="width: 100%;">
-                                            <f:selectItem itemLabel="L1" itemValue="L1"/>
-                                            <f:selectItem itemLabel="M1" itemValue="M1"/>
-                                            <f:selectItem itemLabel="W1" itemValue="W1"/>                     
-                                            <f:selectItem itemLabel="J1" itemValue="J1"/>
-                                            <f:selectItem itemLabel="V1" itemValue="V1"/>
-                                            <f:selectItem itemLabel="S1" itemValue="S1"/>
-                                            
-                                            <f:selectItem itemLabel="L2" itemValue="L2"/>
-                                            <f:selectItem itemLabel="M2" itemValue="M2"/>
-                                            <f:selectItem itemLabel="W2" itemValue="W2"/>
-                                            <f:selectItem itemLabel="J2" itemValue="J2"/>
-                                            <f:selectItem itemLabel="V2" itemValue="V2"/>
-                                            <f:selectItem itemLabel="S2" itemValue="S2"/>
-                                            
-                                            <f:selectItem itemLabel="L3" itemValue="L3"/>
-                                            <f:selectItem itemLabel="M3" itemValue="M3"/>
-                                            <f:selectItem itemLabel="W3" itemValue="W3"/>
-                                            <f:selectItem itemLabel="J3" itemValue="J3"/>
-                                            <f:selectItem itemLabel="V3" itemValue="V3"/>
-                                            <f:selectItem itemLabel="S3" itemValue="S3"/>
-                                            
-                                            <f:selectItem itemLabel="L4" itemValue="L4"/>
-                                            <f:selectItem itemLabel="M4" itemValue="M4"/>
-                                            <f:selectItem itemLabel="W4" itemValue="W4"/>
-                                            <f:selectItem itemLabel="J4" itemValue="J4"/>
-                                            <f:selectItem itemLabel="V4" itemValue="V4"/>
-                                            <f:selectItem itemLabel="S4" itemValue="S4"/>
-                                            
-                                            <f:selectItem itemLabel="L5" itemValue="L5"/>
-                                            <f:selectItem itemLabel="M5" itemValue="M5"/>
-                                            <f:selectItem itemLabel="W5" itemValue="W5"/>
-                                            <f:selectItem itemLabel="J5" itemValue="J5"/>
-                                            <f:selectItem itemLabel="V5" itemValue="V5"/>
-                                            <f:selectItem itemLabel="S5" itemValue="S5"/>
-                                            
-                                            <f:selectItem itemLabel="L6" itemValue="L6"/>
-                                            <f:selectItem itemLabel="M6" itemValue="M6"/>
-                                            <f:selectItem itemLabel="W6" itemValue="W6"/>
-                                            <f:selectItem itemLabel="J6" itemValue="J6"/>
-                                            <f:selectItem itemLabel="V6" itemValue="V6"/>
-                                            
-                                            <f:selectItem itemLabel="L7" itemValue="L7"/>
-                                            <f:selectItem itemLabel="M7" itemValue="M7"/>
-                                            <f:selectItem itemLabel="W7" itemValue="W7"/>
-                                            <f:selectItem itemLabel="J7" itemValue="J7"/>
-                                            <f:selectItem itemLabel="V7" itemValue="V7"/>
-                                            <f:selectItem itemLabel="S7" itemValue="S7"/>
-                                            <f:selectItem itemLabel="S6" itemValue="S6"/>
-                                            
-                                            <f:selectItem itemLabel="L8" itemValue="L8"/>
-                                            <f:selectItem itemLabel="M8" itemValue="M8"/>
-                                            <f:selectItem itemLabel="W8" itemValue="W8"/>
-                                            <f:selectItem itemLabel="J8" itemValue="J8"/>
-                                            <f:selectItem itemLabel="V8" itemValue="V8"/>
-                                            <f:selectItem itemLabel="S8" itemValue="S8"/>
-                                            
-                                            <f:selectItem itemLabel="L9" itemValue="L9"/>
-                                            <f:selectItem itemLabel="M9" itemValue="M9"/>
-                                            <f:selectItem itemLabel="W9" itemValue="W9"/>
-                                            <f:selectItem itemLabel="J9" itemValue="J9"/>
-                                            <f:selectItem itemLabel="V9" itemValue="V9"/>
-                                            <f:selectItem itemLabel="S9" itemValue="S9"/>
-                                        </p:selectManyCheckbox>
-                                    </p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column class="horario-encuesta">2. 9:40-11:10</p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column class="horario-encuesta">3. 11:20-12:50</p:column>                                    
-                                </p:row>
-                                <p:row>
-                                    <p:column class="horario-encuesta">4. 13:50-15:20</p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column class="horario-encuesta">5. 15:30-17:00</p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column class="horario-encuesta">6. 17:10-18:40</p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column class="horario-encuesta">7. 19:00-20:10</p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column class="horario-encuesta">8. 20:20-22:00</p:column>
-                                </p:row>
-                                <p:row>
-                                    <p:column class="horario-encuesta">9. 22:00-23:00</p:column>
-                                </p:row>
+                        <p:layoutUnit position="east" resizable="true" minSize="400">
                             
-                                                        
-                        </p:panelGrid>
-                    </p:layoutUnit>
+                            <p:panel header="Asignaturas">
+                                <h:outputText value="Seleccione las asignaturas que desee continuar impartiendo"/>
+                                <p:selectManyCheckbox value="#{encuestaController.asignaturas}" layout="grid" columns="1">
+                                    <f:selectItems value="#{profesorController.getAsignaturasChecklist(profesorController.idProfesor)}" var="check" itemLabel="#{check.asignatura.nombre}" itemValue="#{check.id}"/>
+                                </p:selectManyCheckbox>
+                            </p:panel>
+                            <p:panel header="Comentario">
+                                <p:inputTextarea cols="50" rows="5" value="#{encuestaController.comentario}" validatorMessage="El comentario no puede tener más de 250 caracteres">
+                                    <f:validateLength maximum="250"/>
+                                </p:inputTextarea>
+                            </p:panel>
+                            <br />
+                            <p:commandButton value="Enviar" actionListener="#{encuestaController.resultadoEncuesta(profesorController.idProfesor)}"/>
+                        </p:layoutUnit>
 
-                </p:layout>
-            </h:form>
+                        <p:layoutUnit position="center" header="Horario">
+                            <p:panelGrid  style="width: 100%;">
+                                <f:facet name="header">
+                                    <p:row >
+                                        <p:column colspan="1" style="width: 22%;">MÓDULO</p:column>
+                                        <p:column colspan="1" style="width: 13%;">lUNES</p:column>
+                                        <p:column colspan="1" style="width: 13%;">MARTES</p:column>
+                                        <p:column colspan="1" style="width: 13%;">MIÉRCOLES</p:column>
+                                        <p:column colspan="1" style="width: 13%;">JUEVES</p:column>
+                                        <p:column colspan="1" style="width: 13%;">VIERNES</p:column>
+                                        <p:column colspan="1" style="width: 13%;">SÁBADO</p:column>
+
+                                    </p:row>
+
+                                </f:facet>
+                                    <p:row>:
+                                        <p:column class="horario-encuesta">1. 8:00-9:30</p:column>
+                                        <p:column rowspan="9" colspan="6" >
+                                            <p:selectManyCheckbox id="basic" value="#{encuestaController.horariosSeleccionados}" layout="grid" columns="6" style="width: 100%;">
+                                                <f:selectItem itemLabel="L1" itemValue="L1"/>
+                                                <f:selectItem itemLabel="M1" itemValue="M1"/>
+                                                <f:selectItem itemLabel="W1" itemValue="W1"/>                     
+                                                <f:selectItem itemLabel="J1" itemValue="J1"/>
+                                                <f:selectItem itemLabel="V1" itemValue="V1"/>
+                                                <f:selectItem itemLabel="S1" itemValue="S1"/>
+
+                                                <f:selectItem itemLabel="L2" itemValue="L2"/>
+                                                <f:selectItem itemLabel="M2" itemValue="M2"/>
+                                                <f:selectItem itemLabel="W2" itemValue="W2"/>
+                                                <f:selectItem itemLabel="J2" itemValue="J2"/>
+                                                <f:selectItem itemLabel="V2" itemValue="V2"/>
+                                                <f:selectItem itemLabel="S2" itemValue="S2"/>
+
+                                                <f:selectItem itemLabel="L3" itemValue="L3"/>
+                                                <f:selectItem itemLabel="M3" itemValue="M3"/>
+                                                <f:selectItem itemLabel="W3" itemValue="W3"/>
+                                                <f:selectItem itemLabel="J3" itemValue="J3"/>
+                                                <f:selectItem itemLabel="V3" itemValue="V3"/>
+                                                <f:selectItem itemLabel="S3" itemValue="S3"/>
+
+                                                <f:selectItem itemLabel="L4" itemValue="L4"/>
+                                                <f:selectItem itemLabel="M4" itemValue="M4"/>
+                                                <f:selectItem itemLabel="W4" itemValue="W4"/>
+                                                <f:selectItem itemLabel="J4" itemValue="J4"/>
+                                                <f:selectItem itemLabel="V4" itemValue="V4"/>
+                                                <f:selectItem itemLabel="S4" itemValue="S4"/>
+
+                                                <f:selectItem itemLabel="L5" itemValue="L5"/>
+                                                <f:selectItem itemLabel="M5" itemValue="M5"/>
+                                                <f:selectItem itemLabel="W5" itemValue="W5"/>
+                                                <f:selectItem itemLabel="J5" itemValue="J5"/>
+                                                <f:selectItem itemLabel="V5" itemValue="V5"/>
+                                                <f:selectItem itemLabel="S5" itemValue="S5"/>
+
+                                                <f:selectItem itemLabel="L6" itemValue="L6"/>
+                                                <f:selectItem itemLabel="M6" itemValue="M6"/>
+                                                <f:selectItem itemLabel="W6" itemValue="W6"/>
+                                                <f:selectItem itemLabel="J6" itemValue="J6"/>
+                                                <f:selectItem itemLabel="V6" itemValue="V6"/>
+                                                <f:selectItem itemLabel="S6" itemValue="S6"/>
+
+                                                <f:selectItem itemLabel="L7" itemValue="L7"/>
+                                                <f:selectItem itemLabel="M7" itemValue="M7"/>
+                                                <f:selectItem itemLabel="W7" itemValue="W7"/>
+                                                <f:selectItem itemLabel="J7" itemValue="J7"/>
+                                                <f:selectItem itemLabel="V7" itemValue="V7"/>
+                                                <f:selectItem itemLabel="S7" itemValue="S7"/>
+
+                                                <f:selectItem itemLabel="L8" itemValue="L8"/>
+                                                <f:selectItem itemLabel="M8" itemValue="M8"/>
+                                                <f:selectItem itemLabel="W8" itemValue="W8"/>
+                                                <f:selectItem itemLabel="J8" itemValue="J8"/>
+                                                <f:selectItem itemLabel="V8" itemValue="V8"/>
+                                                <f:selectItem itemLabel="S8" itemValue="S8"/>
+
+                                                <f:selectItem itemLabel="L9" itemValue="L9"/>
+                                                <f:selectItem itemLabel="M9" itemValue="M9"/>
+                                                <f:selectItem itemLabel="W9" itemValue="W9"/>
+                                                <f:selectItem itemLabel="J9" itemValue="J9"/>
+                                                <f:selectItem itemLabel="V9" itemValue="V9"/>
+                                                <f:selectItem itemLabel="S9" itemValue="S9"/>
+                                            </p:selectManyCheckbox>
+                                        </p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column class="horario-encuesta">2. 9:40-11:10</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column class="horario-encuesta">3. 11:20-12:50</p:column>                                    
+                                    </p:row>
+                                    <p:row>
+                                        <p:column class="horario-encuesta">4. 13:50-15:20</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column class="horario-encuesta">5. 15:30-17:00</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column class="horario-encuesta">6. 17:10-18:40</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column class="horario-encuesta">7. 19:00-20:10</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column class="horario-encuesta">8. 20:20-22:00</p:column>
+                                    </p:row>
+                                    <p:row>
+                                        <p:column class="horario-encuesta">9. 22:00-23:00</p:column>
+                                    </p:row>
+
+
+                            </p:panelGrid>
+                        </p:layoutUnit>
+
+                    </p:layout>
+                </h:form>
+
+            </div>
             
         </ui:define>
     </ui:composition>

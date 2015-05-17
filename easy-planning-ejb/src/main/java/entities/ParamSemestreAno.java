@@ -10,60 +10,44 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
-import javax.persistence.OneToOne;
 
 /**
  *
- * @author ariel-linux
+ * @author jano
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(
-            name = "Checklist.findProfesoresByAsgnioAndSemestre",
-            query = "SELECT DISTINCT c.encuesta.profesor.id FROM Checklist c WHERE c.asignatura.id = :asg AND c.encuesta.anio = :anio AND c.encuesta.semestre = :semestre AND c.aceptado = 'true'"
-    )
+    @NamedQuery(name="ParamSemestreAno.findById",
+            query="SELECT p FROM ParamSemestreAno p WHERE p.id = :id")
 })
-public class Checklist implements Serializable {
+public class ParamSemestreAno implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne
-    private Encuesta encuesta;
-    @OneToOne
-    private Asignatura asignatura;
-    
-    private boolean aceptado;
-    
+    private int anoActual;
+    private int semestreActual;
+
+    public int getAnoActual() {
+        return anoActual;
+    }
+
+    public void setAnoActual(int anoActual) {
+        this.anoActual = anoActual;
+    }
+
+    public int getSemestreActual() {
+        return semestreActual;
+    }
+
+    public void setSemestreActual(int semestreActual) {
+        this.semestreActual = semestreActual;
+    }
+
     public Long getId() {
         return id;
-    }
-
-    public Encuesta getEncuesta() {
-        return encuesta;
-    }
-
-    public void setEncuesta(Encuesta encuesta) {
-        this.encuesta = encuesta;
-    }
-
-    public Asignatura getAsignatura() {
-        return asignatura;
-    }
-
-    public void setAsignatura(Asignatura asignatura) {
-        this.asignatura = asignatura;
-    }
-
-    public boolean isAceptado() {
-        return aceptado;
-    }
-
-    public void setAceptado(boolean aceptado) {
-        this.aceptado = aceptado;
     }
 
     public void setId(Long id) {
@@ -80,10 +64,10 @@ public class Checklist implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Checklist)) {
+        if (!(object instanceof ParamSemestreAno)) {
             return false;
         }
-        Checklist other = (Checklist) object;
+        ParamSemestreAno other = (ParamSemestreAno) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -92,7 +76,7 @@ public class Checklist implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Checklist[ id=" + id + " ]";
+        return "entities.ParamSemestreA\u00f1o[ id=" + id + " ]";
     }
     
 }

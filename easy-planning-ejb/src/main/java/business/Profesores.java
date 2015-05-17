@@ -5,7 +5,10 @@
  */
 package business;
 
+import entities.Encuesta;
 import entities.Profesor;
+import java.util.ArrayList;
+import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
@@ -29,6 +32,30 @@ public class Profesores implements ProfesoresLocal{
         }
         catch(NoResultException e){
             return null;
+        }
+    }
+
+    @Override
+    public Encuesta getEncuestaBySemestreAndAnio(Long id, int semestre, int anio) {
+        Query query = em.createNamedQuery("Profesor.getEncuestaBySemestreAndAnio").setParameter("semestre", semestre);
+        query.setParameter("anio", anio);
+        query.setParameter("id", id);
+        try{
+            return (Encuesta) query.getSingleResult();            
+        }
+        catch(NoResultException e){
+            //System.out.println(e.getLocalizedMessage()+" --> Query");
+            return null;
+        }
+    }
+    
+    @Override
+    public List<Profesor> findDisponiblesByBloque(String bloque){
+        Query query = em.createNamedQuery("Profesor.findDisponiblesByBloque").setParameter("bloque", bloque);
+        try{
+            return (List<Profesor>) query.getResultList();
+        }catch (NoResultException e){
+            return new ArrayList<>();
         }
     }
     

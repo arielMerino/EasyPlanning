@@ -22,10 +22,10 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Coordinacion.findByAsignaturaAndAñoAndSemestre",
-            query = "SELECT c FROM Coordinacion c WHERE c.asignatura = :asg AND c.año = :año AND c.semestre = :sem"),
-    @NamedQuery(name = "Coordinacion.findByCarreraAndPlanAndAñoAndSemestre",
-            query = "SELECT c FROM Coordinacion c WHERE c.asignatura.carrera.codigo = :carrera AND c.asignatura.planEstudio = :plan AND c.año = :año AND c.semestre = :semestre")
+    @NamedQuery(name = "Coordinacion.findByAsignaturaAndAnioAndSemestre",
+            query = "SELECT c FROM Coordinacion c WHERE c.asignatura = :asg AND c.anio = :anio AND c.semestre = :sem"),
+    @NamedQuery(name = "Coordinacion.findByCarreraAndPlanAndAnioAndSemestre",
+            query = "SELECT c FROM Coordinacion c WHERE c.asignatura.carrera.codigo = :carrera AND c.asignatura.planEstudio = :plan AND c.anio = :anio AND c.semestre = :semestre")
 })
 public class Coordinacion implements Serializable {
     @OneToMany(mappedBy = "coordinacion")
@@ -34,7 +34,7 @@ public class Coordinacion implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    private int año;
+    private int anio;
     private int semestre;
     private int cantAlumnosReal;
     private int cantAlumnosEstimado;
@@ -59,12 +59,12 @@ public class Coordinacion implements Serializable {
         this.asignatura = asignatura;
     }
     
-    public int getAño() {
-        return año;
+    public int getAnio() {
+        return anio;
     }
 
-    public void setAño(int año) {
-        this.año = año;
+    public void setAnio(int anio) {
+        this.anio = anio;
     }
 
     public int getSemestre() {

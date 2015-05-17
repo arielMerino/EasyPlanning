@@ -1,9 +1,12 @@
 package managedbeans;
 
+import business.ProfesoresLocal;
 import entities.Horario;
 import entities.Profesor;
 import entities.Asignatura;
+import entities.Checklist;
 import entities.Encuesta;
+import entities.ParamSemestreAno;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.ProfesorFacadeLocal;
@@ -27,6 +30,7 @@ import javax.faces.convert.FacesConverter;
 import sessionbeans.HorarioFacadeLocal;
 import sessionbeans.AsignaturaFacadeLocal;
 import sessionbeans.EncuestaFacadeLocal;
+import sessionbeans.ParamSemestreAnioFacadeLocal;
 
 @Named("profesorController")
 @SessionScoped
@@ -40,12 +44,26 @@ public class ProfesorController implements Serializable {
     private AsignaturaFacadeLocal asignaturaFacade;
     @EJB
     private EncuestaFacadeLocal encuestaFacade;
-    private List<Profesor> items = null;
+    @EJB
+    private ProfesoresLocal profesoresBusiness;
+    @EJB
+    private ParamSemestreAnioFacadeLocal ejbParam;
+    
+    private List<Profesor> items;
     private Profesor selected;
     private String[] horariosSeleccionados;
     private List<Profesor> profesoresFiltrados;
+    private Long idProfesor;
 
     public ProfesorController() {
+    }
+
+    public Long getIdProfesor() {
+        return idProfesor;
+    }
+
+    public void setIdProfesor(Long idProfesor) {
+        this.idProfesor = idProfesor;
     }
 
     public List<Profesor> getProfesoresFiltrados() {
@@ -158,8 +176,14 @@ public class ProfesorController implements Serializable {
         }
     }
 
-    public Profesor getProfesor(java.lang.Long id) {
-        return getFacade().find(id);
+    public Profesor getProfesor(String profesorId) {
+        try{
+            Long id = Long.parseLong(profesorId);
+            return getFacade().find(id);
+        }
+        catch (Exception e){
+            return null;
+        }
     }
 
     public List<Profesor> getItemsAvailableSelectMany() {
@@ -216,7 +240,18 @@ public class ProfesorController implements Serializable {
         }
         return encuesta.getComentario();
     }
-
+    
+    public List<Checklist> getAsignaturasChecklist(int id){
+        ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
+        try{
+            Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(getIdProfesor(), semAnio.getSemestreActual(), semAnio.getAnoActual());
+            return encuesta.getListaAsignaturas();
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
+    
     @FacesConverter(forClass = Profesor.class)
     public static class ProfesorControllerConverter implements Converter {
 
@@ -227,7 +262,7 @@ public class ProfesorController implements Serializable {
             }
             ProfesorController controller = (ProfesorController) facesContext.getApplication().getELResolver().
                     getValue(facesContext.getELContext(), null, "profesorController");
-            return controller.getProfesor(getKey(value));
+            return controller.getProfesor(value);
         }
 
         java.lang.Long getKey(String value) {

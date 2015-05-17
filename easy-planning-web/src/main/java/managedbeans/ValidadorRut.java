@@ -58,7 +58,7 @@ public class ValidadorRut implements Validator{
     }
     
     public boolean compruebaFormato(String rut){
-        return rut.matches("\\d{2}\\.\\d{3}\\.\\d{3}\\-[K|k|0-9]");
+        return rut.matches("\\d{1,2}\\.\\d{3}\\.\\d{3}\\-[K|k|0-9]");
     }
     
     @Override
