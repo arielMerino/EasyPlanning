@@ -125,7 +125,9 @@ public class EmailController implements Serializable {
             String nombre = "PAMELA AGUIRRE GUZMÁN";
             String profesor = profesorController.getSelected().getNombre() + " " + profesorController.getSelected().getApellido();
             String asunto = "Encuesta de disponibilidad horaria";
-            String contenido = "Profesor" + " " + profesor + " " + "conteste la encuesta de disponibilidad horaria, por favor. http://localhost:8080/easy-planning-web/faces/profesor/encuesta.xhtml";
+            String contenido = "Profesor" + " " + profesor + " ";
+            contenido = contenido + "conteste la encuesta de disponibilidad horaria, por favor. http://localhost:8080/easy-planning-web/faces/profesor/encuesta.xhtml?id=";
+            contenido = contenido + profesorController.getSelected().getId();
             
             Encuesta encuesta = new Encuesta();
             encuesta.setProfesor(profesorController.getSelected());
