@@ -17,32 +17,42 @@
                 No has seleccionado ningun profesor
             </c:if>
             <c:if test="#{not empty param}">
-                <c:set var="profesor" value="#{profesorController.getProfesor(param.id)}" scope="request"/>
+                <c:set var="id" value="#{param.id}" scope="request"/>
+                <c:set var="anio" value="#{coordinadorController.anio}" scope="request"/>
+                <c:set var="semestre" value="#{coordinadorController.semestre}" scope="request"/>
+                <c:set var="profesor" value="#{profesorController.getProfesor(id)}" scope="request"/>
                 <c:if test="#{empty profesor}">
                     No existe tal profesor
                 </c:if>
                 <c:if test="#{not empty profesor}">
-                    Encuesta Profesor <h:outputText value="#{profesor.nombre} #{profesor.apellido}" />
-                    <br/>
-                    <br/>
-                    Asignaturas:
-                    <br/>
-                    <br/>
-                    <c:forEach  var="item" items="#{profesorController.asignaturasProfesor(param.id)}">                     
-                        - <h:outputText value="#{item.nombre}" /><br/>
-                    </c:forEach>                    
-                    
-                    <br/>
-                    <br/>
-                    Horarios disponibles:
-                    <br/>
-                    <c:forEach var="item" items="#{profesorController.getDisponibles(param.id)}">
-                        <h:outputText value="#{item.bloque} " />
-                    </c:forEach>
-                    <br/>
-                    <br/>
-                    Comentario:
-                    <p><h:outputText value="#{profesorController.comentarioEncuestaProfesor(param.id)}" /></p>
+                    <c:set var="hayEncuesta" value="#{encuestaController.hayEncuestaContestado(param.id, semestre, anio)}" scope="request"/>                    
+                    <c:if test="#{hayEncuesta}">
+                        Encuesta Profesor <h:outputText value="#{profesor.nombre} #{profesor.apellido}" />
+                        <br/>
+                        <br/>
+                        Asignaturas:
+                        <br/>
+                        <br/>                                        
+
+                        <c:forEach  var="item" items="#{encuestaController.getAsignaturasAceptadas(id)}">                     
+                            - <h:outputText value="#{item.nombre}" /><br/>
+                        </c:forEach>                    
+
+                        <br/>
+                        <br/>
+                        Horarios disponibles:
+                        <br/>
+                        <c:forEach var="item" items="#{profesorController.getDisponibles(param.id)}">
+                            <h:outputText value="#{item.bloque} " />
+                        </c:forEach>
+                        <br/>
+                        <br/>
+                        Comentario:
+                        <p><h:outputText value="#{profesorController.comentarioEncuestaProfesor(param.id)}" /></p>
+                    </c:if>
+                    <c:if test="#{!hayEncuesta}">
+                        Aun no ha contestado la encuesta
+                    </c:if>
                 </c:if>
             </c:if>
         </ui:define>
