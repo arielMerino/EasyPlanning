@@ -244,13 +244,26 @@ public class ProfesorController implements Serializable {
     }
     
     public List<Checklist> getAsignaturasChecklist(Long id){
+        
         ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
-        try{
-            Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(id, semAnio.getSemestreActual(), semAnio.getAnoActual());
+        try{            
+            Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(id, semAnio.getSemestreActual(), semAnio.getAnoActual());            
             return encuesta.getListaAsignaturas();
         }
         catch(Exception e){
             return null;
+        }
+    }
+    
+    public boolean hayEncuesta(Long id){
+        
+        ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
+        try{            
+            Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(id, semAnio.getSemestreActual(), semAnio.getAnoActual());
+            return encuesta != null;
+        }
+        catch(Exception e){            
+            return false;
         }
     }
     
