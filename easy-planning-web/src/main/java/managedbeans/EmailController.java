@@ -153,13 +153,10 @@ public class EmailController implements Serializable {
                     check.setAsignatura(asignatura);
                     check.setEncuesta(encuesta);
                     ejbCheck.create(check);
-                }
-            
-                enviarEmail(origen, nombre, pass, emailProfesor, asunto, contenido);
-            }else{
-                JsfUtil.addErrorMessage("Encuesta ya ha sido enviado");
+                }                            
             }
-                        
+            
+            enviarEmail(origen, nombre, pass, emailProfesor, asunto, contenido);                                    
         }
     }
 }
