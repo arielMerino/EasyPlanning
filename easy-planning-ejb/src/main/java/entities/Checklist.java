@@ -24,6 +24,11 @@ import javax.persistence.OneToOne;
     @NamedQuery(
             name = "Checklist.findProfesoresByAsgAnioAndSemestre",
             query = "SELECT DISTINCT c.encuesta.profesor.id FROM Checklist c WHERE c.asignatura.id = :asg AND c.encuesta.anio = :anio AND c.encuesta.semestre = :semestre AND c.aceptado = 'true'"
+            
+    ),
+    @NamedQuery(
+            name = "Checklist.findChecklistByIdEncuesta",
+            query = "SELECT c FROM Checklist c WHERE c.encuesta.id = :idEncuesta"            
     )
 })
 public class Checklist implements Serializable {

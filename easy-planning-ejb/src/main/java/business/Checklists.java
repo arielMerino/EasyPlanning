@@ -5,6 +5,7 @@
  */
 package business;
 
+import entities.Checklist;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -31,6 +32,17 @@ public class Checklists implements ChecklistsLocal {
             return (List<Long>) query.getResultList();
         }catch(NoResultException e){
             return new ArrayList<>();
+        }
+    }
+    
+    @Override
+    public List<Checklist> findChecklistByIdEncuesta(long idEncuesta){
+        Query query = em.createNamedQuery("Checklist.findChecklistByIdEncuesta");
+        query.setParameter("idEncuesta", idEncuesta);        
+        try{
+            return (List<Checklist>) query.getResultList();
+        }catch(NoResultException e){
+            return null;
         }
     }
     // Add business logic below. (Right-click in editor and choose

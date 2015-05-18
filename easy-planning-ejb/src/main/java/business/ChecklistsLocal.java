@@ -5,6 +5,7 @@
  */
 package business;
 
+import entities.Checklist;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -15,4 +16,5 @@ import javax.ejb.Local;
 @Local
 public interface ChecklistsLocal {
     public List<Long> findProfesorByAsgAnioSemestre(long asg, int anio, int semestre);
+    public List<Checklist> findChecklistByIdEncuesta(long idEncuesta);
 }
