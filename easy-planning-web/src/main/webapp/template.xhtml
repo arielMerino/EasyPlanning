@@ -44,7 +44,7 @@
                         <nav id="navbar" class="navbar navbar-default navbar-static-top menu-nav ">
                             <div class="container-fluid">
                                 <div class="row">
-                                    <div class="col-md-11">
+                                    <div class="col-md-10">
                                         <ul class="nav navbar-nav menu-nav">
                                             <li><a href="/easy-planning-web/faces/coordinador_docente/index.xhtml"><span class="glyphicon glyphicon-home" aria-hidden="true" ></span> Inicio</a></li>
                                             <li class="dropdown">
@@ -64,18 +64,16 @@
                                                   <li class="divider"></li>
                                                   <li><a href="/easy-planning-web/faces/coordinador_docente/plan_de_estudios/cargar_plan_de_estudios.xhtml">Agregar Plan de Estudios</a></li>
                                                   <li class="divider"></li>
-                                                  <li><a href="/easy-planning-web/faces/coordinador_docente/plan_de_estudios/inicializar_secciones.xhtml">Inicializar secciones</a></li>
+                                                  <li><a href="/easy-planning-web/faces/coordinador_docente/plan_de_estudios/inicializar_secciones.xhtml">Iniciar Planificación</a></li>
                                                 </ul>
                                             </li>
                                             <li><a href="/easy-planning-web/faces/coordinador_docente/asignacion_horaria/asignacion_horaria.xhtml"><span class="glyphicon glyphicon-calendar" aria-hidden="true" ></span> Asignación horaria</a></li>
                                         </ul>
                                     </div>
-                                    <div class="col-md-1">
-                                        <h:form>
-                                            <div>
-                                                <p:commandLink value="Salir" action="#{usuarioController.logout()}"/>  
-                                            </div>
-                                        </h:form>
+                                    <div class="col-md-2">
+                                        <!--p:commandLink value="Salir" action="#//{usuarioController.logout()}"/-->  
+                                        <a id="btn-sesion" href="/easy-planning-web/faces/coordinador_docente/index.xhtml" class="btn btn-default">Coord Doc</a> 
+                                        <a class="btn btn-default" id="btn-sesion" href="/easy-planning-web/faces/profesor/index.xhtml">Profesor</a>
                                     </div>
                                 </div>
                             </div>

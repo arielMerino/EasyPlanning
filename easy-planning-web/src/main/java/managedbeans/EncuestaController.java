@@ -57,6 +57,14 @@ public class EncuestaController implements Serializable {
     public EncuestaController() {
     }
 
+    public ParamSemestreAnioFacadeLocal getParamFacade() {
+        return paramFacade;
+    }
+
+    public void setParamFacade(ParamSemestreAnioFacadeLocal paramFacade) {
+        this.paramFacade = paramFacade;
+    }
+
     public String[] getHorariosSeleccionados() {
         return horariosSeleccionados;
     }
@@ -121,6 +129,23 @@ public class EncuestaController implements Serializable {
 
             return lista_a;
         }catch (Exception e){
+            return null;
+        }
+    }
+    
+    public List<Asignatura> getAsignaturasRechazadas(String encuestaId){
+        try{
+            List<Checklist> aux = encuestaFacade.find(Long.parseLong(encuestaId)).getListaAsignaturas();
+            List<Asignatura> rechazadas = new ArrayList();
+            
+            for(Checklist check : aux){
+                if(!check.isAceptado()){
+                    rechazadas.add(check.getAsignatura());
+                }
+            }
+            return rechazadas;
+        }
+        catch(Exception e){
             return null;
         }
     }

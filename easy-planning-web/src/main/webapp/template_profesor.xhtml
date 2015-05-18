@@ -44,18 +44,16 @@
                         <nav id="navbar" class="navbar navbar-default navbar-static-top menu-nav ">
                             <div class="container-fluid">
                                 <div class="row">
-                                    <div class="col-md-11">
+                                    <div class="col-md-10">
                                         <ul class="nav navbar-nav menu-nav">
-                                            <li><a href="/easy-planning-web/faces/view_profesor/index.xhtml"><span class="glyphicon glyphicon-home" aria-hidden="true" ></span> Inicio</a></li>
-                                            <li><a href="/easy-planning-web/faces/view_profesor/encuesta.xhtml"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" ></span> Encuesta</a></li>
+                                            <li><a href="/easy-planning-web/faces/profesor/index.xhtml"><span class="glyphicon glyphicon-home" aria-hidden="true" ></span> Inicio</a></li>
+                                            <li><a href="/easy-planning-web/faces/profesor/encuesta.xhtml"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" ></span> Encuesta</a></li>
                                         </ul>
                                     </div>
-                                    <div class="col-md-1">
-                                        <h:form>
-                                            <div>
-                                                <p:commandLink value="Salir" action="#{usuarioController.logout()}"/>  
-                                            </div>
-                                        </h:form>
+                                    <div class="col-md-2">
+                                        <!--p:commandLink value="Salir" action="#//{usuarioController.logout()}"/-->  
+                                        <a id="btn-sesion" href="/easy-planning-web/faces/coordinador_docente/index.xhtml" class="btn btn-default">Coord Doc</a> 
+                                        <a class="btn btn-default" id="btn-sesion" href="/easy-planning-web/faces/profesor/index.xhtml">Profesor</a>
                                     </div>
                                 </div>
                             </div>

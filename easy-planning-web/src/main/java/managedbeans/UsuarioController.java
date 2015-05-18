@@ -80,7 +80,7 @@ public class UsuarioController {
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/index.xhtml");
                 }
                 else if(usuario.getRoles().get(0).getTipo().equals("Profesor")){
-                    FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/view_profesor/encuesta.xhtml");
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/profesor/index.xhtml");
                 }
                 else{
                     System.out.println("no se sabe el rol");

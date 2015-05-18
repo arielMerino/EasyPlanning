@@ -185,7 +185,7 @@ public class ProfesorController implements Serializable {
             return null;
         }
     }
-
+    
     public List<Profesor> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }

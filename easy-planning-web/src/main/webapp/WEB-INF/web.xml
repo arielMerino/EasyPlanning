@@ -21,62 +21,6 @@
     <welcome-file-list>
         <welcome-file>faces/login.xhtml</welcome-file>
     </welcome-file-list>
-    <security-constraint>
-        <display-name>coordinador_docente</display-name>
-        <web-resource-collection>
-            <web-resource-name>asignacion_horaria</web-resource-name>
-            <description/>
-            <url-pattern>/faces/asignacion_horaria/*</url-pattern>
-        </web-resource-collection>
-        <web-resource-collection>
-            <web-resource-name>asignaturas</web-resource-name>
-            <description/>
-            <url-pattern>/faces/asignaturas/*</url-pattern>
-        </web-resource-collection>
-        <web-resource-collection>
-            <web-resource-name>encuesta</web-resource-name>
-            <description/>
-            <url-pattern>/faces/encuesta/*</url-pattern>
-        </web-resource-collection>
-        <web-resource-collection>
-            <web-resource-name>plan_de_estudios</web-resource-name>
-            <description/>
-            <url-pattern>/faces/plan_de_estudios/*</url-pattern>
-        </web-resource-collection>
-        <web-resource-collection>
-            <web-resource-name>profesor</web-resource-name>
-            <description/>
-            <url-pattern>/faces/profesor/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>Coordinador Docente</role-name>
-        </auth-constraint>
-    </security-constraint>
-    <security-constraint>
-        <display-name>secretaria</display-name>
-        <web-resource-collection>
-            <web-resource-name>secretaria</web-resource-name>
-            <description/>
-            <url-pattern>/faces/secretaria/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>Secretaria</role-name>
-        </auth-constraint>
-    </security-constraint>
-    <security-constraint>
-        <display-name>profesor</display-name>
-        <web-resource-collection>
-            <web-resource-name>profesor</web-resource-name>
-            <description/>
-            <url-pattern>/faces/view_profesor/*</url-pattern>
-        </web-resource-collection>
-        <auth-constraint>
-            <description/>
-            <role-name>Profesor</role-name>
-        </auth-constraint>
-    </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>jdbcRealm</realm-name>
