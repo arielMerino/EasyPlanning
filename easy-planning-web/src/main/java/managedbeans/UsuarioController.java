@@ -5,10 +5,12 @@
  */
 package managedbeans;
 
+import entities.Usuario;
 import java.io.IOException;
 import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
@@ -17,6 +19,7 @@ import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import managedbeans.util.JsfUtil;
+import sessionbeans.UsuarioFacadeLocal;
 
 /**
  *
@@ -28,6 +31,8 @@ public class UsuarioController {
 
     private String nombre;
     private String password;
+    @EJB
+    private UsuarioFacadeLocal ejbUsuario;
 
     public UsuarioController(){
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
@@ -69,7 +74,17 @@ public class UsuarioController {
                 request.login(nombre, password);
                 System.out.println("SessionUtil: SessionScope created for " + nombre);
                 JsfUtil.addSuccessMessage("Logeado con éxito");
-                FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/index.xhtml");
+                Usuario usuario = ejbUsuario.findByUsername(nombre);
+                System.out.println("nombre de usuario: "+usuario.getUsername()+" - rol: "+usuario.getRoles().get(0).getTipo());
+                if(usuario.getRoles().get(0).getTipo().equals("Coordinador Docente")){
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/index.xhtml");
+                }
+                else if(usuario.getRoles().get(0).getTipo().equals("Profesor")){
+                    FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/view_profesor/encuesta.xhtml");
+                }
+                else{
+                    System.out.println("no se sabe el rol");
+                }
             } else {
                 System.out.println("SessionUtil: User allready logged");
                 
@@ -100,51 +115,4 @@ public class UsuarioController {
         externalContext.redirect("/easy-planning-web/faces/login.xhtml");
     }
     
-    /**
-     * Obtiene el nombre del usuario de la sesión
-     */
-    private void getDatosUsuario() {
-        
-        ExternalContext context = FacesContext.getCurrentInstance().getExternalContext();
-        Object objPeticion = context.getRequest();
-        if (!(objPeticion instanceof HttpServletRequest)) {
-            System.out.println("Error objeto es: "
-                    + objPeticion.getClass().toString());
-            return;
-        }
-        HttpServletRequest peticion = (HttpServletRequest) objPeticion;
-        
-        nombre = peticion.getRemoteUser();
-        System.out.println("UsuarioController: "+nombre);
-        if (nombre == null) {
-            JsfUtil.addErrorMessage("Nombre de usuario y contraseña no coinciden");
-            System.out.println("FALLO EN EL LOGIN");
-            //logout();
-        }
-        
-        /*
-        FacesContext context = FacesContext.getCurrentInstance();
-        ExternalContext externalContext = context.getExternalContext();
-        HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-        
-        try{
-            request.login(nombre, nombre);
-        }
-        catch(Exception e){
-            
-        }
-        */
-    }
-    /*
-    public void logout() {
-        ExternalContext ec = FacesContext.getCurrentInstance().getExternalContext();
-        ec.invalidateSession();
-        try {
-            ec.redirect(ec.getRequestContextPath());
-        } catch (IOException ex) {
-            System.out.println("FALLO EN EL LOGIN-----");
-            Logger.getLogger(UsuarioController.class.getName()).log(Level.SEVERE, null, ex);
-        }
-    }
-    */
 }
