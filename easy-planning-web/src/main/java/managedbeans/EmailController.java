@@ -5,10 +5,12 @@
  */
 package managedbeans;
 
+import business.ProfesoresLocal;
 import entities.Asignatura;
 import entities.Checklist;
 import entities.Encuesta;
 import entities.ParamSemestreAno;
+import entities.Profesor;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
 import java.util.Properties;
@@ -49,6 +51,8 @@ public class EmailController implements Serializable {
     private EncuestaFacadeLocal ejbEncuesta;
     @EJB
     private ChecklistFacadeLocal ejbCheck;
+    @EJB
+    private ProfesoresLocal profesorBusiness;
 
     public EncuestaFacadeLocal getEjbEncuesta() {
         return ejbEncuesta;
@@ -118,33 +122,44 @@ public class EmailController implements Serializable {
     
     public void enviarNotificacion() throws Exception {
         String origen = "coordinador.docente.diinf@gmail.com";
-        String pass = "coordinador";
+        String pass = "coordinador";                
         
         if(profesorController.getSelected() != null) {
-            String emailProfesor = profesorController.getSelected().getMail();
+            Profesor p = profesorController.getSelected();
+            String emailProfesor = p.getMail();
             String nombre = "PAMELA AGUIRRE GUZMÁN";
-            String profesor = profesorController.getSelected().getNombre() + " " + profesorController.getSelected().getApellido();
+            String profesor = p.getNombre() + " " + p.getApellido();
             String asunto = "Encuesta de disponibilidad horaria";
             String contenido = "Profesor" + " " + profesor + " ";
             contenido = contenido + "conteste la encuesta de disponibilidad horaria, por favor. http://localhost:8080/easy-planning-web/faces/profesor/encuesta.xhtml?id=";
-            contenido = contenido + profesorController.getSelected().getId();
+            contenido = contenido + p.getId();
             
-            Encuesta encuesta = new Encuesta();
-            encuesta.setProfesor(profesorController.getSelected());
             ParamSemestreAno semAnho = getEjbSemAnio().find(Long.parseLong(1+""));
-            encuesta.setAnio(semAnho.getAnoActual());
-            encuesta.setSemestre(semAnho.getSemestreActual());
-            getEjbEncuesta().create(encuesta);
+            Long id = p.getId();
+            int semestre = semAnho.getSemestreActual();
+            int anio = semAnho.getAnoActual();            
+            Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(id, semestre, anio);
             
-            for(Asignatura asignatura : profesorController.getAsignaturasProfesor(profesorController.getSelected().getId())){
-                Checklist check = new Checklist();
-                check.setAceptado(false);
-                check.setAsignatura(asignatura);
-                check.setEncuesta(encuesta);
-                ejbCheck.create(check);
+            if(encuesta == null){
+                encuesta = new Encuesta();
+                encuesta.setProfesor(p);            
+                encuesta.setAnio(semAnho.getAnoActual());
+                encuesta.setSemestre(semAnho.getSemestreActual());
+                getEjbEncuesta().create(encuesta);
+                
+                for(Asignatura asignatura : profesorController.getAsignaturasProfesor(id)){
+                    Checklist check = new Checklist();
+                    check.setAceptado(false);
+                    check.setAsignatura(asignatura);
+                    check.setEncuesta(encuesta);
+                    ejbCheck.create(check);
+                }
+            
+                enviarEmail(origen, nombre, pass, emailProfesor, asunto, contenido);
+            }else{
+                JsfUtil.addErrorMessage("Encuesta ya ha sido enviado");
             }
-            
-            enviarEmail(origen, nombre, pass, emailProfesor, asunto, contenido);
+                        
         }
     }
 }
