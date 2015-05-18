@@ -13,78 +13,75 @@
             Asignaturas
         </ui:define>
         <ui:define name="body">
-            <h:form id="mostrar_asignaturas">
-                <p>Seleccionar plan de estudios</p>
-                <p:selectOneMenu id="plan" value="#{asignaturaController.planEstudios}" >
-                    <f:selectItem itemValue="todos los planes" itemLabel="todos"/>
-                    <f:selectItems value="#{asignaturaController.planesDeEstudio}" />
-                    <p:ajax process="@this" update="tablaAsignaturas, tituloPanel" />
-                </p:selectOneMenu>
-                <br/>
-                <!--p>Seleccionar Nivel</p>
-                <p:selectOneMenu id="nivel" value="#//{asignaturaController.nivel}">
-                    <f:selectItem itemValue="0" itemLabel="todos"/>
-                    <f:selectItems value="#//{asignaturaController.getMaxNivel()}"/>
-                    <p:ajax process="@this" update="tablaAsignaturas" />
-                </p:selectOneMenu-->
-                <p:panel id="tituloPanel" header="Plan: #{asignaturaController.planEstudios}">
-                    <p:dataTable id="tablaAsignaturas" value="#{asignaturaController.getAsignaturasByPlan(asignaturaController.planEstudios,asignaturaController.nivel)}" 
-                        var="item"
-                        selectionMode="single" selection="#{asignaturaController.selected}"
-                        sortBy="#{item.nivel}"        
-                        paginator="true"
-                        rowKey="#{item.id}"
-                        rows="50"
-                        rowsPerPageTemplate="50,60,70,80"
-                        widgetVar="asignaturasTable"
-                        filteredValue="#{asignaturaController.asignaturasFiltradas}"
-                        emptyMessage="No se han encontrado asignaturas según los parámetros indicados"
-                        >
-                        <p:column filterBy="#{item.codigo}" filterMatchMode="contains">
-                            <f:facet name="header">
-                                <h:outputText value="Código"/>
-                            </f:facet>
-                            <h:outputText value="#{item.codigo}"/>
-                        </p:column>
-                        <p:column filterBy="#{item.nombre}" filterMatchMode="contains">
-                            <f:facet name="header">
-                                <h:outputText value="Asignatura"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nombre}"/>
-                        </p:column>
-                        <p:column filterBy="#{item.nivel}" filterMatchMode="contains">
-                            <f:facet name="header">
-                                <h:outputText value="Nivel"/>
-                            </f:facet>
-                            <h:outputText value="#{item.nivel}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="T"/>
-                            </f:facet>
-                            <h:outputText value="#{item.teoria}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="E"/>
-                            </f:facet>
-                            <h:outputText value="#{item.ejercicios}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="L"/>
-                            </f:facet>
-                            <h:outputText value="#{item.laboratorio}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Total horas"/>
-                            </f:facet>
-                            <h:outputText value="#{asignaturaController.bloquesTotales(item.id)}"/>
-                        </p:column>
-                    </p:dataTable>
-                </p:panel>
-            </h:form>
+            <div class="container-fluid">
+                <h:form id="mostrar_asignaturas">
+                    <p>Seleccionar plan de estudios</p>
+                    <p:selectOneMenu id="plan" value="#{asignaturaController.planEstudios}" >
+                        <f:selectItem itemValue="todos los planes" itemLabel="todos"/>
+                        <f:selectItems value="#{asignaturaController.planesDeEstudio}" />
+                        <p:ajax process="@this" update="tablaAsignaturas, tituloPanel" />
+                    </p:selectOneMenu>
+                    <br/>
+                    <p:panel id="tituloPanel" header="Plan: #{asignaturaController.planEstudios}">
+                        <p:dataTable id="tablaAsignaturas" value="#{asignaturaController.getAsignaturasByPlan(asignaturaController.planEstudios,asignaturaController.nivel)}" 
+                            var="item"
+                            selectionMode="single" selection="#{asignaturaController.selected}"
+                            sortBy="#{item.nivel}"        
+                            paginator="true"
+                            rowKey="#{item.id}"
+                            rows="50"
+                            rowsPerPageTemplate="50,60,70,80"
+                            widgetVar="asignaturasTable"
+                            filteredValue="#{asignaturaController.asignaturasFiltradas}"
+                            emptyMessage="No se han encontrado asignaturas según los parámetros indicados"
+                            >
+                            <p:column filterBy="#{item.codigo}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <h:outputText value="Código"/>
+                                </f:facet>
+                                <h:outputText value="#{item.codigo}"/>
+                            </p:column>
+                            <p:column filterBy="#{item.nombre}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <h:outputText value="Asignatura"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nombre}"/>
+                            </p:column>
+                            <p:column filterBy="#{item.nivel}" filterMatchMode="contains">
+                                <f:facet name="header">
+                                    <h:outputText value="Nivel"/>
+                                </f:facet>
+                                <h:outputText value="#{item.nivel}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="T"/>
+                                </f:facet>
+                                <h:outputText value="#{item.teoria}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="E"/>
+                                </f:facet>
+                                <h:outputText value="#{item.ejercicios}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="L"/>
+                                </f:facet>
+                                <h:outputText value="#{item.laboratorio}"/>
+                            </p:column>
+                            <p:column>
+                                <f:facet name="header">
+                                    <h:outputText value="Total horas"/>
+                                </f:facet>
+                                <h:outputText value="#{asignaturaController.bloquesTotales(item.id)}"/>
+                            </p:column>
+                        </p:dataTable>
+                    </p:panel>
+                </h:form>
+
+            </div>
             
         </ui:define>
     </ui:composition>

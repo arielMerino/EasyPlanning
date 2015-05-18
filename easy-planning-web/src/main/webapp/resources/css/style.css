@@ -152,3 +152,33 @@ html .ui-layout-container{
     /* Pad bottom by footer height */
     //padding: 0 0 60px;
 }
+.panel-default>.panel-heading{
+    background-color: #ff7319;
+    color: #fff;
+    border: none;
+}
+.panel-default>.panel-body{
+    background-color: #0052cc;
+    color: #fff;
+    padding-top: 5%;
+}
+.panel-default{
+    margin-top: 20%;
+    border: none;
+}
+.label-form{
+    color: #fff;
+}
+.form-control{
+    color: #0052cc;
+}
+.btn-default{
+    background-color: #ff7319;
+    color: #fff;
+    border: none;
+    margin-top: 60%;
+}
+#banner-bottom{
+    padding-bottom: 2em;
+    background-color: #ff7319;
+}

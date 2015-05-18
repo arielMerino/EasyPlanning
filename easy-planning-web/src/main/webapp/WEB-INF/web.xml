@@ -21,4 +21,24 @@
     <welcome-file-list>
         <welcome-file>faces/index.xhtml</welcome-file>
     </welcome-file-list>
+    <login-config>
+        <auth-method>FORM</auth-method>
+        <realm-name>jdbcRealm</realm-name>
+        <form-login-config>
+            <form-login-page>/faces/index.xhtml</form-login-page>
+            <form-error-page>/faces/login.xhtml</form-error-page>
+        </form-login-config>
+    </login-config>
+    <security-role>
+        <description/>
+        <role-name>Coordinador Docente</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>Secretaria</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>Profesor</role-name>
+    </security-role>
 </web-app>
