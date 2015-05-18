@@ -37,6 +37,15 @@ public class AsignaturaController implements Serializable {
     private int nivel = 0;
     private List<Asignatura> asignaturasFiltradas;
     private List<Asignatura> asignaturaEncuestas;
+    private List<Asignatura> asignaturasSemestrePasado;
+
+    public List<Asignatura> getAsignaturasSemestrePasado() {
+        return asignaturasSemestrePasado;
+    }
+
+    public void setAsignaturasSemestrePasado(List<Asignatura> asignaturasSemestrePasado) {
+        this.asignaturasSemestrePasado = asignaturasSemestrePasado;
+    }
 
     public List<Asignatura> getAsignaturaEncuestas() {
         return asignaturaEncuestas;
@@ -254,9 +263,4 @@ public class AsignaturaController implements Serializable {
         return niveles;
     }
     
-    public void asignaturasParaEncuestas(){
-        
-            System.out.println(asignaturaEncuestas.size());
-                    
-    }
 }

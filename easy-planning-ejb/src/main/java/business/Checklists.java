@@ -5,6 +5,7 @@
  */
 package business;
 
+import entities.Asignatura;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -30,6 +31,17 @@ public class Checklists implements ChecklistsLocal {
         try{
             return (List<Long>) query.getResultList();
         }catch(NoResultException e){
+            return new ArrayList<>();
+        }
+    }
+    
+    @Override
+    public List<Asignatura> findAsignaturasByEncuestaId(long id_encuesta){
+        Query query = em.createNamedQuery("Checklist.findAsignaturaByEncuestaId").setParameter("idEncuesta", id_encuesta);
+        try{
+            return (List<Asignatura>) query.getResultList();
+        }
+        catch(NoResultException e){
             return new ArrayList<>();
         }
     }

@@ -10,20 +10,65 @@
     
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="Cargar Plan de Estudios - Easy Planning"></h:outputText>
+            <h:outputText value="Editar Encuesta - Easy Planning"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <br/>
             
-            <h3>Seleccione las asignaturas que se mostrarán al profesor en su encuesta:</h3>
+            <h4>Seleccione las asignaturas que se mostrarán al profesor en su encuesta:</h4>
             
             <br/>
-            <h:form>
+            
+            <c:set var="profesor_id" value="#{param['id']}" scope="request" />
+            <c:if test="#{profesor_id != 0 and profesor_id != null}">
+                #{checklistController.setProfesor_id(profesor_id)}
+            </c:if>
+            
+            <h:form id="form">
                 
-                
-                <p:panel id="tituloPanel" header="Profesor: #{profesorController.getProfesor(param.id).nombre} #{profesorController.getProfesor(param.id).apellido}">   
-                    <p:commandButton value="Guardar encuesta" actionListener="#{asignaturaController.asignaturasParaEncuestas()}"/>
-                    <p:dataTable id="tablaAsignaturas" value="#{asignaturaController.getAsignaturasByPlan(asignaturaController.planEstudios,asignaturaController.nivel)}" 
+                <p:panel id="tituloPanel" header="Profesor: #{profesorController.getProfesor(checklistController.profesor_id).nombre} #{profesorController.getProfesor(checklistController.profesor_id).apellido}">
+                    
+                    <h5>Asignaturas en la encuesta actual</h5>
+                    <p:dataTable id="tablaAsignaturas1" value="#{checklistController.asignaturasSemestrePasado(checklistController.profesor_id)}" 
+                        var="item"
+                        sortBy="#{item.nivel}" 
+                        selection="#{asignaturaController.asignaturasSemestrePasado}"
+                        paginator="true"
+                        rowKey="#{item.id}"
+                        rows="20"
+                        rowsPerPageTemplate="20,30,40,50,60,70,80"
+                        widgetVar="asignaturasTable1"
+                        emptyMessage="No se han encontrado asignaturas"
+                        >
+                        
+                        <p:column width="50%" >
+                            <f:facet name="header">
+                                <h:outputText value="Asignatura"/>
+                            </f:facet>
+                            <h:outputText value="#{item.nombre}"/>
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="Plan"/>
+                            </f:facet>
+                            <h:outputText value="#{item.planEstudio}"/>
+                        </p:column>
+                        <p:column style="text-align: center">
+                            <f:facet name="header">
+                                <h:outputText value="Carrera"/>
+                            </f:facet>
+                            <h:outputText value="#{item.carrera.nombre}"/>
+                        </p:column>
+                        <p:column style="text-align: center" width="10%" >
+                            <p:commandButton value="Quitar" />
+                        </p:column>
+                    </p:dataTable>
+                    
+                    <br/>
+                    <p:commandButton actionListener="#{checklistController.asignaturasParaEncuestas(asignaturaController.asignaturaEncuestas,checklistController.profesor_id)}" value="Guardar Encuesta" update="tablaAsignaturas1" oncomplete="submit();" />
+                    <br/>
+                    <h5>Todas las asignaturas</h5>
+                    <p:dataTable id="tablaAsignaturas2" value="#{asignaturaController.getAsignaturasByPlan(asignaturaController.planEstudios,asignaturaController.nivel)}" 
                         var="item"
                         sortBy="#{item.nivel}" 
                         selection="#{asignaturaController.asignaturaEncuestas}"
@@ -31,7 +76,7 @@
                         rowKey="#{item.id}"
                         rows="20"
                         rowsPerPageTemplate="20,30,40,50,60,70,80"
-                        widgetVar="asignaturasTable"
+                        widgetVar="asignaturasTable2"
                         filteredValue="#{asignaturaController.asignaturasFiltradas}"
                         emptyMessage="No se han encontrado asignaturas según los parámetros indicados"
                         >
@@ -60,6 +105,7 @@
                         </p:column>
                     </p:dataTable>
                 </p:panel>
+                
             
             
             </h:form>
