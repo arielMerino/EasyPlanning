@@ -19,7 +19,7 @@
                         #{profesorController.setIdProfesor(id)}
                     </c:if>
                     
-                    <c:if test="#{profesorController.getAsignaturasChecklist(profesorController.idProfesor) == null}">
+                    <c:if test="#{!profesorController.hayEncuesta(id)}">
                         <br />
                         <div class="alert alert-danger text-center">
                             <strong>Usted aún no tiene una encuesta asignada</strong>

@@ -201,4 +201,14 @@ public class EncuestaController implements Serializable {
             return false;
         }
     }
+    
+    public Encuesta getEncuestaContestado(String profesorId, int semestre, int anio){
+        try{
+            Long id = Long.parseLong(profesorId);
+            Encuesta e = profesorBusiness.getEncuestaBySemestreAndAnio(id, semestre, anio);
+            return e;
+        }catch (Exception e){
+            return null;
+        }        
+    }    
 }

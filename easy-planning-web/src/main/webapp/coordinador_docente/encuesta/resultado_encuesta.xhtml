@@ -28,8 +28,9 @@
                             No existe tal profesor
                         </c:if>
                         <c:if test="#{not empty profesor}">
-                            <c:set var="hayEncuesta" value="#{encuestaController.hayEncuestaContestado(param.id, semestre, anio)}" scope="request"/>                    
+                            <c:set var="hayEncuesta" value="#{encuestaController.hayEncuestaContestado(id, semestre, anio)}" scope="request"/>
                             <c:if test="#{hayEncuesta}">
+                                <c:set var="e" value="#{encuestaController.getEncuestaContestado(id, semestre, anio)}" scope="request"/>
                                 <br />
                                 <div class="col-md-6 col-md-offset-3">
                                     <table class="table table-hover">
@@ -52,7 +53,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <c:forEach  var="item" items="#{encuestaController.getAsignaturasAceptadas(id)}">                     
+                                                <c:forEach  var="item" items="#{encuestaController.getAsignaturasAceptadas(e.id)}">                     
                                                     <td><h:outputText value="#{item.nombre}" /></td>
                                                 </c:forEach>
                                             </tr>
@@ -67,7 +68,7 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <c:forEach var="item" items="#{profesorController.getDisponibles(param.id)}">
+                                                    <c:forEach var="item" items="#{profesorController.getDisponibles(id)}">
                                                         <h:outputText value="#{item.bloque}, "/>
                                                     </c:forEach>
                                                 </td>
@@ -82,7 +83,7 @@
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <td><h:outputText value="#{profesorController.comentarioEncuestaProfesor(param.id)}" /></td>
+                                                <td><h:outputText value="#{profesorController.comentarioEncuestaProfesor(id)}" /></td>
                                             </tr>
                                         </tbody>
                                     </table>
