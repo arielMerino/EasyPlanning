@@ -53,8 +53,17 @@ public class EncuestaController implements Serializable {
     private String comentario = "";
     private Long[] asignaturas;
     private String[] horariosSeleccionados;
+    private boolean contestada = false;
     
     public EncuestaController() {
+    }
+
+    public boolean isContestada() {
+        return contestada;
+    }
+
+    public void setContestada(boolean contestada) {
+        this.contestada = contestada;
     }
 
     public ParamSemestreAnioFacadeLocal getParamFacade() {
@@ -175,6 +184,7 @@ public class EncuestaController implements Serializable {
             }
             dropHorariosNoSeleccionados(id);
             JsfUtil.addSuccessMessage("Encuesta registrada con éxito");
+            contestada = true;
             
         }
         catch(Exception e){
