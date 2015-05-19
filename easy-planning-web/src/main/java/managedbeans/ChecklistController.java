@@ -24,6 +24,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
+import javax.faces.application.FacesMessage;
+import javax.faces.context.FacesContext;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
 import org.primefaces.context.RequestContext;
@@ -120,18 +122,38 @@ public class ChecklistController implements Serializable {
             }
         }
         return null;
-    }
+    } 
     
     public void asignaturasParaEncuestas(List<Asignatura> asignaturas,Long id){
         
-        Encuesta encuesta = this.encuestaActual(id);        
+        Encuesta encuesta = this.encuestaActual(id);   
+        List<Checklist> checklist = encuesta.getListaAsignaturas();
         
+        boolean ver=true;
+        FacesContext context = FacesContext.getCurrentInstance();
+        
+        for(Checklist chk : checklist){
+            for(Asignatura asig : asignaturas){
+                System.out.println("Asignatura: "+asig.getId().toString()+", Check: "+chk.getAsignatura().getId().toString());
+                if(asig.getId()==chk.getAsignatura().getId()){
+                    ver=false;
+                }
+            }
+        }
+        
+        
+        if(ver){
             for(Asignatura asig : asignaturas){
                 Checklist check = new Checklist();
                 check.setEncuesta(encuesta);
                 check.setAsignatura(asig);
                 ejbFacade.create(check);
             }
+            context.addMessage(null, new FacesMessage("Resultado",  "Se han incluido las asignaturas exitósamente") );
+        }
+        else{
+            context.addMessage(null, new FacesMessage("Advertencia",  "Una asignatura seleccionada ya esta incluida en la enceusta actual.") );
+        }
                     
     }
     
@@ -147,6 +169,8 @@ public class ChecklistController implements Serializable {
         /*for(Asignatura asig : asignaturas){
             checklistBusiness.deleteChecklist(encuesta.getId(),asig.getId());
         }*/
+
+        
         List<Checklist> checklists = encuesta.getListaAsignaturas();
         for(Checklist chk : checklists){
             for(Asignatura asig : asignaturas){

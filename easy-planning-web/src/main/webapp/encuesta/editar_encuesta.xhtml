@@ -26,6 +26,8 @@
             
             <h:form id="form">
                 
+                <p:growl id="feedback" showDetail="true" />
+                
                 <p:panel id="tituloPanel" header="Profesor: #{profesorController.getProfesor(checklistController.profesor_id).nombre} #{profesorController.getProfesor(checklistController.profesor_id).apellido}">
                     
                     <h5>Asignaturas en la encuesta actual</h5>
