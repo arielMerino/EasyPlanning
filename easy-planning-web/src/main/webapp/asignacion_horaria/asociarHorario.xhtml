@@ -8,7 +8,7 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition>
-        <p:dialog class="panel panel-default" widgetVar="seccionProfesor" id="selSeccionProfesor" width="320px" modal="true" appendTo="@(body)" resizable="false" style="margin: 0; ">
+        <p:dialog class="panel panel-default" widgetVar="seccionProfesor" id="selSeccionProfesor" width="600px" modal="true" appendTo="@(body)" resizable="false" style="margin: 0; ">
             <h:form id="form2">
                 <p:panel id="formulario" style="width: 100%;">
                     <c:if test="#{not asignacionHoraria.validarAsignatura()}" >
@@ -16,22 +16,40 @@
                     </c:if>
                     <c:if test="#{asignacionHoraria.validarAsignatura()}" >
                         <div>
-                            <h:outputLabel style="white-space: normal;width: 50%">Seleccionar sección:</h:outputLabel>
+                            <h4>Seleccionar sección:</h4>
+                            <br/>
+                            <h:outputLabel style="white-space: normal;width: 50%">sección:</h:outputLabel>
                             <br/>
                             <p:selectOneMenu required="true" value="#{asignacionHoraria.seccionId}" requiredMessage="Debe seleccionar una seccion" style="width: 50%">
                                 <f:selectItem itemLabel="Seccion" noSelectionOption="true" />
                                 <f:selectItems value="#{asignacionHoraria.seccionesBusiness.findByAsignaturaAnioYSemestre(asignacionHoraria.asignaturaFacade.find(asignacionHoraria.asignaturaSelected).getId(), asignacionHoraria.anioSelected, asignacionHoraria.semestreSelected)}" var="seccion" itemLabel="#{seccion.codigo}" itemValue="#{seccion.id}"/>
                             </p:selectOneMenu>
-                            <br/>
-                            <h:outputLabel style="white-space: normal;width: 50%">Seleccionar profesor:</h:outputLabel>
-                            <p:selectOneMenu value="#{asignacionHoraria.profesorSelected}" style="width: 50%">
-                                <f:selectItem itemLabel="profesor" noSelectionOption="true" />
-                                <f:selectItems value="#{asignacionHoraria.getDisponiblesByBloque(asignacionHoraria.bloqueSelected)}" var="prof" itemLabel="#{prof.nombre} #{prof.apellido}" itemValue="#{prof.id}"/>
-                            </p:selectOneMenu>
+                            <h4>Seleccionar Profesor:</h4>
+                            <div class="row">
+                                <div class="col-xs-6">
+                                    <h:outputLabel style="white-space: normal;width: 100%">Profesor con disponibilidad:</h:outputLabel>
+                                    <br/>
+                                    <p:selectOneMenu id="ProfesoresDisponibles" value="#{asignacionHoraria.profesorSelected}" style="width: 100%" immediate="true">
+                                        <f:selectItem itemLabel="sin profesor" itemValue="#{null}"/>
+                                        <f:selectItems value="#{asignacionHoraria.getDisponiblesByBloque(asignacionHoraria.bloqueSelected)}" var="prof" itemLabel="#{prof.nombre} #{prof.apellido}" itemValue="#{prof.id}"/>
+                                        <p:ajax process="@this" update="allProfesores" />
+                                    </p:selectOneMenu>
+                                </div>
+                                <div class="col-xs-6">
+                                    <h:outputLabel style="white-space: normal;width: 100%">Todos los profesores:</h:outputLabel>
+                                    <br/>
+                                    <p:selectOneMenu id="allProfesores" value="#{asignacionHoraria.profesorSelected}" style="width: 100%" filter="true" filterMatchMode="contains" immediate="true">
+                                        <f:selectItem itemLabel="sin profesor" itemValue="#{null}" />
+                                        <f:selectItems value="#{asignacionHoraria.profesorFacade.findAll()}" var="Tprof" itemLabel="#{Tprof.nombre} #{Tprof.apellido}" itemValue="#{Tprof.id}"/>
+                                        <p:ajax process="@this" update="ProfesoresDisponibles"/>
+                                    </p:selectOneMenu>
+                                </div>
+                            </div>
                         </div>
-                        <div>
-                            <p:commandButton value="Cancelar" action="#{asignacionHoraria.limpiarBloqueYprofesor()}" update="formulario" onsuccess="PF('seccionProfesor').hide();" />
-                            <p:commandButton value="Asignar" action="#{asignacionHoraria.setAsignar(1)}" update="formulario" onsuccess="#{asignacionHoraria.asignar()}; handleSubmit(args,'form2');" />
+                        <div class="row">
+                            <p:commandButton class="btn btn-default col-xs-2" value="Cancelar" action="#{asignacionHoraria.limpiarBloqueYprofesor()}" update="formulario" onsuccess="PF('seccionProfesor').hide();" />
+                            <p:commandButton class="btn btn-default col-xs-2" value="Asignar" action="#{asignacionHoraria.setAsignar(1)}" update="formulario, :seleccionCarreraPlanAsignatura" onsuccess="#{asignacionHoraria.asignar()};submit();" />
+                            <p:commandButton class="btn btn-default col-xs-2" value="Eliminar" action="#{asignacionHoraria.eliminarHorario()}" update="formulario, :seleccionCarreraPlanAsignatura" onsuccess="submit();" />
                         </div>
                     </c:if>
                 </p:panel>

@@ -41,13 +41,13 @@ public class EncuestaController implements Serializable {
     @EJB
     private ProfesoresLocal profesorBusiness;
     @EJB
-    private ProfesorFacadeLocal ejbProfesor;
+    private ProfesorFacadeLocal profesorFacade;
     @EJB
-    private ParamSemestreAnioFacadeLocal ejbParam;
+    private ParamSemestreAnioFacadeLocal paramFacade;
     @EJB
-    private HorarioFacadeLocal ejbHorario;
+    private HorarioFacadeLocal horarioFacade;
     @EJB
-    private HorariosLocal ejbHorarioBusiness;
+    private HorariosLocal horarioBusiness;
     
     private List<String> listaContinuidad;    
     private String comentario = "";
@@ -71,19 +71,7 @@ public class EncuestaController implements Serializable {
 
     public void setAsignaturas(Long[] asignaturas) {
         this.asignaturas = asignaturas;
-    }
-
-    public EncuestaFacadeLocal getFacade() {
-        return encuestaFacade;
-    }
-
-    public AsignaturaFacadeLocal getAsignaturaFacade() {
-        return asignaturaFacade;
-    }
-    
-    public ChecklistFacadeLocal getChecklistFacade() {
-        return checklistFacade;
-    }
+    }    
 
     public List<String> getListaContinuidad() {
         return listaContinuidad;
@@ -105,16 +93,16 @@ public class EncuestaController implements Serializable {
 
         if(!listaContinuidad.isEmpty()){
             Encuesta encuesta = new Encuesta();                
-            getFacade().create(encuesta);
+            encuestaFacade.create(encuesta);
 
             for(int i = 0; i < listaContinuidad.size(); i++){
                 Checklist checklist = new Checklist();
-                getChecklistFacade().create(checklist);
+                checklistFacade.create(checklist);
                 Long id = Long.parseLong(listaContinuidad.get(i));
-                Asignatura asignatura = getAsignaturaFacade().find(id);
+                Asignatura asignatura = asignaturaFacade.find(id);
                 checklist.setEncuesta(encuesta);
                 checklist.setAsignatura(asignatura);
-                getChecklistFacade().edit(checklist);
+                checklistFacade.edit(checklist);
             }
         }
     }
@@ -122,16 +110,16 @@ public class EncuestaController implements Serializable {
     public ArrayList<Asignatura> getAsignaturasAceptadas(String encuestaId){
         try{
             Long id = Long.parseLong(encuestaId);
-            List<Checklist> aux = getFacade().find(id).getListaAsignaturas();
+            List<Checklist> aux = encuestaFacade.find(id).getListaAsignaturas();
 
-            ArrayList<Asignatura> asignaturas = new ArrayList<>();
+            ArrayList<Asignatura> lista_a = new ArrayList<>();
 
             for(Checklist check : aux){
                 if(check.isAceptado())            
-                    asignaturas.add(check.getAsignatura());
+                    lista_a.add(check.getAsignatura());
             }
 
-            return asignaturas;
+            return lista_a;
         }catch (Exception e){
             return null;
         }
@@ -139,7 +127,7 @@ public class EncuestaController implements Serializable {
     
     public void resultadoEncuesta(int id_profesor){
         Long id = Long.parseLong(id_profesor+"");
-        ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
+        ParamSemestreAno semAnio = paramFacade.find(Long.parseLong(1+""));
         try{
             Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(id, semAnio.getSemestreActual(), semAnio.getAnoActual());
             encuesta.setComentario(comentario);
@@ -153,11 +141,11 @@ public class EncuestaController implements Serializable {
             }
             setFalseChecklist(id);
             for(String bloque : horariosSeleccionados){
-                if(ejbHorarioBusiness.findByBloqueAndProfesor(bloque, id) == null){                    
+                if(horarioBusiness.findByBloqueAndProfesor(bloque, id) == null){                    
                     Horario horario = new Horario();
                     horario.setBloque(bloque);
-                    horario.setProfesor(ejbProfesor.find(id));
-                    ejbHorario.create(horario);
+                    horario.setProfesor(profesorFacade.find(id));
+                    horarioFacade.create(horario);
                 }
             }
             JsfUtil.addSuccessMessage("Encuesta registrada con éxito");
@@ -170,7 +158,7 @@ public class EncuestaController implements Serializable {
     }
     
     public void setFalseChecklist(Long id_profesor){
-        ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
+        ParamSemestreAno semAnio = paramFacade.find(Long.parseLong(1+""));
         Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(id_profesor, semAnio.getSemestreActual(), semAnio.getAnoActual());
         List<Checklist> noSeleccionadas = new ArrayList();
         boolean flag;        
@@ -191,4 +179,36 @@ public class EncuestaController implements Serializable {
         }
     }
     
+    public boolean hayEncuestaContestado(String profesorId, int semestre, int anio){
+        try{
+            Long id = Long.parseLong(profesorId);
+            Encuesta e = profesorBusiness.getEncuestaBySemestreAndAnio(id, semestre, anio);
+            List<Checklist> c = e.getListaAsignaturas();
+
+            for(Checklist check : c){
+                if(check.isAceptado())            
+                    return true;
+            }
+            
+            List<Horario> h = horarioBusiness.findDisponiblesByProfesorId(id);
+            
+            for(Horario horario : h){
+                return true;
+            }
+            
+            return false;
+        }catch (Exception e){
+            return false;
+        }
+    }
+    
+    public Encuesta getEncuestaContestado(String profesorId, int semestre, int anio){
+        try{
+            Long id = Long.parseLong(profesorId);
+            Encuesta e = profesorBusiness.getEncuestaBySemestreAndAnio(id, semestre, anio);
+            return e;
+        }catch (Exception e){
+            return null;
+        }        
+    }    
 }

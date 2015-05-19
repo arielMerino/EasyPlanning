@@ -201,9 +201,11 @@ public class ProfesorController implements Serializable {
         List<Horario> horarios = this.horarioFacade.findAll();
         ArrayList<Horario> disponibles = new ArrayList<>();
         for (int i = 0; i < horarios.size(); i++) {
-            if (profesorId == horarios.get(i).getProfesor().getId()) {
-                if (horarios.get(i).getSeccion()==null) {
-                    disponibles.add(horarios.get(i));
+            if (horarios.get(i).getProfesor() != null){
+                if (profesorId == horarios.get(i).getProfesor().getId()) {
+                    if (horarios.get(i).getSeccion()==null) {
+                        disponibles.add(horarios.get(i));
+                    }
                 }
             }
         }
@@ -241,14 +243,27 @@ public class ProfesorController implements Serializable {
         return encuesta.getComentario();
     }
     
-    public List<Checklist> getAsignaturasChecklist(int id){
+    public List<Checklist> getAsignaturasChecklist(Long id){
+        
         ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
-        try{
-            Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(getIdProfesor(), semAnio.getSemestreActual(), semAnio.getAnoActual());
+        try{            
+            Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(id, semAnio.getSemestreActual(), semAnio.getAnoActual());            
             return encuesta.getListaAsignaturas();
         }
         catch(Exception e){
             return null;
+        }
+    }
+    
+    public boolean hayEncuesta(Long id){
+        
+        ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
+        try{            
+            Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(id, semAnio.getSemestreActual(), semAnio.getAnoActual());
+            return encuesta != null;
+        }
+        catch(Exception e){            
+            return false;
         }
     }
     

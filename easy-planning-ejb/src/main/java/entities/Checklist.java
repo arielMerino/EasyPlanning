@@ -22,12 +22,16 @@ import javax.persistence.OneToOne;
 @Entity
 @NamedQueries({
     @NamedQuery(
-            name = "Checklist.findProfesoresByAsgnioAndSemestre",
+            name = "Checklist.findProfesoresByAsgAnioAndSemestre",
             query = "SELECT DISTINCT c.encuesta.profesor.id FROM Checklist c WHERE c.asignatura.id = :asg AND c.encuesta.anio = :anio AND c.encuesta.semestre = :semestre AND c.aceptado = 'true'"
     ),
     @NamedQuery(
             name="Checklist.findAsignaturaByEncuestaId",
             query="SELECT c.asignatura from Checklist c WHERE c.encuesta.id = :idEncuesta"
+    ),
+    @NamedQuery(
+            name="Checklist.deleteChecklist",
+            query="DELETE FROM Checklist c WHERE c.encuesta.id = :idEncuesta AND c.asignatura.id = :idAsignatura"
     )
 })
 public class Checklist implements Serializable {

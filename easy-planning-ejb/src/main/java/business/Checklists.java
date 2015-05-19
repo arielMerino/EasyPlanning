@@ -45,6 +45,12 @@ public class Checklists implements ChecklistsLocal {
             return new ArrayList<>();
         }
     }
+    
+    @Override
+    public void deleteChecklist(long encuesta_id, long asignatura_id){
+        Query query = em.createNamedQuery("Checklist.deleteChecklist").setParameter("idEncuesta", encuesta_id);
+        query.setParameter("idAsignatura", asignatura_id);
+    }
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 }

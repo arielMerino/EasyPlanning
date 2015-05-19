@@ -4,7 +4,8 @@
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
     
     <ui:composition template="/template.xhtml">
     
@@ -13,38 +14,94 @@
         </ui:define>
 
         <ui:define name="body">
-            <c:if test="#{empty param}">
-                No has seleccionado ningun profesor
-            </c:if>
-            <c:if test="#{not empty param}">
-                <c:set var="profesor" value="#{profesorController.getProfesor(param.id)}" scope="request"/>
-                <c:if test="#{empty profesor}">
-                    No existe tal profesor
-                </c:if>
-                <c:if test="#{not empty profesor}">
-                    Encuesta Profesor <h:outputText value="#{profesor.nombre} #{profesor.apellido}" />
-                    <br/>
-                    <br/>
-                    Asignaturas:
-                    <br/>
-                    <br/>
-                    <c:forEach  var="item" items="#{profesorController.asignaturasProfesor(param.id)}">                     
-                        - <h:outputText value="#{item.nombre}" /><br/>
-                    </c:forEach>                    
-                    
-                    <br/>
-                    <br/>
-                    Horarios disponibles:
-                    <br/>
-                    <c:forEach var="item" items="#{profesorController.getDisponibles(param.id)}">
-                        <h:outputText value="#{item.bloque} " />
-                    </c:forEach>
-                    <br/>
-                    <br/>
-                    Comentario:
-                    <p><h:outputText value="#{profesorController.comentarioEncuestaProfesor(param.id)}" /></p>
-                </c:if>
-            </c:if>
+            <div class="container-fluid">
+                <div class="row">
+                    <c:if test="#{empty param}">
+                        No has seleccionado ningun profesor
+                    </c:if>
+                    <c:if test="#{not empty param}">
+                        <c:set var="id" value="#{param.id}" scope="request"/>
+                        <c:set var="anio" value="#{coordinadorController.anio}" scope="request"/>
+                        <c:set var="semestre" value="#{coordinadorController.semestre}" scope="request"/>
+                        <c:set var="profesor" value="#{profesorController.getProfesor(id)}" scope="request"/>
+                        <c:if test="#{empty profesor}">
+                            No existe tal profesor
+                        </c:if>
+                        <c:if test="#{not empty profesor}">
+                            <c:set var="hayEncuesta" value="#{encuestaController.hayEncuestaContestado(id, semestre, anio)}" scope="request"/>
+                            <c:if test="#{hayEncuesta}">
+                                <c:set var="e" value="#{encuestaController.getEncuestaContestado(id, semestre, anio)}" scope="request"/>
+                                <br />
+                                <div class="col-md-6 col-md-offset-3">
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Profesor</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><h:outputText value="#{profesor.nombre} #{profesor.apellido}"/></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Asignaturas</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <c:forEach  var="item" items="#{encuestaController.getAsignaturasAceptadas(e.id)}">                     
+                                                    <td><h:outputText value="#{item.nombre}" /></td>
+                                                </c:forEach>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Horarios disponibles</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <c:forEach var="item" items="#{profesorController.getDisponibles(id)}">
+                                                        <h:outputText value="#{item.bloque}, "/>
+                                                    </c:forEach>
+                                                </td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table table-hover">
+                                        <thead>
+                                            <tr>
+                                                <th>Comentario</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td><h:outputText value="#{profesorController.comentarioEncuestaProfesor(id)}" /></td>
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                </div>
+                                
+                            </c:if>
+                            <c:if test="#{!hayEncuesta}">
+                                <div class="col-md-12">
+                                    <div class="alert alert-warning text-center">                                        
+                                        <h5><strong>Este profesor aún no ha contestado la encuesta</strong></h5>
+                                    </div>
+                                </div>                                
+                            </c:if>
+                        </c:if>
+                    </c:if>
+                </div>
+            </div>
+            
         </ui:define>
     </ui:composition>
 </html>

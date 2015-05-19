@@ -17,4 +17,5 @@ import javax.ejb.Local;
 public interface ChecklistsLocal {
     public List<Long> findProfesorByAsgAnioSemestre(long asg, int anio, int semestre);
     public List<Asignatura> findAsignaturasByEncuestaId(long id_encuesta);
+    public void deleteChecklist(long encuesta_id, long asignatura_id);
 }

@@ -20,17 +20,26 @@
                 <p:outputLabel value="Seleccione el profesor al que desea editar la encuesta:"></p:outputLabel>
 
                 <br/>
-
-                <ui:repeat value="#{profesorController.items}" var="item">
-
-
-                    - <h:link value="#{item.nombre} #{item.apellido}" outcome="/encuesta/editar_encuesta.xhtml">                 
-                        <f:param name="id" value="#{item.id}" />
-                    </h:link><br/>
-
-
-                </ui:repeat>
-            
+                
+                <p:dataTable id="tablaProfesor" value="#{profesorController.items}" 
+                        var="item"
+                        sortBy="#{item.nombre}"
+                        paginator="true"
+                        rowKey="#{item.id}"
+                        rows="20"
+                        rowsPerPageTemplate="20,30,40,50,60,70,80"
+                        widgetVar="profesorTable"
+                        emptyMessage="No se han encontrado Profesores"
+                        >
+                    <p:column filterBy="#{item.nombre} #{item.apellido}" filterMatchMode="contains" >
+                        <f:facet name="header">
+                            <h:outputText value="Profesor"/>
+                        </f:facet>
+                        <h:link value="#{item.nombre} #{item.apellido}" outcome="/encuesta/editar_encuesta.xhtml">                 
+                            <f:param name="id" value="#{item.id}" />
+                        </h:link>
+                    </p:column>
+                </p:dataTable>
             
             </h:form>
         </ui:define>

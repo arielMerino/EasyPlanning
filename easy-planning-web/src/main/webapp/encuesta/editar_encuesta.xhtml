@@ -29,6 +29,9 @@
                 <p:panel id="tituloPanel" header="Profesor: #{profesorController.getProfesor(checklistController.profesor_id).nombre} #{profesorController.getProfesor(checklistController.profesor_id).apellido}">
                     
                     <h5>Asignaturas en la encuesta actual</h5>
+                    
+                    <p:commandButton value="Quitar Asignatura" update=":form" actionListener="#{checklistController.eliminarAsignaturaEncuesta(checklistController.profesor_id,asignaturaController.asignaturasSemestrePasado)}" />
+                    
                     <p:dataTable id="tablaAsignaturas1" value="#{checklistController.asignaturasSemestrePasado(checklistController.profesor_id)}" 
                         var="item"
                         sortBy="#{item.nivel}" 
@@ -40,7 +43,9 @@
                         widgetVar="asignaturasTable1"
                         emptyMessage="No se han encontrado asignaturas"
                         >
-                        
+                        <p:column style="text-align: center" width="10%" selectionMode="multiple">
+                            
+                        </p:column>
                         <p:column width="50%" >
                             <f:facet name="header">
                                 <h:outputText value="Asignatura"/>
@@ -59,16 +64,14 @@
                             </f:facet>
                             <h:outputText value="#{item.carrera.nombre}"/>
                         </p:column>
-                        <p:column style="text-align: center" width="10%" >
-                            <p:commandButton value="Quitar" />
-                        </p:column>
+                        
                     </p:dataTable>
                     
                     <br/>
-                    <p:commandButton actionListener="#{checklistController.asignaturasParaEncuestas(asignaturaController.asignaturaEncuestas,checklistController.profesor_id)}" value="Guardar Encuesta" update="tablaAsignaturas1" oncomplete="submit();" />
-                    <br/>
                     <h5>Todas las asignaturas</h5>
-                    <p:dataTable id="tablaAsignaturas2" value="#{asignaturaController.getAsignaturasByPlan(asignaturaController.planEstudios,asignaturaController.nivel)}" 
+                    <p:commandButton actionListener="#{checklistController.asignaturasParaEncuestas(asignaturaController.asignaturaEncuestas,checklistController.profesor_id)}" value="Agregar Asignaturas" update=":form" />
+                    
+                    <p:dataTable id="tablaAsignaturas2" value="#{asignaturaController.facade.findAll()}" 
                         var="item"
                         sortBy="#{item.nivel}" 
                         selection="#{asignaturaController.asignaturaEncuestas}"
