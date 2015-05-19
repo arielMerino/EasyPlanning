@@ -143,7 +143,7 @@ public class EncuestaController implements Serializable {
     public List<Asignatura> getAsignaturasRechazadas(String encuestaId){
         try{
             Long id = Long.parseLong(encuestaId);
-            List<Checklist> aux = getChecklistsBusiness().findChecklistByIdEncuesta(id);            
+            List<Checklist> aux = getChecklistsBusiness().findChecklistByIdEncuesta(id);
             List<Asignatura> rechazadas = new ArrayList();
             
             for(Checklist check : aux){
@@ -194,9 +194,10 @@ public class EncuestaController implements Serializable {
     public void setFalseChecklist(Long id_profesor){
         ParamSemestreAno semAnio = paramFacade.find(Long.parseLong(1+""));
         Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(id_profesor, semAnio.getSemestreActual(), semAnio.getAnoActual());
+        List<Checklist> lista = getChecklistsBusiness().findChecklistByIdEncuesta(encuesta.getId());
         List<Checklist> noSeleccionadas = new ArrayList();
         boolean flag;        
-        for(Checklist todas : encuesta.getListaAsignaturas()){
+        for(Checklist todas : lista){
             flag = false;
             for(Long seleccionada : asignaturas){
                 if(Objects.equals(seleccionada, todas.getId())){
