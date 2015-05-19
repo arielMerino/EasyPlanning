@@ -1,5 +1,6 @@
 package managedbeans;
 
+import business.ChecklistsLocal;
 import business.ProfesoresLocal;
 import entities.Horario;
 import entities.Profesor;
@@ -29,6 +30,7 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import sessionbeans.HorarioFacadeLocal;
 import sessionbeans.AsignaturaFacadeLocal;
+import sessionbeans.ChecklistFacadeLocal;
 import sessionbeans.EncuestaFacadeLocal;
 import sessionbeans.ParamSemestreAnioFacadeLocal;
 
@@ -46,6 +48,8 @@ public class ProfesorController implements Serializable {
     private EncuestaFacadeLocal encuestaFacade;
     @EJB
     private ProfesoresLocal profesoresBusiness;
+    @EJB
+    private ChecklistsLocal checklistsBusiness;
     @EJB
     private ParamSemestreAnioFacadeLocal ejbParam;
     
@@ -185,7 +189,7 @@ public class ProfesorController implements Serializable {
             return null;
         }
     }
-
+    
     public List<Profesor> getItemsAvailableSelectMany() {
         return getFacade().findAll();
     }
@@ -248,9 +252,11 @@ public class ProfesorController implements Serializable {
         ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
         try{            
             Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(id, semAnio.getSemestreActual(), semAnio.getAnoActual());            
-            return encuesta.getListaAsignaturas();
+            List<Checklist> lista = checklistsBusiness.findChecklistByIdEncuesta(encuesta.getId());            
+            
+            return lista;
         }
-        catch(Exception e){
+        catch(Exception e){        
             return null;
         }
     }
@@ -265,6 +271,11 @@ public class ProfesorController implements Serializable {
         catch(Exception e){            
             return false;
         }
+    }
+    
+    public Profesor getProfesorAsignado(Long id_asignatura){
+        ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
+        return profesoresBusiness.getProfesorByHorarioAsignado(id_asignatura, semAnio.getAnoActual(), semAnio.getSemestreActual());
     }
     
     @FacesConverter(forClass = Profesor.class)

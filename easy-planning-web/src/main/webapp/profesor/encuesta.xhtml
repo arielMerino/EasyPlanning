@@ -7,7 +7,7 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"      
       xmlns:p="http://primefaces.org/ui">
     
-    <ui:composition template="/template.xhtml">
+    <ui:composition template="/template_profesor.xhtml">
         <ui:define name="title">
             <h:outputText value="Encuesta - Easy Planning"></h:outputText>
         </ui:define>
@@ -28,6 +28,35 @@
                             </p>
                         </div>
                     </c:if>
+                    <c:if test="#{profesorController.hayEncuesta(id)}">
+                        <br />
+                        <div class="alert alert-info">
+                            <p>
+                                Estimado Profesor(a) <strong>#{profesorController.getProfesor(id).nombre} #{profesorController.getProfesor(id).apellido}</strong>,
+                            </p>
+                            <p>
+                                El Comité de Docencia estará muy agradecido de que usted conteste esta encuesta sobre su disponibilidad horaria
+                                para la planificación docente del <strong>semestre #{coordinadorController.semestre}
+                                del año #{coordinadorController.anio}</strong>
+                            </p>
+                            <p><strong>Instrucciones:</strong></p>
+                            <p>
+                                <ul>
+                                    <li>Indique los horarios que tendrá disponible el próximo semestre para realizar clases, 
+                                        ya sean de cátedra, ejercicios o laboratorio, marcando la casilla que se encuentra a 
+                                        la izquierda de cada bloque horario.</li>
+                                    <li>Indique las asignaturas que desea impartir del listado que se le proponen 
+                                    seleccionando las asignaturas que usted desee realizar. Deje en blanco quellas 
+                                    asignaturas que no desee realizar.</li>
+                                    <li>Puede indicar alguna observación o comentario en la sección indicada para tales fines.</li>
+                                    <li>Una vez completado el formulario, presione sobre Enviar para registrar sus respuestas.</li>
+                                </ul>
+                            </p>
+                            <p>
+                                Muchas gracias por contestar esta encuesta.
+                            </p>
+                        </div>
+                    </c:if>
                     <p:layout>
 
                         <p:layoutUnit position="east" resizable="true" minSize="400">
@@ -38,7 +67,7 @@
                                     <f:selectItems value="#{profesorController.getAsignaturasChecklist(profesorController.idProfesor)}" var="check" itemLabel="#{check.asignatura.nombre}" itemValue="#{check.id}"/>
                                 </p:selectManyCheckbox>
                             </p:panel>
-                            <p:panel header="Comentario">
+                            <p:panel header="Observaciones y/o Comentarios">
                                 <p:inputTextarea cols="50" rows="5" value="#{encuestaController.comentario}" validatorMessage="El comentario no puede tener más de 250 caracteres">
                                     <f:validateLength maximum="250"/>
                                 </p:inputTextarea>

@@ -25,7 +25,10 @@
                         <c:set var="semestre" value="#{coordinadorController.semestre}" scope="request"/>
                         <c:set var="profesor" value="#{profesorController.getProfesor(id)}" scope="request"/>
                         <c:if test="#{empty profesor}">
-                            No existe tal profesor
+                            <br />
+                            <div class="col-md-8 col-md-offset-2 alert alert-danger">
+                                <h5 class="text-center"><strong>No existe el profesor</strong></h5>
+                            </div>
                         </c:if>
                         <c:if test="#{not empty profesor}">
                             <c:set var="hayEncuesta" value="#{encuestaController.hayEncuestaContestado(id, semestre, anio)}" scope="request"/>
@@ -33,10 +36,10 @@
                                 <c:set var="e" value="#{encuestaController.getEncuestaContestado(id, semestre, anio)}" scope="request"/>
                                 <br />
                                 <div class="col-md-6 col-md-offset-3">
-                                    <table class="table table-hover">
+                                    <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>Profesor</th>
+                                                <th>Profesor que contestó la encuesta</th>
                                             </tr>
                                         </thead>
                                         <tbody>
@@ -45,40 +48,64 @@
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <table class="table table-hover">
+                                    <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>Asignaturas</th>
+                                                <th>Asignaturas que el profesor desea realizar el próximo semestre</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
-                                                <c:forEach  var="item" items="#{encuestaController.getAsignaturasAceptadas(e.id)}">                     
-                                                    <td><h:outputText value="#{item.nombre}" /></td>
-                                                </c:forEach>
+                                                <td>
+                                                    <c:forEach  var="item" items="#{encuestaController.getAsignaturasAceptadas(e.id)}">                     
+                                                        <h:outputText value="#{item.nombre} - " />
+                                                    </c:forEach>
+                                                </td>    
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <table class="table table-hover">
+                                    <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>Horarios disponibles</th>
+                                                <th>Asignaturas que el profesor no desea realizar el próximo semestre</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr>
+                                                <td>
+                                                    <c:set var="rechazadas" value="#{encuestaController.getAsignaturasRechazadas(e.id)}"/>
+                                                    <c:if test="#{empty rechazadas}">
+                                                        <h:outputText value="Ninguna"/>
+                                                    </c:if>
+                                                    <c:if test="#{not empty rechazadas}">
+                                                        <c:forEach  var="item" items="">                     
+                                                            <h:outputText value="#{item.nombre} - " />
+                                                        </c:forEach>
+                                                    </c:if>
+                                                </td>    
+                                            </tr>
+                                        </tbody>
+                                    </table>
+                                    <table class="table">
+                                        <thead>
+                                            <tr>
+                                                <th>Horarios disponibles indicados por el profesor</th>
                                             </tr>
                                         </thead>
                                         <tbody>
                                             <tr>
                                                 <td>
                                                     <c:forEach var="item" items="#{profesorController.getDisponibles(id)}">
-                                                        <h:outputText value="#{item.bloque}, "/>
+                                                        <h:outputText value="#{item.bloque} -"/>
                                                     </c:forEach>
                                                 </td>
                                             </tr>
                                         </tbody>
                                     </table>
-                                    <table class="table table-hover">
+                                    <table class="table">
                                         <thead>
                                             <tr>
-                                                <th>Comentario</th>
+                                                <th>Observaciones y/o comentarios indicados por el profesor</th>
                                             </tr>
                                         </thead>
                                         <tbody>

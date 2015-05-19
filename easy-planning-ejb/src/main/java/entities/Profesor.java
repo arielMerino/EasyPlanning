@@ -30,7 +30,10 @@ import javax.persistence.OneToMany;
             query="SELECT h.profesor FROM Horario h WHERE h.bloque = :bloque AND h.seccion IS NULL AND h.profesor IS NOT NULL"),
     
     @NamedQuery(name="Profesor.getEncuestaBySemestreAndAnio",
-            query="SELECT e FROM Encuesta e WHERE e.profesor.id = :id AND e.anio = :anio AND e.semestre = :semestre")
+            query="SELECT e FROM Encuesta e WHERE e.profesor.id = :id AND e.anio = :anio AND e.semestre = :semestre"),
+    
+    @NamedQuery(name="Profesor.getProfesorByHorarioAsignado",
+            query="SELECT p FROM Profesor p, Coordinacion c, Seccion s, Horario h WHERE c.asignatura.id = :id_asignatura AND c.id = s.coordinacion.id AND s.id = h.seccion.id AND h.profesor.id = p.id AND c.anio = :anio AND c.semestre = :semestre")
 })
 public class Profesor implements Serializable {
     @OneToMany(mappedBy = "profesor")

@@ -15,8 +15,8 @@
                 <div class="row" role="tabpanel">
                     <div class="col-md-12">
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#prof-asig" aria-controls="prof-asig" role="tab" data-toggle="tab">Ver según Profesores</a></li>
-                            <li role="presentation"><a href="#asig-prof" aria-controls="asig-prof" role="tab" data-toggle="tab">Ver según Asignaturas</a></li>
+                            <li role="presentation" class="active"><a class="tab-panel-link" href="#prof-asig" aria-controls="prof-asig" role="tab" data-toggle="tab">Ver según Profesores</a></li>
+                            <li role="presentation"><a class="tab-panel-link" href="#asig-prof" aria-controls="asig-prof" role="tab" data-toggle="tab">Ver según Asignaturas</a></li>
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="prof-asig">
@@ -31,18 +31,18 @@
 
                                             <p:columnGroup type="header">
                                                 <p:row>
-                                                    <p:column colspan="3" headerText="Profesor"/>
-                                                    <p:column colspan="4" headerText="Asignatura"/>
+                                                    <p:column colspan="2" headerText="Profesor"/>
+                                                    <p:column colspan="5" headerText="Asignatura"/>
                                                 </p:row>
                                                 <p:row>
                                                     <p:column headerText="Nombre" filterBy="#{profesor.nombre}" filterMatchMode="contains"/>
                                                     <p:column headerText="Apellido" filterBy="#{profesor.apellido}" filterMatchMode="contains"/>
-                                                    <p:column headerText="RUT" filterBy="#{profesor.rut}" filterMatchMode="contains"/>
-                                                    <p:column headerText="Nombre"/>
-                                                    <p:column headerText="Nivel"/>
-                                                    <p:column headerText="Carrera"/>
-                                                    <p:column headerText="Plan de Estudios">
-                                                    </p:column>
+                                                    <p:column headerText="Código" colspan="1"/>
+                                                    <p:column headerText="Nombre" colspan="1"/>
+                                                    <p:column headerText="Carrera" colspan="1"/>
+                                                    <p:column headerText="Plan de Estudios" colspan="1"/>
+                                                    <p:column headerText="Nivel" colspan="1"/>
+                                                    
                                                 </p:row>
                                             </p:columnGroup>
                                             <p:column>
@@ -52,35 +52,19 @@
                                                 <h:outputText value="#{profesor.apellido}"/>
                                             </p:column>
                                             <p:column>
-                                                <h:outputText value="#{profesor.rut}"/>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.id).codigo}"/>
                                             </p:column>
                                             <p:column>
-                                                <ol>
-                                                    <ui:repeat var="asig" value="#{profesorController.getAsignaturasProfesor(profesor.id)}">
-                                                        <li><h:outputText value="#{asig.nombre}"/></li><br />
-                                                    </ui:repeat>
-                                                </ol>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.id).nombre}"/>
                                             </p:column>
                                             <p:column>
-                                                <ol>
-                                                    <ui:repeat var="asig" value="#{profesorController.getAsignaturasProfesor(profesor.id)}">
-                                                        <li><h:outputText value="#{asig.nivel}"/></li><br />
-                                                    </ui:repeat>
-                                                </ol>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.id).carrera.nombre}"/>
                                             </p:column>
                                             <p:column>
-                                                <ol>
-                                                    <ui:repeat var="asig" value="#{profesorController.getAsignaturasProfesor(profesor.id)}">
-                                                        <li><h:outputText value="#{asig.carrera.nombre}"/></li><br />
-                                                    </ui:repeat>
-                                                </ol>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.id).planEstudio}"/>
                                             </p:column>
-                                            <p:column>
-                                                <ol>
-                                                    <ui:repeat var="asig" value="#{profesorController.getAsignaturasProfesor(profesor.id)}">
-                                                        <li><h:outputText value="#{asig.planEstudio}"/></li><br />
-                                                    </ui:repeat>
-                                                </ol>
+                                            <p:column  styleClass="panel-item">
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.id).nivel}"/>
                                             </p:column>
                                         </p:dataTable>
                                     </p:panel>
@@ -98,10 +82,11 @@
 
                                             <p:columnGroup type="header">
                                                 <p:row>
-                                                    <p:column colspan="4" headerText="Asignatura"/>
-                                                    <p:column colspan="3" headerText="Profesor"/>
+                                                    <p:column colspan="5" headerText="Asignatura"/>
+                                                    <p:column colspan="1" headerText="Profesor"/>
                                                 </p:row>
                                                 <p:row>
+                                                    <p:column headerText="Código" filterBy="#{asignatura.codigo}" filterMatchMode="contains"/>
                                                     <p:column headerText="Nombre" filterBy="#{asignatura.nombre}" filterMatchMode="contains"/>
                                                     <p:column headerText="Nivel" filterBy="#{asignatura.nivel}" filterMatchMode="contains"/>
                                                     <p:column headerText="Carrera" filterBy="#{asignatura.carrera.nombre}" filterMatchMode="contains"/>
@@ -112,11 +97,12 @@
                                                             </p:selectCheckboxMenu>
                                                         </f:facet>
                                                     </p:column>
-                                                    <p:column headerText="Nombre"/>
-                                                    <p:column headerText="Apellido"/>
-                                                    <p:column headerText="RUT"/>
+                                                    <p:column headerText="Nombre Apellido" colspan="1"/>
                                                 </p:row>
                                             </p:columnGroup>
+                                            <p:column>
+                                                <h:outputText value="#{asignatura.codigo}"/>
+                                            </p:column>
                                             <p:column>
                                                 <h:outputText value="#{asignatura.nombre}"/>
                                             </p:column>
@@ -130,25 +116,7 @@
                                                 <h:outputText value="#{asignatura.planEstudio}"/>
                                             </p:column>
                                             <p:column>
-                                                <ol>
-                                                    <ui:repeat var="prof" value="#{asignaturaController.getProfesoresAsignatura2(asignatura.id)}">
-                                                        <li><h:outputText value="#{prof.nombre}"/></li><br />
-                                                    </ui:repeat>
-                                                </ol>
-                                            </p:column>
-                                            <p:column>
-                                                <ol>
-                                                    <ui:repeat var="prof" value="#{asignaturaController.getProfesoresAsignatura2(asignatura.id)}">
-                                                        <li><h:outputText value="#{prof.apellido}"/></li><br />
-                                                    </ui:repeat>
-                                                </ol>
-                                            </p:column>
-                                            <p:column>
-                                                <ol>
-                                                    <ui:repeat var="prof" value="#{asignaturaController.getProfesoresAsignatura2(asignatura.id)}">
-                                                        <li><h:outputText value="#{prof.rut}"/></li><br />
-                                                    </ui:repeat>
-                                                </ol>
+                                                <h:outputText value="#{profesorController.getProfesorAsignado(asignatura.id).nombre} #{profesorController.getProfesorAsignado(asignatura.id).apellido}"/>
                                             </p:column>
                                         </p:dataTable>
                                     </p:panel>

@@ -57,6 +57,14 @@ public class EncuestaController implements Serializable {
     public EncuestaController() {
     }
 
+    public ParamSemestreAnioFacadeLocal getParamFacade() {
+        return paramFacade;
+    }
+
+    public void setParamFacade(ParamSemestreAnioFacadeLocal paramFacade) {
+        this.paramFacade = paramFacade;
+    }
+
     public String[] getHorariosSeleccionados() {
         return horariosSeleccionados;
     }
@@ -125,6 +133,23 @@ public class EncuestaController implements Serializable {
         }
     }
     
+    public List<Asignatura> getAsignaturasRechazadas(String encuestaId){
+        try{
+            List<Checklist> aux = encuestaFacade.find(Long.parseLong(encuestaId)).getListaAsignaturas();
+            List<Asignatura> rechazadas = new ArrayList();
+            
+            for(Checklist check : aux){
+                if(!check.isAceptado()){
+                    rechazadas.add(check.getAsignatura());
+                }
+            }
+            return rechazadas;
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
+    
     public void resultadoEncuesta(int id_profesor){
         Long id = Long.parseLong(id_profesor+"");
         ParamSemestreAno semAnio = paramFacade.find(Long.parseLong(1+""));
@@ -148,6 +173,7 @@ public class EncuestaController implements Serializable {
                     horarioFacade.create(horario);
                 }
             }
+            dropHorariosNoSeleccionados(id);
             JsfUtil.addSuccessMessage("Encuesta registrada con éxito");
             
         }
@@ -211,4 +237,29 @@ public class EncuestaController implements Serializable {
             return null;
         }        
     }    
+    
+    public void dropHorariosNoSeleccionados(Long id_profesor){
+        List<Horario> horarios = horarioBusiness.findBySeleccionados(id_profesor);
+        List<Horario> porBorrar = new ArrayList();
+        
+        if(horariosSeleccionados.length > 0){
+            for(Horario horarioGuardado : horarios){
+                boolean flag = false;
+                for(String horario : horariosSeleccionados){
+                    if(horario.equals(horarioGuardado.getBloque())){
+                        //System.out.println("EncuestaController: se compara "+horario+" con "+horarioGuardado.getBloque());
+                        flag = true;
+                    }
+                }
+                if(!flag){
+                    //System.out.println("EncuestaController: se agrega el horario "+horarioGuardado.getBloque());
+                    porBorrar.add(horarioGuardado);
+                }
+            }
+        }
+        for(Horario drop : porBorrar){
+            //Horario dropHorario = horarioBusiness.findByBloqueAndProfesor(drop, id_profesor);
+            horarioFacade.remove(drop);
+        }
+    }
 }

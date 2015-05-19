@@ -6,6 +6,7 @@
 package business;
 
 import entities.Asignatura;
+import entities.Checklist;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -50,6 +51,16 @@ public class Checklists implements ChecklistsLocal {
     public void deleteChecklist(long encuesta_id, long asignatura_id){
         Query query = em.createNamedQuery("Checklist.deleteChecklist").setParameter("idEncuesta", encuesta_id);
         query.setParameter("idAsignatura", asignatura_id);
+    }
+    
+    public List<Checklist> findChecklistByIdEncuesta(long idEncuesta){
+        Query query = em.createNamedQuery("Checklist.findChecklistByIdEncuesta");
+        query.setParameter("idEncuesta", idEncuesta);        
+        try{
+            return (List<Checklist>) query.getResultList();
+        }catch(NoResultException e){
+            return null;
+        }
     }
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

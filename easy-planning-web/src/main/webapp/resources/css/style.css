@@ -176,9 +176,26 @@ html .ui-layout-container{
     background-color: #ff7319;
     color: #fff;
     border: none;
-    margin-top: 60%;
 }
 #banner-bottom{
     padding-bottom: 2em;
     background-color: #ff7319;
+}
+#btn-sesion{
+    background-color: #fff;
+    color: #ff7319;
+    margin-top: 0.5em;
+}
+#btn-sesion:hover{
+    background-color: #ff7319;
+    color: #fff;
+    border: #fff solid 1px;
+}
+.panel-tabla .ui-widget-content{
+    background-color: transparent !important;
+    border-color: transparent !important;
+    text-align: left;
+}
+.panel-item{
+    margin-left: 5em;
 }

@@ -74,5 +74,27 @@ public class Horarios implements HorariosLocal {
             return new ArrayList<>();
         }
     }
+
+    @Override
+    public List<Horario> findByHorariosNoDisponibles() {
+        Query query = em.createNamedQuery("Horario.findByHorariosNoDisponibles");
+        try{
+            return query.getResultList();
+        }
+        catch(NoResultException e){
+            return null;
+        }
+    }
+
+    @Override
+    public List<Horario> findBySeleccionados(Long id_profesor) {
+        Query query = em.createNamedQuery("Horario.findBySeleccionados").setParameter("id_profesor", id_profesor);
+        try{
+            return query.getResultList();
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
     
 }

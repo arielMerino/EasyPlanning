@@ -32,6 +32,11 @@ import javax.persistence.OneToOne;
     @NamedQuery(
             name="Checklist.deleteChecklist",
             query="DELETE FROM Checklist c WHERE c.encuesta.id = :idEncuesta AND c.asignatura.id = :idAsignatura"
+            
+    ),
+    @NamedQuery(
+            name = "Checklist.findChecklistByIdEncuesta",
+            query = "SELECT c FROM Checklist c WHERE c.encuesta.id = :idEncuesta"            
     )
 })
 public class Checklist implements Serializable {

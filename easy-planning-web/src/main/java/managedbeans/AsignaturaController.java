@@ -5,8 +5,10 @@
  */
 package managedbeans;
 
+import business.AsignaturasLocal;
 import entities.Asignatura;
 import entities.Coordinacion;
+import entities.ParamSemestreAno;
 import entities.Profesor;
 import entities.Seccion;
 import javax.inject.Named;
@@ -18,6 +20,7 @@ import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.el.ELException;
 import sessionbeans.AsignaturaFacadeLocal;
+import sessionbeans.ParamSemestreAnioFacadeLocal;
 import sessionbeans.SeccionFacadeLocal;
 
 /**
@@ -31,6 +34,11 @@ public class AsignaturaController implements Serializable {
     private AsignaturaFacadeLocal ejbFacade;
     @EJB
     private SeccionFacadeLocal seccionFacade;
+    @EJB
+    private AsignaturasLocal asignaturaBusiness;
+    @EJB
+    private ParamSemestreAnioFacadeLocal ejbParam;
+    
     private List<Asignatura> items = null;
     private Asignatura selected;
     private String planEstudios = "todos los planes";
@@ -263,4 +271,9 @@ public class AsignaturaController implements Serializable {
         return niveles;
     }
     
+    public Asignatura findByAsignaturaAsignada(Long id_profesor){
+        ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
+        return asignaturaBusiness.findByAsignaturaAsignada(id_profesor, semAnio.getAnoActual(), semAnio.getSemestreActual());
+    }
+
 }

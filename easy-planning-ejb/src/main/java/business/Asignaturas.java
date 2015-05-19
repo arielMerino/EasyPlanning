@@ -100,4 +100,18 @@ public class Asignaturas implements AsignaturasLocal {
             return new ArrayList<>();
         }
     }
+
+    @Override
+    public Asignatura findByAsignaturaAsignada(Long id_profesor, int anio, int semestre) {
+        Query query = em.createNamedQuery("Asignatura.findByAsignaturaAsignada").setParameter("id_profesor", id_profesor);
+        query.setParameter("anio", anio);
+        query.setParameter("semestre", semestre);
+        
+        try{
+            return (Asignatura) query.getSingleResult();
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
 }
