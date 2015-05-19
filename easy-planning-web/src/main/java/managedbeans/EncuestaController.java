@@ -173,6 +173,7 @@ public class EncuestaController implements Serializable {
                     horarioFacade.create(horario);
                 }
             }
+            dropHorariosNoSeleccionados(id);
             JsfUtil.addSuccessMessage("Encuesta registrada con éxito");
             
         }
@@ -236,4 +237,29 @@ public class EncuestaController implements Serializable {
             return null;
         }        
     }    
+    
+    public void dropHorariosNoSeleccionados(Long id_profesor){
+        List<Horario> horarios = horarioBusiness.findBySeleccionados(id_profesor);
+        List<Horario> porBorrar = new ArrayList();
+        
+        if(horariosSeleccionados.length > 0){
+            for(Horario horarioGuardado : horarios){
+                boolean flag = false;
+                for(String horario : horariosSeleccionados){
+                    if(horario.equals(horarioGuardado.getBloque())){
+                        //System.out.println("EncuestaController: se compara "+horario+" con "+horarioGuardado.getBloque());
+                        flag = true;
+                    }
+                }
+                if(!flag){
+                    //System.out.println("EncuestaController: se agrega el horario "+horarioGuardado.getBloque());
+                    porBorrar.add(horarioGuardado);
+                }
+            }
+        }
+        for(Horario drop : porBorrar){
+            //Horario dropHorario = horarioBusiness.findByBloqueAndProfesor(drop, id_profesor);
+            horarioFacade.remove(drop);
+        }
+    }
 }

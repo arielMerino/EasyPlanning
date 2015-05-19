@@ -25,4 +25,5 @@ public interface HorariosLocal {
     
     public List<Horario> findByHorariosNoDisponibles();
     
+    public List<Horario> findBySeleccionados(Long id_profesor);
 }
