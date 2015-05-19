@@ -1,5 +1,6 @@
 package managedbeans;
 
+import business.ChecklistsLocal;
 import business.HorariosLocal;
 import business.ProfesoresLocal;
 import entities.Asignatura;
@@ -48,6 +49,8 @@ public class EncuestaController implements Serializable {
     private HorarioFacadeLocal horarioFacade;
     @EJB
     private HorariosLocal horarioBusiness;
+    @EJB
+    private ChecklistsLocal checklistsBusiness;
     
     private List<String> listaContinuidad;    
     private String comentario = "";
@@ -97,6 +100,10 @@ public class EncuestaController implements Serializable {
         this.comentario = comentario;
     }
     
+    public ChecklistsLocal getChecklistsBusiness() {
+        return checklistsBusiness;
+    }
+    
     public void crearEncuesta(){
 
         if(!listaContinuidad.isEmpty()){
@@ -118,7 +125,7 @@ public class EncuestaController implements Serializable {
     public ArrayList<Asignatura> getAsignaturasAceptadas(String encuestaId){
         try{
             Long id = Long.parseLong(encuestaId);
-            List<Checklist> aux = encuestaFacade.find(id).getListaAsignaturas();
+            List<Checklist> aux = getChecklistsBusiness().findChecklistByIdEncuesta(id);
 
             ArrayList<Asignatura> lista_a = new ArrayList<>();
 
@@ -135,7 +142,8 @@ public class EncuestaController implements Serializable {
     
     public List<Asignatura> getAsignaturasRechazadas(String encuestaId){
         try{
-            List<Checklist> aux = encuestaFacade.find(Long.parseLong(encuestaId)).getListaAsignaturas();
+            Long id = Long.parseLong(encuestaId);
+            List<Checklist> aux = getChecklistsBusiness().findChecklistByIdEncuesta(id);            
             List<Asignatura> rechazadas = new ArrayList();
             
             for(Checklist check : aux){
