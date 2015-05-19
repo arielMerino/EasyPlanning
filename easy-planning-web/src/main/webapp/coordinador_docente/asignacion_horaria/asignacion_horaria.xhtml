@@ -18,7 +18,7 @@
                     <div class="col-xs-3">
                         <h:outputLabel style="white-space: normal;">Seleccionar Año a planificar:</h:outputLabel>
                         <p:selectOneMenu id="anio" value="#{asignacionHoraria.anioSelected}" style="width: 100%" immediate="true">
-                            <f:selectItem itemLabel="Anio" noSelectionOption="true" />
+                            <f:selectItem itemLabel="Año" noSelectionOption="true" />
                             <f:selectItems value="#{asignacionHoraria.aniosDisponibles()}" var="year" itemValue="#{year}" itemLabel="#{year}" />
                             <p:ajax process="@this" update="horarioAsignacion" />
                         </p:selectOneMenu>

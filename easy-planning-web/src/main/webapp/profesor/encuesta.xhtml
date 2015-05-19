@@ -19,7 +19,7 @@
                         #{profesorController.setIdProfesor(id)}
                     </c:if>
                     
-                    <c:if test="#{!profesorController.hayEncuesta(id)}">
+                    <c:if test="#{!profesorController.hayEncuesta(id)  and !encuestaController.contestada}">
                         <br />
                         <div class="alert alert-danger text-center">
                             <strong>Usted aún no tiene una encuesta asignada</strong>
@@ -73,7 +73,7 @@
                                 </p:inputTextarea>
                             </p:panel>
                             <br />
-                            <p:commandButton value="Enviar" actionListener="#{encuestaController.resultadoEncuesta(profesorController.idProfesor)}"/>
+                            <p:commandButton value="Enviar" actionListener="#{encuestaController.resultadoEncuesta(profesorController.idProfesor)}" ajax="false"/>
                         </p:layoutUnit>
 
                         <p:layoutUnit position="center" header="Horario">

@@ -57,9 +57,15 @@
                                         <tbody>
                                             <tr>
                                                 <td>
-                                                    <c:forEach  var="item" items="#{encuestaController.getAsignaturasAceptadas(e.id)}">                     
-                                                        <h:outputText value="#{item.nombre} - " />
-                                                    </c:forEach>
+                                                    <c:set var="aceptadas" value="#{encuestaController.getAsignaturasAceptadas(e.id)}"/>
+                                                    <c:if test="#{empty aceptadas}">
+                                                        <h:outputText value="Ninguna"/>
+                                                    </c:if>
+                                                    <c:if test="#{not empty aceptadas}">
+                                                        <c:forEach  var="item" items="#{aceptadas}">                     
+                                                            <h:outputText value="#{item.nombre} - " />
+                                                        </c:forEach>
+                                                    </c:if>
                                                 </td>    
                                             </tr>
                                         </tbody>
@@ -78,7 +84,7 @@
                                                         <h:outputText value="Ninguna"/>
                                                     </c:if>
                                                     <c:if test="#{not empty rechazadas}">
-                                                        <c:forEach  var="item" items="">                     
+                                                        <c:forEach  var="item" items="#{rechazadas}">                     
                                                             <h:outputText value="#{item.nombre} - " />
                                                         </c:forEach>
                                                     </c:if>

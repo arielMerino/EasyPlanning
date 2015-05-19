@@ -1,5 +1,6 @@
 package managedbeans;
 
+import business.ChecklistsLocal;
 import business.HorariosLocal;
 import business.ProfesoresLocal;
 import entities.Asignatura;
@@ -48,13 +49,24 @@ public class EncuestaController implements Serializable {
     private HorarioFacadeLocal horarioFacade;
     @EJB
     private HorariosLocal horarioBusiness;
+    @EJB
+    private ChecklistsLocal checklistsBusiness;
     
     private List<String> listaContinuidad;    
     private String comentario = "";
     private Long[] asignaturas;
     private String[] horariosSeleccionados;
+    private boolean contestada = false;
     
     public EncuestaController() {
+    }
+
+    public boolean isContestada() {
+        return contestada;
+    }
+
+    public void setContestada(boolean contestada) {
+        this.contestada = contestada;
     }
 
     public ParamSemestreAnioFacadeLocal getParamFacade() {
@@ -97,6 +109,10 @@ public class EncuestaController implements Serializable {
         this.comentario = comentario;
     }
     
+    public ChecklistsLocal getChecklistsBusiness() {
+        return checklistsBusiness;
+    }
+    
     public void crearEncuesta(){
 
         if(!listaContinuidad.isEmpty()){
@@ -118,7 +134,7 @@ public class EncuestaController implements Serializable {
     public ArrayList<Asignatura> getAsignaturasAceptadas(String encuestaId){
         try{
             Long id = Long.parseLong(encuestaId);
-            List<Checklist> aux = encuestaFacade.find(id).getListaAsignaturas();
+            List<Checklist> aux = getChecklistsBusiness().findChecklistByIdEncuesta(id);
 
             ArrayList<Asignatura> lista_a = new ArrayList<>();
 
@@ -135,7 +151,8 @@ public class EncuestaController implements Serializable {
     
     public List<Asignatura> getAsignaturasRechazadas(String encuestaId){
         try{
-            List<Checklist> aux = encuestaFacade.find(Long.parseLong(encuestaId)).getListaAsignaturas();
+            Long id = Long.parseLong(encuestaId);
+            List<Checklist> aux = getChecklistsBusiness().findChecklistByIdEncuesta(id);
             List<Asignatura> rechazadas = new ArrayList();
             
             for(Checklist check : aux){
@@ -175,6 +192,7 @@ public class EncuestaController implements Serializable {
             }
             dropHorariosNoSeleccionados(id);
             JsfUtil.addSuccessMessage("Encuesta registrada con éxito");
+            contestada = true;
             
         }
         catch(Exception e){
@@ -186,9 +204,10 @@ public class EncuestaController implements Serializable {
     public void setFalseChecklist(Long id_profesor){
         ParamSemestreAno semAnio = paramFacade.find(Long.parseLong(1+""));
         Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(id_profesor, semAnio.getSemestreActual(), semAnio.getAnoActual());
+        List<Checklist> lista = getChecklistsBusiness().findChecklistByIdEncuesta(encuesta.getId());
         List<Checklist> noSeleccionadas = new ArrayList();
         boolean flag;        
-        for(Checklist todas : encuesta.getListaAsignaturas()){
+        for(Checklist todas : lista){
             flag = false;
             for(Long seleccionada : asignaturas){
                 if(Objects.equals(seleccionada, todas.getId())){
