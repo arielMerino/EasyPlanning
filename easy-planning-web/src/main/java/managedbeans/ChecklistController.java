@@ -52,6 +52,8 @@ public class ChecklistController implements Serializable {
     private ChecklistsLocal checklistBusiness;
     @EJB
     private AsignaturaFacadeLocal asignaturaFacade;
+    @EJB
+    private ChecklistsLocal checklistsBusiness;
     
     private String init = "1";
     private Long profesor_id = Long.parseLong(init);
@@ -96,6 +98,10 @@ public class ChecklistController implements Serializable {
     public ParamSemestreAnioFacadeLocal getEjbParam() {
         return ejbParam;
     }
+    
+    public ChecklistsLocal getChecklistsBusiness() {
+        return checklistsBusiness;
+    }    
         
     /**
      * Creates a new instance of ChecklistController
@@ -104,7 +110,8 @@ public class ChecklistController implements Serializable {
     }
     
     public Checklist findChcecklistByAsignatura(Encuesta encuesta,Long asignatura_id){
-        for(Checklist chk : encuesta.getListaAsignaturas()){
+        List<Checklist> checklists = getChecklistsBusiness().findChecklistByIdEncuesta(encuesta.getId());
+        for(Checklist chk : checklists){
             if(chk.getAsignatura().getId()==asignatura_id){
                 return chk;
             }
@@ -127,12 +134,12 @@ public class ChecklistController implements Serializable {
     public void asignaturasParaEncuestas(List<Asignatura> asignaturas,Long id){
         
         Encuesta encuesta = this.encuestaActual(id);   
-        List<Checklist> checklist = encuesta.getListaAsignaturas();
+        List<Checklist> checklists = getChecklistsBusiness().findChecklistByIdEncuesta(encuesta.getId());
         
         boolean ver=true;
         FacesContext context = FacesContext.getCurrentInstance();
         
-        for(Checklist chk : checklist){
+        for(Checklist chk : checklists){
             for(Asignatura asig : asignaturas){
                 System.out.println("Asignatura: "+asig.getId().toString()+", Check: "+chk.getAsignatura().getId().toString());
                 if(asig.getId()==chk.getAsignatura().getId()){
@@ -171,7 +178,7 @@ public class ChecklistController implements Serializable {
         }*/
 
         
-        List<Checklist> checklists = encuesta.getListaAsignaturas();
+        List<Checklist> checklists = getChecklistsBusiness().findChecklistByIdEncuesta(encuesta.getId());
         for(Checklist chk : checklists){
             for(Asignatura asig : asignaturas){
                 
