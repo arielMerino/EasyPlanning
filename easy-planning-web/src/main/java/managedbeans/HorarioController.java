@@ -5,6 +5,7 @@
  */
 package managedbeans;
 
+import business.HorariosLocal;
 import entities.Horario;
 import entities.Seccion;
 import javax.inject.Named;
@@ -27,13 +28,20 @@ public class HorarioController implements Serializable {
     private HorarioFacadeLocal ejbFacade;
     @EJB
     private SeccionFacadeLocal seccionFacade;
+    @EJB
+    private HorariosLocal ejbBusiness;
     
     private List<Horario> items = null;
     private Horario selected;
+
+    public HorariosLocal getEjbBusiness() {
+        return ejbBusiness;
+    }
+
+    public void setEjbBusiness(HorariosLocal ejbBusiness) {
+        this.ejbBusiness = ejbBusiness;
+    }
     
-    /**
-     * Creates a new instance of HorarioController
-     */
     public HorarioController() {
     }
 
@@ -95,6 +103,10 @@ public class HorarioController implements Serializable {
         } catch (Exception e) {
             return false;
         }
+    }
+    
+    public List<Horario> getHorariosOcupados(){
+        return getEjbBusiness().findByHorariosNoDisponibles();
     }
     
 }

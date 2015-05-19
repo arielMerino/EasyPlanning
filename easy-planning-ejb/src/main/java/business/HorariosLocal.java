@@ -22,4 +22,7 @@ public interface HorariosLocal {
     public Horario findDisponibleByBloqueAndProfesor(String bloque, long idProfesor);
     
     public List<Horario> findDisponiblesByProfesorId(long profesorId);
+    
+    public List<Horario> findByHorariosNoDisponibles();
+    
 }

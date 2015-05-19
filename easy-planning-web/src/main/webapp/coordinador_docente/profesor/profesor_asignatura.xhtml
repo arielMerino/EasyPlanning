@@ -15,8 +15,8 @@
                 <div class="row" role="tabpanel">
                     <div class="col-md-12">
                         <ul class="nav nav-tabs" role="tablist">
-                            <li role="presentation" class="active"><a href="#prof-asig" aria-controls="prof-asig" role="tab" data-toggle="tab">Ver según Profesores</a></li>
-                            <li role="presentation"><a href="#asig-prof" aria-controls="asig-prof" role="tab" data-toggle="tab">Ver según Asignaturas</a></li>
+                            <li role="presentation" class="active"><a class="tab-panel-link" href="#prof-asig" aria-controls="prof-asig" role="tab" data-toggle="tab">Ver según Profesores</a></li>
+                            <li role="presentation"><a class="tab-panel-link" href="#asig-prof" aria-controls="asig-prof" role="tab" data-toggle="tab">Ver según Asignaturas</a></li>
                         </ul>
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="prof-asig">
@@ -79,10 +79,11 @@
 
                                             <p:columnGroup type="header">
                                                 <p:row>
-                                                    <p:column colspan="4" headerText="Asignatura"/>
-                                                    <p:column colspan="3" headerText="Profesor"/>
+                                                    <p:column colspan="5" headerText="Asignatura"/>
+                                                    <p:column colspan="2" headerText="Profesor"/>
                                                 </p:row>
                                                 <p:row>
+                                                    <p:column headerText="Código" filterBy="#{asignatura.codigo}" filterMatchMode="contains"/>
                                                     <p:column headerText="Nombre" filterBy="#{asignatura.nombre}" filterMatchMode="contains"/>
                                                     <p:column headerText="Nivel" filterBy="#{asignatura.nivel}" filterMatchMode="contains"/>
                                                     <p:column headerText="Carrera" filterBy="#{asignatura.carrera.nombre}" filterMatchMode="contains"/>
@@ -95,9 +96,11 @@
                                                     </p:column>
                                                     <p:column headerText="Nombre"/>
                                                     <p:column headerText="Apellido"/>
-                                                    <p:column headerText="RUT"/>
                                                 </p:row>
                                             </p:columnGroup>
+                                            <p:column>
+                                                <h:outputText value="#{asignatura.codigo}"/>
+                                            </p:column>
                                             <p:column>
                                                 <h:outputText value="#{asignatura.nombre}"/>
                                             </p:column>
@@ -121,13 +124,6 @@
                                                 <ol>
                                                     <ui:repeat var="prof" value="#{asignaturaController.getProfesoresAsignatura2(asignatura.id)}">
                                                         <li><h:outputText value="#{prof.apellido}"/></li><br />
-                                                    </ui:repeat>
-                                                </ol>
-                                            </p:column>
-                                            <p:column>
-                                                <ol>
-                                                    <ui:repeat var="prof" value="#{asignaturaController.getProfesoresAsignatura2(asignatura.id)}">
-                                                        <li><h:outputText value="#{prof.rut}"/></li><br />
                                                     </ui:repeat>
                                                 </ol>
                                             </p:column>
