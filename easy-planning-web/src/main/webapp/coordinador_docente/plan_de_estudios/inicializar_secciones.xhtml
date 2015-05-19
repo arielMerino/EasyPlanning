@@ -41,7 +41,7 @@
                         <f:selectItem itemLabel="2do Semestre" itemValue="2" />
                     </p:selectOneListbox>
                     <br />
-                    <p:commandButton value="Cargar" action="#{seccionController.generarSeccionesBasicas(seccionController.carrera,seccionController.planEstudio, seccionController.semestre, seccionController.ano)}"></p:commandButton>
+                    <p:commandButton value="Cargar" action="#{seccionController.generarSeccionesBasicas(seccionController.carrera,seccionController.planEstudio, seccionController.semestre, seccionController.ano)}" ajax="false"></p:commandButton>
                 </h:form>
                 <p:outputLabel value="#{seccionController.mensaje}"></p:outputLabel>
             </div>
