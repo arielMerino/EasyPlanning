@@ -273,6 +273,11 @@ public class ProfesorController implements Serializable {
         }
     }
     
+    public Profesor getProfesorAsignado(Long id_asignatura){
+        ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
+        return profesoresBusiness.getProfesorByHorarioAsignado(id_asignatura, semAnio.getAnoActual(), semAnio.getSemestreActual());
+    }
+    
     @FacesConverter(forClass = Profesor.class)
     public static class ProfesorControllerConverter implements Converter {
 

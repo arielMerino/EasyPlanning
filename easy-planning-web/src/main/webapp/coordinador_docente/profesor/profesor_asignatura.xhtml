@@ -51,17 +51,20 @@
                                             <p:column>
                                                 <h:outputText value="#{profesor.apellido}"/>
                                             </p:column>
-                                            <p:column colspan="5">                                                
-                                                <ui:repeat var="asig" value="#{profesorController.getAsignaturasProfesor(profesor.id)}">
-                                                    <p:panelGrid styleClass="panel-tabla" columns="5">  
-                                                        <h:outputText value="#{asig.codigo}"/>
-                                                        <h:outputText value="#{asig.nombre}"/>
-                                                        <h:outputText value="#{asig.carrera.nombre}"/>
-                                                        <h:outputText value="#{asig.planEstudio}"/>
-                                                        <h:outputText styleClass="panel-item" value="#{asig.nivel}"/>
-                                                        
-                                                    </p:panelGrid>
-                                                </ui:repeat>
+                                            <p:column>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.id).codigo}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.id).nombre}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.id).carrera.nombre}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.id).planEstudio}"/>
+                                            </p:column>
+                                            <p:column  styleClass="panel-item">
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.id).nivel}"/>
                                             </p:column>
                                         </p:dataTable>
                                     </p:panel>
@@ -80,7 +83,7 @@
                                             <p:columnGroup type="header">
                                                 <p:row>
                                                     <p:column colspan="5" headerText="Asignatura"/>
-                                                    <p:column colspan="2" headerText="Profesor"/>
+                                                    <p:column colspan="1" headerText="Profesor"/>
                                                 </p:row>
                                                 <p:row>
                                                     <p:column headerText="Código" filterBy="#{asignatura.codigo}" filterMatchMode="contains"/>
@@ -94,8 +97,7 @@
                                                             </p:selectCheckboxMenu>
                                                         </f:facet>
                                                     </p:column>
-                                                    <p:column headerText="Nombre"/>
-                                                    <p:column headerText="Apellido"/>
+                                                    <p:column headerText="Nombre Apellido" colspan="1"/>
                                                 </p:row>
                                             </p:columnGroup>
                                             <p:column>
@@ -114,18 +116,7 @@
                                                 <h:outputText value="#{asignatura.planEstudio}"/>
                                             </p:column>
                                             <p:column>
-                                                <ol>
-                                                    <ui:repeat var="prof" value="#{asignaturaController.getProfesoresAsignatura2(asignatura.id)}">
-                                                        <li><h:outputText value="#{prof.nombre}"/></li><br />
-                                                    </ui:repeat>
-                                                </ol>
-                                            </p:column>
-                                            <p:column>
-                                                <ol>
-                                                    <ui:repeat var="prof" value="#{asignaturaController.getProfesoresAsignatura2(asignatura.id)}">
-                                                        <li><h:outputText value="#{prof.apellido}"/></li><br />
-                                                    </ui:repeat>
-                                                </ol>
+                                                <h:outputText value="#{profesorController.getProfesorAsignado(asignatura.id).nombre} #{profesorController.getProfesorAsignado(asignatura.id).apellido}"/>
                                             </p:column>
                                         </p:dataTable>
                                     </p:panel>
