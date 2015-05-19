@@ -169,7 +169,7 @@ public class ChecklistController implements Serializable {
         /*for(Asignatura asig : asignaturas){
             checklistBusiness.deleteChecklist(encuesta.getId(),asig.getId());
         }*/
-
+        FacesContext context = FacesContext.getCurrentInstance();
         
         List<Checklist> checklists = encuesta.getListaAsignaturas();
         for(Checklist chk : checklists){
@@ -178,6 +178,7 @@ public class ChecklistController implements Serializable {
                 if(asig.getId()==chk.getAsignatura().getId()){
                     this.selected = chk;
                     this.destroy();
+                    /*context.addMessage(null, new FacesMessage("Resultado",  "Se han sacado las asignaturas exitósamente.") );*/
                 }
             }
         }
@@ -215,7 +216,7 @@ public class ChecklistController implements Serializable {
     }
     
     public void destroy() {
-        persist(JsfUtil.PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("ProfesorDeleted"));
+        persist(JsfUtil.PersistAction.DELETE, ResourceBundle.getBundle("/Bundle").getString("ChecklistDeleted"));
         if (!JsfUtil.isValidationFailed()) {
             selected = null; // Remove selection
         }
