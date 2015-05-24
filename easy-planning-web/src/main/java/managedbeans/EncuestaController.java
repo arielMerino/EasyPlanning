@@ -247,6 +247,26 @@ public class EncuestaController implements Serializable {
         }
     }
     
+    public boolean hayEncuesta(Long id_profesor){
+        ParamSemestreAno semAnio = paramFacade.find(Long.parseLong(1+""));
+        System.out.println("id_profesor: "+id_profesor);
+        try{
+            Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(id_profesor, semAnio.getSemestreActual(), semAnio.getAnoActual());
+            if(encuesta != null){
+                System.out.println("hayEncuesta retorna true, id profesor: "+id_profesor);
+                return true;
+            }
+            else{
+                System.out.println("hayEncuesta encuesta igual a null, retorna false, id profesor: "+id_profesor);
+                return false;
+            }
+        }
+        catch(Exception e){
+            System.out.println("EncuestaController: retorna false, id profesor: "+id_profesor);
+            return false;
+        }
+    }
+    
     public Encuesta getEncuestaContestado(String profesorId, int semestre, int anio){
         try{
             Long id = Long.parseLong(profesorId);

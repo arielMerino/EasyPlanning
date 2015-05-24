@@ -199,3 +199,10 @@ html .ui-layout-container{
 .panel-item{
     margin-left: 5em;
 }
+.btn-center{
+    margin-left: 50%;
+    color: #269abc !important;
+}
+.btn-center>span:hover{
+    color: #0052cc;
+}

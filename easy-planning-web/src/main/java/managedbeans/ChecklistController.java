@@ -165,10 +165,15 @@ public class ChecklistController implements Serializable {
     }
     
     public List<Asignatura> asignaturasSemestrePasado(Long id){
-        Encuesta encuesta = this.encuestaActual(id);
-        List<Asignatura> asignaturas = checklistBusiness.findAsignaturasByEncuestaId(encuesta.getId());
-        
-        return asignaturas; 
+        try{
+            Encuesta encuesta = this.encuestaActual(id);
+            List<Asignatura> asignaturas = checklistBusiness.findAsignaturasByEncuestaId(encuesta.getId());
+
+            return asignaturas;
+        } 
+        catch(Exception e){
+            return new ArrayList();
+        }
     }
     
     public void eliminarAsignaturaEncuesta(Long id,List<Asignatura> asignaturas){
