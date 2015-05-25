@@ -73,7 +73,7 @@
                                 </p:inputTextarea>
                             </p:panel>
                             <br />
-                            <p:commandButton value="Enviar" actionListener="#{encuestaController.resultadoEncuesta(profesorController.idProfesor)}" ajax="false"/>
+                            <p:commandButton value="Enviar" actionListener="#{encuestaController.resultadoEncuesta(profesorController.idProfesor)}" update=":growl"/>
                         </p:layoutUnit>
 
                         <p:layoutUnit position="center" header="Horario">

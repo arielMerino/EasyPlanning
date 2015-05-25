@@ -16,6 +16,16 @@
         <ui:define name="body">
             <div class="container-fluid">
                 <div class="row">
+                    <div class="col-md-12">
+                        <ol class="breadcrumb">
+                            <li><a href="/easy-planning-web/faces/coordinador_docente/index.xhtml">Inicio</a></li>
+                            <li><a href="#">Profesores</a></li>
+                            <li><a href="/easy-planning-web/faces/coordinador_docente/profesor/List.xhtml">Ver Profesores</a></li>
+                            <li class="active">Resultados de Encuesta</li>
+                        </ol>
+                    </div>                      
+                </div>
+                <div class="row">
                     <c:if test="#{empty param}">
                         No has seleccionado ningun profesor
                     </c:if>
