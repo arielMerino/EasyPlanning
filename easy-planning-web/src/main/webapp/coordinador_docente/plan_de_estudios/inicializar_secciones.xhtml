@@ -13,37 +13,51 @@
         </ui:define>
         <ui:define name="body">
             <div class="container-fluid">
-                <h:form enctype='multipart/form-data'>
-                    <h:outputLabel value="Seleccione la Carrera"/>
-                    <p:selectOneMenu value="#{seccionController.carrera}" required="true" requiredMessage="Debe indicar una carrera">
-                        <f:selectItems value="#{seccionController.carreraFacade.findAll()}" var="carrera" itemValue="#{carrera.codigo}" itemLabel="#{carrera.nombre} - #{carrera.codigo}"/>
-                    </p:selectOneMenu>
-                    <br />
-                    <br />
-                    <h:outputLabel value="Plan de estudio a inicializar: "/>
-                    <p:selectOneMenu value="#{seccionController.planEstudio}" required="true" requiredMessage="Debe indicar el plan de estudios a inicializar">
-                        <f:selectItems value="#{asignaturaController.planesDeEstudio}"/>
-                    </p:selectOneMenu>
-                    <br />
-                    <br />
-                    <h:outputLabel value="Año a inicializar: "></h:outputLabel>
-                    <p:selectOneMenu id="console" value="#{seccionController.ano}" required="true" requiredMessage="Debe seleccionar el año a inicializar">
-                        <f:selectItem itemLabel="Elija un año" itemValue="" />
-                        <f:selectItem itemLabel="2015" itemValue="2015" />
-                        <f:selectItem itemLabel="2016" itemValue="2016" />
-                        <f:selectItem itemLabel="2017" itemValue="2017" />
-                    </p:selectOneMenu>
-                    <br />
-                    <br />
-                    <h:outputLabel value="Semestre a inicializar: "></h:outputLabel>
-                    <p:selectOneListbox value="#{seccionController.semestre}" required="true" requiredMessage="Debe indicar el semestre a inicializar">
-                        <f:selectItem itemLabel="1er Semestre" itemValue="1" />
-                        <f:selectItem itemLabel="2do Semestre" itemValue="2" />
-                    </p:selectOneListbox>
-                    <br />
-                    <p:commandButton value="Cargar" action="#{seccionController.generarSeccionesBasicas(seccionController.carrera,seccionController.planEstudio, seccionController.semestre, seccionController.ano)}" ajax="false"></p:commandButton>
-                </h:form>
-                <p:outputLabel value="#{seccionController.mensaje}"></p:outputLabel>
+                <div class="row">
+                    <div class="col-md-12">
+                        <ol class="breadcrumb">
+                            <li><a href="/easy-planning-web/faces/coordinador_docente/index.xhtml">Inicio</a></li>
+                            <li><a href="#">Planificación Docente</a></li>
+                            <li class="active">Iniciar Planificación</li>
+                        </ol>
+                    </div>                    
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h:form enctype='multipart/form-data'>
+                            <h:outputLabel value="Seleccione la Carrera"/>
+                            <p:selectOneMenu value="#{seccionController.carrera}" required="true" requiredMessage="Debe indicar una carrera">
+                                <f:selectItems value="#{seccionController.carreraFacade.findAll()}" var="carrera" itemValue="#{carrera.codigo}" itemLabel="#{carrera.nombre} - #{carrera.codigo}"/>
+                            </p:selectOneMenu>
+                            <br />
+                            <br />
+                            <h:outputLabel value="Plan de estudio a inicializar: "/>
+                            <p:selectOneMenu value="#{seccionController.planEstudio}" required="true" requiredMessage="Debe indicar el plan de estudios a inicializar">
+                                <f:selectItems value="#{asignaturaController.planesDeEstudio}"/>
+                            </p:selectOneMenu>
+                            <br />
+                            <br />
+                            <h:outputLabel value="Año a inicializar: "></h:outputLabel>
+                            <p:selectOneMenu id="console" value="#{seccionController.ano}" required="true" requiredMessage="Debe seleccionar el año a inicializar">
+                                <f:selectItem itemLabel="Elija un año" itemValue="" />
+                                <f:selectItem itemLabel="2015" itemValue="2015" />
+                                <f:selectItem itemLabel="2016" itemValue="2016" />
+                                <f:selectItem itemLabel="2017" itemValue="2017" />
+                            </p:selectOneMenu>
+                            <br />
+                            <br />
+                            <h:outputLabel value="Semestre a inicializar: "></h:outputLabel>
+                            <p:selectOneListbox value="#{seccionController.semestre}" required="true" requiredMessage="Debe indicar el semestre a inicializar">
+                                <f:selectItem itemLabel="1er Semestre" itemValue="1" />
+                                <f:selectItem itemLabel="2do Semestre" itemValue="2" />
+                            </p:selectOneListbox>
+                            <br />
+                            <p:commandButton value="Cargar" action="#{seccionController.generarSeccionesBasicas(seccionController.carrera,seccionController.planEstudio, seccionController.semestre, seccionController.ano)}" ajax="false"></p:commandButton>
+                        </h:form>
+                        <p:outputLabel value="#{seccionController.mensaje}"></p:outputLabel>        
+                    </div>
+                </div>
+                
             </div>
             
         </ui:define>

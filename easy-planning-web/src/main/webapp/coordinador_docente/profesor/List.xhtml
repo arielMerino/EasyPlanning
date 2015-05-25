@@ -16,71 +16,86 @@
         </ui:define>
 
         <ui:define name="body">
-            <h:form id="ProfesorListForm">
-                <p:panel class="new-body">
-                    <p:dataTable id="datalist" value="#{profesorController.items}" var="item"
-                                 selectionMode="single" selection="#{profesorController.selected}"
-                                 rowKey="#{item.id}"
-                                 widgetVar="profesoresTable"
-                                 filteredValue="#{profesorController.profesoresFiltrados}"
-                                 emptyMessage="No se han encontrado profesores según los parámetros indicados">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ol class="breadcrumb">
+                            <li><a href="/easy-planning-web/faces/coordinador_docente/index.xhtml">Inicio</a></li>
+                            <li><a href="#">Profesores</a></li>
+                            <li class="active">Ver Profesores</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <br />
+                        <h:form id="ProfesorListForm">
+                            <p:dataTable id="datalist" value="#{profesorController.items}" var="item"
+                                         selectionMode="single" selection="#{profesorController.selected}"
+                                         rowKey="#{item.id}"
+                                         widgetVar="profesoresTable"
+                                         filteredValue="#{profesorController.profesoresFiltrados}"
+                                         emptyMessage="No se han encontrado profesores según los parámetros indicados">
 
-                        <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton emailButton"/>
-                        <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton emailButton"/>
+                                <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton emailButton"/>
+                                <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton emailButton"/>
 
-                        <p:column filterBy="#{item.nombre}" filterMatchMode="contains">
-                            <f:facet name="header">
-                                <h:outputText value="Nombre"/>                                
-                            </f:facet>
-                            <h:outputText value="#{item.nombre}"/>
-                        </p:column>
-                        <p:column filterBy="#{item.apellido}" filterMatchMode="contains">
-                            <f:facet name="header">
-                                <h:outputText value="Apellido"/>
-                            </f:facet>
-                            <h:outputText value="#{item.apellido}"/>
-                        </p:column>
-                        <p:column filterBy="#{item.mail}" filterMatchMode="contains">
-                            <f:facet name="header">
-                                <h:outputText value="E-mail"/>
-                            </f:facet>
-                            <h:outputText value="#{item.mail}"/>
-                        </p:column>
-                        <p:column filterBy="#{item.rut}" filterMatchMode="contains">
-                            <f:facet name="header">
-                                <h:outputText value="RUT"/>
-                            </f:facet>
-                            <h:outputText value="#{item.rut}"/>
-                        </p:column>
-                        <p:column>
-                            <f:facet name="header">
-                                <h:outputText value="Ver Encuesta" />
-                            </f:facet>
-                            <!--c:set var="id" value="#//{item.id}"/>
-                            <c:if test="#//{encuestaController.hayEncuesta(id)}">
-                                <h:outputText value="Holi"/>
-                            </c:if>
-                            <c:if test="#//{not encuestaController.hayEncuesta(id)}">
-                                <h:outputText value="no holi :C"/>
-                            </c:if-->
-                            <h:link outcome="/coordinador_docente/encuesta/resultado_encuesta" value="Ver Encuesta" >
-                                <f:param name="id" value="#{item.id}" />
-                            </h:link>
-                        </p:column>
-                        <f:facet name="footer" class="table-footer">
-                            <p:commandButton id="createButton" icon="ui-icon-plus"   value="Nuevo Profesor" actionListener="#{profesorController.prepareCreate}" update=":ProfesorCreateForm" oncomplete="PF('ProfesorCreateDialog').show()"/>
-                            <p:commandButton id="viewButton"   icon="ui-icon-search" value="Ver" update=":ProfesorViewForm" oncomplete="PF('ProfesorViewDialog').show()" disabled="#{empty profesorController.selected}"/>
-                            <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" update=":ProfesorEditForm" oncomplete="PF('ProfesorEditDialog').show()" disabled="#{empty profesorController.selected}"/>
-                            <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Eliminar" actionListener="#{profesorController.destroy}" update=":growl,datalist" disabled="#{empty profesorController.selected}"/>
-                            <p:commandButton id="emailButton" icon="ui-icon-mail-closed"  value="Enviar notificación" actionListener="#{emailController.enviarNotificacion}" update=":growl,datalist" disabled="#{empty profesorController.selected}"/>
-                        </f:facet>
-                    </p:dataTable>
-                </p:panel>
-            </h:form>
+                                <p:column filterBy="#{item.nombre}" filterMatchMode="contains">
+                                    <f:facet name="header">
+                                        <h:outputText value="Nombre"/>                                
+                                    </f:facet>
+                                    <h:outputText value="#{item.nombre}"/>
+                                </p:column>
+                                <p:column filterBy="#{item.apellido}" filterMatchMode="contains">
+                                    <f:facet name="header">
+                                        <h:outputText value="Apellido"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.apellido}"/>
+                                </p:column>
+                                <p:column filterBy="#{item.mail}" filterMatchMode="contains">
+                                    <f:facet name="header">
+                                        <h:outputText value="E-mail"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.mail}"/>
+                                </p:column>
+                                <p:column filterBy="#{item.rut}" filterMatchMode="contains">
+                                    <f:facet name="header">
+                                        <h:outputText value="RUT"/>
+                                    </f:facet>
+                                    <h:outputText value="#{item.rut}"/>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
+                                        <h:outputText value="Ver Encuesta" />
+                                    </f:facet>
+                                    <!--c:set var="id" value="#//{item.id}"/>
+                                    <c:if test="#//{encuestaController.hayEncuesta(id)}">
+                                        <h:outputText value="Holi"/>
+                                    </c:if>
+                                    <c:if test="#//{not encuestaController.hayEncuesta(id)}">
+                                        <h:outputText value="no holi :C"/>
+                                    </c:if-->
+                                    <h:link outcome="/coordinador_docente/encuesta/resultado_encuesta" value="Ver Encuesta" >
+                                        <f:param name="id" value="#{item.id}" />
+                                    </h:link>
+                                </p:column>
+                                <f:facet name="footer" class="table-footer">
+                                    <p:commandButton id="createButton" icon="ui-icon-plus"   value="Nuevo Profesor" actionListener="#{profesorController.prepareCreate}" update=":ProfesorCreateForm" oncomplete="PF('ProfesorCreateDialog').show()"/>
+                                    <p:commandButton id="viewButton"   icon="ui-icon-search" value="Ver" update=":ProfesorViewForm" oncomplete="PF('ProfesorViewDialog').show()" disabled="#{empty profesorController.selected}"/>
+                                    <p:commandButton id="editButton"   icon="ui-icon-pencil" value="Editar" update=":ProfesorEditForm" oncomplete="PF('ProfesorEditDialog').show()" disabled="#{empty profesorController.selected}"/>
+                                    <p:commandButton id="deleteButton" icon="ui-icon-trash"  value="Eliminar" actionListener="#{profesorController.destroy}" update=":growl,datalist" disabled="#{empty profesorController.selected}"/>
+                                    <p:commandButton id="emailButton" icon="ui-icon-mail-closed"  value="Enviar notificación" actionListener="#{emailController.enviarNotificacion}" update=":growl,datalist" disabled="#{empty profesorController.selected}"/>
+                                </f:facet>
+                            </p:dataTable>
+                        </h:form>
 
-            <ui:include src="Create.xhtml"/>
-            <ui:include src="Edit.xhtml"/>
-            <ui:include src="View.xhtml"/>
+                        <ui:include src="Create.xhtml"/>
+                        <ui:include src="Edit.xhtml"/>
+                        <ui:include src="View.xhtml"/>
+
+                    </div>
+                </div>
+            </div>
             
         </ui:define>
     </ui:composition>

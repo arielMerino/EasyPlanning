@@ -14,85 +14,99 @@
         </ui:define>
         <ui:define name="body">
             <div class="container-fluid">
-                <h:form enctype='multipart/form-data'>
-                    <div class="form-group">
-                        <br/>
-                        <br />
-                        <p:outputLabel value="Carrera: "></p:outputLabel>
-                        <p:selectOneMenu value="#{cargarPlanDeEstudios.carreraSelected}" required="true" requiredMessage="Debe seleccionar una carrera">
-                            <f:selectItems value="#{cargarPlanDeEstudios.carreraFacade.findAll()}" var="carrera" itemLabel="#{carrera.nombre} - #{carrera.codigo}" itemValue="#{carrera.codigo}"/>
-                        </p:selectOneMenu>
-                        <br/>
-                        <br />
-                        <p:outputLabel value="Nombre plan de estudios: "></p:outputLabel>
-                        <p:inputText label="Nombre plan de estudios" value="#{cargarPlanDeEstudios.nombrePlan}" required="true" requiredMessage="Debe ingresar el nombre del Plan de Estudios"></p:inputText>
-                        <br />
-                        <br />
-                        <h:inputFile styleClass="ui-button-text ui-c ui-state-default ui-widget-content ui-widget-header" label="Seleccionar archivo" value="#{cargarPlanDeEstudios.ruta}" required="true" requiredMessage="Debe seleccionar un archivo"></h:inputFile>
-                        <br />
-                        <h:commandButton styleClass="ui-button-text ui-c ui-state-default ui-widget-content ui-widget-header" value="Cargar" actionListener="#{cargarPlanDeEstudios.cargarArchivo()}" onclick="submit()"></h:commandButton>    
+                <div class="row">
+                    <div class="col-md-12">
+                        <ol class="breadcrumb">
+                            <li><a href="/easy-planning-web/faces/coordinador_docente/index.xhtml">Inicio</a></li>
+                            <li><a href="#">Carreras</a></li>
+                            <li class="active">Agregar Plan de Estudios</li>
+                        </ol>
                     </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h:form enctype='multipart/form-data'>
+                            <div class="form-group">
+                                <br/>
+                                <br />
+                                <p:outputLabel value="Carrera: "></p:outputLabel>
+                                <p:selectOneMenu value="#{cargarPlanDeEstudios.carreraSelected}" required="true" requiredMessage="Debe seleccionar una carrera">
+                                    <f:selectItems value="#{cargarPlanDeEstudios.carreraFacade.findAll()}" var="carrera" itemLabel="#{carrera.nombre} - #{carrera.codigo}" itemValue="#{carrera.codigo}"/>
+                                </p:selectOneMenu>
+                                <br/>
+                                <br />
+                                <p:outputLabel value="Nombre plan de estudios: "></p:outputLabel>
+                                <p:inputText label="Nombre plan de estudios" value="#{cargarPlanDeEstudios.nombrePlan}" required="true" requiredMessage="Debe ingresar el nombre del Plan de Estudios"></p:inputText>
+                                <br />
+                                <br />
+                                <h:inputFile styleClass="ui-button-text ui-c ui-state-default ui-widget-content ui-widget-header" label="Seleccionar archivo" value="#{cargarPlanDeEstudios.ruta}" required="true" requiredMessage="Debe seleccionar un archivo"></h:inputFile>
+                                <br />
+                                <h:commandButton styleClass="ui-button-text ui-c ui-state-default ui-widget-content ui-widget-header" value="Cargar" actionListener="#{cargarPlanDeEstudios.cargarArchivo()}" onclick="submit()"></h:commandButton>    
+                            </div>
+
+                        </h:form>
+                        <h:outputText value="#{cargarPlanDeEstudios.aux}"></h:outputText>
+                        <p:panel header="Plan de Estudios #{cargarPlanDeEstudios.nombrePlan} registrado" rendered="#{cargarPlanDeEstudios.cargados}" >
+                            <p:dataTable id="tablaAsignaturas" value="#{cargarPlanDeEstudios.asignaturasAñadidas}" var="item"
+                                                selectionMode="single"
+                                                selection="#{asignaturaController.selected}"
+                                                 rowKey="#{item.codigo}">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Código"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.codigo}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Asignatura"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.nombre}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Nivel"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.nivel}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="T"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.teoria}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="E"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.ejercicios}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="L"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.laboratorio}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Prerequisitos"/>
+                                        </f:facet>
+                                        <ul>
+                                            <h:outputText value="Ingreso" rendered="#{item.nivel == 1}">Ingreso</h:outputText>
+                                        </ul>
+                                        <ul>
+                                            <ui:repeat value="#{item.prerequisitos}" var="prerequisito">
+                                                <li>
+                                                    <h:outputText value="#{prerequisito.codigo} - #{prerequisito.nombre}"></h:outputText>
+                                                </li>
+                                            </ui:repeat>
+                                        </ul>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel>        
+                    </div>
+                </div>
                     
-                </h:form>
-                <h:outputText value="#{cargarPlanDeEstudios.aux}"></h:outputText>
-                <p:panel header="Plan de Estudios #{cargarPlanDeEstudios.nombrePlan} registrado" rendered="#{cargarPlanDeEstudios.cargados}" >
-                    <p:dataTable id="tablaAsignaturas" value="#{cargarPlanDeEstudios.asignaturasAñadidas}" var="item"
-                                        selectionMode="single"
-                                        selection="#{asignaturaController.selected}"
-                                         rowKey="#{item.codigo}">
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Código"/>
-                                </f:facet>
-                                <h:outputText value="#{item.codigo}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Asignatura"/>
-                                </f:facet>
-                                <h:outputText value="#{item.nombre}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Nivel"/>
-                                </f:facet>
-                                <h:outputText value="#{item.nivel}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="T"/>
-                                </f:facet>
-                                <h:outputText value="#{item.teoria}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="E"/>
-                                </f:facet>
-                                <h:outputText value="#{item.ejercicios}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="L"/>
-                                </f:facet>
-                                <h:outputText value="#{item.laboratorio}"/>
-                            </p:column>
-                            <p:column>
-                                <f:facet name="header">
-                                    <h:outputText value="Prerequisitos"/>
-                                </f:facet>
-                                <ul>
-                                    <h:outputText value="Ingreso" rendered="#{item.nivel == 1}">Ingreso</h:outputText>
-                                </ul>
-                                <ul>
-                                    <ui:repeat value="#{item.prerequisitos}" var="prerequisito">
-                                        <li>
-                                            <h:outputText value="#{prerequisito.codigo} - #{prerequisito.nombre}"></h:outputText>
-                                        </li>
-                                    </ui:repeat>
-                                </ul>
-                            </p:column>
-                        </p:dataTable>
-                    </p:panel>    
             </div>
             
         </ui:define>

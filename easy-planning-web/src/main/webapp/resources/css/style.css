@@ -206,3 +206,12 @@ html .ui-layout-container{
 .btn-center>span:hover{
     color: #0052cc;
 }
+.breadcrumb{
+    background-color: #fff;
+}
+.breadcrumb>li>a{
+    color: #ff7319;
+}
+.breadcrumb>.active{
+    color: #aaa;
+}
