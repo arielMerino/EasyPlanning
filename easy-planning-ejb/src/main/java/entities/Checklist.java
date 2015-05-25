@@ -37,7 +37,7 @@ import javax.persistence.OneToOne;
     @NamedQuery(
             name = "Checklist.findChecklistByIdEncuesta",
             query = "SELECT c FROM Checklist c WHERE c.encuesta.id = :idEncuesta"            
-    )
+    ),
 })
 public class Checklist implements Serializable {
     private static final long serialVersionUID = 1L;

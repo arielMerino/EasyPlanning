@@ -69,8 +69,14 @@
                         <p:selectOneMenu id="asignaturas" value="#{asignacionHoraria.asignaturaSelected}" required="true" requiredMessage="Debe seleccionar una asignatura" style="width: 100%" immediate="true">
                             <f:selectItem itemLabel="Asignatura" itemValue="#{asignacionHoraria.resetAsignatura()}" />
                             <f:selectItems value="#{asignacionHoraria.asignaturasBusiness.findByNivelAndCarreraAndPlan(asignacionHoraria.nivelSelected, asignacionHoraria.carrerasBusiness.findByCodigo(asignacionHoraria.carreraSelected).getNombre(), asignacionHoraria.planEstudioSelected)}" var="asg" itemLabel="#{asg.nombre} - #{asg.codigo}" itemValue="#{asg.id}"/>
-                            <p:ajax process="@this" update=":form2:formulario" />
+                            <p:ajax process="@this" update="disponibilidades, :form2:formulario" />
                         </p:selectOneMenu>
+                    </div>
+                    <div  class="col-xs-3">
+                        <br/>
+                        <h:outputLabel style="white-space: normal;">Bloques disponibles:</h:outputLabel>
+                        <br/>
+                        <h:outputLabel id="disponibilidades" style="white-space: normal;">#{asignacionHoraria.obtenerBloquesDisponibles()}</h:outputLabel>
                     </div>
                 </div>
                 <br/>
