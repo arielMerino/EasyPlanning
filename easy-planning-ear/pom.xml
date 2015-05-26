@@ -9,7 +9,7 @@
 
     <groupId>cl.G2Pingeso</groupId>
     <artifactId>easy-planning-ear</artifactId>
-    <version>1.0</version>
+    <version>1.1</version>
     <packaging>ear</packaging>
 
     <name>easy-planning-ear</name>
