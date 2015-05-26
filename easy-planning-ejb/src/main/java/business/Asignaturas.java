@@ -93,7 +93,7 @@ public class Asignaturas implements AsignaturasLocal {
         query.setParameter("plan", plan);
         try{
             List<Integer> salida = (List<Integer>) query.getResultList();
-            salida.sort(null);
+            //salida.sort(null);
             return salida;
             
         }catch(NoResultException e){
