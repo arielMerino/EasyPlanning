@@ -16,8 +16,6 @@
                         <p:inputText id="nombre" value="#{carreraController.selected.nombre}" title="#{bundle.EditCarreraTitle_nombre}" />
                         <p:outputLabel value="#{bundle.EditCarreraLabel_codigo}" for="codigo" />
                         <p:inputText id="codigo" value="#{carreraController.selected.codigo}" title="#{bundle.EditCarreraTitle_codigo}" />
-                        <p:outputLabel value="#{bundle.EditCarreraLabel_id}" for="id" />
-                        <p:inputText id="id" value="#{carreraController.selected.id}" title="#{bundle.EditCarreraTitle_id}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{carreraController.update}" value="#{bundle.Save}" update="display,:CarreraListForm:datalist,:growl" oncomplete="handleSubmit(args, 'CarreraEditDialog');"/>
                     <p:commandButton value="#{bundle.Cancel}" onclick="CarreraEditDialog.hide()"/>
