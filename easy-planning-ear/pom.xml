@@ -49,6 +49,16 @@
                         </deployable>
                     </deployables>
                 </configuration>
+                <executions>
+                    <execution>
+                        <id>redeploy</id>
+                        <phase>install</phase>
+                        <goals>
+                            <goal>stop</goal>
+                            <goal>start</goal>
+                        </goals>
+                    </execution>                         
+                </executions>
                 <dependencies>
                     <dependency>
                         <groupId>org.glassfish.deployment</groupId>
