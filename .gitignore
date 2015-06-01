@@ -1,3 +1,4 @@
 /easy-planning-ejb/target/
 /easy-planning-web/target/
 /easy-planning-ear/target/
+*.class
