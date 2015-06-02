@@ -30,7 +30,6 @@ import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import sessionbeans.HorarioFacadeLocal;
 import sessionbeans.AsignaturaFacadeLocal;
-import sessionbeans.ChecklistFacadeLocal;
 import sessionbeans.EncuestaFacadeLocal;
 import sessionbeans.ParamSemestreAnioFacadeLocal;
 
@@ -57,17 +56,17 @@ public class ProfesorController implements Serializable {
     private Profesor selected;
     private String[] horariosSeleccionados;
     private List<Profesor> profesoresFiltrados;
-    private Long idProfesor;
+    private String rutProfesor;
 
     public ProfesorController() {
     }
 
-    public Long getIdProfesor() {
-        return idProfesor;
+    public String getIdProfesor() {
+        return rutProfesor;
     }
 
-    public void setIdProfesor(Long idProfesor) {
-        this.idProfesor = idProfesor;
+    public void setIdProfesor(String idProfesor) {
+        this.rutProfesor = idProfesor;
     }
 
     public List<Profesor> getProfesoresFiltrados() {
@@ -180,10 +179,9 @@ public class ProfesorController implements Serializable {
         }
     }
 
-    public Profesor getProfesor(String profesorId) {
+    public Profesor getProfesor(String rutProfesor) {
         try{
-            Long id = Long.parseLong(profesorId);
-            return getFacade().find(id);
+            return getFacade().find(rutProfesor);
         }
         catch (Exception e){
             return null;
@@ -201,12 +199,12 @@ public class ProfesorController implements Serializable {
     /*
         Función que retorna una lista con los bloques horarios disponibles de un profesor
     */
-    public ArrayList<Horario> getDisponibles(long profesorId){
+    public ArrayList<Horario> getDisponibles(String rutProfesor){
         List<Horario> horarios = this.horarioFacade.findAll();
         ArrayList<Horario> disponibles = new ArrayList<>();
         for (int i = 0; i < horarios.size(); i++) {
             if (horarios.get(i).getProfesor() != null){
-                if (profesorId == horarios.get(i).getProfesor().getId()) {
+                if (rutProfesor.equals(horarios.get(i).getProfesor().getRutProfesor())) {
                     if (horarios.get(i).getSeccion()==null) {
                         disponibles.add(horarios.get(i));
                     }
@@ -216,9 +214,8 @@ public class ProfesorController implements Serializable {
         return disponibles;
     }
     
-    public ArrayList<Asignatura> asignaturasProfesor(String profesorid){
-        Long id = Long.parseLong(profesorid);
-        List<Asignatura> aux = getFacade().find(id).getAsignaturas();
+    public ArrayList<Asignatura> asignaturasProfesor(String rutProfesor){
+        List<Asignatura> aux = getFacade().find(rutProfesor).getAsignaturas();
         ArrayList<Asignatura> asignaturas = new ArrayList<>();
         for(Asignatura asig : aux){
             asignaturas.add(asig);
@@ -226,9 +223,9 @@ public class ProfesorController implements Serializable {
         return asignaturas;
     }
     
-    public List<Asignatura> getAsignaturasProfesor(Long profesorid){
+    public List<Asignatura> getAsignaturasProfesor(String rutProfesor){
         try{
-            return getFacade().find(profesorid).getAsignaturas();
+            return getFacade().find(rutProfesor).getAsignaturas();
         }
         catch(EJBException | ELException e){
             return new ArrayList();
@@ -236,22 +233,22 @@ public class ProfesorController implements Serializable {
         
     }
     
-    public String comentarioEncuestaProfesor(Long profesorid){
+    public String comentarioEncuestaProfesor(String rutProfesor){
         List<Encuesta> encuestas = encuestaFacade.findAll();
         Encuesta encuesta = new Encuesta();
         for(Encuesta e : encuestas){
-            if(Objects.equals(e.getProfesor().getId(), profesorid)){
+            if(Objects.equals(e.getProfesor().getRutProfesor(), rutProfesor)){
                 encuesta = e;
             }
         }
         return encuesta.getComentario();
     }
     
-    public List<Checklist> getAsignaturasChecklist(Long id){
+    public List<Checklist> getAsignaturasChecklist(String rutProfesor){
         
         ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
         try{            
-            Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(id, semAnio.getSemestreActual(), semAnio.getAnoActual());            
+            Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semAnio.getSemestreActual(), semAnio.getAnoActual());            
             List<Checklist> lista = checklistsBusiness.findChecklistByIdEncuesta(encuesta.getId());            
             
             return lista;
@@ -261,11 +258,11 @@ public class ProfesorController implements Serializable {
         }
     }
     
-    public boolean hayEncuesta(Long id){
+    public boolean hayEncuesta(String rutProfesor){
         
         ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
         try{            
-            Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(id, semAnio.getSemestreActual(), semAnio.getAnoActual());
+            Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semAnio.getSemestreActual(), semAnio.getAnoActual());
             return encuesta != null;
         }
         catch(Exception e){            
@@ -297,7 +294,7 @@ public class ProfesorController implements Serializable {
             return key;
         }
 
-        String getStringKey(java.lang.Long value) {
+        String getStringKey(String value) {
             StringBuilder sb = new StringBuilder();
             sb.append(value);
             return sb.toString();
@@ -310,7 +307,7 @@ public class ProfesorController implements Serializable {
             }
             if (object instanceof Profesor) {
                 Profesor o = (Profesor) object;
-                return getStringKey(o.getId());
+                return getStringKey(o.getRutProfesor());
             } else {
                 Logger.getLogger(this.getClass().getName()).log(Level.SEVERE, "object {0} is of type {1}; expected type: {2}", new Object[]{object, object.getClass().getName(), Profesor.class.getName()});
                 return null;

@@ -20,7 +20,7 @@ public interface ProfesoresLocal {
         
     public List<Profesor> findDisponiblesByBloque(String bloque);
     
-    public Encuesta getEncuestaBySemestreAndAnio(Long id, int semestre, int anio);
+    public Encuesta getEncuestaBySemestreAndAnio(String rutProfesor, int semestre, int anio);
     
     public Profesor getProfesorByHorarioAsignado(Long id_asignatura, int anio, int semestre);
 }

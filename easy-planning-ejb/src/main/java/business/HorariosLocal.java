@@ -17,13 +17,13 @@ import javax.ejb.Local;
 public interface HorariosLocal {
     public Horario findBybloqueCarreraPlanNivelAnioYSemestre(String bloque, int codigo, String plan, int nivel, int anio, int semestre);
     
-    public Horario findByBloqueAndProfesor(String bloque, Long idProfesor);
+    public Horario findByBloqueAndProfesor(String bloque, String rutProfesor);
     
-    public Horario findDisponibleByBloqueAndProfesor(String bloque, long idProfesor);
+    public Horario findDisponibleByBloqueAndProfesor(String bloque, String rutProfesor);
     
-    public List<Horario> findDisponiblesByProfesorId(long profesorId);
+    public List<Horario> findDisponiblesByProfesorId(String rutProfesor);
     
     public List<Horario> findByHorariosNoDisponibles();
     
-    public List<Horario> findBySeleccionados(Long id_profesor);
+    public List<Horario> findBySeleccionados(String rutProfesor);
 }

@@ -33,21 +33,23 @@
                         <br/>
 
                         <c:set var="profesor_id" value="#{param['id']}" scope="request" />
-                        <c:if test="#{profesor_id != 0 and profesor_id != null}">
-                            #{checklistController.setProfesor_id(profesor_id)}
+                        
+                        <c:if test="#{not empty profesor_id}">
+                            #{profesor_id}
+                            #{checklistController.setRutProfesor(profesor_id)}
                         </c:if>
 
                         <h:form id="form">
 
                             <p:growl id="feedback" showDetail="true" />
 
-                            <p:panel id="tituloPanel" header="Profesor: #{profesorController.getProfesor(checklistController.profesor_id).nombre} #{profesorController.getProfesor(checklistController.profesor_id).apellido}">
+                            <p:panel id="tituloPanel" header="Profesor: #{profesorController.getProfesor(checklistController.rutProfesor).nombre} #{profesorController.getProfesor(checklistController.rutProfesor).apellido}">
 
                                 <h5>Asignaturas en la encuesta actual</h5>
 
-                                <p:commandButton value="Quitar Asignatura" update=":form" actionListener="#{checklistController.eliminarAsignaturaEncuesta(checklistController.profesor_id,asignaturaController.asignaturasSemestrePasado)}" />
+                                <p:commandButton value="Quitar Asignatura" update=":form" actionListener="#{checklistController.eliminarAsignaturaEncuesta(checklistController.rutProfesor,asignaturaController.asignaturasSemestrePasado)}" />
 
-                                <p:dataTable id="tablaAsignaturas1" value="#{checklistController.asignaturasSemestrePasado(checklistController.profesor_id)}" 
+                                <p:dataTable id="tablaAsignaturas1" value="#{checklistController.asignaturasSemestrePasado(checklistController.rutProfesor)}" 
                                     var="item"
                                     sortBy="#{item.nivel}" 
                                     selection="#{asignaturaController.asignaturasSemestrePasado}"
@@ -84,7 +86,7 @@
 
                                 <br/>
                                 <h5>Todas las asignaturas</h5>
-                                <p:commandButton actionListener="#{checklistController.asignaturasParaEncuestas(asignaturaController.asignaturaEncuestas,checklistController.profesor_id)}" value="Agregar Asignaturas" update=":form" />
+                                <p:commandButton actionListener="#{checklistController.asignaturasParaEncuestas(asignaturaController.asignaturaEncuestas,checklistController.rutProfesor)}" value="Agregar Asignaturas" update=":form" />
 
                                 <p:dataTable id="tablaAsignaturas2" value="#{asignaturaController.facade.findAll()}" 
                                     var="item"

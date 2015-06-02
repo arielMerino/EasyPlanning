@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
-import javax.persistence.criteria.CriteriaBuilder;
-import javax.persistence.criteria.CriteriaQuery;
 
 /**
  *
@@ -102,8 +102,8 @@ public class Asignaturas implements AsignaturasLocal {
     }
 
     @Override
-    public Asignatura findByAsignaturaAsignada(Long id_profesor, int anio, int semestre) {
-        Query query = em.createNamedQuery("Asignatura.findByAsignaturaAsignada").setParameter("id_profesor", id_profesor);
+    public Asignatura findByAsignaturaAsignada(String rutProfesor, int anio, int semestre) {
+        Query query = em.createNamedQuery("Asignatura.findByAsignaturaAsignada").setParameter("rutProfesor", rutProfesor);
         query.setParameter("anio", anio);
         query.setParameter("semestre", semestre);
         

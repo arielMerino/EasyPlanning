@@ -132,13 +132,13 @@ public class EmailController implements Serializable {
             String asunto = "Encuesta de disponibilidad horaria";
             String contenido = "Profesor" + " " + profesor + " ";
             contenido = contenido + "conteste la encuesta de disponibilidad horaria, por favor. http://localhost:8080/easy-planning-web/faces/profesor/encuesta.xhtml?id=";
-            contenido = contenido + p.getId();
+            contenido = contenido + p.getRutProfesor();
             
             ParamSemestreAno semAnho = getEjbSemAnio().find(Long.parseLong(1+""));
-            Long id = p.getId();
-            int semestre = semAnho.getSemestreActual();
-            int anio = semAnho.getAnoActual();            
-            Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(id, semestre, anio);
+            String rutProfesor = p.getRutProfesor();
+            int semestre = ejbSemAnio.find(1L).getSemestreActual();
+            int anio = ejbSemAnio.find(1L).getAnoActual();            
+            Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semestre, anio);
             
             if(encuesta == null){
                 encuesta = new Encuesta();
@@ -147,7 +147,7 @@ public class EmailController implements Serializable {
                 encuesta.setSemestre(semAnho.getSemestreActual());
                 getEjbEncuesta().create(encuesta);
                 
-                for(Asignatura asignatura : profesorController.getAsignaturasProfesor(id)){
+                for(Asignatura asignatura : profesorController.getAsignaturasProfesor(rutProfesor)){
                     Checklist check = new Checklist();
                     check.setAceptado(false);
                     check.setAsignatura(asignatura);

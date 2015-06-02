@@ -23,7 +23,7 @@ import javax.persistence.OneToOne;
 @NamedQueries({
     @NamedQuery(
             name = "Checklist.findProfesoresByAsgAnioAndSemestre",
-            query = "SELECT DISTINCT c.encuesta.profesor.id FROM Checklist c WHERE c.asignatura.id = :asg AND c.encuesta.anio = :anio AND c.encuesta.semestre = :semestre AND c.aceptado = 'true'"
+            query = "SELECT DISTINCT c.encuesta.profesor.rutProfesor FROM Checklist c WHERE c.asignatura.id = :asg AND c.encuesta.anio = :anio AND c.encuesta.semestre = :semestre AND c.aceptado = 'true'"
     ),
     @NamedQuery(
             name="Checklist.findAsignaturaByEncuestaId",

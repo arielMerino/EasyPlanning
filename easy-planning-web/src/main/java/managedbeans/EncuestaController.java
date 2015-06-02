@@ -167,11 +167,10 @@ public class EncuestaController implements Serializable {
         }
     }
     
-    public void resultadoEncuesta(int id_profesor){
-        Long id = Long.parseLong(id_profesor+"");
+    public void resultadoEncuesta(String rutProfesor){
         ParamSemestreAno semAnio = paramFacade.find(Long.parseLong(1+""));
         try{
-            Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(id, semAnio.getSemestreActual(), semAnio.getAnoActual());
+            Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semAnio.getSemestreActual(), semAnio.getAnoActual());
             encuesta.setComentario(comentario);
             encuestaFacade.edit(encuesta);
             
@@ -181,16 +180,16 @@ public class EncuestaController implements Serializable {
                 checklistFacade.edit(check);
                 
             }
-            setFalseChecklist(id);
+            setFalseChecklist(rutProfesor);
             for(String bloque : horariosSeleccionados){
-                if(horarioBusiness.findByBloqueAndProfesor(bloque, id) == null){                    
+                if(horarioBusiness.findByBloqueAndProfesor(bloque, rutProfesor) == null){                    
                     Horario horario = new Horario();
                     horario.setBloque(bloque);
-                    horario.setProfesor(profesorFacade.find(id));
+                    horario.setProfesor(profesorFacade.find(rutProfesor));
                     horarioFacade.create(horario);
                 }
             }
-            dropHorariosNoSeleccionados(id);
+            dropHorariosNoSeleccionados(rutProfesor);
             JsfUtil.addSuccessMessage("Encuesta registrada con éxito");
             contestada = true;
             
@@ -201,9 +200,9 @@ public class EncuestaController implements Serializable {
         
     }
     
-    public void setFalseChecklist(Long id_profesor){
+    public void setFalseChecklist(String rutProfesor){
         ParamSemestreAno semAnio = paramFacade.find(Long.parseLong(1+""));
-        Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(id_profesor, semAnio.getSemestreActual(), semAnio.getAnoActual());
+        Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semAnio.getSemestreActual(), semAnio.getAnoActual());
         List<Checklist> lista = getChecklistsBusiness().findChecklistByIdEncuesta(encuesta.getId());
         List<Checklist> noSeleccionadas = new ArrayList();
         boolean flag;        
@@ -224,18 +223,17 @@ public class EncuestaController implements Serializable {
         }
     }
     
-    public boolean hayEncuestaContestado(String profesorId, int semestre, int anio){
+    public boolean hayEncuestaContestado(String rutProfesor, int semestre, int anio){
         try{
-            Long id = Long.parseLong(profesorId);
-            Encuesta e = profesorBusiness.getEncuestaBySemestreAndAnio(id, semestre, anio);
+            Encuesta e = profesorBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semestre, anio);
             List<Checklist> c = e.getListaAsignaturas();
-
+            System.out.println(c.size());
             for(Checklist check : c){
                 if(check.isAceptado())            
                     return true;
             }
             
-            List<Horario> h = horarioBusiness.findDisponiblesByProfesorId(id);
+            List<Horario> h = horarioBusiness.findDisponiblesByProfesorId(rutProfesor);
             
             for(Horario horario : h){
                 return true;
@@ -247,38 +245,38 @@ public class EncuestaController implements Serializable {
         }
     }
     
-    public boolean hayEncuesta(Long id_profesor){
+    public boolean hayEncuesta(String rutProfesor){
         ParamSemestreAno semAnio = paramFacade.find(Long.parseLong(1+""));
-        System.out.println("id_profesor: "+id_profesor);
+        System.out.println("id_profesor: "+rutProfesor);
         try{
-            Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(id_profesor, semAnio.getSemestreActual(), semAnio.getAnoActual());
+            Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semAnio.getSemestreActual(), semAnio.getAnoActual());
             if(encuesta != null){
-                System.out.println("hayEncuesta retorna true, id profesor: "+id_profesor);
+                System.out.println("hayEncuesta retorna true, id profesor: "+rutProfesor);
                 return true;
             }
             else{
-                System.out.println("hayEncuesta encuesta igual a null, retorna false, id profesor: "+id_profesor);
+                System.out.println("hayEncuesta encuesta igual a null, retorna false, id profesor: "+rutProfesor);
                 return false;
             }
         }
         catch(Exception e){
-            System.out.println("EncuestaController: retorna false, id profesor: "+id_profesor);
+            System.out.println("EncuestaController: retorna false, id profesor: "+rutProfesor);
             return false;
         }
     }
     
-    public Encuesta getEncuestaContestado(String profesorId, int semestre, int anio){
+    public Encuesta getEncuestaContestado(String rutProfesor, int semestre, int anio){
         try{
-            Long id = Long.parseLong(profesorId);
-            Encuesta e = profesorBusiness.getEncuestaBySemestreAndAnio(id, semestre, anio);
+            System.out.println(semestre+ " " + anio);
+            Encuesta e = profesorBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semestre, anio);
             return e;
         }catch (Exception e){
             return null;
         }        
     }    
     
-    public void dropHorariosNoSeleccionados(Long id_profesor){
-        List<Horario> horarios = horarioBusiness.findBySeleccionados(id_profesor);
+    public void dropHorariosNoSeleccionados(String rutProfesor){
+        List<Horario> horarios = horarioBusiness.findBySeleccionados(rutProfesor);
         List<Horario> porBorrar = new ArrayList();
         
         if(horariosSeleccionados.length > 0){

@@ -271,9 +271,9 @@ public class AsignaturaController implements Serializable {
         return niveles;
     }
     
-    public Asignatura findByAsignaturaAsignada(Long id_profesor){
+    public Asignatura findByAsignaturaAsignada(String rutProfesor){
         ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
-        return asignaturaBusiness.findByAsignaturaAsignada(id_profesor, semAnio.getAnoActual(), semAnio.getSemestreActual());
+        return asignaturaBusiness.findByAsignaturaAsignada(rutProfesor, semAnio.getAnoActual(), semAnio.getSemestreActual());
     }
 
 }

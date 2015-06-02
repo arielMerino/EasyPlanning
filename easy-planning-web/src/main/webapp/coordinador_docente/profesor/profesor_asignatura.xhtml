@@ -61,19 +61,19 @@
                                                 <h:outputText value="#{profesor.apellido}"/>
                                             </p:column>
                                             <p:column>
-                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.id).codigo}"/>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).codigo}"/>
                                             </p:column>
                                             <p:column>
-                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.id).nombre}"/>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).nombre}"/>
                                             </p:column>
                                             <p:column>
-                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.id).carrera.nombre}"/>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).carrera.nombre}"/>
                                             </p:column>
                                             <p:column>
-                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.id).planEstudio}"/>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).planEstudio}"/>
                                             </p:column>
                                             <p:column  styleClass="panel-item">
-                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.id).nivel}"/>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).nivel}"/>
                                             </p:column>
                                         </p:dataTable>
                                     </p:panel>
