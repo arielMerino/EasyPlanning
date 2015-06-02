@@ -5,13 +5,11 @@
  */
 package managedbeans;
 
-import business.Asignaturas;
 import business.ChecklistsLocal;
 
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import entities.Profesor;
 import entities.Asignatura;
 import entities.Checklist;
 import entities.Encuesta;
@@ -28,7 +26,6 @@ import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
-import org.primefaces.context.RequestContext;
 import sessionbeans.AsignaturaFacadeLocal;
 import sessionbeans.ChecklistFacadeLocal;
 import sessionbeans.EncuestaFacadeLocal;
@@ -56,8 +53,8 @@ public class ChecklistController implements Serializable {
     private ChecklistsLocal checklistsBusiness;
     
     private String init = "1";
-    private Long profesor_id = Long.parseLong(init);
     private Checklist selected;
+    private String rutProfesor = "";
 
     public Checklist getSelected() {
         return selected;
@@ -79,14 +76,6 @@ public class ChecklistController implements Serializable {
         this.checklistBusiness = checklistBusiness;
     }
 
-    public Long getProfesor_id() {
-        return profesor_id;
-    }
-
-    public void setProfesor_id(Long profesor_id) {
-        this.profesor_id = profesor_id;
-    }
-
     public ChecklistFacadeLocal getEjbFacade() {
         return ejbFacade;
     }
@@ -102,6 +91,14 @@ public class ChecklistController implements Serializable {
     public ChecklistsLocal getChecklistsBusiness() {
         return checklistsBusiness;
     }    
+
+    public String getRutProfesor() {
+        return rutProfesor;
+    }
+
+    public void setRutProfesor(String rutProfesor) {
+        this.rutProfesor = rutProfesor;
+    }
         
     /**
      * Creates a new instance of ChecklistController
@@ -112,28 +109,28 @@ public class ChecklistController implements Serializable {
     public Checklist findChcecklistByAsignatura(Encuesta encuesta,Long asignatura_id){
         List<Checklist> checklists = getChecklistsBusiness().findChecklistByIdEncuesta(encuesta.getId());
         for(Checklist chk : checklists){
-            if(chk.getAsignatura().getId()==asignatura_id){
+            if(Objects.equals(chk.getAsignatura().getId(), asignatura_id)){
                 return chk;
             }
         }
         return null;
     }
     
-    public Encuesta encuestaActual(Long profesor_id){
+    public Encuesta encuestaActual(String rutProfesor){
         Encuesta encuesta = new Encuesta();
         List<ParamSemestreAno> param = ejbParam.findAll();
         ParamSemestreAno actual = param.get(param.size()-1);
         for(Encuesta enc : encuestaFacade.findAll()){
-            if(actual.getAnoActual()==enc.getAnio() && actual.getSemestreActual()==enc.getSemestre() && Objects.equals(profesor_id, enc.getProfesor().getId())){
+            if(actual.getAnoActual()==enc.getAnio() && actual.getSemestreActual()==enc.getSemestre() && rutProfesor.equals(enc.getProfesor().getRutProfesor())){
                 return enc;
             }
         }
         return null;
     } 
     
-    public void asignaturasParaEncuestas(List<Asignatura> asignaturas,Long id){
+    public void asignaturasParaEncuestas(List<Asignatura> asignaturas,String rutProfesor){
         
-        Encuesta encuesta = this.encuestaActual(id);   
+        Encuesta encuesta = this.encuestaActual(rutProfesor);   
         List<Checklist> checklists = getChecklistsBusiness().findChecklistByIdEncuesta(encuesta.getId());
         
         boolean ver=true;
@@ -164,9 +161,9 @@ public class ChecklistController implements Serializable {
                     
     }
     
-    public List<Asignatura> asignaturasSemestrePasado(Long id){
+    public List<Asignatura> asignaturasSemestrePasado(String rutProfesor){
         try{
-            Encuesta encuesta = this.encuestaActual(id);
+            Encuesta encuesta = this.encuestaActual(rutProfesor);
             List<Asignatura> asignaturas = checklistBusiness.findAsignaturasByEncuestaId(encuesta.getId());
 
             return asignaturas;
@@ -176,8 +173,8 @@ public class ChecklistController implements Serializable {
         }
     }
     
-    public void eliminarAsignaturaEncuesta(Long id,List<Asignatura> asignaturas){
-        Encuesta encuesta = this.encuestaActual(id);
+    public void eliminarAsignaturaEncuesta(String rutProfesor,List<Asignatura> asignaturas){
+        Encuesta encuesta = this.encuestaActual(rutProfesor);
         /*for(Asignatura asig : asignaturas){
             checklistBusiness.deleteChecklist(encuesta.getId(),asig.getId());
         }*/

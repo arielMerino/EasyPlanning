@@ -42,9 +42,9 @@ public class Horarios implements HorariosLocal {
     }
 
     @Override
-    public Horario findByBloqueAndProfesor(String bloque, Long idProfesor) {
+    public Horario findByBloqueAndProfesor(String bloque, String rutProfesor) {
         Query query = em.createNamedQuery("Horario.findByBloqueAndProfesor").setParameter("bloque", bloque);
-        query.setParameter("idProfesor", idProfesor);
+        query.setParameter("rutProfesor", rutProfesor);
         try{
             return (entities.Horario) query.getSingleResult();
         }
@@ -54,9 +54,9 @@ public class Horarios implements HorariosLocal {
     }
     
     @Override
-    public Horario findDisponibleByBloqueAndProfesor(String bloque, long idProfesor){
+    public Horario findDisponibleByBloqueAndProfesor(String bloque, String rutProfesor){
         Query query = em.createNamedQuery("Horario.findDisponibleByBloqueAndProfesor").setParameter("bloque", bloque);
-        query.setParameter("idProfesor", idProfesor);
+        query.setParameter("rutProfesor", rutProfesor);
         query.setParameter("seccion", null);
         try{
             return (entities.Horario) query.getSingleResult();
@@ -66,8 +66,8 @@ public class Horarios implements HorariosLocal {
     }
     
     @Override
-    public List<Horario> findDisponiblesByProfesorId(long profesorId){
-        Query query = em.createNamedQuery("Horario.findHorariosDisponiblesByProfesor").setParameter("idProfesor", profesorId);
+    public List<Horario> findDisponiblesByProfesorId(String rutProfesor){
+        Query query = em.createNamedQuery("Horario.findHorariosDisponiblesByProfesor").setParameter("rutProfesor", rutProfesor);
         try{
             return (List<Horario>) query.getResultList();
         }catch (NoResultException e){
@@ -87,8 +87,8 @@ public class Horarios implements HorariosLocal {
     }
 
     @Override
-    public List<Horario> findBySeleccionados(Long id_profesor) {
-        Query query = em.createNamedQuery("Horario.findBySeleccionados").setParameter("id_profesor", id_profesor);
+    public List<Horario> findBySeleccionados(String rutProfesor) {
+        Query query = em.createNamedQuery("Horario.findBySeleccionados").setParameter("rutProfesor", rutProfesor);
         try{
             return query.getResultList();
         }

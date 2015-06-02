@@ -5,9 +5,12 @@
  */
 package managedbeans;
 
+import entities.ParamSemestreAno;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import javax.ejb.EJB;
+import sessionbeans.ParamSemestreAnioFacadeLocal;
 
 /**
  *
@@ -16,9 +19,10 @@ import java.io.Serializable;
 @Named(value = "coordinadorController")
 @SessionScoped
 public class CoordinadorController implements Serializable {
-    
-    int anio = 2015;
-    int semestre = 2;
+    @EJB
+    private ParamSemestreAnioFacadeLocal anioSem ;
+    private int anio;
+    private int semestre;
     
     public CoordinadorController() {
     }
@@ -30,4 +34,28 @@ public class CoordinadorController implements Serializable {
     public int getSemestre() {
         return semestre;
     }           
+    
+    public int getAnioActual(){
+        this.anio = anioSem.find(1L).getAnoActual();
+        return this.anio;
+    }
+    
+    public int getSemestreActual(){
+        this.semestre = anioSem.find(1L).getSemestreActual();
+        return this.semestre;
+    }
+    
+    public void setSemestreActual(int semestre){
+        ParamSemestreAno SemAn = anioSem.find(1L);
+        this.semestre = semestre;
+        SemAn.setSemestreActual(semestre);
+        anioSem.edit(SemAn);
+    }
+    
+    public void setAnioActual(int anio){
+        ParamSemestreAno SemAn = anioSem.find(1L);
+        this.anio = anio;
+        SemAn.setAnoActual(anio);
+        anioSem.edit(SemAn);
+    }
 }

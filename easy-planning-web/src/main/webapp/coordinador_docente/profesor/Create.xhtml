@@ -21,7 +21,7 @@
                             <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
                         </p:inputText>
                         <p:outputLabel value="RUT (con puntos y guión)" for="rut" />
-                        <p:inputText id="rut" value="#{profesorController.selected.rut}" title="#{bundle.CreateProfesorTitle_rut}">
+                        <p:inputText id="rut" value="#{profesorController.selected.rutProfesor}" title="rut">
                             <!--f:validateRegex pattern="\d{2}\.\d{3}\.\d{3}\-[K|k|0-9]"/-->
                             <f:validator validatorId="ValidadorRut"/>
                         </p:inputText>

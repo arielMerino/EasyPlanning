@@ -21,7 +21,7 @@
                             <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
                         </p:inputText>
                         <p:outputLabel value="RUT" for="rut" />
-                        <p:inputText id="rut" value="#{profesorController.selected.rut}" title="#{bundle.EditProfesorTitle_rut}" />
+                        <p:inputText id="rut" value="#{profesorController.selected.rutProfesor}" title="#{bundle.EditProfesorTitle_rut}" />
                     </p:panelGrid>
                     <p:commandButton actionListener="#{profesorController.update}" value="Guardar" update="display,:ProfesorListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ProfesorEditDialog');"/>
                     <p:commandButton value="Cancelar" onclick="ProfesorEditDialog.hide()"/>

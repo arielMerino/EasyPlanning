@@ -32,7 +32,7 @@
                         <h:form id="ProfesorListForm">
                             <p:dataTable id="datalist" value="#{profesorController.items}" var="item"
                                          selectionMode="single" selection="#{profesorController.selected}"
-                                         rowKey="#{item.id}"
+                                         rowKey="#{item.rutProfesor}"
                                          widgetVar="profesoresTable"
                                          filteredValue="#{profesorController.profesoresFiltrados}"
                                          emptyMessage="No se han encontrado profesores según los parámetros indicados">
@@ -58,11 +58,11 @@
                                     </f:facet>
                                     <h:outputText value="#{item.mail}"/>
                                 </p:column>
-                                <p:column filterBy="#{item.rut}" filterMatchMode="contains">
+                                <p:column filterBy="#{item.rutProfesor}" filterMatchMode="contains">
                                     <f:facet name="header">
                                         <h:outputText value="RUT"/>
                                     </f:facet>
-                                    <h:outputText value="#{item.rut}"/>
+                                    <h:outputText value="#{item.rutProfesor}"/>
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
@@ -76,7 +76,7 @@
                                         <h:outputText value="no holi :C"/>
                                     </c:if-->
                                     <h:link outcome="/coordinador_docente/encuesta/resultado_encuesta" value="Ver Encuesta" >
-                                        <f:param name="id" value="#{item.id}" />
+                                        <f:param name="id" value="#{item.rutProfesor}" />
                                     </h:link>
                                 </p:column>
                                 <f:facet name="footer" class="table-footer">

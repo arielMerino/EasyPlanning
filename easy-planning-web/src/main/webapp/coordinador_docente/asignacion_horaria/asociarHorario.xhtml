@@ -31,7 +31,7 @@
                                     <br/>
                                     <p:selectOneMenu id="ProfesoresDisponibles" value="#{asignacionHoraria.profesorSelected}" style="width: 100%" immediate="true">
                                         <f:selectItem itemLabel="sin profesor" itemValue="#{null}"/>
-                                        <f:selectItems value="#{asignacionHoraria.getDisponiblesByBloque(asignacionHoraria.bloqueSelected)}" var="prof" itemLabel="#{prof.nombre} #{prof.apellido}" itemValue="#{prof.id}"/>
+                                        <f:selectItems value="#{asignacionHoraria.getDisponiblesByBloque(asignacionHoraria.bloqueSelected)}" var="prof" itemLabel="#{prof.nombre} #{prof.apellido}" itemValue="#{prof.rutProfesor}"/>
                                         <p:ajax process="@this" update="allProfesores" />
                                     </p:selectOneMenu>
                                 </div>
@@ -40,7 +40,7 @@
                                     <br/>
                                     <p:selectOneMenu id="allProfesores" value="#{asignacionHoraria.profesorSelected}" style="width: 100%" filter="true" filterMatchMode="contains" immediate="true">
                                         <f:selectItem itemLabel="sin profesor" itemValue="#{null}" />
-                                        <f:selectItems value="#{asignacionHoraria.profesorFacade.findAll()}" var="Tprof" itemLabel="#{Tprof.nombre} #{Tprof.apellido}" itemValue="#{Tprof.id}"/>
+                                        <f:selectItems value="#{asignacionHoraria.profesorFacade.findAll()}" var="Tprof" itemLabel="#{Tprof.nombre} #{Tprof.apellido}" itemValue="#{Tprof.rutProfesor}"/>
                                         <p:ajax process="@this" update="ProfesoresDisponibles"/>
                                     </p:selectOneMenu>
                                 </div>

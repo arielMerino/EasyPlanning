@@ -23,15 +23,15 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name = "Horario.findBybloqueCarreraPlanNivelAnioYSemestre",
             query = "SELECT h FROM Horario h WHERE h.bloque = :bloque AND h.seccion.coordinacion.asignatura.carrera.codigo = :codigo AND h.seccion.coordinacion.asignatura.planEstudio = :plan AND h.seccion.coordinacion.asignatura.nivel = :nivel AND h.seccion.coordinacion.anio = :anio AND h.seccion.coordinacion.semestre = :semestre"),
     @NamedQuery(name="Horario.findByBloqueAndProfesor",
-            query = "SELECT h FROM Horario h WHERE h.bloque = :bloque AND h.profesor.id = :idProfesor"),
+            query = "SELECT h FROM Horario h WHERE h.bloque = :bloque AND h.profesor.rutProfesor = :rutProfesor"),
     @NamedQuery(name = "Horario.findDisponibleByBloqueAndProfesor",
-            query = "SELECT h FROM Horario h WHERE h.bloque = :bloque AND h.profesor.id = :idProfesor AND h.seccion = :seccion"),
+            query = "SELECT h FROM Horario h WHERE h.bloque = :bloque AND h.profesor.rutProfesor = :rutProfesor AND h.seccion = :seccion"),
     @NamedQuery(name = "Horario.findHorariosDisponiblesByProfesor",
-            query = "SELECT h FROM Horario h WHERE h.profesor.id = :idProfesor AND h.seccion IS NULL"),
+            query = "SELECT h FROM Horario h WHERE h.profesor.rutProfesor = :rutProfesor AND h.seccion IS NULL"),
     @NamedQuery(name="Horario.findByHorariosNoDisponibles",
             query="SELECT h FROM Horario h WHERE h.seccion IS NOT NULL"),
     @NamedQuery(name="Horario.findBySeleccionados",
-            query="SELECT h FROM Horario h WHERE h.profesor.id = :id_profesor")
+            query="SELECT h FROM Horario h WHERE h.profesor.rutProfesor = :rutProfesor")
 })
 public class Horario implements Serializable {
     private static final long serialVersionUID = 1L;

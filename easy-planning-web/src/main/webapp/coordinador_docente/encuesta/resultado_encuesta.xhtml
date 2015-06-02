@@ -31,8 +31,8 @@
                     </c:if>
                     <c:if test="#{not empty param}">
                         <c:set var="id" value="#{param.id}" scope="request"/>
-                        <c:set var="anio" value="#{coordinadorController.anio}" scope="request"/>
-                        <c:set var="semestre" value="#{coordinadorController.semestre}" scope="request"/>
+                        <c:set var="anio" value="#{coordinadorController.getAnioActual()}" scope="request"/>
+                        <c:set var="semestre" value="#{coordinadorController.getSemestreActual()}" scope="request"/>
                         <c:set var="profesor" value="#{profesorController.getProfesor(id)}" scope="request"/>
                         <c:if test="#{empty profesor}">
                             <br />
