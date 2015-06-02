@@ -23,7 +23,6 @@ import javax.persistence.Query;
 public class Checklists implements ChecklistsLocal {
     @PersistenceContext(unitName = "cl.G2Pingeso_easy-planning-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
-    
     @Override
     public List<String> findProfesorByAsgAnioSemestre(long asg, int anio, int semestre){
         Query query = em.createNamedQuery("Checklist.findProfesoresByAsgAnioAndSemestre").setParameter("asg", asg);
