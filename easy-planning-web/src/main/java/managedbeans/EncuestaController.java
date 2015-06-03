@@ -55,19 +55,10 @@ public class EncuestaController implements Serializable {
     private List<String> listaContinuidad;    
     private String comentario = "";
     private Long[] asignaturas;
-    private String[] horariosSeleccionados;
-    private boolean contestada = false;
+    private String[] horariosSeleccionados;    
     
     public EncuestaController() {
-    }
-
-    public boolean isContestada() {
-        return contestada;
-    }
-
-    public void setContestada(boolean contestada) {
-        this.contestada = contestada;
-    }
+    }        
 
     public ParamSemestreAnioFacadeLocal getParamFacade() {
         return paramFacade;
@@ -111,24 +102,6 @@ public class EncuestaController implements Serializable {
     
     public ChecklistsLocal getChecklistsBusiness() {
         return checklistsBusiness;
-    }
-    
-    public void crearEncuesta(){
-
-        if(!listaContinuidad.isEmpty()){
-            Encuesta encuesta = new Encuesta();                
-            encuestaFacade.create(encuesta);
-
-            for(int i = 0; i < listaContinuidad.size(); i++){
-                Checklist checklist = new Checklist();
-                checklistFacade.create(checklist);
-                Long id = Long.parseLong(listaContinuidad.get(i));
-                Asignatura asignatura = asignaturaFacade.find(id);
-                checklist.setEncuesta(encuesta);
-                checklist.setAsignatura(asignatura);
-                checklistFacade.edit(checklist);
-            }
-        }
     }
     
     public ArrayList<Asignatura> getAsignaturasAceptadas(String encuestaId){
@@ -191,7 +164,6 @@ public class EncuestaController implements Serializable {
             }
             dropHorariosNoSeleccionados(rutProfesor);
             JsfUtil.addSuccessMessage("Encuesta registrada con éxito");
-            contestada = true;
             
         }
         catch(Exception e){
