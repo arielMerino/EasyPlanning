@@ -41,7 +41,7 @@
                             </div>
                         </c:if>
                         <c:if test="#{not empty profesor}">
-                            <c:set var="hayEncuesta" value="#{encuestaController.hayEncuestaContestado(id, semestre, anio)}" scope="request"/>
+                            <c:set var="hayEncuesta" value="#{profesorController.hayEncuestaContestado(id, semestre, anio)}" scope="request"/>
                             <c:if test="#{hayEncuesta}">
                                 <c:set var="e" value="#{encuestaController.getEncuestaContestado(id, semestre, anio)}" scope="request"/>
                                 <br />

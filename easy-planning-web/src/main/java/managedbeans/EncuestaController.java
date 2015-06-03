@@ -191,47 +191,7 @@ public class EncuestaController implements Serializable {
             checklistFacade.edit(noSelect);
         }
     }
-    
-    public boolean hayEncuestaContestado(String rutProfesor, int semestre, int anio){
-        try{
-            Encuesta e = profesorBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semestre, anio);
-            List<Checklist> c = e.getListaAsignaturas();
-            System.out.println(c.size());
-            for(Checklist check : c){
-                if(check.isAceptado())            
-                    return true;
-            }
-            
-            List<Horario> h = horarioBusiness.findDisponiblesByProfesorId(rutProfesor);
-            
-            System.out.println(!h.isEmpty());
-            
-            return !h.isEmpty();
-        }catch (Exception e){
-            return false;
-        }
-    }
-    
-    public boolean hayEncuesta(String rutProfesor){
-        ParamSemestreAno semAnio = paramFacade.find(Long.parseLong(1+""));
-        System.out.println("id_profesor: "+rutProfesor);
-        try{
-            Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semAnio.getSemestreActual(), semAnio.getAnoActual());
-            if(encuesta != null){
-                System.out.println("hayEncuesta retorna true, id profesor: "+rutProfesor);
-                return true;
-            }
-            else{
-                System.out.println("hayEncuesta encuesta igual a null, retorna false, id profesor: "+rutProfesor);
-                return false;
-            }
-        }
-        catch(Exception e){
-            System.out.println("EncuestaController: retorna false, id profesor: "+rutProfesor);
-            return false;
-        }
-    }
-    
+        
     public Encuesta getEncuestaContestado(String rutProfesor, int semestre, int anio){
         try{
             System.out.println(semestre+ " " + anio);

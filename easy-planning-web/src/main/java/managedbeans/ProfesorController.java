@@ -1,6 +1,7 @@
 package managedbeans;
 
 import business.ChecklistsLocal;
+import business.HorariosLocal;
 import business.ProfesoresLocal;
 import entities.Horario;
 import entities.Profesor;
@@ -29,34 +30,33 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import sessionbeans.HorarioFacadeLocal;
-import sessionbeans.AsignaturaFacadeLocal;
 import sessionbeans.EncuestaFacadeLocal;
 import sessionbeans.ParamSemestreAnioFacadeLocal;
 
 @Named("profesorController")
 @SessionScoped
 public class ProfesorController implements Serializable {
-
-    @EJB
-    private ProfesorFacadeLocal ejbFacade;
-    @EJB
-    private HorarioFacadeLocal horarioFacade;
-    @EJB
-    private AsignaturaFacadeLocal asignaturaFacade;
+    
     @EJB
     private EncuestaFacadeLocal encuestaFacade;
     @EJB
-    private ProfesoresLocal profesoresBusiness;
+    private HorarioFacadeLocal horarioFacade;
+    @EJB
+    private ParamSemestreAnioFacadeLocal paramFacade;
+    @EJB
+    private ProfesorFacadeLocal profesorFacade;
     @EJB
     private ChecklistsLocal checklistsBusiness;
     @EJB
-    private ParamSemestreAnioFacadeLocal ejbParam;
+    private HorariosLocal horariosBusiness;
+    @EJB
+    private ProfesoresLocal profesoresBusiness;           
     
-    private List<Profesor> items;
     private Profesor selected;
-    private String[] horariosSeleccionados;
-    private List<Profesor> profesoresFiltrados;
+    private List<Profesor> items;
+    private List<Profesor> profesoresFiltrados;    
     private String rutProfesor;
+    private String[] horariosSeleccionados;    
 
     public ProfesorController() {
     }
@@ -100,7 +100,7 @@ public class ProfesorController implements Serializable {
     }
 
     private ProfesorFacadeLocal getFacade() {
-        return ejbFacade;
+        return profesorFacade;
     }    
 
     public HorarioFacadeLocal getHorarioFacade() {
@@ -246,7 +246,7 @@ public class ProfesorController implements Serializable {
     
     public List<Checklist> getAsignaturasChecklist(String rutProfesor){
         
-        ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
+        ParamSemestreAno semAnio = paramFacade.find(Long.parseLong(1+""));
         try{            
             Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semAnio.getSemestreActual(), semAnio.getAnoActual());            
             List<Checklist> lista = checklistsBusiness.findChecklistByIdEncuesta(encuesta.getId());            
@@ -258,20 +258,48 @@ public class ProfesorController implements Serializable {
         }
     }
     
-    public boolean hayEncuesta(String rutProfesor){
-        
-        ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
-        try{            
-            Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semAnio.getSemestreActual(), semAnio.getAnoActual());
-            return encuesta != null;
-        }
-        catch(Exception e){            
+    public boolean hayEncuestaContestado(String rutProfesor, int semestre, int anio){
+        try{
+            Encuesta e = profesoresBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semestre, anio);
+            List<Checklist> c = e.getListaAsignaturas();//hay que modificar el getListaAsignatura
+            System.out.println(c.size());
+            for(Checklist check : c){
+                if(check.isAceptado())            
+                    return true;
+            }
+            
+            List<Horario> h = horariosBusiness.findDisponiblesByProfesorId(rutProfesor);
+            
+            System.out.println(!h.isEmpty());
+            
+            return !h.isEmpty();
+        }catch (Exception e){
             return false;
         }
     }
     
+    public boolean hayEncuesta(String rutProfesor){
+        ParamSemestreAno semAnio = paramFacade.find(1L);
+        System.out.println("id_profesor: "+rutProfesor);
+        try{
+            Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semAnio.getSemestreActual(), semAnio.getAnoActual());
+            if(encuesta != null){
+                System.out.println("hayEncuesta retorna true, id profesor: "+rutProfesor);
+                return true;
+            }
+            else{
+                System.out.println("hayEncuesta encuesta igual a null, retorna false, id profesor: "+rutProfesor);
+                return false;
+            }
+        }
+        catch(Exception e){
+            System.out.println("EncuestaController: retorna false, id profesor: "+rutProfesor);
+            return false;
+        }
+    }    
+    
     public Profesor getProfesorAsignado(Long id_asignatura){
-        ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
+        ParamSemestreAno semAnio = paramFacade.find(Long.parseLong(1+""));
         return profesoresBusiness.getProfesorByHorarioAsignado(id_asignatura, semAnio.getAnoActual(), semAnio.getSemestreActual());
     }
     

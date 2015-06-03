@@ -67,14 +67,7 @@
                                 <p:column>
                                     <f:facet name="header">
                                         <h:outputText value="Ver Encuesta" />
-                                    </f:facet>
-                                    <!--c:set var="id" value="#//{item.id}"/>
-                                    <c:if test="#//{encuestaController.hayEncuesta(id)}">
-                                        <h:outputText value="Holi"/>
-                                    </c:if>
-                                    <c:if test="#//{not encuestaController.hayEncuesta(id)}">
-                                        <h:outputText value="no holi :C"/>
-                                    </c:if-->
+                                    </f:facet>                                    
                                     <h:link outcome="/coordinador_docente/encuesta/resultado_encuesta" value="Ver Encuesta" >
                                         <f:param name="id" value="#{item.rutProfesor}" />
                                     </h:link>
