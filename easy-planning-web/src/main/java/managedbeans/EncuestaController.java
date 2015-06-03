@@ -10,7 +10,6 @@ import entities.Horario;
 import entities.ParamSemestreAno;
 
 import sessionbeans.EncuestaFacadeLocal;
-import sessionbeans.AsignaturaFacadeLocal;
 import sessionbeans.ChecklistFacadeLocal;
 
 import javax.inject.Named;
@@ -34,9 +33,7 @@ import sessionbeans.ProfesorFacadeLocal;
 public class EncuestaController implements Serializable {
     
     @EJB
-    private EncuestaFacadeLocal encuestaFacade;
-    @EJB
-    private AsignaturaFacadeLocal asignaturaFacade;
+    private EncuestaFacadeLocal encuestaFacade;    
     @EJB
     private ChecklistFacadeLocal checklistFacade;
     @EJB
@@ -207,11 +204,9 @@ public class EncuestaController implements Serializable {
             
             List<Horario> h = horarioBusiness.findDisponiblesByProfesorId(rutProfesor);
             
-            for(Horario horario : h){
-                return true;
-            }
+            System.out.println(!h.isEmpty());
             
-            return false;
+            return !h.isEmpty();
         }catch (Exception e){
             return false;
         }
