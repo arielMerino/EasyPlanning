@@ -37,16 +37,6 @@ public class Carrera implements Serializable {
     private String nombre;
     @Column(unique = true)
     private int codigo;
-    @OneToMany(mappedBy = "carrera" )
-    private List<PlanEstudio> planes;
-
-    public List<PlanEstudio> getPlanes() {
-        return planes;
-    }
-
-    public void setPlanes(List<PlanEstudio> planes) {
-        this.planes = planes;
-    }
     
     public List<Asignatura> getAsignaturas() {
         return asignaturas;
