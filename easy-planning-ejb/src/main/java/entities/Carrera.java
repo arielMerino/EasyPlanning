@@ -26,24 +26,23 @@ import javax.persistence.OneToMany;
     @NamedQuery(name="Carrera.findByCodigo",query="SELECT c FROM Carrera c WHERE c.codigo = :codigo")
 })
 public class Carrera implements Serializable {
+    @OneToMany(mappedBy = "carrera")
+    private List<PlanEstudio> planes;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
-    @OneToMany(mappedBy = "carrera")
-    private List<Asignatura> asignaturas;
-    @Column(unique = true)
     private String nombre;
     @Column(unique = true)
     private int codigo;
-    
-    public List<Asignatura> getAsignaturas() {
-        return asignaturas;
+
+    public List<PlanEstudio> getPlanes() {
+        return planes;
     }
 
-    public void setAsignaturas(List<Asignatura> asignaturas) {
-        this.asignaturas = asignaturas;
+    public void setPlanes(List<PlanEstudio> planes) {
+        this.planes = planes;
     }
 
     public String getNombre() {

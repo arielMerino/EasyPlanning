@@ -52,16 +52,27 @@ public class Asignatura implements Serializable {
     private int laboratorio;
     private String planEstudio;
     
+    //@ManyToOne
+    //private VersionPlan version;
+    
     @OneToMany
     private List<Asignatura> prerequisitos;
     
     @ManyToMany
     private List<Profesor> profesores;
     
+    
     public Asignatura(){        
     }
-    
+/*
+    public VersionPlan getVersion() {
+        return version;
+    }
 
+    public void setVersion(VersionPlan version) {
+        this.version = version;
+    }
+*/
     public List<Profesor> getProfesores() {
         return profesores;
     }

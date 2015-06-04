@@ -10,6 +10,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
 
 /**
  *
@@ -23,18 +24,29 @@ public class VersionPlan implements Serializable {
     private Long id;
     
     private int version;
-    private int anio;
+    private int jornada; //0 -> diurno; 1 -> vespertino
+    
+    @ManyToOne
+    private PlanEstudio plan;
 
+    public int getJornada() {
+        return jornada;
+    }
+
+    public void setJornada(int jornada) {
+        this.jornada = jornada;
+    }
+
+    public PlanEstudio getPlan() {
+        return plan;
+    }
+
+    public void setPlan(PlanEstudio plan) {
+        this.plan = plan;
+    }
+    
     public Long getId() {
         return id;
-    }
-
-    public int getAnio() {
-        return anio;
-    }
-
-    public void setAnio(int anio) {
-        this.anio = anio;
     }
 
     public void setId(Long id) {

@@ -6,10 +6,13 @@
 package entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 
 /**
  *
@@ -17,28 +20,39 @@ import javax.persistence.Id;
  */
 @Entity
 public class PlanEstudio implements Serializable {
+    @OneToMany(mappedBy = "plan")
+    private List<VersionPlan> versiones;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
     private int anio; //anio en que se creo el plan
-    private String tipo; //diurno o vespertino
+    @ManyToOne
+    private Carrera carrera;
 
     public int getAnio() {
         return anio;
     }
 
+    public List<VersionPlan> getVersiones() {
+        return versiones;
+    }
+
+    public void setVersiones(List<VersionPlan> versiones) {
+        this.versiones = versiones;
+    }
+
+    public Carrera getCarrera() {
+        return carrera;
+    }
+
+    public void setCarrera(Carrera carrera) {
+        this.carrera = carrera;
+    }
+    
     public void setAnio(int anio) {
         this.anio = anio;
-    }
-
-    public String getTipo() {
-        return tipo;
-    }
-
-    public void setTipo(String tipo) {
-        this.tipo = tipo;
     }
 
     public Long getId() {
