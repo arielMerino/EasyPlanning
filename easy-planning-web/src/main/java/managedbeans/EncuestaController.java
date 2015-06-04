@@ -192,7 +192,7 @@ public class EncuestaController implements Serializable {
         }
     }
         
-    public Encuesta getEncuestaContestado(String rutProfesor, int semestre, int anio){
+    public Encuesta getEncuesta(String rutProfesor, int semestre, int anio){
         try{
             System.out.println(semestre+ " " + anio);
             Encuesta e = profesorBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semestre, anio);
