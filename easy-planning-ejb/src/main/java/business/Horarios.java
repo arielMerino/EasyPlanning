@@ -97,4 +97,13 @@ public class Horarios implements HorariosLocal {
         }
     }
     
+    @Override
+    public List<Horario> findAsignadosByProfesorId(String rutProfesor){
+        Query query = em.createNamedQuery("Horario.findHorariosAsignadosByProfesor").setParameter("rutProfesor", rutProfesor);
+        try{
+            return (List<Horario>) query.getResultList();
+        }catch (NoResultException e){
+            return null;
+        }
+    }
 }

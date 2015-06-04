@@ -26,4 +26,6 @@ public interface HorariosLocal {
     public List<Horario> findByHorariosNoDisponibles();
     
     public List<Horario> findBySeleccionados(String rutProfesor);
+    
+    public List<Horario> findAsignadosByProfesorId(String rutProfesor);
 }

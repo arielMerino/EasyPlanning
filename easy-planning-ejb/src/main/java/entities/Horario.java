@@ -28,6 +28,8 @@ import javax.persistence.NamedQuery;
             query = "SELECT h FROM Horario h WHERE h.bloque = :bloque AND h.profesor.rutProfesor = :rutProfesor AND h.seccion = :seccion"),
     @NamedQuery(name = "Horario.findHorariosDisponiblesByProfesor",
             query = "SELECT h FROM Horario h WHERE h.profesor.rutProfesor = :rutProfesor AND h.seccion IS NULL"),
+    @NamedQuery(name = "Horario.findHorariosAsignadosByProfesor",
+            query = "SELECT h FROM Horario h WHERE h.profesor.rutProfesor = :rutProfesor AND h.seccion IS NOT NULL"),
     @NamedQuery(name="Horario.findByHorariosNoDisponibles",
             query="SELECT h FROM Horario h WHERE h.seccion IS NOT NULL"),
     @NamedQuery(name="Horario.findBySeleccionados",
