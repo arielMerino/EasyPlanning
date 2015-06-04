@@ -340,9 +340,16 @@ public class asignacionHoraria implements Serializable {
     public String getCodigoAsgSeccionByBloque(String bloque){
         try{
             Horario result = horariosBusiness.findBybloqueCarreraPlanNivelAnioYSemestre(bloque, carreraSelected, planEstudioSelected, nivelSelected, anioSelected, semestreSelected);
-            if (result == null)
+            if (result == null){
                 return "";
-            return result.getSeccion().getCoordinacion().getAsignatura().getCodigo()+"-"+result.getSeccion().getCodigo();
+            }
+            
+            if(result.getSeccion().getCoordinacion().getAsignatura().getAlias() == null){
+                return result.getSeccion().getCoordinacion().getAsignatura().getCodigo()+"-"+result.getSeccion().getCodigo();
+            }
+            else{
+                return result.getSeccion().getCoordinacion().getAsignatura().getAlias()+"-"+result.getSeccion().getCodigo();
+            }
         }catch(NullPointerException e){
             return "";
         }

@@ -58,27 +58,26 @@
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">
-                                            <h:outputText value="T"/>
+                                            <h:outputText value="T-E-L"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.teoria}"/>
+                                        <h:outputText value="#{item.teoria} - #{item.ejercicios} - #{item.laboratorio}"/>
                                     </p:column>
-                                    <p:column>
+                                    <p:column filterBy="#{item.carrera.nombre}" filterMatchMode="contains">
                                         <f:facet name="header">
-                                            <h:outputText value="E"/>
+                                            <h:outputText value="Carrera"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.ejercicios}"/>
+                                        <h:outputText value="#{item.carrera.nombre}"/>
                                     </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="L"/>
+                                    <p:column filterBy="#{item.planEstudio}" filterMatchMode="in">
+                                        <f:facet name="filter">
+                                            <p:selectCheckboxMenu label="Planes de Estudio" onchange="PF('asignaturasTable').filter()" scrollHeight="150">
+                                                <f:selectItems value="#{asignaturaController.planesDeEstudio}" />
+                                            </p:selectCheckboxMenu>
                                         </f:facet>
-                                        <h:outputText value="#{item.laboratorio}"/>
-                                    </p:column>
-                                    <p:column>
                                         <f:facet name="header">
-                                            <h:outputText value="Total horas"/>
+                                            <h:outputText value="Plan de Estudios"/>
                                         </f:facet>
-                                        <h:outputText value="#{asignaturaController.bloquesTotales(item.id)}"/>
+                                        <h:outputText value="#{item.planEstudio}"/>
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">
