@@ -37,7 +37,7 @@ public class Carrera implements Serializable {
     private String nombre;
     @Column(unique = true)
     private int codigo;
-
+    
     public List<Asignatura> getAsignaturas() {
         return asignaturas;
     }

@@ -62,6 +62,7 @@
                         <p:layoutUnit position="east" resizable="true" minSize="400">
                             
                             <p:panel header="Asignaturas">
+                                #{encuestaController.precargarAsignaturas(profesorController.idProfesor)}
                                 <h:outputText value="Seleccione las asignaturas que desee continuar impartiendo"/>
                                 <p:selectManyCheckbox value="#{encuestaController.asignaturas}" layout="grid" columns="1">
                                     <f:selectItems value="#{profesorController.getAsignaturasChecklist(profesorController.idProfesor)}" var="check" itemLabel="#{check.asignatura.nombre}" itemValue="#{check.id}"/>
@@ -77,6 +78,7 @@
                         </p:layoutUnit>
 
                         <p:layoutUnit position="center" header="Horario">
+                            #{encuestaController.precargar(profesorController.idProfesor)}
                             <p:panelGrid  style="width: 100%;">
                                 <f:facet name="header">
                                     <p:row >

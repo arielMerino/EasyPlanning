@@ -119,6 +119,37 @@ public class EncuestaController implements Serializable {
         }
     }
     
+    public void precargar(String rutProfesor){
+        List<Horario> horarios = horarioBusiness.findBySeleccionados(rutProfesor);
+        String[] bloques = new String[horarios.size()];
+        for (int i = 0; i < horarios.size(); i++){
+            bloques[i] = horarios.get(i).getBloque();
+        }
+        setHorariosSeleccionados(bloques);
+    }
+    
+    public void precargarAsignaturas(String rutProfesor){
+        ParamSemestreAno semAnio = paramFacade.find(1L);
+        Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semAnio.getSemestreActual(), semAnio.getAnoActual());
+        if ( encuesta != null){
+            List<Checklist> checklists = checklistsBusiness.findChecklistByIdEncuesta(encuesta.getId());
+            if (checklists != null){
+                List<Checklist> aceptados = new ArrayList<>();
+                for (Checklist c : checklists){
+                    if(c.isAceptado())
+                       aceptados.add(c);
+                }
+                if(aceptados.size() > 0){
+                    Long[] asgs = new Long[aceptados.size()];
+                    for (int i = 0; i < aceptados.size(); i++){
+                        asgs[i] = aceptados.get(i).getId();
+                    }
+                    setAsignaturas(asgs);
+                }
+            }
+        }
+    }
+    
     public List<Asignatura> getAsignaturasRechazadas(String encuestaId){
         try{
             Long id = Long.parseLong(encuestaId);
@@ -137,6 +168,15 @@ public class EncuestaController implements Serializable {
         }
     }
     
+    public void dropHorarios(String rutProfesor){
+        List<Horario> horarios = horarioBusiness.findBySeleccionados(rutProfesor);
+        if (horarios != null){
+            for (Horario h : horarios){
+                horarioFacade.remove(h);
+            }
+        }
+    }
+    
     public void resultadoEncuesta(String rutProfesor){
         ParamSemestreAno semAnio = paramFacade.find(Long.parseLong(1+""));
         try{
@@ -151,15 +191,16 @@ public class EncuestaController implements Serializable {
                 
             }
             setFalseChecklist(rutProfesor);
+            dropHorarios(rutProfesor);
             for(String bloque : horariosSeleccionados){
-                if(horarioBusiness.findByBloqueAndProfesor(bloque, rutProfesor) == null){                    
-                    Horario horario = new Horario();
-                    horario.setBloque(bloque);
-                    horario.setProfesor(profesorFacade.find(rutProfesor));
-                    horarioFacade.create(horario);
-                }
+                //if(horarioBusiness.findByBloqueAndProfesor(bloque, rutProfesor) == null){                    
+                Horario horario = new Horario();
+                horario.setBloque(bloque);
+                horario.setProfesor(profesorFacade.find(rutProfesor));
+                horarioFacade.create(horario);
+                //}
             }
-            dropHorariosNoSeleccionados(rutProfesor);
+            //dropHorariosNoSeleccionados(rutProfesor);
             JsfUtil.addSuccessMessage("Encuesta registrada con éxito");
             
         }
@@ -200,7 +241,7 @@ public class EncuestaController implements Serializable {
         }catch (Exception e){
             return null;
         }        
-    }    
+    }
     
     public void dropHorariosNoSeleccionados(String rutProfesor){
         List<Horario> horarios = horarioBusiness.findBySeleccionados(rutProfesor);

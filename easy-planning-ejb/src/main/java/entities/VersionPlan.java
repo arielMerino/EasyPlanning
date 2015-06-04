@@ -16,20 +16,39 @@ import javax.persistence.Id;
  * @author ariel-linux
  */
 @Entity
-public class planestudio implements Serializable {
+public class VersionPlan implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
+    
+    private int version;
+    private int anio;
 
     public Long getId() {
         return id;
+    }
+
+    public int getAnio() {
+        return anio;
+    }
+
+    public void setAnio(int anio) {
+        this.anio = anio;
     }
 
     public void setId(Long id) {
         this.id = id;
     }
 
+    public int getVersion() {
+        return version;
+    }
+
+    public void setVersion(int version) {
+        this.version = version;
+    }
+    
     @Override
     public int hashCode() {
         int hash = 0;
@@ -40,10 +59,10 @@ public class planestudio implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof planestudio)) {
+        if (!(object instanceof VersionPlan)) {
             return false;
         }
-        planestudio other = (planestudio) object;
+        VersionPlan other = (VersionPlan) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -52,7 +71,7 @@ public class planestudio implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.planestudio[ id=" + id + " ]";
+        return "entities.versionplan[ id=" + id + " ]";
     }
     
 }
