@@ -169,7 +169,7 @@ html .ui-layout-container{
 .label-form{
     color: #fff;
 }
-.form-control{
+.login-form{
     color: #0052cc;
 }
 .btn-default{
@@ -203,6 +203,14 @@ html .ui-layout-container{
     margin-left: 50%;
     color: #269abc !important;
 }
+.btn-center-text{
+    margin-left: 33%;
+    color: #269abc !important;
+}
+.btn-center-text a:hover{
+    text-decoration: none !important;
+    font-weight: bold !important;
+}
 .btn-center>span:hover{
     color: #0052cc;
 }
@@ -214,4 +222,7 @@ html .ui-layout-container{
 }
 .breadcrumb>.active{
     color: #aaa;
+}
+.panel-no-border{
+    border-color: transparent !important;
 }

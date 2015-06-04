@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"         
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+      xmlns:b="http://bootsfaces.net/ui">
+    
+    <ui:composition template="/template.xhtml">
+        <ui:define name="head">
+            Agregar Alias
+        </ui:define>
+        <ui:define name="body">
+            <c:set var="asignatura_id" value="#{param['id']}" scope="request"/>
+            <c:if test="#{not empty asignatura_id}">
+                #{asignatura_id}
+                #{asignaturaController.setAsignatura(asignatura_id)}
+            </c:if>
+            <div class="row">
+                <div class="col-md-6 col-md-offset-3"> 
+                    <h4 class="text-center">Agregar o editar alias de asignatura</h4>
+                    <h:form id="aliasAsignaturaForm">
+                        <strong><h:outputText value="Nombre"/></strong>
+                        <b:inputText value="#{asignaturaController.asignatura.nombre}" disabled="true"/>
+                        <br/>
+                        <strong><h:outputText value="Alias"/></strong>
+                        <b:inputText  value="#{asignaturaController.asignatura.alias}"/>
+                        <br/>
+                        <p:commandButton class="btn btn-default" value="Guardar" action="#{asignaturaController.guardarAliasAsignatura()}"/>
+                    </h:form>
+                </div>
+            </div>
+        </ui:define>
+    </ui:composition>
+
+    
+</html>

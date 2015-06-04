@@ -51,6 +51,7 @@ public class Asignatura implements Serializable {
     private int ejercicios;
     private int laboratorio;
     private String planEstudio;
+    private String alias;
     
     @OneToMany
     private List<Asignatura> prerequisitos;
@@ -60,7 +61,14 @@ public class Asignatura implements Serializable {
     
     public Asignatura(){        
     }
-    
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
 
     public List<Profesor> getProfesores() {
         return profesores;
