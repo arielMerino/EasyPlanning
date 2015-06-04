@@ -7,7 +7,6 @@ package entities;
 
 import java.io.Serializable;
 import java.util.List;
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,32 +21,45 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name="Carrera.findByNombre",query="SELECT a FROM Carrera a WHERE a.nombre = :nombre"),
-    @NamedQuery(name="Carrera.findByCodigo",query="SELECT c FROM Carrera c WHERE c.codigo = :codigo")
+    @NamedQuery(name = "VersionPlan.findByIdCarreraIdPlanAndVersion", query = "SELECT v FROM VersionPlan v WHERE v.plan.carrera.id = :idCarrera AND v.plan.id = :idPlan AND v.version = :version")
 })
-public class Carrera implements Serializable {
+public class VersionPlan implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    @OneToMany(mappedBy = "carrera")
+    @OneToMany
+    private PlanEstudio plan;
+    @OneToMany(mappedBy = "version")
     private List<Asignatura> asignaturas;
-    @Column(unique = true)
-    private String nombre;
-    @Column(unique = true)
-    private int codigo;
-    @OneToMany(mappedBy = "carrera" )
-    private List<PlanEstudio> planes;
-
-    public List<PlanEstudio> getPlanes() {
-        return planes;
-    }
-
-    public void setPlanes(List<PlanEstudio> planes) {
-        this.planes = planes;
-    }
     
+    private int version;
+    private int anio;
+
+    public Long getId() {
+        return id;
+    }
+
+    public int getAnio() {
+        return anio;
+    }
+
+    public void setAnio(int anio) {
+        this.anio = anio;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public PlanEstudio getPlan() {
+        return plan;
+    }
+
+    public void setPlan(PlanEstudio plan) {
+        this.plan = plan;
+    }
+
     public List<Asignatura> getAsignaturas() {
         return asignaturas;
     }
@@ -56,30 +68,14 @@ public class Carrera implements Serializable {
         this.asignaturas = asignaturas;
     }
 
-    public String getNombre() {
-        return nombre;
+    public int getVersion() {
+        return version;
     }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public int getCodigo() {
-        return codigo;
-    }
-
-    public void setCodigo(int codigo) {
-        this.codigo = codigo;
+    public void setVersion(int version) {
+        this.version = version;
     }
     
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
     @Override
     public int hashCode() {
         int hash = 0;
@@ -90,10 +86,10 @@ public class Carrera implements Serializable {
     @Override
     public boolean equals(Object object) {
         // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Carrera)) {
+        if (!(object instanceof VersionPlan)) {
             return false;
         }
-        Carrera other = (Carrera) object;
+        VersionPlan other = (VersionPlan) object;
         if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
             return false;
         }
@@ -102,7 +98,7 @@ public class Carrera implements Serializable {
 
     @Override
     public String toString() {
-        return "entities.Carrera[ id=" + id + " ]";
+        return "entities.versionplan[ id=" + id + " ]";
     }
     
 }

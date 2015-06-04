@@ -44,6 +44,8 @@ public class Asignatura implements Serializable {
     private Long id;
     @ManyToOne
     private Carrera carrera;
+    @ManyToOne
+    private VersionPlan version;
     private String codigo;
     private String nombre;
     private int nivel;
