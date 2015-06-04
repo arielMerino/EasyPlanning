@@ -8,6 +8,7 @@ import entities.Asignatura;
 import entities.Checklist;
 import entities.Encuesta;
 import entities.ParamSemestreAno;
+import java.io.IOException;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.ProfesorFacadeLocal;
@@ -57,8 +58,17 @@ public class ProfesorController implements Serializable {
     private String[] horariosSeleccionados;
     private List<Profesor> profesoresFiltrados;
     private String rutProfesor;
+    private Profesor profesor;
 
     public ProfesorController() {
+    }
+
+    public Profesor getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(String id) {
+        this.profesor = this.profesoresBusiness.findByRut(id);
     }
 
     public String getIdProfesor() {
@@ -137,9 +147,7 @@ public class ProfesorController implements Serializable {
     }
 
     public List<Profesor> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
+        items = getFacade().findAll();
         return items;
     }
     
@@ -151,6 +159,11 @@ public class ProfesorController implements Serializable {
         selected = profesor;
     }
 
+    public void guardarAliasProfesor() throws IOException{
+        getFacade().edit(profesor);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/profesor/List.xhtml");        
+    }
+    
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();

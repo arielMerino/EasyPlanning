@@ -374,9 +374,15 @@ public class asignacionHoraria implements Serializable {
     public String getProfesorByBloque(String bloque){
         try{
             Horario result = horariosBusiness.findBybloqueCarreraPlanNivelAnioYSemestre(bloque, carreraSelected, planEstudioSelected, nivelSelected, anioSelected, semestreSelected);
-            if (result == null)
+            if (result == null){
                 return "";
-            return "- "+result.getProfesor().getNombre()+" "+result.getProfesor().getApellido();            
+            }
+            if(result.getProfesor().getAlias() == null){
+                return "- "+result.getProfesor().getNombre()+" "+result.getProfesor().getApellido();            
+            }
+            else{
+                return "- "+result.getProfesor().getAlias();
+            }
         }catch(NullPointerException e){
             return "";
         }

@@ -72,5 +72,16 @@ public class Profesores implements ProfesoresLocal{
             return null;
         }
     }
+
+    @Override
+    public Profesor getProfesorByRut(String rut) {
+        Query query = em.createNamedQuery("Profesor.getProfesorByRut").setParameter("rutProfesor", rut);
+        try{
+            return (Profesor) query.getSingleResult();
+        }
+        catch(Exception e){
+            return null;
+        }
+    }
     
 }
