@@ -149,6 +149,15 @@ public class EncuestaController implements Serializable {
         }
     }
     
+    public void precargar(String rutProfesor){
+        List<Horario> horarios = horarioBusiness.findBySeleccionados(rutProfesor);
+        String[] bloques = new String[horarios.size()];
+        for (int i = 0; i < horarios.size(); i++){
+            bloques[i] = horarios.get(i).getBloque();
+        }
+        setHorariosSeleccionados(bloques);
+    }
+    
     public List<Asignatura> getAsignaturasRechazadas(String encuestaId){
         try{
             Long id = Long.parseLong(encuestaId);
@@ -167,6 +176,15 @@ public class EncuestaController implements Serializable {
         }
     }
     
+    public void dropHorarios(String rutProfesor){
+        List<Horario> horarios = horarioBusiness.findBySeleccionados(rutProfesor);
+        if (horarios != null){
+            for (Horario h : horarios){
+                horarioFacade.remove(h);
+            }
+        }
+    }
+    
     public void resultadoEncuesta(String rutProfesor){
         ParamSemestreAno semAnio = paramFacade.find(Long.parseLong(1+""));
         try{
@@ -181,15 +199,16 @@ public class EncuestaController implements Serializable {
                 
             }
             setFalseChecklist(rutProfesor);
+            dropHorarios(rutProfesor);
             for(String bloque : horariosSeleccionados){
-                if(horarioBusiness.findByBloqueAndProfesor(bloque, rutProfesor) == null){                    
-                    Horario horario = new Horario();
-                    horario.setBloque(bloque);
-                    horario.setProfesor(profesorFacade.find(rutProfesor));
-                    horarioFacade.create(horario);
-                }
+                //if(horarioBusiness.findByBloqueAndProfesor(bloque, rutProfesor) == null){                    
+                Horario horario = new Horario();
+                horario.setBloque(bloque);
+                horario.setProfesor(profesorFacade.find(rutProfesor));
+                horarioFacade.create(horario);
+                //}
             }
-            dropHorariosNoSeleccionados(rutProfesor);
+            //dropHorariosNoSeleccionados(rutProfesor);
             JsfUtil.addSuccessMessage("Encuesta registrada con éxito");
             contestada = true;
             
@@ -273,7 +292,7 @@ public class EncuestaController implements Serializable {
         }catch (Exception e){
             return null;
         }        
-    }    
+    }
     
     public void dropHorariosNoSeleccionados(String rutProfesor){
         List<Horario> horarios = horarioBusiness.findBySeleccionados(rutProfesor);
