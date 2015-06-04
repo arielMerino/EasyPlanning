@@ -215,3 +215,14 @@ html .ui-layout-container{
 .breadcrumb>.active{
     color: #aaa;
 }
+
+.bloqueVacio{
+    background-color: #ffffff;
+    height: 55px;
+    margin-top: 0;
+    margin-left: 1px;
+    margin-right: 0;
+    margin-bottom: 0;
+    border: #777 solid 1px;
+    white-space: normal;
+}
