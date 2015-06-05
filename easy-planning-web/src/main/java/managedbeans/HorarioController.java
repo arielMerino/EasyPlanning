@@ -14,7 +14,6 @@ import java.io.Serializable;
 import java.util.List;
 import javax.ejb.EJB;
 import sessionbeans.HorarioFacadeLocal;
-import sessionbeans.ProfesorFacadeLocal;
 import sessionbeans.SeccionFacadeLocal;
 
 /**
