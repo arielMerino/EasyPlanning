@@ -321,10 +321,9 @@ public class ProfesorController implements Serializable {
         
         List<Horario> horarios = horariosBusiness.findAsignadosByProfesorId(rutProfesor);        
 
-        for(Horario h : horarios){            
-            String codigo = h.getSeccion().getCoordinacion().getAsignatura().getCodigo();
+        for(Horario h : horarios){                        
             String nombre = h.getSeccion().getCoordinacion().getAsignatura().getNombre();
-            String salida = codigo + nombre;
+            String salida = nombre;
                                        
             System.out.println("codigo nombre asignatura = " + salida);
             
