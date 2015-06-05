@@ -74,7 +74,7 @@ public class Profesor implements Serializable {
     public void setAsignaturas(List<Asignatura> asignaturas) {
         this.asignaturas = asignaturas;
     }
-
+    
     public void setDisponibilidad(List<Horario> disponibilidad) {
         this.disponibilidad = disponibilidad;
     }

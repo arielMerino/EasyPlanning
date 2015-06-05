@@ -20,7 +20,7 @@ public interface AsignaturasLocal {
 
     public List<Asignatura> getAllProfesorAsignatura();
     
-    public List<Asignatura> findByCarreraAndPlan(String carrera, String plan);
+    public List<Asignatura> findByCarreraAndPlan( long version);
     
     public List<Asignatura> findByNivelAndCarreraAndPlan(int nivel, String carrera, String plan);
     

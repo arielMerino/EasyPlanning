@@ -11,6 +11,7 @@ import entities.Coordinacion;
 import entities.ParamSemestreAno;
 import entities.Profesor;
 import entities.Seccion;
+import entities.VersionPlan;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -23,6 +24,7 @@ import javax.el.ELException;
 import sessionbeans.AsignaturaFacadeLocal;
 import sessionbeans.ParamSemestreAnioFacadeLocal;
 import sessionbeans.SeccionFacadeLocal;
+import sessionbeans.VersionPlanFacadeLocal;
 
 /**
  *
@@ -39,6 +41,8 @@ public class AsignaturaController implements Serializable {
     private AsignaturasLocal asignaturaBusiness;
     @EJB
     private ParamSemestreAnioFacadeLocal ejbParam;
+    @EJB
+    private VersionPlanFacadeLocal versionFacade;
     
     private List<Asignatura> items = null;
     private Asignatura selected;
@@ -239,7 +243,7 @@ public class AsignaturaController implements Serializable {
         return asignaturasPorNivel;
     }
     
-    
+    //retorna una lista de enteros con los id de todos los planes de estudios
     public ArrayList<Integer> getPlanesDeEstudio(){
         ArrayList<Integer> planesEstudio = new ArrayList<>();
         List<Asignatura> asignaturas = getFacade().findAll();
@@ -247,6 +251,17 @@ public class AsignaturaController implements Serializable {
             if(!planesEstudio.contains(Integer.valueOf(asg.getVersionplan().getId()+""))){
                 planesEstudio.add(Integer.valueOf(asg.getVersionplan().getId()+""));
             }
+        }
+        return planesEstudio;
+    }
+    
+    //retorna una lista de enteros con los id de todos los planes de estudios correspondientes a una carrera dada
+    public ArrayList<VersionPlan> getPlanesDeEstudio(int carreraId){
+        ArrayList<VersionPlan> planesEstudio = new ArrayList<>();
+        List<VersionPlan> versiones = versionFacade.findAll();
+        for (VersionPlan v : versiones){
+            if (!planesEstudio.contains(v) && v.getPlanEstudio().getCarrera().getId().toString().equals(carreraId+""))
+                planesEstudio.add(v);
         }
         return planesEstudio;
     }

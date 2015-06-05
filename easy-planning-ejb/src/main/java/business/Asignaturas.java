@@ -68,11 +68,10 @@ public class Asignaturas implements AsignaturasLocal {
         return query.getResultList();
     }
     
-    @Override
-    public List<Asignatura> findByCarreraAndPlan(String carrera, String plan) {
+    @Override //al final es findByCarreraAndVersion
+    public List<Asignatura> findByCarreraAndPlan(long version) {
         try{
-        Query query = em.createNamedQuery("Asignatura.findByCarreraAndPlan").setParameter("carrera", carrera);
-        query.setParameter("plan", plan);
+        Query query = em.createNamedQuery("Asignatura.findByVersionPlan").setParameter("plan", version);
         return (List<Asignatura>) query.getResultList();
         }catch(Exception e){
             List<Asignatura> error = new ArrayList<>();
@@ -87,7 +86,7 @@ public class Asignaturas implements AsignaturasLocal {
         query.setParameter("plan", plan);
         return (List<Asignatura>) query.getResultList();
     }
-    /*
+        /*
     @Override
     public List<String> findPlanesByCodigoCarrera(int codigo){
         Query query = em.createNamedQuery("Asignatura.findPlanesByCarrera").setParameter("carrera", codigo);

@@ -14,11 +14,9 @@ import entities.Seccion;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import sessionbeans.AsignaturaFacadeLocal;
-import sessionbeans.CarreraFacade;
 import sessionbeans.CarreraFacadeLocal;
 import sessionbeans.CoordinacionFacadeLocal;
 import sessionbeans.SeccionFacadeLocal;
@@ -46,7 +44,7 @@ public class SeccionController implements Serializable {
     private CarrerasLocal carreraBusiness;
     
     int carrera;
-    String planEstudio;
+    int planEstudio;
     String mensaje;
     int Semestre;
     int ano;
@@ -92,7 +90,7 @@ public class SeccionController implements Serializable {
     }
 
     
-    public String getPlanEstudio() {
+    public int getPlanEstudio() {
         return planEstudio;
     }
 
@@ -104,7 +102,7 @@ public class SeccionController implements Serializable {
         this.coordinacionBusiness = coordinacionBusiness;
     }
 
-    public void setPlanEstudio(String planEstudio) {
+    public void setPlanEstudio(int planEstudio) {
         this.planEstudio = planEstudio;
     }
 
@@ -137,12 +135,18 @@ public class SeccionController implements Serializable {
     public SeccionFacadeLocal getSeccionFacade(){
         return seccionFacade;
     }
-    /*
-    public void generarSeccionesBasicas(int carrera, String plan, int semestre, int ano){
+    
+    public void generarSeccionesBasicas(int carrera, int plan, int semestre, int ano){
         List<Asignatura> asignaturas;
         try {
-            asignaturas = asignaturaBusiness.findByCarreraAndPlan(carreraBusiness.findByCodigo(carrera).getNombre(), plan);
+            asignaturas = asignaturaFacade.findAll();
+            for (Asignatura a: asignaturas){
+                if (!a.getVersionplan().getId().equals(Long.valueOf(plan+"")))
+                    asignaturas.remove(a);
+            }
             boolean seguir = true;
+            System.out.println(asignaturas.size());
+            System.out.println("plan: "+plan);
             for(Asignatura asg : asignaturas){
                 //para que no hayan 2 coordinaciones para el mismo ramo en el mismo semestre
                 
@@ -191,12 +195,13 @@ public class SeccionController implements Serializable {
                 mensaje = "Secciones creadas con éxito";
             }
             else{
+                
                 mensaje = "No se han creado secciones";
             }
         }catch (Exception e) {
             System.out.println("creación de secciones terminada con errores");
         }
-    }*/
+    }
     /**
      * Creates a new instance of SeccionController
      */

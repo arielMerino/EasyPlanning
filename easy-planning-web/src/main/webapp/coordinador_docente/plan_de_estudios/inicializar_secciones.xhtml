@@ -28,12 +28,13 @@
                             <h:outputLabel value="Seleccione la Carrera"/>
                             <p:selectOneMenu value="#{seccionController.carrera}" required="true" requiredMessage="Debe indicar una carrera">
                                 <f:selectItems value="#{seccionController.carreraFacade.findAll()}" var="carrera" itemValue="#{carrera.id}" itemLabel="#{carrera.nombre}"/>
+                                <p:ajax process="@this" update="selectPlan" />
                             </p:selectOneMenu>
                             <br />
                             <br />
                             <h:outputLabel value="Plan de estudio a inicializar: "/>
-                            <p:selectOneMenu value="#{seccionController.planEstudio}" required="true" requiredMessage="Debe indicar el plan de estudios a inicializar">
-                                <f:selectItems value="#{asignaturaController.planesDeEstudio}"/>
+                            <p:selectOneMenu id="selectPlan" value="#{seccionController.planEstudio}" required="true" requiredMessage="Debe indicar el plan de estudios a inicializar">
+                                <f:selectItems value="#{asignaturaController.getPlanesDeEstudio(seccionController.carrera)}" var="plan" itemValue="#{plan.id}" itemLabel="#{plan.planEstudio.codigo} - #{plan.anio}.#{plan.version} (#{cargarPlanDeEstudios.getJornada(plan.planEstudio.jornada)})"/>
                             </p:selectOneMenu>
                             <br />
                             <br />
