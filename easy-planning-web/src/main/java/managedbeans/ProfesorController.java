@@ -66,6 +66,7 @@ public class ProfesorController implements Serializable {
     }
 
     public void setIdProfesor(String idProfesor) {
+        System.out.println("set idProfesor = " + idProfesor);
         this.rutProfesor = idProfesor;
     }
 
@@ -301,6 +302,54 @@ public class ProfesorController implements Serializable {
     public Profesor getProfesorAsignado(Long id_asignatura){
         ParamSemestreAno semAnio = paramFacade.find(Long.parseLong(1+""));
         return profesoresBusiness.getProfesorByHorarioAsignado(id_asignatura, semAnio.getAnoActual(), semAnio.getSemestreActual());
+    }
+    
+    public String[] getHorariosAsignado(){
+        String asignaturas[] = new String[54];
+                
+        System.out.println("profesorController.getHorarioAsignado rut: " + rutProfesor);
+        
+        List<Horario> horarios = horariosBusiness.findAsignadosByProfesorId(rutProfesor);
+
+        for(Horario h : horarios){            
+            String codigo = h.getSeccion().getCoordinacion().getAsignatura().getCodigo();
+            String nombre = h.getSeccion().getCoordinacion().getAsignatura().getNombre();
+            String salida = codigo + nombre;
+            
+            System.out.println(salida);
+            
+            System.out.println(h.getBloque());
+            
+            String dia = h.getBloque().substring(0, 1);
+            int fila = Integer.parseInt(h.getBloque().substring(1, 2)) - 1;
+            int columna = 0;
+            int posicion = 0;
+            
+            switch (dia) {
+                case "L":  columna = 0;
+                         break;
+                case "M":  columna = 1;
+                         break;
+                case "W":  columna = 2;
+                         break;
+                case "J":  columna = 3;
+                         break;
+                case "V":  columna = 4;
+                         break;
+                case "S":  columna = 5;
+                         break;               
+                default: columna = -1;
+                         break;
+            }
+            System.out.println(fila);
+            System.out.println(columna);
+            posicion = fila * 6 + columna;
+            System.out.println(posicion);
+            
+            asignaturas[posicion] = salida;
+        }
+
+        return asignaturas;
     }
     
     @FacesConverter(forClass = Profesor.class)

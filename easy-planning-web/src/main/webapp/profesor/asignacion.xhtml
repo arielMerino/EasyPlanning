@@ -3,12 +3,18 @@
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"                
       xmlns:p="http://primefaces.org/ui"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core"
+>    
     <ui:composition template="/template_profesor.xhtml">
         <ui:define name="title">
             <h:outputText value="Ver Asignación"/>
         </ui:define>
         <ui:define name="body">
+            <!-- setear un profesor por defecto para facilitar el trabajo -->
+            #{profesorController.setIdProfesor("14.741.130-8")}
+            <c:set var="lista" value="#{profesorController.getHorariosAsignado()}" scope="request"/>
+            
             <p:panel id="horarioAsignacion">
                 <div class="row">
                     <p:panel class="col-xs-2 headerBloque">
@@ -39,22 +45,22 @@
                         <p class="horario-title"> 1 - 08:00 - 09:30</p>
                     </p:panel>  
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[0]}                        
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[1]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[2]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[3]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[4]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[5]}
                     </p:panel>
                 </div>
                 <div class="row">
@@ -62,22 +68,22 @@
                         <p class="horario-title"> 2 - 09:40 - 11:10</p>
                     </p:panel>  
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[6]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[7]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[8]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[9]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[10]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[11]}
                     </p:panel>
                 </div>
                 <div class="row">
@@ -85,22 +91,22 @@
                         <p class="horario-title"> 3 - 11:20 - 12:50</p>
                     </p:panel>  
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[12]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[13]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[14]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[15]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[16]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[17]}
                     </p:panel>                    
                 </div>
                 <div class="row">
@@ -108,22 +114,22 @@
                         <p class="horario-title"> 4 - 13:50 - 15:20</p>
                     </p:panel> 
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[18]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[19]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[20]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[21]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[22]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[23]}
                     </p:panel>                    
                 </div>
                 <div class="row">
@@ -131,22 +137,22 @@
                         <p class="horario-title"> 5 - 15:30 - 17:00</p>
                     </p:panel> 
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[24]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[25]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[26]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[27]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[28]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[29]}
                     </p:panel>
                     
                 </div>
@@ -155,22 +161,22 @@
                         <p class="horario-title"> 6 - 17:10 - 18:40</p>
                     </p:panel>  
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[30]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[31]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[32]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[33]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[34]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[35]}
                     </p:panel>                                                                                                    
                 </div>
                 <div class="row">
@@ -178,22 +184,22 @@
                         <p class="horario-title"> 7 - 19:00 - 20:10</p>
                     </p:panel>                                                                                                     
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[36]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[37]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[38]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[39]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[40]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[41]}
                     </p:panel>
                 </div>
                 <div class="row">
@@ -201,22 +207,22 @@
                         <p class="horario-title"> 8 - 20:20 - 22:00</p>
                     </p:panel>  
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[42]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[43]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[44]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[45]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[46]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[47]}
                     </p:panel>                                                                                                    
                 </div>
                 <div class="row">
@@ -224,22 +230,22 @@
                         <p class="horario-title"> 9 - 22:00 - 23:00</p>
                     </p:panel>                                                                                                      
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[48]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[49]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[50]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[51]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[52]}
                     </p:panel>
                     <p:panel class="col-xs-1 bloqueVacio">
-                        
+                        #{lista[53]}
                     </p:panel>
                 </div>
             </p:panel>
