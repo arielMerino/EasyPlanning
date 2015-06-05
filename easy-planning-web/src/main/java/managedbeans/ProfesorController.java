@@ -18,6 +18,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -305,25 +306,35 @@ public class ProfesorController implements Serializable {
     }
     
     public String[] getHorariosAsignado(){
-        String asignaturas[] = new String[54];
+        String asignaturas[] = new String[108];
+        List<String> colores = new ArrayList<>();
+        colores.add("#449DED");
+        colores.add("#72A603");
+        colores.add("#E8541C");
+        colores.add("#FFD52F");
+        colores.add("#33A3BA");
+        colores.add("#FF893B");
+
+        Vector v = new Vector();
                 
         System.out.println("profesorController.getHorarioAsignado rut: " + rutProfesor);
         
-        List<Horario> horarios = horariosBusiness.findAsignadosByProfesorId(rutProfesor);
+        List<Horario> horarios = horariosBusiness.findAsignadosByProfesorId(rutProfesor);        
 
         for(Horario h : horarios){            
             String codigo = h.getSeccion().getCoordinacion().getAsignatura().getCodigo();
             String nombre = h.getSeccion().getCoordinacion().getAsignatura().getNombre();
             String salida = codigo + nombre;
+                                       
+            System.out.println("codigo nombre asignatura = " + salida);
             
-            System.out.println(salida);
-            
-            System.out.println(h.getBloque());
+            System.out.println("bloque = " + h.getBloque());
             
             String dia = h.getBloque().substring(0, 1);
             int fila = Integer.parseInt(h.getBloque().substring(1, 2)) - 1;
             int columna = 0;
             int posicion = 0;
+            int color_posicion = 0;
             
             switch (dia) {
                 case "L":  columna = 0;
@@ -341,11 +352,19 @@ public class ProfesorController implements Serializable {
                 default: columna = -1;
                          break;
             }
-            System.out.println(fila);
-            System.out.println(columna);
-            posicion = fila * 6 + columna;
-            System.out.println(posicion);
             
+            posicion = fila * 6 + columna;
+            
+            System.out.println("fila " + fila);
+            System.out.println("columna " + columna);            
+            System.out.println("posicion " + posicion);
+            
+            if(v.indexOf(nombre) == -1){
+                v.add(nombre);                
+            }
+            
+            color_posicion = v.indexOf(nombre);
+            asignaturas[posicion + 54] = colores.get(color_posicion);            
             asignaturas[posicion] = salida;
         }
 
