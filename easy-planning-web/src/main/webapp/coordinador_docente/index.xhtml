@@ -2,9 +2,112 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:ui="http://xmlns.jcp.org/jsf/facelets">
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:p="http://primefaces.org/ui">
 
-    <ui:composition template="/template.xhtml"></ui:composition>
-
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Inicio"/>
+        </ui:define>
+        <ui:define name="body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ol class="breadcrumb">
+                            <li class="active">Inicio</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Bienvenido(a) a Easy Planning</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4">
+                        <div class="panel-index panel panel-default">
+                            <div class="panel-heading-index panel-heading">
+                                <p>Profesores</p>
+                            </div>
+                            <div class="panel-body-index panel-body">
+                                <ul>
+                                    <li>
+                                        <h:outputLink id="ver_prof" value="/easy-planning-web/faces/coordinador_docente/profesor/List.xhtml">
+                                            <h:outputText value="Ver Profesores" />
+                                        </h:outputLink>
+                                        <p:tooltip class="tooltip-index" for="ver_prof" value="Sección dedicada a visualizar los datos de los profesores, así como también sus respuestas a la Encuesta de Disponibilidad, además de poder agregar y/o editar los alias de cada uno"/>
+                                    </li>
+                                    <li>
+                                        <h:outputLink id="asig_prop" value="/easy-planning-web/faces/coordinador_docente/encuesta/lista_profesores.xhtml">
+                                            <h:outputText value="Asignaturas Propuestas" />
+                                        </h:outputLink>
+                                        <p:tooltip class="tooltip-index" for="asig_prop" value="Sección dedicada a mostrar las asignaturas que se le han propuesto a los profesores para realizar el semestre en planificación" />
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel-index panel panel-default">
+                            <div class="panel-heading-index panel-heading">
+                                <p>Carreras</p>
+                            </div>
+                            <div class="panel-body-index panel-body">
+                                <ul>
+                                    <li>
+                                        <h:outputLink id="ver_carr" value="/easy-planning-web/faces/coordinador_docente/carrera/List.xhtml">
+                                            <h:outputText value="Ver Carreras" />
+                                        </h:outputLink>
+                                        <p:tooltip class="tooltip-index" for="ver_carr" value="Sección dedicada a la creación, edición y elminación de carreras" />
+                                    </li>
+                                    <li>
+                                        <h:outputLink id="ver_asig" value="/easy-planning-web/faces/coordinador_docente/asignaturas/listar_asignaturas.xhtml">
+                                            <h:outputText value="Ver Asignaturas" />
+                                        </h:outputLink>
+                                        <p:tooltip class="tooltip-index" for="ver_asig" value="Sección en la que se pueden visualizar todas las asignaturas además de agregar y/o ediar el alias de cada una" />                                        
+                                    </li>
+                                    <li>
+                                        <h:outputLink id="add_plan" value="/easy-planning-web/faces/coordinador_docente/plan_de_estudios/cargar_plan_de_estudios.xhtml">
+                                            <h:outputText value="Agregar Plan de Estudios" />
+                                        </h:outputLink>
+                                        <p:tooltip class="tooltip-index" for="add_plan" value="Sección dedicada a agregar nuevos Planes de Estudio" />                                        
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="panel-index panel panel-default">
+                            <div class="panel-heading-index panel-heading">
+                                <p>Planificación Docente</p>
+                            </div>
+                            <div class="panel-body-index panel-body">
+                                <ul>
+                                    <li>
+                                        <h:outputLink id="inic_planif" value="/easy-planning-web/faces/coordinador_docente/plan_de_estudios/inicializar_secciones.xhtml">
+                                            <h:outputText value="Iniciar Planificación" />
+                                        </h:outputLink>
+                                        <p:tooltip class="tooltip-index" for="inic_planif" value="Sección en la que se inicia la Planificación Docente indicando el semestre y año sobre los cuales se va a realizar" />                                        
+                                    </li>
+                                    <li>
+                                        <h:outputLink id="asig_hor" value="/easy-planning-web/faces/coordinador_docente/asignacion_horaria/asignacion_horaria.xhtml">
+                                            <h:outputText value="Asignación Horaria" />
+                                        </h:outputLink>
+                                        <p:tooltip class="tooltip-index" for="asig_hor" value="Sección encargada de asignar las Asignaturas y Profesores de cada nivel de la Planificación Docente de una o varias carreras" />                                        
+                                    </li>
+                                    <li>
+                                        <h:outputLink id="asig_prof" value="/easy-planning-web/faces/coordinador_docente/profesor/profesor_asignatura.xhtml">
+                                            <h:outputText value="Asignaturas con Profesor" />
+                                        </h:outputLink>
+                                        <p:tooltip class="tooltip-index" for="asig_prof" value="Sección para visualizar que asignaciones entre Profesor y Asignatura se han realizado durante la planificación, permitiendo también visualizar aquellas Asignaturas y Profesores a los cuales aún no se asignado nada" />                                        
+                                    </li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </ui:define>        
+    </ui:composition>
 </html>
 
