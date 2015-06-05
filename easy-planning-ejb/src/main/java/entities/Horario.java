@@ -20,8 +20,6 @@ import javax.persistence.NamedQuery;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name = "Horario.findBybloqueCarreraPlanNivelAnioYSemestre",
-            query = "SELECT h FROM Horario h WHERE h.bloque = :bloque AND h.seccion.coordinacion.asignatura.carrera.codigo = :codigo AND h.seccion.coordinacion.asignatura.planEstudio = :plan AND h.seccion.coordinacion.asignatura.nivel = :nivel AND h.seccion.coordinacion.anio = :anio AND h.seccion.coordinacion.semestre = :semestre"),
     @NamedQuery(name="Horario.findByBloqueAndProfesor",
             query = "SELECT h FROM Horario h WHERE h.bloque = :bloque AND h.profesor.rutProfesor = :rutProfesor"),
     @NamedQuery(name = "Horario.findDisponibleByBloqueAndProfesor",

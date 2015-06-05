@@ -50,11 +50,11 @@ public class Profesor implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "rut_profesor")
     private String rutProfesor;
-    
+    @Column(name = "nombre_profesor")
     private String nombre;
-    
+    @Column(name = "apellido_profesor")
     private String apellido;
-    
+    @Column(name = "mail_profesor")
     private String mail;
 
     public String getRutProfesor() {

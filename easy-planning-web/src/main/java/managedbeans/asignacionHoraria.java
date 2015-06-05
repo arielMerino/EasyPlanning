@@ -126,7 +126,7 @@ public class asignacionHoraria implements Serializable {
         return bloqueSelected;
     }
 
-    public void setBloqueSelected(String bloqueSelected) {
+    /*public void setBloqueSelected(String bloqueSelected) {
         this.bloqueSelected = bloqueSelected;
         Horario h = horariosBusiness.findBybloqueCarreraPlanNivelAnioYSemestre(bloqueSelected, carreraSelected, planEstudioSelected, nivelSelected, anioSelected, semestreSelected);
         if (h != null){
@@ -134,7 +134,7 @@ public class asignacionHoraria implements Serializable {
                 profesorSelected = h.getProfesor().getRutProfesor();
             seccionId = h.getSeccion().getId();
         }
-    }
+    }*/
 
     public int getAsignar() {
         return asignar;
@@ -337,7 +337,7 @@ public class asignacionHoraria implements Serializable {
         return anios;
     }
     
-    public String getCodigoAsgSeccionByBloque(String bloque){
+    /*public String getCodigoAsgSeccionByBloque(String bloque){
         try{
             Horario result = horariosBusiness.findBybloqueCarreraPlanNivelAnioYSemestre(bloque, carreraSelected, planEstudioSelected, nivelSelected, anioSelected, semestreSelected);
             if (result == null)
@@ -346,7 +346,7 @@ public class asignacionHoraria implements Serializable {
         }catch(NullPointerException e){
             return "";
         }
-    }
+    }*/
     
     public List<Profesor> getProfesoresDisponibles(){
         List<String> ids = new ArrayList<>();
@@ -364,7 +364,7 @@ public class asignacionHoraria implements Serializable {
         return 0L;
     }
     
-    public String getProfesorByBloque(String bloque){
+    /*public String getProfesorByBloque(String bloque){
         try{
             Horario result = horariosBusiness.findBybloqueCarreraPlanNivelAnioYSemestre(bloque, carreraSelected, planEstudioSelected, nivelSelected, anioSelected, semestreSelected);
             if (result == null)
@@ -373,7 +373,7 @@ public class asignacionHoraria implements Serializable {
         }catch(NullPointerException e){
             return "";
         }
-    }
+    }*/
     
     public List<Profesor> getDisponiblesByBloque(String bloque){
         List<Profesor> disponiblesBloque = profesoresBusiness.findDisponiblesByBloque(bloque);
@@ -412,7 +412,7 @@ public class asignacionHoraria implements Serializable {
         this.profesorSelected = "";
         this.seccionId = 0L;
     }
-    
+    /*
     public void eliminarHorario(){
         Horario h = horariosBusiness.findBybloqueCarreraPlanNivelAnioYSemestre(bloqueSelected, carreraSelected, planEstudioSelected, nivelSelected, anioSelected, semestreSelected);
         if (h != null)
@@ -469,7 +469,7 @@ public class asignacionHoraria implements Serializable {
         else{
             limpiarBloqueYprofesor();
         }
-    }
+    }*/
     
     public asignacionHoraria() {
     }    

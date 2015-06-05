@@ -27,7 +27,7 @@
                         <h:form enctype='multipart/form-data'>
                             <h:outputLabel value="Seleccione la Carrera"/>
                             <p:selectOneMenu value="#{seccionController.carrera}" required="true" requiredMessage="Debe indicar una carrera">
-                                <f:selectItems value="#{seccionController.carreraFacade.findAll()}" var="carrera" itemValue="#{carrera.codigo}" itemLabel="#{carrera.nombre} - #{carrera.codigo}"/>
+                                <f:selectItems value="#{seccionController.carreraFacade.findAll()}" var="carrera" itemValue="#{carrera.id}" itemLabel="#{carrera.nombre}"/>
                             </p:selectOneMenu>
                             <br />
                             <br />

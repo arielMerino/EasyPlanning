@@ -137,7 +137,7 @@ public class SeccionController implements Serializable {
     public SeccionFacadeLocal getSeccionFacade(){
         return seccionFacade;
     }
-    
+    /*
     public void generarSeccionesBasicas(int carrera, String plan, int semestre, int ano){
         List<Asignatura> asignaturas;
         try {
@@ -196,7 +196,7 @@ public class SeccionController implements Serializable {
         }catch (Exception e) {
             System.out.println("creación de secciones terminada con errores");
         }
-    }
+    }*/
     /**
      * Creates a new instance of SeccionController
      */

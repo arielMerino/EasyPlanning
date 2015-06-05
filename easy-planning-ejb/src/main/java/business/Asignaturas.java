@@ -24,7 +24,7 @@ import javax.persistence.Query;
 public class Asignaturas implements AsignaturasLocal {
     @PersistenceContext(unitName = "cl.G2Pingeso_easy-planning-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
-    
+    /*
     @Override
     public Asignatura findByCodigoAndPlan(String codigo, String plan) {
         Query query = em.createNamedQuery("Asignatura.findByCodigoAndPlan").setParameter("codigo", codigo);
@@ -36,12 +36,23 @@ public class Asignaturas implements AsignaturasLocal {
             return null;
         }
     }
-    
+    */
     @Override
     public Asignatura findByCarreraAndCodigoAndPlan(int carrera, String codigo, String plan) {
         Query query = em.createNamedQuery("Asignatura.findByCarreraAndCodigoAndPlan").setParameter("carrera", carrera);
         query.setParameter("codigo", codigo);
         query.setParameter("plan", plan);
+        try{
+            return (entities.Asignatura) query.getSingleResult();
+        }catch(NoResultException e){
+            return null;
+        }
+    }
+    
+    @Override
+    public Asignatura findByCodigoAsgAndIdVersion(String codigo, long idVersion){
+        Query query = em.createNamedQuery("Asignatura.findByCodigoAsgAndIdVersion").setParameter("codigo", codigo);
+        query.setParameter("idVersion", idVersion);
         try{
             return (entities.Asignatura) query.getSingleResult();
         }catch(NoResultException e){
@@ -76,7 +87,7 @@ public class Asignaturas implements AsignaturasLocal {
         query.setParameter("plan", plan);
         return (List<Asignatura>) query.getResultList();
     }
-    
+    /*
     @Override
     public List<String> findPlanesByCodigoCarrera(int codigo){
         Query query = em.createNamedQuery("Asignatura.findPlanesByCarrera").setParameter("carrera", codigo);
@@ -100,7 +111,7 @@ public class Asignaturas implements AsignaturasLocal {
             return new ArrayList<>();
         }
     }
-
+    */
     @Override
     public Asignatura findByAsignaturaAsignada(String rutProfesor, int anio, int semestre) {
         Query query = em.createNamedQuery("Asignatura.findByAsignaturaAsignada").setParameter("rutProfesor", rutProfesor);

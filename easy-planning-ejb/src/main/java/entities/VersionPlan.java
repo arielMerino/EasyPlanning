@@ -11,38 +11,44 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 
 /**
  *
  * @author ariel-linux
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(
+        name = "VersionPlan.findByIdPlan",
+        query = "SELECT vp FROM VersionPlan vp WHERE vp.planEstudio.id = :idPlan")
+})
 public class VersionPlan implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
+    private int anio;
     private int version;
-    private int jornada; //0 -> diurno; 1 -> vespertino
     
     @ManyToOne
-    private PlanEstudio plan;
+    private PlanEstudio planEstudio;
 
-    public int getJornada() {
-        return jornada;
+    public PlanEstudio getPlanEstudio() {
+        return planEstudio;
     }
 
-    public void setJornada(int jornada) {
-        this.jornada = jornada;
+    public void setPlanEstudio(PlanEstudio planEstudio) {
+        this.planEstudio = planEstudio;
     }
 
-    public PlanEstudio getPlan() {
-        return plan;
+    public int getAnio() {
+        return anio;
     }
 
-    public void setPlan(PlanEstudio plan) {
-        this.plan = plan;
+    public void setAnio(int anio) {
+        this.anio = anio;
     }
     
     public Long getId() {

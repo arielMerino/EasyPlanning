@@ -25,7 +25,7 @@ public class Horarios implements HorariosLocal {
     // "Insert Code > Add Business Method")
     @PersistenceContext(unitName = "cl.G2Pingeso_easy-planning-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
-    
+    /*
     @Override
     public Horario findBybloqueCarreraPlanNivelAnioYSemestre(String bloque, int codigo, String plan, int nivel, int anio, int semestre){
         Query query = em.createNamedQuery("Horario.findBybloqueCarreraPlanNivelAnioYSemestre").setParameter("codigo", codigo);
@@ -40,7 +40,7 @@ public class Horarios implements HorariosLocal {
             return null;
         }
     }
-
+    */
     @Override
     public Horario findByBloqueAndProfesor(String bloque, String rutProfesor) {
         Query query = em.createNamedQuery("Horario.findByBloqueAndProfesor").setParameter("bloque", bloque);

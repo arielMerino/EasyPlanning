@@ -45,12 +45,7 @@
                                     </f:facet>
                                     <h:outputText value="#{item.nombre}"/>
                                 </p:column>
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Código"/>
-                                    </f:facet>
-                                    <h:outputText value="#{item.codigo}"/>
-                                </p:column>
+                                
                                 <f:facet name="footer">
                                     <p:commandButton id="createButton" icon="ui-icon-plus"   value="#{bundle.Create}" actionListener="#{carreraController.prepareCreate}" update=":CarreraCreateForm" oncomplete="PF('CarreraCreateDialog').show()"/>
                                     <p:commandButton id="viewButton"   icon="ui-icon-search" value="#{bundle.View}" update=":CarreraViewForm" oncomplete="PF('CarreraViewDialog').show()" disabled="#{empty carreraController.selected}"/>

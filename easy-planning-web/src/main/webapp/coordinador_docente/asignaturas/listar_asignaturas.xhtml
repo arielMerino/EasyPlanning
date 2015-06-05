@@ -28,12 +28,12 @@
                         <h:form id="mostrar_asignaturas">
                             <p>Seleccionar plan de estudios</p>
                             <p:selectOneMenu id="plan" value="#{asignaturaController.planEstudios}" >
-                                <f:selectItem itemValue="todos los planes" itemLabel="todos"/>
+                                <f:selectItem itemValue= "#{0}" itemLabel="todos"/>
                                 <f:selectItems value="#{asignaturaController.planesDeEstudio}" />
                                 <p:ajax process="@this" update="tablaAsignaturas, tituloPanel" />
                             </p:selectOneMenu>
                             <br/>
-                            <p:panel id="tituloPanel" header="Plan: #{asignaturaController.planEstudios}">
+                            <p:panel id="tituloPanel" header="Plan: asignaturaController.planEstudios">
                                 <p:dataTable id="tablaAsignaturas" value="#{asignaturaController.getAsignaturasByPlan(asignaturaController.planEstudios,asignaturaController.nivel)}" 
                                     var="item"
                                     selectionMode="single" selection="#{asignaturaController.selected}"
