@@ -66,6 +66,18 @@
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
+                                        <h:outputText value="Alias"/>
+                                    </f:facet>
+                                    <h:panelGrid class="panel-no-border" columns="2">                                        
+                                        <h:outputText value="#{item.alias}"/>
+                                        <h:link class="btn-center-text" outcome="/faces/coordinador_docente/profesor/agregar_alias.xhtml">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                            <f:param name="id" value="#{item.rutProfesor}"/>
+                                        </h:link>
+                                    </h:panelGrid>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
                                         <h:outputText value="Ver Encuesta" />
                                     </f:facet>                                    
                                     <h:link outcome="/coordinador_docente/encuesta/resultado_encuesta" value="Ver Encuesta" >

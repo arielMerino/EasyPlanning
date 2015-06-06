@@ -34,7 +34,10 @@ import javax.validation.constraints.Size;
             query="SELECT e FROM Encuesta e WHERE e.profesor.rutProfesor = :rutProfesor AND e.anio = :anio AND e.semestre = :semestre"),
     
     @NamedQuery(name="Profesor.getProfesorByHorarioAsignado",
-            query="SELECT p FROM Profesor p, Coordinacion c, Seccion s, Horario h WHERE c.asignatura.id = :id_asignatura AND c.id = s.coordinacion.id AND s.id = h.seccion.id AND h.profesor.rutProfesor = p.rutProfesor AND c.anio = :anio AND c.semestre = :semestre")
+            query="SELECT p FROM Profesor p, Coordinacion c, Seccion s, Horario h WHERE c.asignatura.id = :id_asignatura AND c.id = s.coordinacion.id AND s.id = h.seccion.id AND h.profesor.rutProfesor = p.rutProfesor AND c.anio = :anio AND c.semestre = :semestre"),
+    
+    @NamedQuery(name="Profesor.getProfesorByRut",
+            query="SELECT p FROM Profesor p WHERE p.rutProfesor = :rutProfesor")
 })
 public class Profesor implements Serializable {
     @OneToMany(mappedBy = "profesor")
@@ -56,6 +59,16 @@ public class Profesor implements Serializable {
     private String apellido;
     
     private String mail;
+    
+    private String alias;
+
+    public String getAlias() {
+        return alias;
+    }
+
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
 
     public String getRutProfesor() {
         return rutProfesor;

@@ -340,9 +340,16 @@ public class asignacionHoraria implements Serializable {
     public String getCodigoAsgSeccionByBloque(String bloque){
         try{
             Horario result = horariosBusiness.findBybloqueCarreraPlanNivelAnioYSemestre(bloque, carreraSelected, planEstudioSelected, nivelSelected, anioSelected, semestreSelected);
-            if (result == null)
+            if (result == null){
                 return "";
-            return result.getSeccion().getCoordinacion().getAsignatura().getCodigo()+"-"+result.getSeccion().getCodigo();
+            }
+            
+            if(result.getSeccion().getCoordinacion().getAsignatura().getAlias() == null){
+                return result.getSeccion().getCoordinacion().getAsignatura().getCodigo()+"-"+result.getSeccion().getCodigo();
+            }
+            else{
+                return result.getSeccion().getCoordinacion().getAsignatura().getAlias()+"-"+result.getSeccion().getCodigo();
+            }
         }catch(NullPointerException e){
             return "";
         }
@@ -367,9 +374,15 @@ public class asignacionHoraria implements Serializable {
     public String getProfesorByBloque(String bloque){
         try{
             Horario result = horariosBusiness.findBybloqueCarreraPlanNivelAnioYSemestre(bloque, carreraSelected, planEstudioSelected, nivelSelected, anioSelected, semestreSelected);
-            if (result == null)
+            if (result == null){
                 return "";
-            return "- "+result.getProfesor().getNombre()+" "+result.getProfesor().getApellido();            
+            }
+            if(result.getProfesor().getAlias() == null){
+                return "- "+result.getProfesor().getNombre()+" "+result.getProfesor().getApellido();            
+            }
+            else{
+                return "- "+result.getProfesor().getAlias();
+            }
         }catch(NullPointerException e){
             return "";
         }

@@ -11,6 +11,7 @@ import entities.Coordinacion;
 import entities.ParamSemestreAno;
 import entities.Profesor;
 import entities.Seccion;
+import java.io.IOException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -19,6 +20,7 @@ import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.el.ELException;
+import javax.faces.context.FacesContext;
 import sessionbeans.AsignaturaFacadeLocal;
 import sessionbeans.ParamSemestreAnioFacadeLocal;
 import sessionbeans.SeccionFacadeLocal;
@@ -41,6 +43,7 @@ public class AsignaturaController implements Serializable {
     
     private List<Asignatura> items = null;
     private Asignatura selected;
+    private Asignatura asignatura;
     private String planEstudios = "todos los planes";
     private int nivel = 0;
     private List<Asignatura> asignaturasFiltradas;
@@ -95,6 +98,7 @@ public class AsignaturaController implements Serializable {
     }
 
     public List<Asignatura> getItems() {
+        getAsignaturas();
         return items;
     }
 
@@ -108,6 +112,15 @@ public class AsignaturaController implements Serializable {
 
     public void setSelected(Asignatura selected) {
         this.selected = selected;
+    }
+    
+    public Asignatura getAsignatura(){
+        return asignatura;
+    }
+    
+    public void setAsignatura(String id){
+        Long id_asignatura = Long.parseLong(id+"");
+        this.asignatura = this.ejbFacade.find(id_asignatura);
     }
     /*
     carga la lista de asignaturas en items
@@ -274,6 +287,23 @@ public class AsignaturaController implements Serializable {
     public Asignatura findByAsignaturaAsignada(String rutProfesor){
         ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
         return asignaturaBusiness.findByAsignaturaAsignada(rutProfesor, semAnio.getAnoActual(), semAnio.getSemestreActual());
+    }
+    
+    public void guardarAliasAsignatura() throws IOException{
+        getFacade().edit(asignatura);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/asignaturas/listar_asignaturas.xhtml");
+    }
+    
+    public boolean tieneAlias(String alias){
+        System.out.println("Asignatura Controller - alias: "+alias);
+        if(alias.equals("")){
+            System.out.println("Asignatura Controller - tieneAlias: false");
+            return false;
+        }
+        else{
+            System.out.println("Asignatura Controller - tieneAlias: true");
+            return true;
+        }
     }
 
 }

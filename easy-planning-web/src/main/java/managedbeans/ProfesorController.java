@@ -9,6 +9,7 @@ import entities.Asignatura;
 import entities.Checklist;
 import entities.Encuesta;
 import entities.ParamSemestreAno;
+import java.io.IOException;
 import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
 import sessionbeans.ProfesorFacadeLocal;
@@ -53,13 +54,22 @@ public class ProfesorController implements Serializable {
     @EJB
     private ProfesoresLocal profesoresBusiness;           
     
+    private Profesor profesor;
     private Profesor selected;
     private List<Profesor> items;
     private List<Profesor> profesoresFiltrados;    
     private String rutProfesor;
-    private String[] horariosSeleccionados;    
+    private String[] horariosSeleccionados;        
 
     public ProfesorController() {
+    }
+
+    public Profesor getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(String id) {
+        this.profesor = this.profesoresBusiness.findByRut(id);
     }
 
     public String getIdProfesor() {
@@ -139,9 +149,7 @@ public class ProfesorController implements Serializable {
     }
 
     public List<Profesor> getItems() {
-        if (items == null) {
-            items = getFacade().findAll();
-        }
+        items = getFacade().findAll();
         return items;
     }
     
@@ -153,6 +161,11 @@ public class ProfesorController implements Serializable {
         selected = profesor;
     }
 
+    public void guardarAliasProfesor() throws IOException{
+        getFacade().edit(profesor);
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/profesor/List.xhtml");        
+    }
+    
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();
@@ -322,18 +335,19 @@ public class ProfesorController implements Serializable {
         List<Horario> horarios = horariosBusiness.findAsignadosByProfesorId(rutProfesor);        
 
         for(Horario h : horarios){                        
-            String nombre = h.getSeccion().getCoordinacion().getAsignatura().getNombre();
-            String salida = nombre;
-                                       
-            System.out.println("codigo nombre asignatura = " + salida);
+            String alias = h.getSeccion().getCoordinacion().getAsignatura().getAlias();            
+            System.out.println("alias = " + alias);
+            if(alias == null)
+                alias = h.getSeccion().getCoordinacion().getAsignatura().getNombre();
+            
             
             System.out.println("bloque = " + h.getBloque());
             
             String dia = h.getBloque().substring(0, 1);
             int fila = Integer.parseInt(h.getBloque().substring(1, 2)) - 1;
-            int columna = 0;
-            int posicion = 0;
-            int color_posicion = 0;
+            int columna;
+            int posicion;
+            int color_posicion;
             
             switch (dia) {
                 case "L":  columna = 0;
@@ -358,13 +372,13 @@ public class ProfesorController implements Serializable {
             System.out.println("columna " + columna);            
             System.out.println("posicion " + posicion);
             
-            if(v.indexOf(nombre) == -1){
-                v.add(nombre);                
+            if(v.indexOf(alias) == -1){
+                v.add(alias);                
             }
             
-            color_posicion = v.indexOf(nombre);
+            color_posicion = v.indexOf(alias);
             asignaturas[posicion + 54] = colores.get(color_posicion);            
-            asignaturas[posicion] = salida;
+            asignaturas[posicion] = alias;
         }
 
         return asignaturas;

@@ -169,7 +169,7 @@ html .ui-layout-container{
 .label-form{
     color: #fff;
 }
-.form-control{
+.login-form{
     color: #0052cc;
 }
 .btn-default{
@@ -203,6 +203,14 @@ html .ui-layout-container{
     margin-left: 50%;
     color: #269abc !important;
 }
+.btn-center-text{
+    margin-left: 33%;
+    color: #269abc !important;
+}
+.btn-center-text a:hover{
+    text-decoration: none !important;
+    font-weight: bold !important;
+}
 .btn-center>span:hover{
     color: #0052cc;
 }
@@ -226,4 +234,44 @@ html .ui-layout-container{
     border: #777 solid 1px;
     white-space: normal;
     text-align: center;
+}
+
+.panel-no-border{
+    border-color: transparent !important;
+}
+.panel-body-index{
+    background-color: #fff !important;
+}
+.panel-index{
+    border: rgba(255,115,25,0.5) solid 1px !important;
+    margin-top: 10% !important;
+}
+.panel-heading-index{
+    background-color: rgba(255,115,25,1) !important;
+}
+.panel-heading-index>p{
+    text-align: center;
+    font-weight: bold;
+    font-size: 1.5em;
+    margin: 0px !important;
+    text-shadow: 1px 1px 1px #ff7319;
+}
+.panel-body-index>ul{
+    color: #ff7319;
+}
+.panel-body-index>ul>li>a{
+    color: #ff7319;
+    font-size: 1.2em;
+}
+.panel-body-index>ul>li>a:hover{
+    text-decoration: none;
+    font-weight: bold;
+}
+.tooltip-index{
+    max-width: 30em;
+    text-align: justify;
+}
+
+.horarioprofesor{
+    height: 60px !important;
 }

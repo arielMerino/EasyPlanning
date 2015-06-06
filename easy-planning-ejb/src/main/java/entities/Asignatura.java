@@ -51,6 +51,10 @@ public class Asignatura implements Serializable {
     private int ejercicios;
     private int laboratorio;
     private String planEstudio;
+    private String alias;
+    
+    //@ManyToOne
+    //private VersionPlan version;
     
     @OneToMany
     private List<Asignatura> prerequisitos;
@@ -58,10 +62,25 @@ public class Asignatura implements Serializable {
     @ManyToMany
     private List<Profesor> profesores;
     
+    
     public Asignatura(){        
     }
-    
+    public String getAlias() {
+        return alias;
+    }
 
+    public void setAlias(String alias) {
+        this.alias = alias;
+    }
+/*
+    public VersionPlan getVersion() {
+        return version;
+    }
+
+    public void setVersion(VersionPlan version) {
+        this.version = version;
+    }
+*/
     public List<Profesor> getProfesores() {
         return profesores;
     }

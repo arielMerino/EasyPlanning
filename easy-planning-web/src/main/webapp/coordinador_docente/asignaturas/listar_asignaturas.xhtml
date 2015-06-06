@@ -4,9 +4,8 @@
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
       xmlns:f="http://xmlns.jcp.org/jsf/core"
-      xmlns:p="http://primefaces.org/ui"
-      
-      >
+      xmlns:p="http://primefaces.org/ui"         
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
       
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
@@ -26,17 +25,10 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h:form id="mostrar_asignaturas">
-                            <p>Seleccionar plan de estudios</p>
-                            <p:selectOneMenu id="plan" value="#{asignaturaController.planEstudios}" >
-                                <f:selectItem itemValue="todos los planes" itemLabel="todos"/>
-                                <f:selectItems value="#{asignaturaController.planesDeEstudio}" />
-                                <p:ajax process="@this" update="tablaAsignaturas, tituloPanel" />
-                            </p:selectOneMenu>
                             <br/>
-                            <p:panel id="tituloPanel" header="Plan: #{asignaturaController.planEstudios}">
-                                <p:dataTable id="tablaAsignaturas" value="#{asignaturaController.getAsignaturasByPlan(asignaturaController.planEstudios,asignaturaController.nivel)}" 
+                            <p:panel id="tituloPanel" header="Asignaturas">
+                                <p:dataTable id="tablaAsignaturas" value="#{asignaturaController.getListaAsignaturas()}" 
                                     var="item"
-                                    selectionMode="single" selection="#{asignaturaController.selected}"
                                     sortBy="#{item.nivel}"        
                                     paginator="true"
                                     rowKey="#{item.id}"
@@ -66,27 +58,38 @@
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">
-                                            <h:outputText value="T"/>
+                                            <h:outputText value="T-E-L"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.teoria}"/>
+                                        <h:outputText value="#{item.teoria} - #{item.ejercicios} - #{item.laboratorio}"/>
+                                    </p:column>
+                                    <p:column filterBy="#{item.carrera.nombre}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <h:outputText value="Carrera"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.carrera.nombre}"/>
+                                    </p:column>
+                                    <p:column filterBy="#{item.planEstudio}" filterMatchMode="in">
+                                        <f:facet name="filter">
+                                            <p:selectCheckboxMenu label="Planes de Estudio" onchange="PF('asignaturasTable').filter()" scrollHeight="150">
+                                                <f:selectItems value="#{asignaturaController.planesDeEstudio}" />
+                                            </p:selectCheckboxMenu>
+                                        </f:facet>
+                                        <f:facet name="header">
+                                            <h:outputText value="Plan de Estudios"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.planEstudio}"/>
                                     </p:column>
                                     <p:column>
                                         <f:facet name="header">
-                                            <h:outputText value="E"/>
+                                            <h:outputText value="Alias"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.ejercicios}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="L"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.laboratorio}"/>
-                                    </p:column>
-                                    <p:column>
-                                        <f:facet name="header">
-                                            <h:outputText value="Total horas"/>
-                                        </f:facet>
-                                        <h:outputText value="#{asignaturaController.bloquesTotales(item.id)}"/>
+                                        <h:panelGrid class="panel-no-border" columns="2">
+                                            <h:outputText value="#{item.alias}"/>
+                                            <h:link class="btn-center-text" outcome="/faces/coordinador_docente/asignaturas/agregar_alias.xhtml">
+                                                <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                                <f:param name="id" value="#{item.id}"/>
+                                            </h:link>
+                                        </h:panelGrid>
                                     </p:column>
                                 </p:dataTable>
                             </p:panel>
