@@ -29,7 +29,9 @@ import javax.persistence.NamedQuery;
     @NamedQuery(name="Horario.findByHorariosNoDisponibles",
             query="SELECT h FROM Horario h WHERE h.seccion IS NOT NULL"),
     @NamedQuery(name="Horario.findBySeleccionados",
-            query="SELECT h FROM Horario h WHERE h.profesor.rutProfesor = :rutProfesor")
+            query="SELECT h FROM Horario h WHERE h.profesor.rutProfesor = :rutProfesor"),
+    @NamedQuery(name = "Horario.findByversionPlanAndSemestreAndAnioAndBloque",
+            query = "SELECT h FROM Horario h WHERE h.seccion.coordinacion.asignatura.versionplan.id = :idPlan AND h.seccion.coordinacion.semestre = :semestre AND h.seccion.coordinacion.anio = :anio AND h.seccion.coordinacion.asignatura.nivel = :nivel AND h.bloque = :bloque")
 })
 public class Horario implements Serializable {
     private static final long serialVersionUID = 1L;

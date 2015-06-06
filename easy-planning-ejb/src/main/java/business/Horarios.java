@@ -6,6 +6,7 @@
 package business;
 
 import entities.Horario;
+import entities.Seccion;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -95,6 +96,21 @@ public class Horarios implements HorariosLocal {
         catch(Exception e){
             return null;
         }
+    }
+    
+    @Override
+    public Horario findBybloqueCarreraPlanNivelAnioYSemestre(String bloque, long idPlan, int nivel, int anio, int semestre) {
+        Query query = em.createNamedQuery("Horario.findByversionPlanAndSemestreAndAnioAndBloque").setParameter("idPlan", idPlan);
+        query.setParameter("bloque", bloque);
+        query.setParameter("nivel",nivel);
+        query.setParameter("semestre",semestre);
+        query.setParameter("anio",anio);
+        try{
+            return (entities.Horario) query.getSingleResult();
+        }catch(NoResultException e){
+            return null;
+        }
+        
     }
     
 }
