@@ -40,8 +40,6 @@ import javax.validation.constraints.Size;
             query="SELECT p FROM Profesor p WHERE p.rutProfesor = :rutProfesor")
 })
 public class Profesor implements Serializable {
-    @OneToMany(mappedBy = "profesor")
-    private List<Encuesta> encuestas;
     @ManyToMany(mappedBy = "profesores")
     private List<Asignatura> asignaturas;
     @OneToMany(mappedBy = "profesor")
@@ -53,11 +51,11 @@ public class Profesor implements Serializable {
     @Size(min = 1, max = 20)
     @Column(name = "rut_profesor")
     private String rutProfesor;
-    
+    @Column(name = "nombre_profesor")
     private String nombre;
-    
+    @Column(name = "apellido_profesor")
     private String apellido;
-    
+    @Column(name = "mail_profesor")
     private String mail;
     
     private String alias;
@@ -82,14 +80,6 @@ public class Profesor implements Serializable {
         return disponibilidad;
     }
 
-    public List<Encuesta> getEncuestas() {
-        return encuestas;
-    }
-
-    public void setEncuestas(List<Encuesta> encuestas) {
-        this.encuestas = encuestas;
-    }
-
     public List<Asignatura> getAsignaturas() {
         return asignaturas;
     }
@@ -97,7 +87,7 @@ public class Profesor implements Serializable {
     public void setAsignaturas(List<Asignatura> asignaturas) {
         this.asignaturas = asignaturas;
     }
-
+    
     public void setDisponibilidad(List<Horario> disponibilidad) {
         this.disponibilidad = disponibilidad;
     }

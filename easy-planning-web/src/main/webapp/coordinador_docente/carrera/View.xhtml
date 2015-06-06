@@ -14,8 +14,8 @@
                     <p:panelGrid columns="2" rendered="#{carreraController.selected != null}">
                         <h:outputText value="#{bundle.ViewCarreraLabel_nombre}"/>
                         <h:outputText value="#{carreraController.selected.nombre}" title="#{bundle.ViewCarreraTitle_nombre}"/>
-                        <h:outputText value="#{bundle.ViewCarreraLabel_codigo}"/>
-                        <h:outputText value="#{carreraController.selected.codigo}" title="#{bundle.ViewCarreraTitle_codigo}"/>
+                        
+                        
                     </p:panelGrid>
                     <p:commandButton value="#{bundle.Close}" onclick="CarreraViewDialog.hide()"/>
                 </h:panelGroup>

@@ -25,23 +25,15 @@
                 </div>
                 <div class="row">
                     <div class="col-md-12">
-                        <h:form enctype='multipart/form-data'>
+                        <h:form enctype='multipart/form-data' id="cargaPlan">
                             <div class="form-group">
-                                <br/>
-                                <br />
-                                <p:outputLabel value="Carrera: "></p:outputLabel>
-                                <p:selectOneMenu value="#{cargarPlanDeEstudios.carreraSelected}" required="true" requiredMessage="Debe seleccionar una carrera">
-                                    <f:selectItems value="#{cargarPlanDeEstudios.carreraFacade.findAll()}" var="carrera" itemLabel="#{carrera.nombre} - #{carrera.codigo}" itemValue="#{carrera.codigo}"/>
+                                <p:selectOneMenu id="planes" value="#{cargarPlanDeEstudios.idVersion}" required="true" requiredMessage="Debe seleccionar un plan de estudios" >
+                                    <f:selectItems value="#{cargarPlanDeEstudios.versiones}" var="vers" itemLabel="#{vers.planEstudio.carrera.nombre}-#{vers.planEstudio.codigo}.#{vers.anio}.#{vers.version} (#{cargarPlanDeEstudios.getJornada(vers.planEstudio.jornada)})" itemValue="#{vers.id}" />
                                 </p:selectOneMenu>
                                 <br/>
-                                <br />
-                                <p:outputLabel value="Nombre plan de estudios: "></p:outputLabel>
-                                <p:inputText label="Nombre plan de estudios" value="#{cargarPlanDeEstudios.nombrePlan}" required="true" requiredMessage="Debe ingresar el nombre del Plan de Estudios"></p:inputText>
-                                <br />
-                                <br />
                                 <h:inputFile styleClass="ui-button-text ui-c ui-state-default ui-widget-content ui-widget-header" label="Seleccionar archivo" value="#{cargarPlanDeEstudios.ruta}" required="true" requiredMessage="Debe seleccionar un archivo"></h:inputFile>
-                                <br />
-                                <h:commandButton styleClass="ui-button-text ui-c ui-state-default ui-widget-content ui-widget-header" value="Cargar" actionListener="#{cargarPlanDeEstudios.cargarArchivo()}" onclick="submit()"></h:commandButton>    
+                                <br/>
+                                <h:commandButton styleClass="ui-button-text ui-c ui-state-default ui-widget-content ui-widget-header" value="Cargar" actionListener="#{cargarPlanDeEstudios.cargarArchivo()}" onclick="submit()" />
                             </div>
 
                         </h:form>

@@ -16,19 +16,23 @@ import javax.ejb.Local;
 @Local
 public interface AsignaturasLocal {
     
-    public Asignatura findByCodigoAndPlan(String codigo, String plan);
+    //public Asignatura findByCodigoAndPlan(String codigo, String plan);
 
     public List<Asignatura> getAllProfesorAsignatura();
     
-    public List<Asignatura> findByCarreraAndPlan(String carrera, String plan);
-    
-    public List<Asignatura> findByNivelAndCarreraAndPlan(int nivel, String carrera, String plan);
+    public List<Asignatura> findByCarreraAndPlan( long version);
     
     public Asignatura findByCarreraAndCodigoAndPlan(int carrera, String codigo, String plan);
     
-    public List<String> findPlanesByCodigoCarrera(int codigo);
+    public Asignatura findByCodigoAsgAndIdVersion(String codigo, long idVersion);
     
-    public List<Integer> findNivelesByCodigoCarreraAndPlan(int codigoCarrera, String plan);
+    public List<Integer> findNivelesByPlan(long idVersionPlan);
+    
+    public List<Asignatura> findByNivelAndPlan(int nivel, long versionPlan);
+    
+    //public List<String> findPlanesByCodigoCarrera(int codigo);
+    
+    //public List<Integer> findNivelesByCodigoCarreraAndPlan(int codigoCarrera, String plan);
     
     public Asignatura findByAsignaturaAsignada(String rutProfesor, int anio, int semestre);
 }

@@ -6,6 +6,7 @@
 package business;
 
 import entities.Horario;
+import entities.Seccion;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -15,7 +16,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface HorariosLocal {
-    public Horario findBybloqueCarreraPlanNivelAnioYSemestre(String bloque, int codigo, String plan, int nivel, int anio, int semestre);
+    //public Horario findBybloqueCarreraPlanNivelAnioYSemestre(String bloque, int codigo, String plan, int nivel, int anio, int semestre);
     
     public Horario findByBloqueAndProfesor(String bloque, String rutProfesor);
     
@@ -28,4 +29,6 @@ public interface HorariosLocal {
     public List<Horario> findBySeleccionados(String rutProfesor);
     
     public List<Horario> findAsignadosByProfesorId(String rutProfesor);
+    
+    public Horario findBybloqueCarreraPlanNivelAnioYSemestre(String bloque, long idPlan, int nivel, int anio, int semestre);
 }

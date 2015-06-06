@@ -30,7 +30,7 @@ public class Carreras implements CarrerasLocal {
             return null;
         }
     }
-    
+    /*
     @Override
     public Carrera findByCodigo(int codigo){
         Query query = em.createNamedQuery("Carrera.findByCodigo").setParameter("codigo", codigo);
@@ -39,7 +39,7 @@ public class Carreras implements CarrerasLocal {
         }catch(NoResultException e){
             return null;
         }
-    }
+    }*/
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")
 }
