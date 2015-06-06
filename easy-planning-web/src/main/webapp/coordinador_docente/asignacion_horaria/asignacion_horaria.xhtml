@@ -52,40 +52,38 @@
                                     <p:selectOneMenu id="carrera" value="#{asignacionHoraria.carreraSelected}" style="width: 100%" immediate="true">
                                         <f:selectItem itemLabel="Carrera" noSelectionOption="true" />
                                         <f:selectItems value="#{asignacionHoraria.carreraFacade.findAll()}" var="carrera" itemValue="#{carrera.id}" itemLabel="#{carrera.nombre}" />
-                                        <!--<p:ajax process="@this" update="niveles, asignaturas" /> planes, -->
+                                        <p:ajax process="@this" update="planes, niveles" /> <!--, asignaturas-->
                                     </p:selectOneMenu>
                                 </div>
                                 <div class="col-xs-3">
                                     <br/>
                                     <h:outputLabel style="white-space: normal;">Seleccionar Plan de Estudio:</h:outputLabel>
-                                    <!--
+                                    
                                     <p:selectOneMenu id="planes" value="#{asignacionHoraria.planEstudioSelected}" style="width: 100%" immediate="true">
                                         <f:selectItem itemLabel="Plan" noSelectionOption="true" />
-                                        <f:selectItems value="asignacionHoraria.asignaturasBusiness.findPlanesByCodigoCarrera(asignacionHoraria.carreraSelected)" var="plan" itemLabel="plan" itemValue="plan"/>
-                                        <p:ajax process="@this" update="niveles, asignaturas" />
-                                    </p:selectOneMenu>-->
+                                        <f:selectItems value="#{asignaturaController.getPlanesDeEstudio(asignacionHoraria.carreraSelected)}" var="plan" itemLabel="#{asignaturaController.getDatosPlan(plan)}" itemValue="#{plan.id}"/>
+                                        <p:ajax process="@this" update="niveles" /><!--asignaturas-->
+                                    </p:selectOneMenu>
                                 </div>
                                 <div class="col-xs-3">
                                     <br/>
                                     <h:outputLabel style="white-space: normal;">Seleccionar Nivel:</h:outputLabel>
-                                    <!--<p:selectOneMenu id="niveles" value="#{asignacionHoraria.nivelSelected}" style="width: 100%" immediate="true">
+                                    <p:selectOneMenu id="niveles" value="#{asignacionHoraria.nivelSelected}" style="width: 100%" immediate="true" >
                                         <f:selectItem itemLabel="Nivel" noSelectionOption="true" />
-                                        <f:selectItems value="asignacionHoraria.asignaturasBusiness.findNivelesByCodigoCarreraAndPlan(asignacionHoraria.carreraSelected, asignacionHoraria.planEstudioSelected)" var="nivel" itemLabel="nivel nivel" itemValue="nivel"/>
-                                        <p:ajax process="@this" update="asignaturas, horarioAsignacion, asignaturasSemestre" />
-                                    </p:selectOneMenu>-->
+                                        <f:selectItems value="#{asignacionHoraria.asignaturasBusiness.findNivelesByPlan(asignacionHoraria.planEstudioSelected)}" var="nivel" itemLabel="#{nivel}" itemValue="#{nivel}"/>
+                                        <p:ajax process="@this" update="asignaturas" /><!--, horarioAsignacion, asignaturasSemestre-->
+                                    </p:selectOneMenu>
                                 </div>
                             </div>
                             <div class="row" style="padding-left: 1%; padding-right: 1%;">
                                 <div id="Asignatura" class="col-xs-3">
                                     <br/>
-                                    <!--
                                     <h:outputLabel style="white-space: normal;">Seleccionar Asignatura:</h:outputLabel>
-                                    <p:selectOneMenu id="asignaturas" value="asignacionHoraria.asignaturaSelected}" required="true" requiredMessage="Debe seleccionar una asignatura" style="width: 100%" immediate="true">
-                                        <f:selectItem itemLabel="Asignatura" itemValue="asignacionHoraria.resetAsignatura()}" />
-                                        <f:selectItems value="asignacionHoraria.asignaturasBusiness.findByNivelAndCarreraAndPlan(asignacionHoraria.nivelSelected, asignacionHoraria.carrerasBusiness.findByCodigo(asignacionHoraria.carreraSelected).getNombre(), asignacionHoraria.planEstudioSelected)}" var="asg" itemLabel="asg.nombre} - asg.codigo}" itemValue="asg.id}"/>
-                                        <p:ajax process="@this" update="disponibilidades, :form2:formulario" />
+                                    <p:selectOneMenu id="asignaturas" value="#{asignacionHoraria.asignaturaSelected}" required="true" requiredMessage="Debe seleccionar una asignatura" style="width: 100%" immediate="true">
+                                        <f:selectItem itemLabel="Asignatura" itemValue="#{asignacionHoraria.resetAsignatura()}" />
+                                        <f:selectItems value="#{asignacionHoraria.asignaturasBusiness.findByNivelAndPlan(asignacionHoraria.nivelSelected, asignacionHoraria.planEstudioSelected)}" var="asg" itemLabel="#{asg.nombre} - #{asg.codigo}" itemValue="#{asg.id}"/>
+                                        <p:ajax process="@this" update="disponibilidades, " /><!--:form2:formulario-->
                                     </p:selectOneMenu>
-                                    -->
                                 </div>
                                 <div  class="col-xs-3">
                                     <br/>

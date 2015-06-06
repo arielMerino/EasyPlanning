@@ -22,11 +22,13 @@ public interface AsignaturasLocal {
     
     public List<Asignatura> findByCarreraAndPlan( long version);
     
-    public List<Asignatura> findByNivelAndCarreraAndPlan(int nivel, String carrera, String plan);
-    
     public Asignatura findByCarreraAndCodigoAndPlan(int carrera, String codigo, String plan);
     
     public Asignatura findByCodigoAsgAndIdVersion(String codigo, long idVersion);
+    
+    public List<Integer> findNivelesByPlan(long idVersionPlan);
+    
+    public List<Asignatura> findByNivelAndPlan(int nivel, long versionPlan);
     
     //public List<String> findPlanesByCodigoCarrera(int codigo);
     

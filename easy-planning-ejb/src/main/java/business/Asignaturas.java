@@ -78,39 +78,30 @@ public class Asignaturas implements AsignaturasLocal {
             return error;
         }
     }
-
+    
     @Override
-    public List<Asignatura> findByNivelAndCarreraAndPlan(int nivel, String carrera, String plan){
-        Query query = em.createNamedQuery("Asignatura.findByNivelAndCarreraAndPlan").setParameter("nivel", nivel);
-        query.setParameter("carrera", carrera);
-        query.setParameter("plan", plan);
-        return (List<Asignatura>) query.getResultList();
-    }
-        /*
-    @Override
-    public List<String> findPlanesByCodigoCarrera(int codigo){
-        Query query = em.createNamedQuery("Asignatura.findPlanesByCarrera").setParameter("carrera", codigo);
+    public List<Asignatura> findByNivelAndPlan(int nivel, long versionPlan){
+        Query query = em.createNamedQuery("Asignatura.findByNivelAndPlan").setParameter("nivel", nivel);
+        query.setParameter("idVersion", versionPlan);
         try{
-            return (List<String>) query.getResultList();
+            return (List<Asignatura>) query.getResultList();
         }catch(NoResultException e){
             return new ArrayList<>();
         }
     }
     
     @Override
-    public List<Integer> findNivelesByCodigoCarreraAndPlan(int codigoCarrera, String plan){
-        Query query = em.createNamedQuery("Asignatura.findNivelesByCodigoCarreraAndPlan").setParameter("codigoCarrera", codigoCarrera);
-        query.setParameter("plan", plan);
+    public List<Integer> findNivelesByPlan(long idVersionPlan){
+        Query query = em.createNamedQuery("Asignatura.findNivelesByPlan").setParameter("versionPlan", idVersionPlan);
         try{
-            List<Integer> salida = (List<Integer>) query.getResultList();
-            //salida.sort(null);
-            return salida;
-            
+            List<Integer> result = (List<Integer>) query.getResultList();
+            result.sort(null);
+            return result;
         }catch(NoResultException e){
             return new ArrayList<>();
         }
     }
-    */
+    
     @Override
     public Asignatura findByAsignaturaAsignada(String rutProfesor, int anio, int semestre) {
         Query query = em.createNamedQuery("Asignatura.findByAsignaturaAsignada").setParameter("rutProfesor", rutProfesor);

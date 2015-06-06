@@ -12,10 +12,12 @@ import business.CoordinacionesLocal;
 import business.HorariosLocal;
 import business.ProfesoresLocal;
 import business.SeccionesLocal;
+import entities.Asignatura;
 import entities.Coordinacion;
 import entities.Horario;
 import entities.Profesor;
 import entities.Seccion;
+import entities.VersionPlan;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
@@ -30,6 +32,7 @@ import sessionbeans.CoordinacionFacadeLocal;
 import sessionbeans.HorarioFacadeLocal;
 import sessionbeans.ProfesorFacadeLocal;
 import sessionbeans.SeccionFacadeLocal;
+import sessionbeans.VersionPlanFacadeLocal;
 
 /**
  *
@@ -67,9 +70,11 @@ public class asignacionHoraria implements Serializable {
     private ChecklistsLocal checklistBusiness;
     @EJB
     private ProfesoresLocal profesoresBusiness;
+    @EJB
+    private VersionPlanFacadeLocal versionFacade;
            
     private int carreraSelected = 0;
-    private String planEstudioSelected = "none";
+    private long planEstudioSelected = 0L; //version plan
     private int nivelSelected = 0;
     private long asignaturaSelected = 0L;
     private Coordinacion coordinacionSelected = null;
@@ -135,6 +140,15 @@ public class asignacionHoraria implements Serializable {
             seccionId = h.getSeccion().getId();
         }
     }*/
+    public List<Integer> findNivelesByPlan(long idVersionPlan){
+        List<Asignatura> asgs = asignaturasBusiness.findByCarreraAndPlan(idVersionPlan);
+        List<Integer> salida = new ArrayList<>();
+        for ( Asignatura a : asgs) {
+            if ( !salida.contains(a.getNivel()))
+                salida.add(a.getNivel());
+        }
+        return salida;
+    }
 
     public int getAsignar() {
         return asignar;
@@ -236,11 +250,19 @@ public class asignacionHoraria implements Serializable {
         this.horarioFacade = horarioFacade;
     }
 
-    public String getPlanEstudioSelected() {
+    public long getPlanEstudioSelected() {
         return planEstudioSelected;
     }
 
-    public void setPlanEstudioSelected(String planEstudioSelected) {
+    public VersionPlanFacadeLocal getVersionFacade() {
+        return versionFacade;
+    }
+
+    public void setVersionFacade(VersionPlanFacadeLocal versionFacade) {
+        this.versionFacade = versionFacade;
+    }
+    
+    public void setPlanEstudioSelected(long planEstudioSelected) {
         this.planEstudioSelected = planEstudioSelected;
     }
 
@@ -412,6 +434,18 @@ public class asignacionHoraria implements Serializable {
         this.profesorSelected = "";
         this.seccionId = 0L;
     }
+    
+    public List<Long> findPlanesByCodigoCarrera(long idCarrera){ //versiones
+        List<VersionPlan> versiones = versionFacade.findAll();
+        List<Long> ids = new ArrayList<>();
+        AsignaturaController instance = new AsignaturaController();
+        for (VersionPlan v : versiones){
+            if (v.getPlanEstudio().getCarrera().getId().equals(idCarrera) && instance.contarVersionesNoVacias(v.getId()) > 0)
+                ids.add(v.getId());
+        }
+        return ids;
+    }
+    
     /*
     public void eliminarHorario(){
         Horario h = horariosBusiness.findBybloqueCarreraPlanNivelAnioYSemestre(bloqueSelected, carreraSelected, planEstudioSelected, nivelSelected, anioSelected, semestreSelected);

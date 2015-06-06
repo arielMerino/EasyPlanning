@@ -198,6 +198,24 @@ public class AsignaturaController implements Serializable {
         return seccionesCoordinacion;
     }
     
+    public String getDatosPlan(VersionPlan version){
+        if(version != null){
+            String salida = "";
+            salida += version.getPlanEstudio().getCodigo();
+            salida += " - " + version.getAnio();
+            salida += "." + version.getVersion();
+            int j;
+            if((j = version.getPlanEstudio().getJornada()) == 0)
+                salida += " (Diurno)";
+            else
+                salida += " (Vespertino)";
+            return salida;
+        }
+        return "";
+    }
+            
+    
+    
     public Integer bloquesTotales(Long asignaturaId){
         Integer teoria = getFacade().find(asignaturaId).getTeoria();
         Integer ejercicios = getFacade().find(asignaturaId).getEjercicios();
@@ -255,12 +273,27 @@ public class AsignaturaController implements Serializable {
         return planesEstudio;
     }
     
+    public int contarVersionesNoVacias(long idVersionPlan){
+        try{
+            int contador = 0;
+            List<Asignatura> asignaturas = ejbFacade.findAll();
+            for ( Asignatura a : asignaturas ){
+                if(a.getVersionplan().getId().equals(idVersionPlan))
+                    contador++;
+            }
+            return contador;
+        }catch(Exception e){
+            System.out.println("hubo algun error");
+            return 0;
+        }
+    }
+    
     //retorna una lista de enteros con los id de todos los planes de estudios correspondientes a una carrera dada
     public ArrayList<VersionPlan> getPlanesDeEstudio(int carreraId){
         ArrayList<VersionPlan> planesEstudio = new ArrayList<>();
         List<VersionPlan> versiones = versionFacade.findAll();
         for (VersionPlan v : versiones){
-            if (!planesEstudio.contains(v) && v.getPlanEstudio().getCarrera().getId().toString().equals(carreraId+""))
+            if (!planesEstudio.contains(v) && v.getPlanEstudio().getCarrera().getId().toString().equals(carreraId+"") && contarVersionesNoVacias(v.getId()) != 0)
                 planesEstudio.add(v);
         }
         return planesEstudio;
