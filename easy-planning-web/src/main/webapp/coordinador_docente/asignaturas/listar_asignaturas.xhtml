@@ -66,24 +66,25 @@
                                         </f:facet>
                                         <h:outputText value="#{item.teoria} - #{item.ejercicios} - #{item.laboratorio}"/>
                                     </p:column>
-                                    <p:column filterBy="#{item.carrera.nombre}" filterMatchMode="contains">
+                                    <p:column filterBy="#{item.versionplan.planEstudio.carrera.nombre}" filterMatchMode="contains">
                                         <f:facet name="header">
                                             <h:outputText value="Carrera"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.carrera.nombre}"/>
+                                        <h:outputText value="#{item.versionplan.planEstudio.carrera.nombre}"/>
                                     </p:column>
-                                    <p:column filterBy="#{item.planEstudio}" filterMatchMode="in">
-                                        <f:facet name="filter">
+                                    <p:column>
+                                     <!--filterBy="#//{item.versionplan.version}" filterMatchMode="in"-->
+                                        <!--f:facet name="filter">
                                             <p:selectCheckboxMenu label="Planes de Estudio" onchange="PF('asignaturasTable').filter()" scrollHeight="150">
-                                                <f:selectItems value="#{asignaturaController.planesDeEstudio}" />
+                                                <f:selectItems value="#//{asignaturaController.planesDeEstudio}" />
                                             </p:selectCheckboxMenu>
-                                        </f:facet>
+                                        </f:facet-->
                                         <f:facet name="header">
                                             <h:outputText value="Plan de Estudios"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.planEstudio}"/>
+                                        <h:outputText value="#{item.versionplan.anio}.#{item.versionplan.version}"/>
                                     </p:column>
-                                    <p:column>
+                                    <p:column filterBy="#{item.alias}" filterMatchMode="contains">
                                         <f:facet name="header">
                                             <h:outputText value="Alias"/>
                                         </f:facet>
