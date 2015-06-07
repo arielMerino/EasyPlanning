@@ -14,7 +14,13 @@
         <ui:define name="body">
             <div class="container-fluid" id="growl">
                 <div class="row">
-                    <div class="col-md-1 col-md-offset-11 logut-link">
+                    <div class="col-md-11">
+                        <ol class="breadcrumb">
+                            <li><a href="/easy-planning-web/faces/profesor/index.xhtml">Inicio</a></li>
+                            <li class="active">Encuesta de Disponibilidad</li>
+                        </ol>
+                    </div>
+                    <div class="col-md-1 logut-link">
                         <h:form>
                             <p:commandLink action="#{usuarioController.logout()}" value="Salir"/>
                         </h:form>

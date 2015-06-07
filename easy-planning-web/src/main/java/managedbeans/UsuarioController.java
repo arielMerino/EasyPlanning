@@ -34,8 +34,17 @@ public class UsuarioController implements Serializable{
 
     private String nombre;
     private String password;
+    private boolean error = false;
     @EJB
     private UsuarioFacadeLocal ejbUsuario;
+
+    public boolean isError() {
+        return error;
+    }
+
+    public void setError(boolean error) {
+        this.error = error;
+    }
 
     public UsuarioController(){
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
@@ -53,12 +62,6 @@ public class UsuarioController implements Serializable{
     }
     
     public String getNombre() {
-        /*
-        if (nombre == null) {
-            getDatosUsuario();
-        }
-        return nombre == null ? "" : nombre;
-        */
         return nombre;
     }
  
@@ -88,16 +91,18 @@ public class UsuarioController implements Serializable{
                 else{
                     System.out.println("no se sabe el rol");
                 }
-            } else {
+                error = false;
+            } 
+            else {
                 System.out.println("SessionUtil: User allready logged");
-                
+                error = false;
             }
             
         } 
         catch (Exception e) {
             System.out.println("SessionUtil: User or password not found");
             JsfUtil.addErrorMessage("El usuario y/o la contraseña no coinciden");
-            // mc.mensajeRetroalimentacion("Error", "Usuario y/o contraseña incorrecta");
+            error = true;
         }
     }
     
