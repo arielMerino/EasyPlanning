@@ -20,13 +20,15 @@ public interface AsignaturasLocal {
 
     public List<Asignatura> getAllProfesorAsignatura();
     
-    public List<Asignatura> findByCarreraAndPlan(String carrera, String plan);
-    
-    public List<Asignatura> findByNivelAndCarreraAndPlan(int nivel, String carrera, String plan);
+    public List<Asignatura> findByCarreraAndPlan( long version);
     
     public Asignatura findByCarreraAndCodigoAndPlan(int carrera, String codigo, String plan);
     
     public Asignatura findByCodigoAsgAndIdVersion(String codigo, long idVersion);
+    
+    public List<Integer> findNivelesByPlan(long idVersionPlan);
+    
+    public List<Asignatura> findByNivelAndPlan(int nivel, long versionPlan);
     
     //public List<String> findPlanesByCodigoCarrera(int codigo);
     

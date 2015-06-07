@@ -7,6 +7,7 @@ package managedbeans;
 
 import entities.Usuario;
 import java.io.IOException;
+import java.io.Serializable;
 import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,6 +15,7 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -26,13 +28,23 @@ import sessionbeans.UsuarioFacadeLocal;
  * @author jano
  */
 @Named(value = "usuarioController")
-@RequestScoped
-public class UsuarioController {
+//@RequestScoped
+@SessionScoped
+public class UsuarioController implements Serializable{
 
     private String nombre;
     private String password;
+    private boolean error = false;
     @EJB
     private UsuarioFacadeLocal ejbUsuario;
+
+    public boolean isError() {
+        return error;
+    }
+
+    public void setError(boolean error) {
+        this.error = error;
+    }
 
     public UsuarioController(){
         HttpSession session = (HttpSession) FacesContext.getCurrentInstance().getExternalContext().getSession(false);
@@ -50,12 +62,6 @@ public class UsuarioController {
     }
     
     public String getNombre() {
-        /*
-        if (nombre == null) {
-            getDatosUsuario();
-        }
-        return nombre == null ? "" : nombre;
-        */
         return nombre;
     }
  
@@ -85,16 +91,18 @@ public class UsuarioController {
                 else{
                     System.out.println("no se sabe el rol");
                 }
-            } else {
+                error = false;
+            } 
+            else {
                 System.out.println("SessionUtil: User allready logged");
-                
+                error = false;
             }
             
         } 
         catch (Exception e) {
             System.out.println("SessionUtil: User or password not found");
             JsfUtil.addErrorMessage("El usuario y/o la contraseña no coinciden");
-            // mc.mensajeRetroalimentacion("Error", "Usuario y/o contraseña incorrecta");
+            error = true;
         }
     }
     

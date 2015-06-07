@@ -6,6 +6,7 @@
 package business;
 
 import entities.Horario;
+import entities.Seccion;
 import java.util.List;
 import javax.ejb.Local;
 
@@ -26,4 +27,8 @@ public interface HorariosLocal {
     public List<Horario> findByHorariosNoDisponibles();
     
     public List<Horario> findBySeleccionados(String rutProfesor);
+    
+    public List<Horario> findAsignadosByProfesorId(String rutProfesor);
+    
+    public Horario findBybloqueCarreraPlanNivelAnioYSemestre(String bloque, long idPlan, int nivel, int anio, int semestre);
 }

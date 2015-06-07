@@ -34,7 +34,10 @@ import javax.validation.constraints.Size;
             query="SELECT e FROM Encuesta e WHERE e.profesor.rutProfesor = :rutProfesor AND e.anio = :anio AND e.semestre = :semestre"),
     
     @NamedQuery(name="Profesor.getProfesorByHorarioAsignado",
-            query="SELECT p FROM Profesor p, Coordinacion c, Seccion s, Horario h WHERE c.asignatura.id = :id_asignatura AND c.id = s.coordinacion.id AND s.id = h.seccion.id AND h.profesor.rutProfesor = p.rutProfesor AND c.anio = :anio AND c.semestre = :semestre")
+            query="SELECT p FROM Profesor p, Coordinacion c, Seccion s, Horario h WHERE c.asignatura.id = :id_asignatura AND c.id = s.coordinacion.id AND s.id = h.seccion.id AND h.profesor.rutProfesor = p.rutProfesor AND c.anio = :anio AND c.semestre = :semestre"),
+    
+    @NamedQuery(name="Profesor.getProfesorByRut",
+            query="SELECT p FROM Profesor p WHERE p.rutProfesor = :rutProfesor")
 })
 public class Profesor implements Serializable {
     @ManyToMany(mappedBy = "profesores")
@@ -54,6 +57,16 @@ public class Profesor implements Serializable {
     private String apellido;
     @Column(name = "mail_profesor")
     private String mail;
+    
+    private String alias_profesor;
+
+    public String getAlias() {
+        return alias_profesor;
+    }
+
+    public void setAlias(String alias) {
+        this.alias_profesor = alias;
+    }
 
     public String getRutProfesor() {
         return rutProfesor;
@@ -74,7 +87,7 @@ public class Profesor implements Serializable {
     public void setAsignaturas(List<Asignatura> asignaturas) {
         this.asignaturas = asignaturas;
     }
-
+    
     public void setDisponibilidad(List<Horario> disponibilidad) {
         this.disponibilidad = disponibilidad;
     }

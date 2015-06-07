@@ -17,7 +17,43 @@ and open the template in the editor.
             <h:outputText value="Inicio"/>
         </ui:define>
         <ui:define name="body">
-            
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-11">
+                        <ol class="breadcrumb">
+                            <li class="active">Inicio</li>
+                        </ol>
+                    </div>
+                    <div class="col-md-1 logut-link">
+                        <h:form>
+                            <p:commandLink action="#{usuarioController.logout()}" value="Salir"/>
+                        </h:form>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h4>Bienvenido(a) a Easy Planning</h4>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 col-md-offset-2">
+                        <div class="opcion-profesor">
+                            <h:outputLink class="link-opcion-profesor" id="enc" value="/easy-planning-web/faces/profesor/encuesta.xhtml">
+                                <h:outputText value="Encuesta de Disponibilidad" />
+                            </h:outputLink>
+                            <p:tooltip class="tooltip-index" for="enc" value="Acceso a la Encuesta de Disponibilidad con las Asignaturas que el Comité de Docencia le ofrece para realizar el próximo semestre" />
+                        </div>
+                    </div>
+                    <div class="col-md-4">
+                        <div class="opcion-profesor">
+                            <h:outputLink class="link-opcion-profesor" id="horario" value="#">
+                                <h:outputText value="Mi Horario Planificado" />
+                            </h:outputLink>
+                            <p:tooltip class="tooltip-index" for="horario" value="Sección en la que se muestran las Asignaturas asignadas con su respectivo horario" />
+                        </div>
+                    </div>
+                </div>
+            </div>
         </ui:define>
     </ui:composition>
 </html>

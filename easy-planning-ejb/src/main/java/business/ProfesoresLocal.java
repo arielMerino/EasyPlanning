@@ -23,4 +23,6 @@ public interface ProfesoresLocal {
     public Encuesta getEncuestaBySemestreAndAnio(String rutProfesor, int semestre, int anio);
     
     public Profesor getProfesorByHorarioAsignado(Long id_asignatura, int anio, int semestre);
+    
+    public Profesor getProfesorByRut(String rut);
 }

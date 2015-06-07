@@ -13,13 +13,26 @@
         </ui:define>
         <ui:define name="body">
             <div class="container-fluid" id="growl">
+                <div class="row">
+                    <div class="col-md-11">
+                        <ol class="breadcrumb">
+                            <li><a href="/easy-planning-web/faces/profesor/index.xhtml">Inicio</a></li>
+                            <li class="active">Encuesta de Disponibilidad</li>
+                        </ol>
+                    </div>
+                    <div class="col-md-1 logut-link">
+                        <h:form>
+                            <p:commandLink action="#{usuarioController.logout()}" value="Salir"/>
+                        </h:form>
+                    </div> 
+                </div>
                 <h:form>
                     <c:set var="id" scope="request" value="#{param['id']}"/>
                     <c:if test="#{id != 0}">
                         #{profesorController.setIdProfesor(id)}
                     </c:if>
                     
-                    <c:if test="#{!profesorController.hayEncuesta(id)  and !encuestaController.contestada}">
+                    <c:if test="#{!profesorController.hayEncuesta(id)}">
                         <br />
                         <div class="alert alert-danger text-center">
                             <strong>Usted aún no tiene una encuesta asignada</strong>

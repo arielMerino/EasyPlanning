@@ -13,13 +13,18 @@
         <ui:define name="body">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-11">
                         <ol class="breadcrumb">
                             <li><a href="/easy-planning-web/faces/coordinador_docente/index.xhtml">Inicio</a></li>
                             <li><a href="#">Planificación Docente</a></li>
                             <li class="active">Asignaturas con Profesor</li>
                         </ol>
-                    </div>                                        
+                    </div>   
+                    <div class="col-md-1 logut-link">
+                        <h:form>
+                            <p:commandLink action="#{usuarioController.logout()}" value="Salir"/>
+                        </h:form>
+                    </div>
                 </div>
                 <div class="row" role="tabpanel">
                     <div class="col-md-12">
@@ -67,10 +72,10 @@
                                                 <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).nombre}"/>
                                             </p:column>
                                             <p:column>
-                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).carrera.nombre}"/>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).versionplan.planEstudio.carrera.nombre}"/>
                                             </p:column>
                                             <p:column>
-                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).planEstudio}"/>
+                                                <h:outputText value="#{asignaturaController.getDatosPlan(asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).versionplan)}"/>
                                             </p:column>
                                             <p:column  styleClass="panel-item">
                                                 <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).nivel}"/>
@@ -98,8 +103,8 @@
                                                     <p:column headerText="Código" filterBy="#{asignatura.codigo}" filterMatchMode="contains"/>
                                                     <p:column headerText="Nombre" filterBy="#{asignatura.nombre}" filterMatchMode="contains"/>
                                                     <p:column headerText="Nivel" filterBy="#{asignatura.nivel}" filterMatchMode="contains"/>
-                                                    <p:column headerText="Carrera" filterBy="#{asignatura.carrera.nombre}" filterMatchMode="contains"/>
-                                                    <p:column headerText="Plan de Estudios" filterBy="#{asignatura.planEstudio}" filterMatchMode="in">
+                                                    <p:column headerText="Carrera" filterBy="#{asignatura.versionplan.planEstudio.carrera.nombre}" filterMatchMode="contains"/>
+                                                    <p:column headerText="Plan de Estudios" filterBy="#{asignaturaController.getDatosPlan(asignatura.versionplan)}" filterMatchMode="in">
                                                         <f:facet name="filter">
                                                             <p:selectCheckboxMenu label="Planes de Estudio" onchange="PF('asignaturasTable').filter()" scrollHeight="150">
                                                                 <f:selectItems value="#{asignaturaController.planesDeEstudio}" />
@@ -119,10 +124,10 @@
                                                 <h:outputText value="#{asignatura.nivel}"/>
                                             </p:column>
                                             <p:column>
-                                                <h:outputText value="#{asignatura.carrera.nombre}"/>
+                                                <h:outputText value="#{asignatura.versionplan.planEstudio.carrera.nombre}"/>
                                             </p:column>
                                             <p:column>
-                                                <h:outputText value="#{asignatura.planEstudio}"/>
+                                                <h:outputText value="#{asignaturaController.getDatosPlan(asignatura.versionplan)}"/>
                                             </p:column>
                                             <p:column>
                                                 <h:outputText value="#{profesorController.getProfesorAsignado(asignatura.id).nombre} #{profesorController.getProfesorAsignado(asignatura.id).apellido}"/>

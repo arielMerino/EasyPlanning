@@ -27,8 +27,21 @@ public class CarreraController implements Serializable {
     private CarreraFacadeLocal ejbFacade;
     private List<Carrera> items = null;
     private Carrera selected;
+    private List<String> carreras;
 
     public CarreraController() {
+    }
+
+    public List<String> getCarreras() {
+        List<Carrera> lista = ejbFacade.findAll();
+        for(Carrera carrera : lista){
+            carreras.add(carrera.getNombre());
+        }
+        return carreras;
+    }
+
+    public void setCarreras(List<String> carreras) {
+        this.carreras = carreras;
     }
 
     public Carrera getSelected() {

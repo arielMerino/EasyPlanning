@@ -18,12 +18,17 @@
         <ui:define name="body">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-11">
                         <ol class="breadcrumb">
                             <li><a href="/easy-planning-web/faces/coordinador_docente/index.xhtml">Inicio</a></li>
                             <li><a href="#">Profesores</a></li>
                             <li class="active">Ver Profesores</li>
                         </ol>
+                    </div>
+                    <div class="col-md-1 logut-link">
+                        <h:form>
+                            <p:commandLink action="#{usuarioController.logout()}" value="Salir"/>
+                        </h:form>
                     </div>
                 </div>
                 <div class="row">
@@ -66,15 +71,20 @@
                                 </p:column>
                                 <p:column>
                                     <f:facet name="header">
+                                        <h:outputText value="Alias"/>
+                                    </f:facet>
+                                    <h:panelGrid class="panel-no-border" columns="2">                                        
+                                        <h:outputText value="#{item.alias}"/>
+                                        <h:link class="btn-center-text" outcome="/faces/coordinador_docente/profesor/agregar_alias.xhtml">
+                                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                                            <f:param name="id" value="#{item.rutProfesor}"/>
+                                        </h:link>
+                                    </h:panelGrid>
+                                </p:column>
+                                <p:column>
+                                    <f:facet name="header">
                                         <h:outputText value="Ver Encuesta" />
                                     </f:facet>
-                                    <!--c:set var="id" value="#//{item.id}"/>
-                                    <c:if test="#//{encuestaController.hayEncuesta(id)}">
-                                        <h:outputText value="Holi"/>
-                                    </c:if>
-                                    <c:if test="#//{not encuestaController.hayEncuesta(id)}">
-                                        <h:outputText value="no holi :C"/>
-                                    </c:if-->
                                     <h:link outcome="/coordinador_docente/encuesta/resultado_encuesta" value="Ver Encuesta" >
                                         <f:param name="id" value="#{item.rutProfesor}" />
                                     </h:link>

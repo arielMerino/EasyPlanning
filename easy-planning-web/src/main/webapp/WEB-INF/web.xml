@@ -21,6 +21,42 @@
     <welcome-file-list>
         <welcome-file>faces/coordinador_docente/index.xhtml</welcome-file>
     </welcome-file-list>
+    <security-constraint>
+        <display-name>paginas_coordinador_docente</display-name>
+        <web-resource-collection>
+            <web-resource-name>paginas_coordinador_docente</web-resource-name>
+            <description/>
+            <url-pattern>/faces/coordinador_docente/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Coordinador Docente</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>paginas_profesor</display-name>
+        <web-resource-collection>
+            <web-resource-name>paginas_profesro</web-resource-name>
+            <description/>
+            <url-pattern>/faces/profesor/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Profesor</role-name>
+        </auth-constraint>
+    </security-constraint>
+    <security-constraint>
+        <display-name>paginas_secretaria</display-name>
+        <web-resource-collection>
+            <web-resource-name>paginas_secretaria</web-resource-name>
+            <description/>
+            <url-pattern>/faces/secretaria/*</url-pattern>
+        </web-resource-collection>
+        <auth-constraint>
+            <description/>
+            <role-name>Secretaria</role-name>
+        </auth-constraint>
+    </security-constraint>
     <login-config>
         <auth-method>FORM</auth-method>
         <realm-name>jdbcRealm</realm-name>

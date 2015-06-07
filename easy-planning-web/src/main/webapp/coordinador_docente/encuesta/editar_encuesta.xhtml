@@ -15,14 +15,19 @@
         <ui:define name="body">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-11">
                         <ol class="breadcrumb">
                             <li><a href="/easy-planning-web/faces/coordinador_docente/index.xhtml">Inicio</a></li>
                             <li><a href="#">Profesores</a></li>
                             <li><a href="/easy-planning-web/faces/coordinador_docente/encuesta/lista_profesores.xhtml">Asignaturas Propuestas</a></li>
                             <li class="active">Editar Encuesta</li>
                         </ol>
-                    </div>    
+                    </div>  
+                    <div class="col-md-1 logut-link">
+                        <h:form>
+                            <p:commandLink action="#{usuarioController.logout()}" value="Salir"/>
+                        </h:form>
+                    </div>  
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -73,13 +78,13 @@
                                         <f:facet name="header">
                                             <h:outputText value="Plan"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.planEstudio}"/>
+                                        <h:outputText value="#{item.versionplan.planEstudio.codigo}"/>
                                     </p:column>
                                     <p:column style="text-align: center">
                                         <f:facet name="header">
                                             <h:outputText value="Carrera"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.carrera.nombre}"/>
+                                        <h:outputText value="#{item.versionplan.planEstudio.carrera.nombre}"/>
                                     </p:column>
 
                                 </p:dataTable>
@@ -111,17 +116,23 @@
                                         </f:facet>
                                         <h:outputText value="#{item.nombre}"/>
                                     </p:column>
-                                    <p:column filterBy="#{item.planEstudio}" filterMatchMode="contains" style="text-align: center">
-                                        <f:facet name="header">
-                                            <h:outputText value="Plan"/>
-                                        </f:facet>
-                                        <h:outputText value="#{item.planEstudio}"/>
-                                    </p:column>
-                                    <p:column filterBy="#{item.carrera.nombre}" filterMatchMode="contains" style="text-align: center">
+                                    <p:column filterBy="#{item.versionplan.planEstudio.carrera.nombre}" filterMatchMode="contains" style="text-align: center">
                                         <f:facet name="header">
                                             <h:outputText value="Carrera"/>
                                         </f:facet>
-                                        <h:outputText value="#{item.carrera.nombre}"/>
+                                        <h:outputText value="#{item.versionplan.planEstudio.carrera.nombre}"/>
+                                    </p:column>
+                                    <p:column filterBy="#{item.versionplan.planEstudio.codigo}" filterMatchMode="contains" style="text-align: center">
+                                        <f:facet name="header">
+                                            <h:outputText value="Plan"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.versionplan.planEstudio.codigo}"/>
+                                    </p:column>
+                                    <p:column filterBy="#{item.versionplan.anio}.#{item.versionplan.version}" filterMatchMode="contains" style="text-align: center">
+                                        <f:facet name="header">
+                                            <h:outputText value="Versión"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.versionplan.anio}.#{item.versionplan.version}" />
                                     </p:column>
                                 </p:dataTable>
                             </p:panel>

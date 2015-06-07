@@ -22,15 +22,20 @@ import javax.persistence.OneToMany;
     @NamedQuery(name="Asignatura.findByCodigoAndPlan", 
             query="SELECT a FROM Asignatura a WHERE a.codigo = :codigo AND a.versionplan = :plan"),
     @NamedQuery(name="Asignatura.getAllProfesorAsignatura",
-            query="SELECT a, p FROM Asignatura a JOIN a.profesores p"),/*
-    @NamedQuery (name="Asignatura.findByCarreraAndPlan",
-            query="SELECT a FROM Asignatura a WHERE a.carrera.nombre = :carrera AND a.versionplan = :plan"),
+            query="SELECT a, p FROM Asignatura a JOIN a.profesores p"),
+    @NamedQuery (name="Asignatura.findByVersionPlan",
+            query="SELECT a FROM Asignatura a WHERE a.versionplan = :plan"),
+    /*
     @NamedQuery (name="Asignatura.findByNivelAndCarreraAndPlan",
             query="SELECT a FROM Asignatura a WHERE a.nivel = :nivel AND a.carrera.nombre = :carrera AND a.versionplan = :plan"),*/
+    @NamedQuery(name = "Asignatura.findByNivelAndPlan",
+            query="SELECT a FROM Asignatura a WHERE a.nivel = :nivel AND a.versionplan.id = :idVersion"),
     @NamedQuery (name="Asignatura.findByCodigoAsgAndIdVersion",
             query="SELECT a FROM Asignatura a WHERE a.codigo = :codigo AND a.versionplan.id = :idVersion"),
     @NamedQuery(name="Asignatura.findByAsignaturaAsignada",
-            query="SELECT a FROM Horario h, Seccion s, Coordinacion c, Asignatura a WHERE h.profesor.rutProfesor = :rutProfesor AND h.seccion.id = s.id AND s.coordinacion.id = c.id AND c.asignatura.id = a.id AND c.anio = :anio AND c.semestre = :semestre")
+            query="SELECT a FROM Horario h, Seccion s, Coordinacion c, Asignatura a WHERE h.profesor.rutProfesor = :rutProfesor AND h.seccion.id = s.id AND s.coordinacion.id = c.id AND c.asignatura.id = a.id AND c.anio = :anio AND c.semestre = :semestre"),
+    @NamedQuery(name = "Asignatura.findNivelesByPlan",
+            query = "SELECT DISTINCT a.nivel FROM Asignatura a WHERE a.versionplan.id = :versionPlan")
 })
 public class Asignatura implements Serializable {
     @OneToMany(mappedBy = "asignatura")
@@ -45,6 +50,7 @@ public class Asignatura implements Serializable {
     private int teoria;
     private int ejercicios;
     private int laboratorio;
+    private String alias_asignatura;
     
     @ManyToOne
     private VersionPlan versionplan;
@@ -57,6 +63,14 @@ public class Asignatura implements Serializable {
     
     
     public Asignatura(){        
+    }
+    
+    public String getAlias() {
+        return alias_asignatura;
+    }
+
+    public void setAlias(String alias) {
+        this.alias_asignatura = alias;
     }
 
     public VersionPlan getVersionplan() {

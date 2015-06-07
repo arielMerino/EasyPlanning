@@ -16,14 +16,19 @@
         <ui:define name="body">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-11">
                         <ol class="breadcrumb">
                             <li><a href="/easy-planning-web/faces/coordinador_docente/index.xhtml">Inicio</a></li>
                             <li><a href="#">Profesores</a></li>
                             <li><a href="/easy-planning-web/faces/coordinador_docente/profesor/List.xhtml">Ver Profesores</a></li>
                             <li class="active">Resultados de Encuesta</li>
                         </ol>
-                    </div>                      
+                    </div>   
+                    <div class="col-md-1 logut-link">
+                        <h:form>
+                            <p:commandLink action="#{usuarioController.logout()}" value="Salir"/>
+                        </h:form>
+                    </div>                   
                 </div>
                 <div class="row">
                     <c:if test="#{empty param}">
@@ -41,9 +46,9 @@
                             </div>
                         </c:if>
                         <c:if test="#{not empty profesor}">
-                            <c:set var="hayEncuesta" value="#{encuestaController.hayEncuestaContestado(id, semestre, anio)}" scope="request"/>
+                            <c:set var="hayEncuesta" value="#{profesorController.hayEncuestaContestado(id, semestre, anio)}" scope="request"/>
                             <c:if test="#{hayEncuesta}">
-                                <c:set var="e" value="#{encuestaController.getEncuestaContestado(id, semestre, anio)}" scope="request"/>
+                                <c:set var="e" value="#{encuestaController.getEncuesta(id, semestre, anio)}" scope="request"/>
                                 <br />
                                 <div class="col-md-6 col-md-offset-3">
                                     <table class="table">
