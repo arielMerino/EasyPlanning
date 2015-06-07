@@ -13,6 +13,13 @@
         </ui:define>
         <ui:define name="body">
             <div class="container-fluid" id="growl">
+                <div class="row">
+                    <div class="col-md-1 col-md-offset-11 logut-link">
+                        <h:form>
+                            <p:commandLink action="#{usuarioController.logout()}" value="Salir"/>
+                        </h:form>
+                    </div> 
+                </div>
                 <h:form>
                     <c:set var="id" scope="request" value="#{param['id']}"/>
                     <c:if test="#{id != 0}">

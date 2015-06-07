@@ -288,3 +288,13 @@ html .ui-layout-container{
 .horarioprofesor{
     height: 60px !important;
 }
+.logut-link{
+    margin-top: 0.5em;
+}
+.logut-link>form>a{
+    color: #ff7319;
+}
+.logut-link>form>a:hover{
+    text-decoration: none;
+    font-weight: bold;
+}

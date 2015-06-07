@@ -7,6 +7,7 @@ package managedbeans;
 
 import entities.Usuario;
 import java.io.IOException;
+import java.io.Serializable;
 import java.security.Principal;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -14,6 +15,7 @@ import javax.ejb.EJB;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.http.HttpServletRequest;
@@ -26,8 +28,9 @@ import sessionbeans.UsuarioFacadeLocal;
  * @author jano
  */
 @Named(value = "usuarioController")
-@RequestScoped
-public class UsuarioController {
+//@RequestScoped
+@SessionScoped
+public class UsuarioController implements Serializable{
 
     private String nombre;
     private String password;

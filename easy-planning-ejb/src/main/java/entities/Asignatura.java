@@ -50,7 +50,7 @@ public class Asignatura implements Serializable {
     private int teoria;
     private int ejercicios;
     private int laboratorio;
-    private String alias;
+    private String alias_asignatura;
     
     @ManyToOne
     private VersionPlan versionplan;
@@ -67,11 +67,11 @@ public class Asignatura implements Serializable {
     }
     
     public String getAlias() {
-        return alias;
+        return alias_asignatura;
     }
 
     public void setAlias(String alias) {
-        this.alias = alias;
+        this.alias_asignatura = alias;
     }
 
     public VersionPlan getVersionplan() {

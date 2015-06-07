@@ -19,10 +19,15 @@ and open the template in the editor.
         <ui:define name="body">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-11">
                         <ol class="breadcrumb">
                             <li class="active">Inicio</li>
                         </ol>
+                    </div>
+                    <div class="col-md-1 logut-link">
+                        <h:form>
+                            <p:commandLink action="#{usuarioController.logout()}" value="Salir"/>
+                        </h:form>
                     </div>
                 </div>
                 <div class="row">

@@ -18,12 +18,17 @@
         <ui:define name="body">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-11">
                         <ol class="breadcrumb">
                             <li><a href="/easy-planning-web/faces/coordinador_docente/index.xhtml">Inicio</a></li>
                             <li><a href="#">Profesores</a></li>
                             <li class="active">Ver Profesores</li>
                         </ol>
+                    </div>
+                    <div class="col-md-1 logut-link">
+                        <h:form>
+                            <p:commandLink action="#{usuarioController.logout()}" value="Salir"/>
+                        </h:form>
                     </div>
                 </div>
                 <div class="row">

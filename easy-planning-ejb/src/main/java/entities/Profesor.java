@@ -58,14 +58,14 @@ public class Profesor implements Serializable {
     @Column(name = "mail_profesor")
     private String mail;
     
-    private String alias;
+    private String alias_profesor;
 
     public String getAlias() {
-        return alias;
+        return alias_profesor;
     }
 
     public void setAlias(String alias) {
-        this.alias = alias;
+        this.alias_profesor = alias;
     }
 
     public String getRutProfesor() {
