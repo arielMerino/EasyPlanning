@@ -258,3 +258,17 @@ html .ui-layout-container{
     max-width: 30em;
     text-align: justify;
 }
+.opcion-profesor{
+    background-color: #ff7319;
+    margin-top: 10%;
+    text-align: center;
+    padding: 5em 5em;
+}
+.opcion-profesor>a{
+    color: #fff;
+    font-size: 1.5em;
+}
+.opcion-profesor>a:hover{
+    text-decoration: none;
+    font-weight: bold;
+}
