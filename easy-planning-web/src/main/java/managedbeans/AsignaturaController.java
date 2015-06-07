@@ -12,11 +12,13 @@ import entities.ParamSemestreAno;
 import entities.Profesor;
 import entities.Seccion;
 import java.io.IOException;
+import entities.VersionPlan;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.el.ELException;
@@ -24,6 +26,7 @@ import javax.faces.context.FacesContext;
 import sessionbeans.AsignaturaFacadeLocal;
 import sessionbeans.ParamSemestreAnioFacadeLocal;
 import sessionbeans.SeccionFacadeLocal;
+import sessionbeans.VersionPlanFacadeLocal;
 
 /**
  *
@@ -40,11 +43,13 @@ public class AsignaturaController implements Serializable {
     private AsignaturasLocal asignaturaBusiness;
     @EJB
     private ParamSemestreAnioFacadeLocal ejbParam;
+    @EJB
+    private VersionPlanFacadeLocal versionFacade;
     
     private List<Asignatura> items = null;
     private Asignatura selected;
     private Asignatura asignatura;
-    private String planEstudios = "todos los planes";
+    private int planEstudios = 0;
     private int nivel = 0;
     private List<Asignatura> asignaturasFiltradas;
     private List<Asignatura> asignaturaEncuestas;
@@ -84,11 +89,11 @@ public class AsignaturaController implements Serializable {
         return seccionFacade;
     }
 
-    public String getPlanEstudios() {
+    public int getPlanEstudios() {
         return planEstudios;
     }
 
-    public void setPlanEstudios(String planEstudios) {
+    public void setPlanEstudios(int planEstudios) {
         this.planEstudios = planEstudios;
     }
     
@@ -206,6 +211,24 @@ public class AsignaturaController implements Serializable {
         return seccionesCoordinacion;
     }
     
+    public String getDatosPlan(VersionPlan version){
+        if(version != null){
+            String salida = "";
+            salida += version.getPlanEstudio().getCodigo();
+            salida += " - " + version.getAnio();
+            salida += "." + version.getVersion();
+            int j;
+            if((j = version.getPlanEstudio().getJornada()) == 0)
+                salida += " (Diurno)";
+            else
+                salida += " (Vespertino)";
+            return salida;
+        }
+        return "";
+    }
+            
+    
+    
     public Integer bloquesTotales(Long asignaturaId){
         Integer teoria = getFacade().find(asignaturaId).getTeoria();
         Integer ejercicios = getFacade().find(asignaturaId).getEjercicios();
@@ -214,10 +237,11 @@ public class AsignaturaController implements Serializable {
         return totalHoras;
     }
     
-    public ArrayList<Asignatura> getAsignaturasByPlan(String plan, int nivel){
+    public ArrayList<Asignatura> getAsignaturasByPlan(int plan, int nivel){
+        Long lplan = Long.valueOf(plan + "");
         ArrayList<Asignatura> asignaturasByPlan = new ArrayList<>();
         List<Asignatura> asignaturas = getListaAsignaturas();
-        if (plan.equalsIgnoreCase("todos los planes")) {
+        if (plan == 0) {
             for (Asignatura asignatura : asignaturas) {
                 asignaturasByPlan.add(asignatura);
             }
@@ -227,7 +251,7 @@ public class AsignaturaController implements Serializable {
             return asignaturasByPlan;
         }
         for (Asignatura asg : asignaturas) {
-            if (asg.getPlanEstudio().equals(plan)) {
+            if (Objects.equals(asg.getVersionplan().getId(), lplan) ) {
                 asignaturasByPlan.add(asg);
             }
             if (nivel != 0) {
@@ -250,14 +274,40 @@ public class AsignaturaController implements Serializable {
         return asignaturasPorNivel;
     }
     
-    
-    public ArrayList<String> getPlanesDeEstudio(){
-        ArrayList<String> planesEstudio = new ArrayList<>();
+    //retorna una lista de enteros con los id de todos los planes de estudios
+    public ArrayList<Integer> getPlanesDeEstudio(){
+        ArrayList<Integer> planesEstudio = new ArrayList<>();
         List<Asignatura> asignaturas = getFacade().findAll();
         for (Asignatura asg : asignaturas){
-            if(!planesEstudio.contains(asg.getPlanEstudio())){
-                planesEstudio.add(asg.getPlanEstudio());
+            if(!planesEstudio.contains(Integer.valueOf(asg.getVersionplan().getId()+""))){
+                planesEstudio.add(Integer.valueOf(asg.getVersionplan().getId()+""));
             }
+        }
+        return planesEstudio;
+    }
+    
+    public int contarVersionesNoVacias(long idVersionPlan){
+        try{
+            int contador = 0;
+            List<Asignatura> asignaturas = ejbFacade.findAll();
+            for ( Asignatura a : asignaturas ){
+                if(a.getVersionplan().getId().equals(idVersionPlan))
+                    contador++;
+            }
+            return contador;
+        }catch(Exception e){
+            System.out.println("hubo algun error");
+            return 0;
+        }
+    }
+    
+    //retorna una lista de enteros con los id de todos los planes de estudios correspondientes a una carrera dada
+    public ArrayList<VersionPlan> getPlanesDeEstudio(int carreraId){
+        ArrayList<VersionPlan> planesEstudio = new ArrayList<>();
+        List<VersionPlan> versiones = versionFacade.findAll();
+        for (VersionPlan v : versiones){
+            if (!planesEstudio.contains(v) && v.getPlanEstudio().getCarrera().getId().toString().equals(carreraId+"") && contarVersionesNoVacias(v.getId()) != 0)
+                planesEstudio.add(v);
         }
         return planesEstudio;
     }
@@ -266,7 +316,7 @@ public class AsignaturaController implements Serializable {
         int nivel = 0;
         ArrayList<Integer> niveles = new ArrayList<>();
         List<Asignatura> asignaturas = getListaAsignaturas();
-        if(getPlanEstudios().equalsIgnoreCase("todos los planes")){
+        if(getPlanEstudios() == 0){
             for( Asignatura asg : asignaturas){
                 if(asg.getNivel() > nivel){
                     nivel = asg.getNivel();
@@ -274,7 +324,7 @@ public class AsignaturaController implements Serializable {
             }
         }
         for( Asignatura asg : asignaturas){
-            if(asg.getNivel() > nivel && asg.getPlanEstudio().equals(getPlanEstudios())){
+            if(asg.getNivel() > nivel && asg.getVersionplan().getId().equals(getPlanEstudios())){
                 nivel = asg.getNivel();
             }
         }

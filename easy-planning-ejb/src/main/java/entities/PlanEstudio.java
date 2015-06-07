@@ -12,6 +12,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.NamedQueries;
+import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 
 /**
@@ -19,26 +21,36 @@ import javax.persistence.OneToMany;
  * @author ariel-linux
  */
 @Entity
+@NamedQueries({
+    @NamedQuery(
+            name = "PlanEstudio.findByCarreraId",
+            query = "SELECT pe FROM PlanEstudio pe WHERE pe.carrera.id = :idCarrera")
+})
 public class PlanEstudio implements Serializable {
-    @OneToMany(mappedBy = "plan")
+    @OneToMany(mappedBy = "planEstudio")
     private List<VersionPlan> versiones;
     private static final long serialVersionUID = 1L;
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    
-    private int anio; //anio en que se creo el plan
+    private int codigo;
+    private int jornada; //0 -> diurno; 1 -> vespertino
     @ManyToOne
     private Carrera carrera;
 
-    public int getAnio() {
-        return anio;
-    }
-
+    
     public List<VersionPlan> getVersiones() {
         return versiones;
     }
 
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+    
     public void setVersiones(List<VersionPlan> versiones) {
         this.versiones = versiones;
     }
@@ -50,9 +62,13 @@ public class PlanEstudio implements Serializable {
     public void setCarrera(Carrera carrera) {
         this.carrera = carrera;
     }
-    
-    public void setAnio(int anio) {
-        this.anio = anio;
+
+    public int getJornada() {
+        return jornada;
+    }
+
+    public void setJornada(int jornada) {
+        this.jornada = jornada;
     }
 
     public Long getId() {

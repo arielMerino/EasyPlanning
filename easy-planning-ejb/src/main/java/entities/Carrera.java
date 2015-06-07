@@ -22,20 +22,21 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name="Carrera.findByNombre",query="SELECT a FROM Carrera a WHERE a.nombre = :nombre"),
-    @NamedQuery(name="Carrera.findByCodigo",query="SELECT c FROM Carrera c WHERE c.codigo = :codigo")
+    @NamedQuery(name="Carrera.findByNombre",query="SELECT a FROM Carrera a WHERE a.nombre = :nombre")//,
+    //@NamedQuery(name="Carrera.findByCodigo",query="SELECT c FROM Carrera c WHERE c.codigo = :codigo")
 })
 public class Carrera implements Serializable {
     @OneToMany(mappedBy = "carrera")
     private List<PlanEstudio> planes;
     private static final long serialVersionUID = 1L;
+    
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
     
     private String nombre;
     @Column(unique = true)
-    private int codigo;
+    //private int codigo;
 
     public List<PlanEstudio> getPlanes() {
         return planes;
@@ -52,7 +53,7 @@ public class Carrera implements Serializable {
     public void setNombre(String nombre) {
         this.nombre = nombre;
     }
-
+/*
     public int getCodigo() {
         return codigo;
     }
@@ -60,7 +61,7 @@ public class Carrera implements Serializable {
     public void setCodigo(int codigo) {
         this.codigo = codigo;
     }
-    
+  */  
     public Long getId() {
         return id;
     }

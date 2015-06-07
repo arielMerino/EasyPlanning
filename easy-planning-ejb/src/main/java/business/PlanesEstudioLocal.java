@@ -5,7 +5,8 @@
  */
 package business;
 
-import entities.Carrera;
+import entities.PlanEstudio;
+import java.util.List;
 import javax.ejb.Local;
 
 /**
@@ -13,7 +14,6 @@ import javax.ejb.Local;
  * @author ariel-linux
  */
 @Local
-public interface CarrerasLocal {
-    public Carrera findByNombre(String nombre);
-    //public Carrera findByCodigo(int codigo);
+public interface PlanesEstudioLocal {
+    public List<PlanEstudio> findPlanByIdCarrera(long idCarrera);
 }

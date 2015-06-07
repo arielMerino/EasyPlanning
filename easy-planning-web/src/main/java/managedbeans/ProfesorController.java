@@ -1,6 +1,7 @@
 package managedbeans;
 
 import business.ChecklistsLocal;
+import business.HorariosLocal;
 import business.ProfesoresLocal;
 import entities.Horario;
 import entities.Profesor;
@@ -18,6 +19,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 import java.util.ResourceBundle;
+import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -30,35 +32,34 @@ import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
 import javax.faces.convert.FacesConverter;
 import sessionbeans.HorarioFacadeLocal;
-import sessionbeans.AsignaturaFacadeLocal;
 import sessionbeans.EncuestaFacadeLocal;
 import sessionbeans.ParamSemestreAnioFacadeLocal;
 
 @Named("profesorController")
 @SessionScoped
 public class ProfesorController implements Serializable {
-
-    @EJB
-    private ProfesorFacadeLocal ejbFacade;
-    @EJB
-    private HorarioFacadeLocal horarioFacade;
-    @EJB
-    private AsignaturaFacadeLocal asignaturaFacade;
+    
     @EJB
     private EncuestaFacadeLocal encuestaFacade;
     @EJB
-    private ProfesoresLocal profesoresBusiness;
+    private HorarioFacadeLocal horarioFacade;
+    @EJB
+    private ParamSemestreAnioFacadeLocal paramFacade;
+    @EJB
+    private ProfesorFacadeLocal profesorFacade;
     @EJB
     private ChecklistsLocal checklistsBusiness;
     @EJB
-    private ParamSemestreAnioFacadeLocal ejbParam;
+    private HorariosLocal horariosBusiness;
+    @EJB
+    private ProfesoresLocal profesoresBusiness;           
     
-    private List<Profesor> items;
-    private Profesor selected;
-    private String[] horariosSeleccionados;
-    private List<Profesor> profesoresFiltrados;
-    private String rutProfesor;
     private Profesor profesor;
+    private Profesor selected;
+    private List<Profesor> items;
+    private List<Profesor> profesoresFiltrados;    
+    private String rutProfesor;
+    private String[] horariosSeleccionados;        
 
     public ProfesorController() {
     }
@@ -76,6 +77,7 @@ public class ProfesorController implements Serializable {
     }
 
     public void setIdProfesor(String idProfesor) {
+        System.out.println("set idProfesor = " + idProfesor);
         this.rutProfesor = idProfesor;
     }
 
@@ -110,7 +112,7 @@ public class ProfesorController implements Serializable {
     }
 
     private ProfesorFacadeLocal getFacade() {
-        return ejbFacade;
+        return profesorFacade;
     }    
 
     public HorarioFacadeLocal getHorarioFacade() {
@@ -259,7 +261,7 @@ public class ProfesorController implements Serializable {
     
     public List<Checklist> getAsignaturasChecklist(String rutProfesor){
         
-        ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
+        ParamSemestreAno semAnio = paramFacade.find(Long.parseLong(1+""));
         try{            
             Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semAnio.getSemestreActual(), semAnio.getAnoActual());            
             List<Checklist> lista = checklistsBusiness.findChecklistByIdEncuesta(encuesta.getId());            
@@ -271,21 +273,115 @@ public class ProfesorController implements Serializable {
         }
     }
     
-    public boolean hayEncuesta(String rutProfesor){
-        
-        ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
-        try{            
-            Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semAnio.getSemestreActual(), semAnio.getAnoActual());
-            return encuesta != null;
-        }
-        catch(Exception e){            
+    public boolean hayEncuestaContestado(String rutProfesor, int semestre, int anio){
+        try{
+            Encuesta e = profesoresBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semestre, anio);
+            List<Checklist> c = e.getListaAsignaturas();//hay que modificar el getListaAsignatura
+            System.out.println(c.size());
+            for(Checklist check : c){
+                if(check.isAceptado())            
+                    return true;
+            }
+            
+            List<Horario> h = horariosBusiness.findDisponiblesByProfesorId(rutProfesor);
+            
+            System.out.println(!h.isEmpty());
+            
+            return !h.isEmpty();
+        }catch (Exception e){
             return false;
         }
     }
     
+    public boolean hayEncuesta(String rutProfesor){
+        ParamSemestreAno semAnio = paramFacade.find(1L);
+        System.out.println("id_profesor: "+rutProfesor);
+        try{
+            Encuesta encuesta = profesoresBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semAnio.getSemestreActual(), semAnio.getAnoActual());
+            if(encuesta != null){
+                System.out.println("hayEncuesta retorna true, id profesor: "+rutProfesor);
+                return true;
+            }
+            else{
+                System.out.println("hayEncuesta encuesta igual a null, retorna false, id profesor: "+rutProfesor);
+                return false;
+            }
+        }
+        catch(Exception e){
+            System.out.println("EncuestaController: retorna false, id profesor: "+rutProfesor);
+            return false;
+        }
+    }    
+    
     public Profesor getProfesorAsignado(Long id_asignatura){
-        ParamSemestreAno semAnio = ejbParam.find(Long.parseLong(1+""));
+        ParamSemestreAno semAnio = paramFacade.find(Long.parseLong(1+""));
         return profesoresBusiness.getProfesorByHorarioAsignado(id_asignatura, semAnio.getAnoActual(), semAnio.getSemestreActual());
+    }
+    
+    public String[] getHorariosAsignado(){
+        String asignaturas[] = new String[108];
+        List<String> colores = new ArrayList<>();
+        colores.add("#449DED");
+        colores.add("#72A603");
+        colores.add("#E8541C");
+        colores.add("#FFD52F");
+        colores.add("#33A3BA");
+        colores.add("#FF893B");
+
+        Vector v = new Vector();
+                
+        System.out.println("profesorController.getHorarioAsignado rut: " + rutProfesor);
+        
+        List<Horario> horarios = horariosBusiness.findAsignadosByProfesorId(rutProfesor);        
+
+        for(Horario h : horarios){                        
+            String alias = h.getSeccion().getCoordinacion().getAsignatura().getAlias();            
+            System.out.println("alias = " + alias);
+            if(alias == null)
+                alias = h.getSeccion().getCoordinacion().getAsignatura().getNombre();
+            
+            
+            System.out.println("bloque = " + h.getBloque());
+            
+            String dia = h.getBloque().substring(0, 1);
+            int fila = Integer.parseInt(h.getBloque().substring(1, 2)) - 1;
+            int columna;
+            int posicion;
+            int color_posicion;
+            
+            switch (dia) {
+                case "L":  columna = 0;
+                         break;
+                case "M":  columna = 1;
+                         break;
+                case "W":  columna = 2;
+                         break;
+                case "J":  columna = 3;
+                         break;
+                case "V":  columna = 4;
+                         break;
+                case "S":  columna = 5;
+                         break;               
+                default: columna = -1;
+                         break;
+            }
+            
+            posicion = fila * 6 + columna;
+            
+            System.out.println("fila " + fila);
+            System.out.println("columna " + columna);            
+            System.out.println("posicion " + posicion);
+            
+            if(v.indexOf(alias) == -1){
+                v.add(alias);                
+            }
+            
+            color_posicion = v.indexOf(alias);
+            asignaturas[posicion + 54] = colores.get(color_posicion);            
+            asignaturas[posicion] = alias;
+        }
+
+        return asignaturas;
     }
     
     @FacesConverter(forClass = Profesor.class)

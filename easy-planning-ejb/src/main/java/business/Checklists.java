@@ -52,6 +52,7 @@ public class Checklists implements ChecklistsLocal {
         query.setParameter("idAsignatura", asignatura_id);
     }
     
+    @Override
     public List<Checklist> findChecklistByIdEncuesta(long idEncuesta){
         Query query = em.createNamedQuery("Checklist.findChecklistByIdEncuesta");
         query.setParameter("idEncuesta", idEncuesta);        

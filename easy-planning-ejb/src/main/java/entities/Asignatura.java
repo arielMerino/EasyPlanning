@@ -2,6 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -19,21 +20,22 @@ import javax.persistence.OneToMany;
 @Entity
 @NamedQueries({
     @NamedQuery(name="Asignatura.findByCodigoAndPlan", 
-            query="SELECT a FROM Asignatura a WHERE a.codigo = :codigo AND a.planEstudio = :plan"),
+            query="SELECT a FROM Asignatura a WHERE a.codigo = :codigo AND a.versionplan = :plan"),
     @NamedQuery(name="Asignatura.getAllProfesorAsignatura",
             query="SELECT a, p FROM Asignatura a JOIN a.profesores p"),
-    @NamedQuery (name="Asignatura.findByCarreraAndPlan",
-            query="SELECT a FROM Asignatura a WHERE a.carrera.nombre = :carrera AND a.planEstudio = :plan"),
+    @NamedQuery (name="Asignatura.findByVersionPlan",
+            query="SELECT a FROM Asignatura a WHERE a.versionplan = :plan"),
+    /*
     @NamedQuery (name="Asignatura.findByNivelAndCarreraAndPlan",
-            query="SELECT a FROM Asignatura a WHERE a.nivel = :nivel AND a.carrera.nombre = :carrera AND a.planEstudio = :plan"),
-    @NamedQuery (name="Asignatura.findByCarreraAndCodigoAndPlan",
-            query="SELECT a FROM Asignatura a WHERE a.carrera.codigo = :carrera AND a.planEstudio = :plan AND a.codigo = :codigo"),
-    @NamedQuery (name = "Asignatura.findPlanesByCarrera",
-            query="SELECT DISTINCT a.planEstudio FROM Asignatura a WHERE a.carrera.codigo = :carrera"),
-    @NamedQuery (name="Asignatura.findNivelesByCodigoCarreraAndPlan",
-            query="SELECT DISTINCT a.nivel FROM Asignatura a WHERE a.carrera.codigo = :codigoCarrera AND a.planEstudio = :plan"),
+            query="SELECT a FROM Asignatura a WHERE a.nivel = :nivel AND a.carrera.nombre = :carrera AND a.versionplan = :plan"),*/
+    @NamedQuery(name = "Asignatura.findByNivelAndPlan",
+            query="SELECT a FROM Asignatura a WHERE a.nivel = :nivel AND a.versionplan.id = :idVersion"),
+    @NamedQuery (name="Asignatura.findByCodigoAsgAndIdVersion",
+            query="SELECT a FROM Asignatura a WHERE a.codigo = :codigo AND a.versionplan.id = :idVersion"),
     @NamedQuery(name="Asignatura.findByAsignaturaAsignada",
-            query="SELECT a FROM Horario h, Seccion s, Coordinacion c, Asignatura a WHERE h.profesor.rutProfesor = :rutProfesor AND h.seccion.id = s.id AND s.coordinacion.id = c.id AND c.asignatura.id = a.id AND c.anio = :anio AND c.semestre = :semestre")
+            query="SELECT a FROM Horario h, Seccion s, Coordinacion c, Asignatura a WHERE h.profesor.rutProfesor = :rutProfesor AND h.seccion.id = s.id AND s.coordinacion.id = c.id AND c.asignatura.id = a.id AND c.anio = :anio AND c.semestre = :semestre"),
+    @NamedQuery(name = "Asignatura.findNivelesByPlan",
+            query = "SELECT DISTINCT a.nivel FROM Asignatura a WHERE a.versionplan.id = :versionPlan")
 })
 public class Asignatura implements Serializable {
     @OneToMany(mappedBy = "asignatura")
@@ -42,22 +44,20 @@ public class Asignatura implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private Long id;
-    @ManyToOne
-    private Carrera carrera;
     private String codigo;
     private String nombre;
     private int nivel;
     private int teoria;
     private int ejercicios;
     private int laboratorio;
-    private String planEstudio;
     private String alias;
     
-    //@ManyToOne
-    //private VersionPlan version;
+    @ManyToOne
+    private VersionPlan versionplan;
     
     @OneToMany
     private List<Asignatura> prerequisitos;
+    
     
     @ManyToMany
     private List<Profesor> profesores;
@@ -65,6 +65,7 @@ public class Asignatura implements Serializable {
     
     public Asignatura(){        
     }
+    
     public String getAlias() {
         return alias;
     }
@@ -72,25 +73,17 @@ public class Asignatura implements Serializable {
     public void setAlias(String alias) {
         this.alias = alias;
     }
-/*
-    public VersionPlan getVersion() {
-        return version;
+
+    public VersionPlan getVersionplan() {
+        return versionplan;
     }
 
-    public void setVersion(VersionPlan version) {
-        this.version = version;
+    public void setVersionplan(VersionPlan versionplan) {
+        this.versionplan = versionplan;
     }
-*/
+
     public List<Profesor> getProfesores() {
         return profesores;
-    }
-
-    public Carrera getCarrera() {
-        return carrera;
-    }
-
-    public void setCarrera(Carrera carrera) {
-        this.carrera = carrera;
     }
     
     public int getTeoria() {
@@ -154,14 +147,6 @@ public class Asignatura implements Serializable {
 
     public void setNivel(int nivel) {
         this.nivel = nivel;
-    }
-
-    public String getPlanEstudio() {
-        return planEstudio;
-    }
-
-    public void setPlanEstudio(String planEstudio) {
-        this.planEstudio = planEstudio;
     }
 
     public Long getId() {

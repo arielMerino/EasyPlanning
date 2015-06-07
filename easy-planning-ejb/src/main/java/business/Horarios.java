@@ -6,6 +6,7 @@
 package business;
 
 import entities.Horario;
+import entities.Seccion;
 import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
@@ -26,21 +27,6 @@ public class Horarios implements HorariosLocal {
     @PersistenceContext(unitName = "cl.G2Pingeso_easy-planning-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
     
-    @Override
-    public Horario findBybloqueCarreraPlanNivelAnioYSemestre(String bloque, int codigo, String plan, int nivel, int anio, int semestre){
-        Query query = em.createNamedQuery("Horario.findBybloqueCarreraPlanNivelAnioYSemestre").setParameter("codigo", codigo);
-        query.setParameter("plan", plan);
-        query.setParameter("nivel", nivel);
-        query.setParameter("anio", anio);
-        query.setParameter("semestre",semestre);
-        query.setParameter("bloque", bloque);
-        try{
-            return (entities.Horario) query.getSingleResult();
-        }catch(NoResultException e){
-            return null;
-        }
-    }
-
     @Override
     public Horario findByBloqueAndProfesor(String bloque, String rutProfesor) {
         Query query = em.createNamedQuery("Horario.findByBloqueAndProfesor").setParameter("bloque", bloque);
@@ -97,4 +83,27 @@ public class Horarios implements HorariosLocal {
         }
     }
     
+    @Override
+    public List<Horario> findAsignadosByProfesorId(String rutProfesor){
+        Query query = em.createNamedQuery("Horario.findHorariosAsignadosByProfesor").setParameter("rutProfesor", rutProfesor);
+        try{
+            return (List<Horario>) query.getResultList();
+        }catch (NoResultException e){
+            return null;
+        }
+    }
+    @Override  
+    public Horario findBybloqueCarreraPlanNivelAnioYSemestre(String bloque, long idPlan, int nivel, int anio, int semestre) {
+        Query query = em.createNamedQuery("Horario.findByversionPlanAndSemestreAndAnioAndBloque").setParameter("idPlan", idPlan);
+        query.setParameter("bloque", bloque);
+        query.setParameter("nivel",nivel);
+        query.setParameter("semestre",semestre);
+        query.setParameter("anio",anio);
+        try{
+            return (entities.Horario) query.getSingleResult();
+        }catch(NoResultException e){
+            return null;
+        }
+        
+    }
 }
