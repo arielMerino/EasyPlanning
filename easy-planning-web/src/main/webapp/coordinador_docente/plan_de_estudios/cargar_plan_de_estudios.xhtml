@@ -1,0 +1,106 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Cargar Plan de Estudios - Easy Planning"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ol class="breadcrumb">
+                            <li><a href="/easy-planning-web/faces/coordinador_docente/index.xhtml">Inicio</a></li>
+                            <li><a href="#">Carreras</a></li>
+                            <li class="active">Agregar Plan de Estudios</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h:form enctype='multipart/form-data' id="cargaPlan">
+                            <div class="form-group">
+                                <p:selectOneMenu id="planes" value="#{cargarPlanDeEstudios.idVersion}" required="true" requiredMessage="Debe seleccionar un plan de estudios" >
+                                    <f:selectItems value="#{cargarPlanDeEstudios.versiones}" var="vers" itemLabel="#{vers.planEstudio.carrera.nombre}-#{vers.planEstudio.codigo}.#{vers.anio}.#{vers.version} (#{cargarPlanDeEstudios.getJornada(vers.planEstudio.jornada)})" itemValue="#{vers.id}" />
+                                </p:selectOneMenu>
+                                <br/>
+                                <h:inputFile styleClass="ui-button-text ui-c ui-state-default ui-widget-content ui-widget-header" label="Seleccionar archivo" value="#{cargarPlanDeEstudios.ruta}" required="true" requiredMessage="Debe seleccionar un archivo"></h:inputFile>
+                                <br/>
+                                <h:commandButton styleClass="ui-button-text ui-c ui-state-default ui-widget-content ui-widget-header" value="Cargar" actionListener="#{cargarPlanDeEstudios.cargarArchivo()}" onclick="submit()" />
+                            </div>
+
+                        </h:form>
+                        <h:outputText value="#{cargarPlanDeEstudios.aux}"></h:outputText>
+                        <p:panel header="Plan de Estudios #{cargarPlanDeEstudios.nombrePlan} registrado" rendered="#{cargarPlanDeEstudios.cargados}" >
+                            <p:dataTable id="tablaAsignaturas" value="#{cargarPlanDeEstudios.asignaturasAñadidas}" var="item"
+                                                selectionMode="single"
+                                                selection="#{asignaturaController.selected}"
+                                                 rowKey="#{item.codigo}">
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Código"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.codigo}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Asignatura"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.nombre}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Nivel"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.nivel}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="T"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.teoria}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="E"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.ejercicios}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="L"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.laboratorio}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Prerequisitos"/>
+                                        </f:facet>
+                                        <ul>
+                                            <h:outputText value="Ingreso" rendered="#{item.nivel == 1}">Ingreso</h:outputText>
+                                        </ul>
+                                        <ul>
+                                            <ui:repeat value="#{item.prerequisitos}" var="prerequisito">
+                                                <li>
+                                                    <h:outputText value="#{prerequisito.codigo} - #{prerequisito.nombre}"></h:outputText>
+                                                </li>
+                                            </ui:repeat>
+                                        </ul>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel>        
+                    </div>
+                </div>
+                    
+            </div>
+            
+        </ui:define>
+    </ui:composition>
+</html>

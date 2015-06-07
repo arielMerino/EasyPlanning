@@ -1,0 +1,103 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      
+      >
+      
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            Asignaturas
+        </ui:define>
+        <ui:define name="body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ol class="breadcrumb">
+                            <li><a href="/easy-planning-web/faces/coordinador_docente/index.xhtml">Inicio</a></li>
+                            <li><a href="#">Carreras</a></li>
+                            <li class="active">Ver Asignaturas</li>
+                        </ol>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-12">
+                        <h:form id="mostrar_asignaturas">
+                            <p>Seleccionar plan de estudios</p>
+                            <p:selectOneMenu id="plan" value="#{asignaturaController.planEstudios}" >
+                                <f:selectItem itemValue= "#{0}" itemLabel="todos"/>
+                                <f:selectItems value="#{asignaturaController.planesDeEstudio}" />
+                                <p:ajax process="@this" update="tablaAsignaturas, tituloPanel" />
+                            </p:selectOneMenu>
+                            <br/>
+                            <p:panel id="tituloPanel" header="Plan: asignaturaController.planEstudios">
+                                <p:dataTable id="tablaAsignaturas" value="#{asignaturaController.getAsignaturasByPlan(asignaturaController.planEstudios,asignaturaController.nivel)}" 
+                                    var="item"
+                                    selectionMode="single" selection="#{asignaturaController.selected}"
+                                    sortBy="#{item.nivel}"        
+                                    paginator="true"
+                                    rowKey="#{item.id}"
+                                    rows="50"
+                                    rowsPerPageTemplate="50,60,70,80"
+                                    widgetVar="asignaturasTable"
+                                    filteredValue="#{asignaturaController.asignaturasFiltradas}"
+                                    emptyMessage="No se han encontrado asignaturas según los parámetros indicados"
+                                    >
+                                    <p:column filterBy="#{item.codigo}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <h:outputText value="Código"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.codigo}"/>
+                                    </p:column>
+                                    <p:column filterBy="#{item.nombre}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <h:outputText value="Asignatura"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.nombre}"/>
+                                    </p:column>
+                                    <p:column filterBy="#{item.nivel}" filterMatchMode="contains">
+                                        <f:facet name="header">
+                                            <h:outputText value="Nivel"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.nivel}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="T"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.teoria}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="E"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.ejercicios}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="L"/>
+                                        </f:facet>
+                                        <h:outputText value="#{item.laboratorio}"/>
+                                    </p:column>
+                                    <p:column>
+                                        <f:facet name="header">
+                                            <h:outputText value="Total horas"/>
+                                        </f:facet>
+                                        <h:outputText value="#{asignaturaController.bloquesTotales(item.id)}"/>
+                                    </p:column>
+                                </p:dataTable>
+                            </p:panel>
+                        </h:form>
+        
+                    </div>
+                </div>
+                
+            </div>
+            
+        </ui:define>
+    </ui:composition>
+</html>
+

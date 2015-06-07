@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+
+    <ui:composition>
+
+        <p:dialog id="ProfesorEditDlg" widgetVar="ProfesorEditDialog" modal="true" resizable="false" appendTo="@(body)" header="Editar Profesor">
+            <h:form id="ProfesorEditForm">
+                <h:panelGroup id="display">
+                    <p:panelGrid columns="2" rendered="#{profesorController.selected != null}">
+                        <p:outputLabel value="Nombre" for="nombre" />
+                        <p:inputText id="nombre" value="#{profesorController.selected.nombre}" title="#{bundle.EditProfesorTitle_nombre}" required="true" requiredMessage="Debe ingresar el nombre del profesor"/>
+                        <p:outputLabel value="Apellido" for="apellido" />
+                        <p:inputText id="apellido" value="#{profesorController.selected.apellido}" title="#{bundle.EditProfesorTitle_apellido}" required="true" requiredMessage="Debe ingresar el nombre del profesor" />
+                        <p:outputLabel value="E-mail" for="mail" />
+                        <p:inputText id="mail" value="#{profesorController.selected.mail}" title="#{bundle.CreateProfesorTitle_mail}" validatorMessage="El email no es válido">
+                            <f:validateRegex pattern="[\w\.-]*[a-zA-Z0-9_]@[\w\.-]*[a-zA-Z0-9]\.[a-zA-Z][a-zA-Z\.]*[a-zA-Z]" />
+                        </p:inputText>
+                        <p:outputLabel value="RUT" for="rut" />
+                        <p:inputText id="rut" value="#{profesorController.selected.rutProfesor}" title="#{bundle.EditProfesorTitle_rut}" />
+                    </p:panelGrid>
+                    <p:commandButton actionListener="#{profesorController.update}" value="Guardar" update="display,:ProfesorListForm:datalist,:growl" oncomplete="handleSubmit(args, 'ProfesorEditDialog');"/>
+                    <p:commandButton value="Cancelar" onclick="ProfesorEditDialog.hide()"/>
+                </h:panelGroup>
+            </h:form>
+        </p:dialog>
+
+    </ui:composition>
+</html>

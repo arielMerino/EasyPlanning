@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            Profesor por asignatura
+        </ui:define>
+        <ui:define name="body">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-12">
+                        <ol class="breadcrumb">
+                            <li><a href="/easy-planning-web/faces/coordinador_docente/index.xhtml">Inicio</a></li>
+                            <li><a href="#">Planificación Docente</a></li>
+                            <li class="active">Asignaturas con Profesor</li>
+                        </ol>
+                    </div>                                        
+                </div>
+                <div class="row" role="tabpanel">
+                    <div class="col-md-12">
+                        <ul class="nav nav-tabs" role="tablist">
+                            <li role="presentation" class="active"><a class="tab-panel-link" href="#prof-asig" aria-controls="prof-asig" role="tab" data-toggle="tab">Ver según Profesores</a></li>
+                            <li role="presentation"><a class="tab-panel-link" href="#asig-prof" aria-controls="asig-prof" role="tab" data-toggle="tab">Ver según Asignaturas</a></li>
+                        </ul>
+                        <div class="tab-content">
+                            <div role="tabpanel" class="tab-pane active" id="prof-asig">
+                                <h:form>
+                                    <p:panel class="new-body">
+                                        <p:dataTable id="datalist"
+                                                     value="#{profesorController.items}"
+                                                     var="profesor"
+                                                    widgetVar="profesoresTable"
+                                                    filteredValue="#{profesorController.profesoresFiltrados}"
+                                                    emptyMessage="No se han encontrado profesores según los parámetros indicados">
+
+                                            <p:columnGroup type="header">
+                                                <p:row>
+                                                    <p:column colspan="2" headerText="Profesor"/>
+                                                    <p:column colspan="5" headerText="Asignatura"/>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column headerText="Nombre" filterBy="#{profesor.nombre}" filterMatchMode="contains"/>
+                                                    <p:column headerText="Apellido" filterBy="#{profesor.apellido}" filterMatchMode="contains"/>
+                                                    <p:column headerText="Código" colspan="1"/>
+                                                    <p:column headerText="Nombre" colspan="1"/>
+                                                    <p:column headerText="Carrera" colspan="1"/>
+                                                    <p:column headerText="Plan de Estudios" colspan="1"/>
+                                                    <p:column headerText="Nivel" colspan="1"/>
+                                                    
+                                                </p:row>
+                                            </p:columnGroup>
+                                            <p:column>
+                                                <h:outputText value="#{profesor.nombre}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{profesor.apellido}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).codigo}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).nombre}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).carrera.nombre}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).planEstudio}"/>
+                                            </p:column>
+                                            <p:column  styleClass="panel-item">
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).nivel}"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:panel>
+                                </h:form>
+                            </div>
+                            <div role="tabpanel" class="tab-pane" id="asig-prof">
+                                <h:form>
+                                    <p:panel class="new-body">
+                                        <p:dataTable id="datalist"
+                                                     value="#{asignaturaController.listaAsignaturas}"
+                                                     var="asignatura"
+                                                    widgetVar="asignaturasTable"
+                                                    filteredValue="#{asignaturaController.asignaturasFiltradas}"
+                                                    emptyMessage="No se han encontrado asignaturas según los parámetros indicados">
+
+                                            <p:columnGroup type="header">
+                                                <p:row>
+                                                    <p:column colspan="5" headerText="Asignatura"/>
+                                                    <p:column colspan="1" headerText="Profesor"/>
+                                                </p:row>
+                                                <p:row>
+                                                    <p:column headerText="Código" filterBy="#{asignatura.codigo}" filterMatchMode="contains"/>
+                                                    <p:column headerText="Nombre" filterBy="#{asignatura.nombre}" filterMatchMode="contains"/>
+                                                    <p:column headerText="Nivel" filterBy="#{asignatura.nivel}" filterMatchMode="contains"/>
+                                                    <p:column headerText="Carrera" filterBy="#{asignatura.carrera.nombre}" filterMatchMode="contains"/>
+                                                    <p:column headerText="Plan de Estudios" filterBy="#{asignatura.planEstudio}" filterMatchMode="in">
+                                                        <f:facet name="filter">
+                                                            <p:selectCheckboxMenu label="Planes de Estudio" onchange="PF('asignaturasTable').filter()" scrollHeight="150">
+                                                                <f:selectItems value="#{asignaturaController.planesDeEstudio}" />
+                                                            </p:selectCheckboxMenu>
+                                                        </f:facet>
+                                                    </p:column>
+                                                    <p:column headerText="Nombre Apellido" colspan="1"/>
+                                                </p:row>
+                                            </p:columnGroup>
+                                            <p:column>
+                                                <h:outputText value="#{asignatura.codigo}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{asignatura.nombre}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{asignatura.nivel}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{asignatura.carrera.nombre}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{asignatura.planEstudio}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{profesorController.getProfesorAsignado(asignatura.id).nombre} #{profesorController.getProfesorAsignado(asignatura.id).apellido}"/>
+                                            </p:column>
+                                        </p:dataTable>
+                                    </p:panel>
+                                </h:form>
+                            </div>
+                        </div>    
+                    </div>
+                    
+                </div>
+            </div>
+            
+            
+        </ui:define>
+    </ui:composition>
+</html>
