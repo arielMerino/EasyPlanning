@@ -93,6 +93,18 @@ public class ProfesorController implements Serializable {
         return selected;
     }
 
+    public Profesor getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
+    }
+    
+    public void setProfesorById(String idProfesor) {
+        this.profesor = profesorFacade.find(idProfesor);
+    }
+
     public void setSelected(Profesor selected) {
         this.selected = selected;
     }
