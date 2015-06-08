@@ -8,20 +8,24 @@
 >    
     <ui:composition template="/template_profesor.xhtml">
         <ui:define name="title">
-            <h:outputText value="Ver Asignación"/>
+            <h:outputText value="Mi Horario"/>
         </ui:define>
         <ui:define name="body">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-1 col-md-offset-11 logut-link">
+                    <div class="col-md-11">
+                        <ol class="breadcrumb">
+                            <li><a href="/easy-planning-web/faces/profesor/index.xhtml">Inicio</a></li>
+                            <li class="active">Mi Horario Planificado</li>
+                        </ol>
+                    </div>
+                    <div class="col-md-1 logut-link">
                         <h:form>
                             <p:commandLink action="#{usuarioController.logout()}" value="Salir"/>
                         </h:form>
                     </div> 
                 </div>
-                <div class="row">
-                    <!-- setear un profesor por defecto para facilitar el trabajo -->
-                    #{profesorController.setIdProfesor("14.741.130-8")}
+                <div class="row">                    
                     <c:set var="lista" value="#{profesorController.getHorariosAsignado()}" scope="request"/>
 
                     <p:panel id="horarioAsignacion">
