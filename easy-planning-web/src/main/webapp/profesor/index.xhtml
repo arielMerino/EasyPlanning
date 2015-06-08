@@ -17,7 +17,8 @@ and open the template in the editor.
             <h:outputText value="Inicio"/>
         </ui:define>
         <ui:define name="body">
-            <c:set var="#{profesorController.idProfesor}" value="#{usuarioController.nombre}"/>
+            <c:set var="rut" value="#{usuarioController.nombre}" />
+            #{profesorController.setIdProfesor(rut)}
             <div class="container-fluid">
                 <div class="row">
                     <div class="col-md-11">
@@ -47,7 +48,7 @@ and open the template in the editor.
                     </div>
                     <div class="col-md-4">
                         <div class="opcion-profesor">
-                            <h:outputLink class="link-opcion-profesor" id="horario" value="#">
+                            <h:outputLink class="link-opcion-profesor" id="horario" value="/easy-planning-web/faces/profesor/miHorario.xhtml">
                                 <h:outputText value="Mi Horario Planificado" />
                             </h:outputLink>
                             <p:tooltip class="tooltip-index" for="horario" value="Sección en la que se muestran las Asignaturas asignadas con su respectivo horario" />
