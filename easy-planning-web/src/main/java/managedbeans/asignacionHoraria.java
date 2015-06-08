@@ -437,6 +437,7 @@ public class asignacionHoraria implements Serializable {
         }
         
         disponibles.sort(null);
+
         for (String s : disponibles){
             salida += s+" ";
         }

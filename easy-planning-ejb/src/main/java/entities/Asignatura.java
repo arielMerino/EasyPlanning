@@ -59,7 +59,6 @@ public class Asignatura implements Serializable {
     @OneToMany
     private List<Asignatura> prerequisitos;
     
-    
     @ManyToMany
     private List<Profesor> profesores;
     
@@ -105,6 +104,10 @@ public class Asignatura implements Serializable {
 
     public int getLaboratorio() {
         return laboratorio;
+    }
+
+    public void setProfesores(List<Profesor> profesores) {
+        this.profesores = profesores;
     }
 
     public void setLaboratorio(int laboratorio) {
