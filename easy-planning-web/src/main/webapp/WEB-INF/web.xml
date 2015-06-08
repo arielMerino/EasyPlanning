@@ -30,7 +30,7 @@
         </web-resource-collection>
         <auth-constraint>
             <description/>
-            <role-name>Coordinador Docente</role-name>
+            <role-name>COORDINADOR DOCENTE</role-name>
         </auth-constraint>
     </security-constraint>
     <security-constraint>
@@ -42,7 +42,7 @@
         </web-resource-collection>
         <auth-constraint>
             <description/>
-            <role-name>Profesor</role-name>
+            <role-name>PROFESOR</role-name>
         </auth-constraint>
     </security-constraint>
     <security-constraint>
@@ -54,7 +54,7 @@
         </web-resource-collection>
         <auth-constraint>
             <description/>
-            <role-name>Secretaria</role-name>
+            <role-name>SECRETARIA</role-name>
         </auth-constraint>
     </security-constraint>
     <login-config>
@@ -67,14 +67,14 @@
     </login-config>
     <security-role>
         <description/>
-        <role-name>Coordinador Docente</role-name>
+        <role-name>COORDINADOR DOCENTE</role-name>
     </security-role>
     <security-role>
         <description/>
-        <role-name>Secretaria</role-name>
+        <role-name>SECRETARIA</role-name>
     </security-role>
     <security-role>
         <description/>
-        <role-name>Profesor</role-name>
+        <role-name>PROFESOR</role-name>
     </security-role>
 </web-app>

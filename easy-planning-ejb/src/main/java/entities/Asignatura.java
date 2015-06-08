@@ -50,6 +50,7 @@ public class Asignatura implements Serializable {
     private int teoria;
     private int ejercicios;
     private int laboratorio;
+    @Column(name = "alias")
     private String alias_asignatura;
     
     @ManyToOne
@@ -57,7 +58,6 @@ public class Asignatura implements Serializable {
     
     @OneToMany
     private List<Asignatura> prerequisitos;
-    
     
     @ManyToMany
     private List<Profesor> profesores;
@@ -104,6 +104,10 @@ public class Asignatura implements Serializable {
 
     public int getLaboratorio() {
         return laboratorio;
+    }
+
+    public void setProfesores(List<Profesor> profesores) {
+        this.profesores = profesores;
     }
 
     public void setLaboratorio(int laboratorio) {

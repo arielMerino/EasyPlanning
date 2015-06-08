@@ -195,7 +195,6 @@ public class SeccionController implements Serializable {
                 mensaje = "Secciones creadas con éxito";
             }
             else{
-                
                 mensaje = "No se han creado secciones";
             }
         }catch (Exception e) {

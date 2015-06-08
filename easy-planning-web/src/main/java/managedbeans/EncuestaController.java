@@ -33,7 +33,7 @@ import sessionbeans.ProfesorFacadeLocal;
 public class EncuestaController implements Serializable {
     
     @EJB
-    private EncuestaFacadeLocal encuestaFacade;    
+    private EncuestaFacadeLocal encuestaFacade;
     @EJB
     private ChecklistFacadeLocal checklistFacade;
     @EJB
@@ -55,7 +55,7 @@ public class EncuestaController implements Serializable {
     private String[] horariosSeleccionados;    
     
     public EncuestaController() {
-    }        
+    }
 
     public ParamSemestreAnioFacadeLocal getParamFacade() {
         return paramFacade;

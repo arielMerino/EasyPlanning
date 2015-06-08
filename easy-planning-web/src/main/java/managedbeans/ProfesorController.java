@@ -59,17 +59,9 @@ public class ProfesorController implements Serializable {
     private List<Profesor> items;
     private List<Profesor> profesoresFiltrados;    
     private String rutProfesor;
-    private String[] horariosSeleccionados;        
+    private String[] horariosSeleccionados;
 
     public ProfesorController() {
-    }
-
-    public Profesor getProfesor() {
-        return profesor;
-    }
-
-    public void setProfesor(String id) {
-        this.profesor = this.profesoresBusiness.findByRut(id);
     }
 
     public String getIdProfesor() {
@@ -99,6 +91,18 @@ public class ProfesorController implements Serializable {
 
     public Profesor getSelected() {
         return selected;
+    }
+
+    public Profesor getProfesor() {
+        return profesor;
+    }
+
+    public void setProfesor(Profesor profesor) {
+        this.profesor = profesor;
+    }
+    
+    public void setProfesorById(String idProfesor) {
+        this.profesor = profesorFacade.find(idProfesor);
     }
 
     public void setSelected(Profesor selected) {

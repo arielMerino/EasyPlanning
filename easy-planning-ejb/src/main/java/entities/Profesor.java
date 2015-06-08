@@ -57,7 +57,7 @@ public class Profesor implements Serializable {
     private String apellido;
     @Column(name = "mail_profesor")
     private String mail;
-    
+    @Column(name = "alias")
     private String alias_profesor;
 
     public String getAlias() {
