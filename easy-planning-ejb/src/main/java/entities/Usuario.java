@@ -30,20 +30,21 @@ import javax.persistence.OneToMany;
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    private Long id;
     private String username;
+    private String nombre_usuario;
+    private String apellido_usuario;
     private String password;
+    private boolean activo = true;
 
     @OneToMany
-    private List<TipoUsuario> roles;
+    private List<TipoUsuario> tipos;
 
     public List<TipoUsuario> getRoles() {
-        return roles;
+        return tipos;
     }
 
     public void setRoles(List<TipoUsuario> roles) {
-        this.roles = roles;
+        this.tipos = roles;
     }
     
     public String getUsername() {
@@ -54,6 +55,30 @@ public class Usuario implements Serializable {
         this.username = username;
     }
 
+    public String getNombre_usuario() {
+        return nombre_usuario;
+    }
+
+    public void setNombre_usuario(String nombre_usuario) {
+        this.nombre_usuario = nombre_usuario;
+    }
+
+    public String getApellido_usuario() {
+        return apellido_usuario;
+    }
+
+    public void setApellido_usuario(String apellido_usuario) {
+        this.apellido_usuario = apellido_usuario;
+    }
+
+    public boolean isActivo() {
+        return activo;
+    }
+
+    public void setActivo(boolean activo) {
+        this.activo = activo;
+    }
+
     public String getPassword() {
         return password;
     }
@@ -61,38 +86,4 @@ public class Usuario implements Serializable {
     public void setPassword(String password) {
         this.password = password;
     }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    @Override
-    public int hashCode() {
-        int hash = 0;
-        hash += (id != null ? id.hashCode() : 0);
-        return hash;
-    }
-
-    @Override
-    public boolean equals(Object object) {
-        // TODO: Warning - this method won't work in the case the id fields are not set
-        if (!(object instanceof Usuario)) {
-            return false;
-        }
-        Usuario other = (Usuario) object;
-        if ((this.id == null && other.id != null) || (this.id != null && !this.id.equals(other.id))) {
-            return false;
-        }
-        return true;
-    }
-
-    @Override
-    public String toString() {
-        return "entities.Usuario[ id=" + id + " ]";
-    }
-    
 }
