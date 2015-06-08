@@ -41,7 +41,8 @@ public class AsignaturasTest {
     private static Asignatura asignatura9;
     private static Asignatura asignatura10;
     private static PlanEstudio plan;
-    private static VersionPlan versionPlan;
+    private static VersionPlan versionPlan1;
+    private static VersionPlan versionPlan2;
     private static Carrera carrera;
     private static Profesor profesor1;
     private static Profesor profesor2;
@@ -83,11 +84,17 @@ public class AsignaturasTest {
         plan.setJornada(0);
         plan.setCarrera(carrera);
         
-        versionPlan = new VersionPlan();
-        versionPlan.setAnio(2001);
-        versionPlan.setId(Long.parseLong("3"));
-        versionPlan.setPlanEstudio(plan);
-        versionPlan.setVersion(3);        
+        versionPlan1 = new VersionPlan();
+        versionPlan1.setAnio(2001);
+        versionPlan1.setId(Long.parseLong("3"));
+        versionPlan1.setPlanEstudio(plan);
+        versionPlan1.setVersion(3);   
+        
+        versionPlan2 = new VersionPlan();
+        versionPlan2.setAnio(2001);
+        versionPlan2.setId(Long.parseLong("2"));
+        versionPlan2.setPlanEstudio(plan);
+        versionPlan2.setVersion(2);   
         
         asignatura1 = new Asignatura();
         asignatura1.setCodigo("10101");
@@ -98,7 +105,7 @@ public class AsignaturasTest {
         asignatura1.setNivel(1);
         asignatura1.setNombre("CÁLCULO I PARA INGENIERÍA");
         asignatura1.setTeoria(6);
-        asignatura1.setVersionplan(versionPlan);
+        asignatura1.setVersionplan(versionPlan1);
         
         asignatura2 = new Asignatura();
         asignatura2.setCodigo("10102");
@@ -109,7 +116,7 @@ public class AsignaturasTest {
         asignatura2.setNivel(1);
         asignatura2.setNombre("ÁLGEBRA I PARA INGENIERÍA");
         asignatura2.setTeoria(6);
-        asignatura2.setVersionplan(versionPlan);
+        asignatura2.setVersionplan(versionPlan1);
         
         asignatura3 = new Asignatura();
         asignatura3.setCodigo("10103");
@@ -120,7 +127,7 @@ public class AsignaturasTest {
         asignatura3.setNivel(1);
         asignatura3.setNombre("FISICA I PARA INGENIERÍA");
         asignatura3.setTeoria(4);
-        asignatura3.setVersionplan(versionPlan);
+        asignatura3.setVersionplan(versionPlan1);
         
         asignatura4 = new Asignatura();
         asignatura4.setCodigo("10104");
@@ -131,7 +138,7 @@ public class AsignaturasTest {
         asignatura4.setNivel(1);
         asignatura4.setNombre("TALLER DE DESARROLLO PERSONAL E INTEGRAL");
         asignatura4.setTeoria(2);
-        asignatura4.setVersionplan(versionPlan);
+        asignatura4.setVersionplan(versionPlan1);
         
         asignatura5 = new Asignatura();
         asignatura5.setCodigo("10125");
@@ -142,7 +149,7 @@ public class AsignaturasTest {
         asignatura5.setNivel(1);
         asignatura5.setNombre("INTRODUCCION A LA INGENIERIA");
         asignatura5.setTeoria(0);
-        asignatura5.setVersionplan(versionPlan);
+        asignatura5.setVersionplan(versionPlan1);
         
         asignatura6 = new Asignatura();
         asignatura6.setCodigo("10126");
@@ -153,7 +160,7 @@ public class AsignaturasTest {
         asignatura6.setNivel(1);
         asignatura6.setNombre("METODOS DE ESTUDIO");
         asignatura6.setTeoria(0);
-        asignatura6.setVersionplan(versionPlan);
+        asignatura6.setVersionplan(versionPlan1);
         
         asignatura7 = new Asignatura();
         asignatura7.setCodigo("10107");
@@ -164,7 +171,7 @@ public class AsignaturasTest {
         asignatura7.setNivel(2);
         asignatura7.setNombre("CALCULO II PARA INGENIERÍA");
         asignatura7.setTeoria(6);
-        asignatura7.setVersionplan(versionPlan);
+        asignatura7.setVersionplan(versionPlan1);
         
         asignatura8 = new Asignatura();
         asignatura8.setCodigo("10108");
@@ -175,7 +182,7 @@ public class AsignaturasTest {
         asignatura8.setNivel(2);
         asignatura8.setNombre("ALGEBRA II PARA INGENIERÍA");
         asignatura8.setTeoria(4);
-        asignatura8.setVersionplan(versionPlan);
+        asignatura8.setVersionplan(versionPlan1);
         
         asignatura9 = new Asignatura();
         asignatura9.setCodigo("10109");
@@ -186,7 +193,7 @@ public class AsignaturasTest {
         asignatura9.setNivel(2);
         asignatura9.setNombre("FÍSICA II PARA INGENIERÍA");
         asignatura9.setTeoria(4);
-        asignatura9.setVersionplan(versionPlan);
+        asignatura9.setVersionplan(versionPlan1);
         
         asignatura10 = new Asignatura();
         asignatura10.setCodigo("10110");
@@ -197,7 +204,7 @@ public class AsignaturasTest {
         asignatura10.setNivel(2);
         asignatura10.setNombre("FUNDAMENTOS DE COMPUTACIÓN Y PROGRAMACIÓN");
         asignatura10.setTeoria(4);
-        asignatura10.setVersionplan(versionPlan);
+        asignatura10.setVersionplan(versionPlan1);
         asignatura10.setProfesores(null);
         
         asignatura7.setPrerequisitos(Arrays.asList(asignatura1));
@@ -223,7 +230,13 @@ public class AsignaturasTest {
         when(mockAsignaturas.findByCodigoAsgAndIdVersion("10101", Long.parseLong("4"))).thenReturn(null);
         when(mockAsignaturas.findByCodigoAsgAndIdVersion("10134", Long.parseLong("3"))).thenReturn(null);
         when(mockAsignaturas.getAllProfesorAsignatura()).thenReturn(Arrays.asList(asignatura1,asignatura2,asignatura3,asignatura4,asignatura5,asignatura6,asignatura7,asignatura8,asignatura8));
-        //when(mockAsignaturas.findByAsignaturaAsignada("18.338.861-4", 2012, 1)).thenReturn(asignatura1);
+        when(mockAsignaturas.findByNivelAndPlan(1, versionPlan1.getId())).thenReturn(Arrays.asList(asignatura1,asignatura2,asignatura3,asignatura4,asignatura5,asignatura6));
+        when(mockAsignaturas.findByNivelAndPlan(2, versionPlan1.getId())).thenReturn(Arrays.asList(asignatura7,asignatura8,asignatura9,asignatura10));
+        when(mockAsignaturas.findByNivelAndPlan(3, versionPlan1.getId())).thenReturn(new ArrayList<Asignatura>());
+        when(mockAsignaturas.findByNivelAndPlan(1, Long.parseLong("4"))).thenReturn(new ArrayList<Asignatura>());
+        when(mockAsignaturas.findNivelesByPlan(versionPlan1.getId())).thenReturn(Arrays.asList(1,2));
+        when(mockAsignaturas.findNivelesByPlan(versionPlan2.getId())).thenReturn(new ArrayList<Integer>());
+        
         
     }
     
@@ -255,8 +268,64 @@ public class AsignaturasTest {
         
     }   
     
+    @Test
+    public void testFindByNivelAndPlan(){
+        System.out.println("findByNivelAndPlan");
+        int nivel1 = 1;
+        int nivel2 = 2;
+        int nivel3 = 3;
+        long versionplan1 = Long.parseLong("3");
+        long versionplan2 = Long.parseLong("4");
+        
+        assertNotNull(mockAsignaturas.findByNivelAndPlan(nivel1, versionplan1));
+        assertNotNull(mockAsignaturas.findByNivelAndPlan(nivel2, versionplan1));
+        assertNotNull(mockAsignaturas.findByNivelAndPlan(nivel3, versionplan1));
+        assertNotNull(mockAsignaturas.findByNivelAndPlan(nivel1, versionplan2));
+        assertEquals(6, mockAsignaturas.findByNivelAndPlan(nivel1, versionplan1).size());
+        assertEquals("CÁLCULO I PARA INGENIERÍA", mockAsignaturas.findByNivelAndPlan(nivel1, versionplan1).get(0).getNombre());
+        assertEquals("10101", mockAsignaturas.findByNivelAndPlan(nivel1, versionplan1).get(0).getCodigo());
+        assertEquals("ÁLGEBRA I PARA INGENIERÍA", mockAsignaturas.findByNivelAndPlan(nivel1, versionplan1).get(1).getNombre());
+        assertEquals("10102", mockAsignaturas.findByNivelAndPlan(nivel1, versionplan1).get(1).getCodigo());
+        assertEquals("FISICA I PARA INGENIERÍA", mockAsignaturas.findByNivelAndPlan(nivel1, versionplan1).get(2).getNombre());
+        assertEquals("10103", mockAsignaturas.findByNivelAndPlan(nivel1, versionplan1).get(2).getCodigo());
+        assertEquals("TALLER DE DESARROLLO PERSONAL E INTEGRAL", mockAsignaturas.findByNivelAndPlan(nivel1, versionplan1).get(3).getNombre());
+        assertEquals("10104", mockAsignaturas.findByNivelAndPlan(nivel1, versionplan1).get(3).getCodigo());
+        assertEquals("INTRODUCCION A LA INGENIERIA", mockAsignaturas.findByNivelAndPlan(nivel1, versionplan1).get(4).getNombre());
+        assertEquals("10125", mockAsignaturas.findByNivelAndPlan(nivel1, versionplan1).get(4).getCodigo());
+        assertEquals("METODOS DE ESTUDIO", mockAsignaturas.findByNivelAndPlan(nivel1, versionplan1).get(5).getNombre());
+        assertEquals("10126", mockAsignaturas.findByNivelAndPlan(nivel1, versionplan1).get(5).getCodigo());
+        assertEquals(4, mockAsignaturas.findByNivelAndPlan(nivel2, versionplan1).size());
+        assertEquals("CALCULO II PARA INGENIERÍA", mockAsignaturas.findByNivelAndPlan(nivel2, versionplan1).get(0).getNombre());
+        assertEquals("10107", mockAsignaturas.findByNivelAndPlan(nivel2, versionplan1).get(0).getCodigo());
+        assertEquals("ALGEBRA II PARA INGENIERÍA", mockAsignaturas.findByNivelAndPlan(nivel2, versionplan1).get(1).getNombre());
+        assertEquals("10108", mockAsignaturas.findByNivelAndPlan(nivel2, versionplan1).get(1).getCodigo());
+        assertEquals("FÍSICA II PARA INGENIERÍA", mockAsignaturas.findByNivelAndPlan(nivel2, versionplan1).get(2).getNombre());
+        assertEquals("10109", mockAsignaturas.findByNivelAndPlan(nivel2, versionplan1).get(2).getCodigo());
+        assertEquals("FUNDAMENTOS DE COMPUTACIÓN Y PROGRAMACIÓN", mockAsignaturas.findByNivelAndPlan(nivel2, versionplan1).get(3).getNombre());
+        assertEquals("10110", mockAsignaturas.findByNivelAndPlan(nivel2, versionplan1).get(3).getCodigo());
+        assertEquals(0, mockAsignaturas.findByNivelAndPlan(nivel3, versionplan1).size());
+        assertEquals(0, mockAsignaturas.findByNivelAndPlan(nivel1, versionplan2).size());
+        
+    }
+    
+    @Test
+    public void testFindNivelesByPlan(){
+        System.out.println("findNivelesByPlan");
+        long version1 = Long.parseLong("3");
+        long version2 = Long.parseLong("2");
+        
+        assertNotNull(mockAsignaturas.findNivelesByPlan(version1));
+        assertNotNull(mockAsignaturas.findNivelesByPlan(version2));
+        assertEquals(2, mockAsignaturas.findNivelesByPlan(version1).size());
+        assertEquals("1", mockAsignaturas.findNivelesByPlan(version1).get(0).toString());
+        assertEquals("2", mockAsignaturas.findNivelesByPlan(version1).get(1).toString());
+        assertEquals(0, mockAsignaturas.findNivelesByPlan(version2).size());
+        
+    }
+    
     /*@Test
     public void testFindByAsignaturaAsignada(){
+        System.out.println("findByAsignaturaAsignada");
         
     }*/
 }

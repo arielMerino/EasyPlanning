@@ -10,6 +10,7 @@ import entities.Coordinacion;
 import entities.Horario;
 import entities.Profesor;
 import entities.Seccion;
+import entities.VersionPlan;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
@@ -48,6 +49,8 @@ public class HorariosTest {
     
     private static Seccion seccion1;
     private static Seccion seccion2;
+    
+    private static VersionPlan versionPlan;
     
     public HorariosTest() {
     }
@@ -89,6 +92,11 @@ public class HorariosTest {
         profesor4.setNombre("Luis");
         profesor4.setRutProfesor("14.162.240-4");
         
+        versionPlan = new VersionPlan();
+        versionPlan.setAnio(2015);
+        versionPlan.setId(Long.parseLong("1"));
+        versionPlan.setVersion(1);
+        
         asignatura = new Asignatura();
         asignatura.setCodigo("10101");
         asignatura.setEjercicios(2);
@@ -97,6 +105,7 @@ public class HorariosTest {
         asignatura.setNivel(1);
         asignatura.setNombre("CÁLCULO I PARA INGENIERÍA");
         asignatura.setTeoria(6);
+        asignatura.setVersionplan(versionPlan);
         
         coordinacion = new Coordinacion();
         coordinacion.setAnio(2015);
@@ -161,6 +170,14 @@ public class HorariosTest {
         when(mockHorarios.findBySeleccionados(profesor2.getRutProfesor())).thenReturn(Arrays.asList(horario3,horario4));
         when(mockHorarios.findBySeleccionados(profesor3.getRutProfesor())).thenReturn(Arrays.asList(horario5));
         when(mockHorarios.findBySeleccionados(profesor4.getRutProfesor())).thenReturn(null);
+        when(mockHorarios.findAsignadosByProfesorId(profesor1.getRutProfesor())).thenReturn(Arrays.asList(horario1));
+        when(mockHorarios.findAsignadosByProfesorId(profesor2.getRutProfesor())).thenReturn(null);
+        when(mockHorarios.findBybloqueCarreraPlanNivelAnioYSemestre(horario1.getBloque(), versionPlan.getId(), asignatura.getNivel(), coordinacion.getAnio(), coordinacion.getSemestre())).thenReturn(horario1);
+        when(mockHorarios.findBybloqueCarreraPlanNivelAnioYSemestre("L1", versionPlan.getId(), asignatura.getNivel(), coordinacion.getAnio(), coordinacion.getSemestre())).thenReturn(null);
+        when(mockHorarios.findBybloqueCarreraPlanNivelAnioYSemestre(horario1.getBloque(), Long.parseLong("2"), asignatura.getNivel(), coordinacion.getAnio(), coordinacion.getSemestre())).thenReturn(null);
+        when(mockHorarios.findBybloqueCarreraPlanNivelAnioYSemestre(horario1.getBloque(), versionPlan.getId(), 2, coordinacion.getAnio(), coordinacion.getSemestre())).thenReturn(null);
+        when(mockHorarios.findBybloqueCarreraPlanNivelAnioYSemestre(horario1.getBloque(), versionPlan.getId(), asignatura.getNivel(), 2016, coordinacion.getSemestre())).thenReturn(null);
+        when(mockHorarios.findBybloqueCarreraPlanNivelAnioYSemestre(horario1.getBloque(), versionPlan.getId(), asignatura.getNivel(), coordinacion.getAnio(), 2)).thenReturn(null);
         
     }
     
@@ -260,6 +277,43 @@ public class HorariosTest {
         assertEquals("4",mockHorarios.findBySeleccionados(rutProfesor2).get(1).getId().toString());
         assertEquals(1, mockHorarios.findBySeleccionados(rutProfesor3).size());
         assertEquals("5",mockHorarios.findBySeleccionados(rutProfesor3).get(0).getId().toString());
+    }
+    
+    @Test
+    public void testFindAsignadosByProfesorId(){
+        System.out.println("findAsignadosByProfesorId");
+        String rut1 = "18.338.861-4";
+        String rut2 = "7.413.382-7";
+        
+        assertNotNull(mockHorarios.findAsignadosByProfesorId(rut1));
+        assertNull(mockHorarios.findAsignadosByProfesorId(rut2));
+        assertEquals(1, mockHorarios.findAsignadosByProfesorId(rut1).size());
+        assertEquals("L2", mockHorarios.findAsignadosByProfesorId(rut1).get(0).getBloque());
+        
+    }
+    
+    @Test
+    public void testFindBybloqueCarreraPlanNivelAnioYSemestre(){
+        System.out.println("findBybloqueCarreraPlanNivelAnioYSemestre");
+        String bloque1 = "L2";
+        String bloque2 = "L1";
+        long version1 = Long.parseLong("1");
+        long version2 = Long.parseLong("2");
+        int nivel1 = 1;
+        int nivel2 = 2;
+        int anio1 = 2015;
+        int anio2 = 2016;
+        int semestre1 = 1;
+        int semestre2 = 2;
+        
+        assertNotNull(mockHorarios.findBybloqueCarreraPlanNivelAnioYSemestre(bloque1, version1, nivel1, anio1, semestre1));
+        assertNull(mockHorarios.findBybloqueCarreraPlanNivelAnioYSemestre(bloque2, version1, nivel1, anio1, semestre1));
+        assertNull(mockHorarios.findBybloqueCarreraPlanNivelAnioYSemestre(bloque1, version2, nivel1, anio1, semestre1));
+        assertNull(mockHorarios.findBybloqueCarreraPlanNivelAnioYSemestre(bloque1, version1, nivel2, anio1, semestre1));
+        assertNull(mockHorarios.findBybloqueCarreraPlanNivelAnioYSemestre(bloque1, version1, nivel1, anio2, semestre1));
+        assertNull(mockHorarios.findBybloqueCarreraPlanNivelAnioYSemestre(bloque1, version1, nivel1, anio1, semestre2));
+        assertEquals("1", mockHorarios.findBybloqueCarreraPlanNivelAnioYSemestre(bloque1, version1, nivel1, anio1, semestre1).getId().toString());
+        
     }
     
 }

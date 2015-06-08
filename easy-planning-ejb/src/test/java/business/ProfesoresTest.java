@@ -11,6 +11,8 @@ import entities.Encuesta;
 import entities.Horario;
 import entities.Profesor;
 import entities.Seccion;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import javax.ejb.embeddable.EJBContainer;
 import org.junit.After;
@@ -40,7 +42,8 @@ public class ProfesoresTest {
     
     private static Seccion seccion;
     
-    private static Horario horario;
+    private static Horario horario1;
+    private static Horario horario2;
     
     public ProfesoresTest() {
     }
@@ -93,12 +96,19 @@ public class ProfesoresTest {
         seccion.setCoordinacion(coordinacion);
         seccion.setId(Long.parseLong("1"));
         
-        horario = new Horario();
-        horario.setBloque("L1");
-        horario.setId(Long.parseLong("1"));
-        horario.setProfesor(profesor1);
-        horario.setSeccion(seccion);
-        horario.setTipo("Teoría");
+        horario1 = new Horario();
+        horario1.setBloque("L1");
+        horario1.setId(Long.parseLong("1"));
+        horario1.setProfesor(profesor1);
+        horario1.setSeccion(seccion);
+        horario1.setTipo("Teoría");
+        
+        horario2 = new Horario();
+        horario2.setBloque("W1");
+        horario2.setId(Long.parseLong("1"));
+        horario2.setProfesor(profesor1);
+        horario2.setSeccion(null);
+        horario2.setTipo("Teoría");
         
         when(mockProfesores.findByRut(profesor1.getRutProfesor())).thenReturn(profesor1);
         when(mockProfesores.findByRut("7.413.382-7")).thenReturn(null);
@@ -110,6 +120,8 @@ public class ProfesoresTest {
         when(mockProfesores.getProfesorByHorarioAsignado(Long.parseLong("3"), coordinacion.getAnio(), coordinacion.getSemestre())).thenReturn(null);
         when(mockProfesores.getProfesorByHorarioAsignado(coordinacion.getAsignatura().getId(), 2016, coordinacion.getSemestre())).thenReturn(null);
         when(mockProfesores.getProfesorByHorarioAsignado(coordinacion.getAsignatura().getId(), coordinacion.getAnio(), 2)).thenReturn(null);
+        when(mockProfesores.findDisponiblesByBloque(horario1.getBloque())).thenReturn(new ArrayList<Profesor>());
+        when(mockProfesores.findDisponiblesByBloque(horario2.getBloque())).thenReturn(Arrays.asList(profesor1));
         
     }
     
@@ -154,21 +166,18 @@ public class ProfesoresTest {
         assertEquals("1", mockProfesores.getEncuestaBySemestreAndAnio(rutProfesor1, semestre1, anio1).getId().toString());
     }
 
-    /*
     @Test
     public void testFindDisponiblesByBloque() throws Exception {
         System.out.println("findDisponiblesByBloque");
-        String bloque = "";
-        EJBContainer container = javax.ejb.embeddable.EJBContainer.createEJBContainer();
-        ProfesoresLocal instance = (ProfesoresLocal)container.getContext().lookup("java:global/classes/Profesores");
-        List<Profesor> expResult = null;
-        List<Profesor> result = instance.findDisponiblesByBloque(bloque);
-        assertEquals(expResult, result);
-        container.close();
-        // TODO review the generated test code and remove the default call to fail.
-        fail("The test case is a prototype.");
+        String bloque1 = "L1";
+        String bloque2 = "W1";
+        
+        assertNotNull(mockProfesores.findDisponiblesByBloque(bloque1));
+        assertNotNull(mockProfesores.findDisponiblesByBloque(bloque2));
+        assertEquals(0, mockProfesores.findDisponiblesByBloque(bloque1).size());
+        assertEquals(1, mockProfesores.findDisponiblesByBloque(bloque2).size());
+        assertEquals("18.338.861-4", mockProfesores.findDisponiblesByBloque(bloque2).get(0).getRutProfesor());
     }
-    */
 
     /**
      * Test of getProfesorByHorarioAsignado method, of class Profesores.
