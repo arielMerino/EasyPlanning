@@ -15,7 +15,7 @@ import javax.ejb.Local;
  */
 @Local
 public interface SeccionesLocal {
-    public List<Seccion> findBySemestreAnioCarreraPlan(int codCarrera, String plan, int anio, int semestre);
+    //public List<Seccion> findBySemestreAnioCarreraPlan(int codCarrera, String plan, int anio, int semestre);
     
     public List<Seccion> findByAsignaturaAnioYSemestre(long asg, int anio, int semestre);
 }

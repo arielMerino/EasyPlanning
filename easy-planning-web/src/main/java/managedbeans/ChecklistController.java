@@ -97,6 +97,7 @@ public class ChecklistController implements Serializable {
     }
 
     public void setRutProfesor(String rutProfesor) {
+        System.out.println("CHECKLIST RUT PROFE: " + rutProfesor);
         this.rutProfesor = rutProfesor;
     }
         

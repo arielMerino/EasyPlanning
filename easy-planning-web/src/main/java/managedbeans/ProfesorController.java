@@ -388,6 +388,29 @@ public class ProfesorController implements Serializable {
         return asignaturas;
     }
     
+    public boolean existeEncuestaActual(String profesor_id){
+        
+        List<Encuesta> encuestas = encuestaFacade.findAll();
+        ParamSemestreAno param = paramFacade.findAll().get(0);
+        
+        if(encuestas!=null){
+            
+            for(Encuesta e : encuestas){
+                System.out.println("Enceusta rut: "+e.getProfesor().getRutProfesor()+", Rut profe: "+profesor_id);
+                if(e.getProfesor().getRutProfesor().equals(profesor_id)){
+                    if(e.getAnio()==param.getAnoActual() && e.getSemestre()==param.getSemestreActual()){
+                        return true;
+                    }
+                }
+            }
+            return false;
+        }
+        else{
+            return false;
+        }
+        
+    }
+    
     @FacesConverter(forClass = Profesor.class)
     public static class ProfesorControllerConverter implements Converter {
 

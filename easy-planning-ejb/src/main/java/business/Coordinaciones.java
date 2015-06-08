@@ -36,7 +36,7 @@ public class Coordinaciones implements CoordinacionesLocal {
         }
     }
     
-    @Override
+    /*@Override
     public List<Coordinacion> findByCarreraAndPlanAndAnioAndSemestre(int carrera, String plan, int anio, int semestre){
         Query query = em.createNamedQuery("Coordinacion.findByCarreraAndPlanAndAnioAndSemestre").setParameter("carrera", carrera);
         query.setParameter("plan", plan);
@@ -47,7 +47,7 @@ public class Coordinaciones implements CoordinacionesLocal {
         }catch(NoResultException e){
             return new ArrayList<>();
         }
-    }
+    }*/
     
     // Add business logic below. (Right-click in editor and choose
     // "Insert Code > Add Business Method")

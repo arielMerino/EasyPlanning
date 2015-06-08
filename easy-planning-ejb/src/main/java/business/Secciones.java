@@ -23,7 +23,7 @@ public class Secciones implements SeccionesLocal {
     @PersistenceContext(unitName = "cl.G2Pingeso_easy-planning-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
     
-    @Override
+    /*@Override
     public List<Seccion> findBySemestreAnioCarreraPlan(int codCarrera, String plan, int anio, int semestre){
         Query query = em.createNamedQuery("Seccion.findByCarreraPlanAnioSemestre").setParameter("codigo", codCarrera);
         query.setParameter("plan", plan);
@@ -34,7 +34,7 @@ public class Secciones implements SeccionesLocal {
         }catch(NoResultException e){
             return new ArrayList<>();
         }
-    }
+    }*/
     
     @Override
     public List<Seccion> findByAsignaturaAnioYSemestre(long asg, int anio, int semestre){

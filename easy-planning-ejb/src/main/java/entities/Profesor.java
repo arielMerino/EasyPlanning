@@ -36,8 +36,8 @@ import javax.validation.constraints.Size;
     @NamedQuery(name="Profesor.getProfesorByHorarioAsignado",
             query="SELECT p FROM Profesor p, Coordinacion c, Seccion s, Horario h WHERE c.asignatura.id = :id_asignatura AND c.id = s.coordinacion.id AND s.id = h.seccion.id AND h.profesor.rutProfesor = p.rutProfesor AND c.anio = :anio AND c.semestre = :semestre"),
     
-    @NamedQuery(name="Profesor.getProfesorByRut",
-            query="SELECT p FROM Profesor p WHERE p.rutProfesor = :rutProfesor")
+    /*@NamedQuery(name="Profesor.getProfesorByRut",
+            query="SELECT p FROM Profesor p WHERE p.rutProfesor = :rutProfesor")*/
 })
 public class Profesor implements Serializable {
     @ManyToMany(mappedBy = "profesores")

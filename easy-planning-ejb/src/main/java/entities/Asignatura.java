@@ -19,8 +19,8 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name="Asignatura.findByCodigoAndPlan", 
-            query="SELECT a FROM Asignatura a WHERE a.codigo = :codigo AND a.versionplan = :plan"),
+    /*@NamedQuery(name="Asignatura.findByCodigoAndPlan", 
+            query="SELECT a FROM Asignatura a WHERE a.codigo = :codigo AND a.versionplan = :plan"),*/
     @NamedQuery(name="Asignatura.getAllProfesorAsignatura",
             query="SELECT a, p FROM Asignatura a JOIN a.profesores p"),
     @NamedQuery (name="Asignatura.findByVersionPlan",

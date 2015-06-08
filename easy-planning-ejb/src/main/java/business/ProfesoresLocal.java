@@ -24,5 +24,5 @@ public interface ProfesoresLocal {
     
     public Profesor getProfesorByHorarioAsignado(Long id_asignatura, int anio, int semestre);
     
-    public Profesor getProfesorByRut(String rut);
+    //public Profesor getProfesorByRut(String rut);
 }

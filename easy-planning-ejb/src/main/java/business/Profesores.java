@@ -73,7 +73,7 @@ public class Profesores implements ProfesoresLocal{
         }
     }
 
-    @Override
+    /*@Override
     public Profesor getProfesorByRut(String rut) {
         Query query = em.createNamedQuery("Profesor.getProfesorByRut").setParameter("rutProfesor", rut);
         try{
@@ -82,6 +82,6 @@ public class Profesores implements ProfesoresLocal{
         catch(Exception e){
             return null;
         }
-    }
+    }*/
     
 }

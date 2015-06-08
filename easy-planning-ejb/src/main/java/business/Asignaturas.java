@@ -37,7 +37,7 @@ public class Asignaturas implements AsignaturasLocal {
         }
     }
     */
-    @Override
+    /*@Override
     public Asignatura findByCarreraAndCodigoAndPlan(int carrera, String codigo, String plan) {
         Query query = em.createNamedQuery("Asignatura.findByCarreraAndCodigoAndPlan").setParameter("carrera", carrera);
         query.setParameter("codigo", codigo);
@@ -47,7 +47,7 @@ public class Asignaturas implements AsignaturasLocal {
         }catch(NoResultException e){
             return null;
         }
-    }
+    }*/
     
     @Override
     public Asignatura findByCodigoAsgAndIdVersion(String codigo, long idVersion){
