@@ -50,6 +50,7 @@ public class Asignatura implements Serializable {
     private int teoria;
     private int ejercicios;
     private int laboratorio;
+    @Column(name = "alias")
     private String alias_asignatura;
     
     @ManyToOne

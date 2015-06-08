@@ -82,10 +82,10 @@ public class UsuarioController implements Serializable{
                 JsfUtil.addSuccessMessage("Logeado con éxito");
                 Usuario usuario = ejbUsuario.findByUsername(nombre);
                 System.out.println("nombre de usuario: "+usuario.getUsername()+" - rol: "+usuario.getRoles().get(0).getTipo());
-                if(usuario.getRoles().get(0).getTipo().equals("Coordinador Docente")){
+                if(usuario.getRoles().get(0).getTipo().equals("COORDINADOR DOCENTE")){
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/index.xhtml");
                 }
-                else if(usuario.getRoles().get(0).getTipo().equals("Profesor")){
+                else if(usuario.getRoles().get(0).getTipo().equals("PROFESOR")){
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/profesor/index.xhtml");
                 }
                 else{
