@@ -380,7 +380,7 @@ public class ProfesorController implements Serializable {
                 v.add(alias);                
             }
             
-            color_posicion = v.indexOf(alias);
+            color_posicion = v.indexOf(alias) % 6;
             asignaturas[posicion + 54] = colores.get(color_posicion);            
             asignaturas[posicion] = alias;
         }
