@@ -5,10 +5,12 @@
  */
 package managedbeans;
 
+import entities.TipoUsuario;
 import entities.Usuario;
 import java.io.IOException;
 import java.io.Serializable;
 import java.security.Principal;
+import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.ejb.EJB;
@@ -35,8 +37,17 @@ public class UsuarioController implements Serializable{
     private String nombre;
     private String password;
     private boolean error = false;
+    private List<TipoUsuario> roles;
     @EJB
     private UsuarioFacadeLocal ejbUsuario;
+
+    public List<TipoUsuario> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<TipoUsuario> roles) {
+        this.roles = roles;
+    }
 
     public boolean isError() {
         return error;
@@ -81,6 +92,7 @@ public class UsuarioController implements Serializable{
                 System.out.println("SessionUtil: SessionScope created for " + nombre);
                 JsfUtil.addSuccessMessage("Logeado con éxito");
                 Usuario usuario = ejbUsuario.findByUsername(nombre);
+                setRoles(usuario.getRoles());
                 System.out.println("nombre de usuario: "+usuario.getUsername()+" - rol: "+usuario.getRoles().get(0).getTipo());
                 if(usuario.getRoles().get(0).getTipo().equals("COORDINADOR DOCENTE")){
                     FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/index.xhtml");
@@ -121,6 +133,19 @@ public class UsuarioController implements Serializable{
         ExternalContext externalContext = FacesContext.getCurrentInstance().getExternalContext();
         externalContext.invalidateSession();
         externalContext.redirect("/easy-planning-web/faces/login.xhtml");
+    }
+    
+    public boolean compruebaRoles(){
+        boolean roles = false;
+        if(getRoles().size() > 1){
+            if(getRoles().get(0).getTipo().equals("COORDINADOR DOCENTE") && getRoles().get(1).getTipo().equals("PROFESOR")){
+                roles = true;
+            }
+            else if(getRoles().get(1).getTipo().equals("COORDINADOR DOCENTE") && getRoles().get(0).getTipo().equals("PROFESOR")){
+                roles = true;
+            }
+        }
+        return roles;
     }
     
 }

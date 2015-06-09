@@ -4,7 +4,8 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <h:head>
         <title><ui:insert name="title">Easy Planning</ui:insert></title>
@@ -88,9 +89,10 @@
                                         <h4><strong><h:outputText value="#{coordinadorController.getSemestreActual()}" id="param-semestre"/> - <h:outputText value="#{coordinadorController.getAnioActual()}" id="param-anio"/></strong></h4>
                                     </div>
                                     <div class="col-md-2">
-                                        <!--p:commandLink value="Salir" action="#//{usuarioController.logout()}"/-->  
-                                        <a id="btn-sesion" href="/easy-planning-web/faces/coordinador_docente/index.xhtml" class="btn btn-default">Coord Doc</a> 
-                                        <a class="btn btn-default" id="btn-sesion" href="/easy-planning-web/faces/profesor/index.xhtml">Profesor</a>
+                                        <c:if test="#{usuarioController.compruebaRoles()}">
+                                            <a id="btn-sesion" href="/easy-planning-web/faces/coordinador_docente/index.xhtml" class="btn btn-default">Coord Doc</a> 
+                                            <a class="btn btn-default" id="btn-sesion" href="/easy-planning-web/faces/profesor/index.xhtml">Profesor</a>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>

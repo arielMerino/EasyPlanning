@@ -4,7 +4,8 @@
       xmlns:b="http://bootsfaces.net/ui"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
       xmlns:h="http://xmlns.jcp.org/jsf/html"
-      xmlns:p="http://primefaces.org/ui">
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <h:head>
         <title><ui:insert name="title">Easy Planning</ui:insert></title>
@@ -47,14 +48,15 @@
                                     <div class="col-md-10">
                                         <ul class="nav navbar-nav menu-nav">
                                             <li><a href="/easy-planning-web/faces/profesor/index.xhtml"><span class="glyphicon glyphicon-home" aria-hidden="true" ></span> Inicio</a></li>
-                                            <li><a href="/easy-planning-web/faces/profesor/encuesta.xhtml"><span class="glyphicon glyphicon-list-alt" aria-hidden="true" ></span> Encuesta de Disponibilidad</a></li>
-                                            <li><a href="/easy-planning-web/faces/profesor/miHorario.xhtml"> Mi Horario Planificado</a></li>
+                                            <li><a href="/easy-planning-web/faces/profesor/encuesta.xhtml"><span class="glyphicon glyphicon-check" aria-hidden="true" ></span> Encuesta de Disponibilidad</a></li>
+                                            <li><a href="/easy-planning-web/faces/profesor/miHorario.xhtml"><span class="glyphicon glyphicon-calendar" aria-hidden="true" ></span>  Mi Horario Planificado</a></li>
                                         </ul>
                                     </div>
                                     <div class="col-md-2">
-                                        <!--p:commandLink value="Salir" action="#//{usuarioController.logout()}"/-->  
-                                        <a id="btn-sesion" href="/easy-planning-web/faces/coordinador_docente/index.xhtml" class="btn btn-default">Coord Doc</a> 
-                                        <a class="btn btn-default" id="btn-sesion" href="/easy-planning-web/faces/profesor/index.xhtml">Profesor</a>
+                                        <c:if test="#{usuarioController.compruebaRoles()}">
+                                            <a id="btn-sesion" href="/easy-planning-web/faces/coordinador_docente/index.xhtml" class="btn btn-default">Coord Doc</a> 
+                                            <a class="btn btn-default" id="btn-sesion" href="/easy-planning-web/faces/profesor/index.xhtml">Profesor</a>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>
