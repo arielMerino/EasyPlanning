@@ -30,6 +30,7 @@ import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import org.apache.poi.hssf.usermodel.HSSFCell;
@@ -404,8 +405,14 @@ public class CargarPlanDeEstudios implements Serializable {
             catch(EJBException ex2){
                 aux = "Ya existe un Plan de Estudios con el nombre '"+nombrePlan+"'";
             }
+            catch(Exception ex3){
+                aux = "El archivo no es válido";
+            }
             
-        }        
+        } 
+        catch(Exception ex3){
+            aux = "El archivo no es válido";
+        }       
     }
     
     public void persist(Asignatura asignatura){
