@@ -14,6 +14,7 @@ import entities.Seccion;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.EJB;
 import sessionbeans.AsignaturaFacadeLocal;
@@ -138,16 +139,21 @@ public class SeccionController implements Serializable {
     
     public void generarSeccionesBasicas(int carrera, int plan, int semestre, int ano){
         List<Asignatura> asignaturas;
+        ArrayList<Asignatura> asignaturasPlan = new ArrayList<>();
         try {
             asignaturas = asignaturaFacade.findAll();
+            
             for (Asignatura a: asignaturas){
-                if (!a.getVersionplan().getId().equals(Long.valueOf(plan+"")))
-                    asignaturas.remove(a);
+                System.out.println("ID: "+a.getId().toString());
+                if (a.getVersionplan().getId().equals(Long.valueOf(plan+""))){
+                    //asignaturas.remove(a);
+                    asignaturasPlan.add(a);
+                }
             }
             boolean seguir = true;
             System.out.println(asignaturas.size());
             System.out.println("plan: "+plan);
-            for(Asignatura asg : asignaturas){
+            for(Asignatura asg : asignaturasPlan){
                 //para que no hayan 2 coordinaciones para el mismo ramo en el mismo semestre
                 
                 if(coordinacionBusiness.findByAsignaturaAndAnioAndSemestre(asg, ano, semestre) == null){
@@ -165,7 +171,7 @@ public class SeccionController implements Serializable {
                 }
             }
             if (seguir == true){
-                for(Asignatura asg : asignaturas){
+                for(Asignatura asg : asignaturasPlan){
                     Coordinacion cord = coordinacionBusiness.findByAsignaturaAndAnioAndSemestre(asg, ano, semestre);
                     if (cord != null){
                         int t = asg.getTeoria();

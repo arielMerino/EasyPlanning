@@ -32,7 +32,18 @@
                 
                 <c:set var="profesor_id" value="#{param['id']}" scope="request" />
                 
-                <c:set var="hayEncuesta" value="#{profesorController.hayEncuesta(profesor_id)}" scope="request"/>
+                <c:if test="#{not empty profesor_id}">
+                   #{checklistController.setRutProfesor(profesor_id)}
+               </c:if>
+                
+                <c:if test="#{empty profesor_id}">
+                    <c:set var="hayEncuesta" value="#{profesorController.hayEncuesta(checklistController.rutProfesor)}" scope="request"/>
+                </c:if>
+                <c:if test="#{not empty profesor_id}">
+                    <c:set var="hayEncuesta" value="#{profesorController.hayEncuesta(profesor_id)}" scope="request"/>
+                </c:if>
+                
+                
                 <c:if test="#{hayEncuesta}">
                 <div class="row">
                     <div class="col-md-12">
