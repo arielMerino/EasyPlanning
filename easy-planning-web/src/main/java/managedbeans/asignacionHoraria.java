@@ -87,6 +87,15 @@ public class asignacionHoraria implements Serializable {
     private int semestreSelected = 1;
     private String bloqueSelected;
     private int asignar = 0;
+    private boolean muestraBoton = false;
+
+    public boolean isMuestraBoton() {
+        return muestraBoton;
+    }
+
+    public void setMuestraBoton(boolean muestraBoton) {
+        this.muestraBoton = muestraBoton;
+    }
 
     public int getCarreraSelected() {
         return carreraSelected;
@@ -156,6 +165,7 @@ public class asignacionHoraria implements Serializable {
     }
 
     public void setAsignar(int asignar) {
+        this.setMuestraBoton(false);
         this.asignar = asignar;
     }
     
@@ -327,7 +337,6 @@ public class asignacionHoraria implements Serializable {
         this.coordinacionSelected = coordinacionSelected;
     }
     public boolean validarAsignatura(){
-        System.out.println("Asignatura seleccionada: "+this.asignaturaSelected);
         if (this.asignaturaSelected == 0L){
             return false;
         }
@@ -448,6 +457,7 @@ public class asignacionHoraria implements Serializable {
     public void limpiarBloqueYprofesor(){
         this.profesorSelected = "";
         this.seccionId = 0L;
+        this.setMuestraBoton(false);
     }
     
     public List<Long> findPlanesByCodigoCarrera(long idCarrera){ //versiones
@@ -467,6 +477,7 @@ public class asignacionHoraria implements Serializable {
         if (h != null)
             horarioFacade.remove(h);
         limpiarBloqueYprofesor();
+        this.setMuestraBoton(false);
     }
     
     public void asignar(){
@@ -490,7 +501,9 @@ public class asignacionHoraria implements Serializable {
                 }
                 horarioFacade.create(h);
                 this.asignar = 0;
-                limpiarBloqueYprofesor();
+                
+                this.profesorSelected = "";
+                this.seccionId = 0L;
             }
             else{
                 h.setBloque(bloqueSelected);
@@ -512,11 +525,15 @@ public class asignacionHoraria implements Serializable {
                 }
                 horarioFacade.edit(h);
                 this.asignar = 0;
-                limpiarBloqueYprofesor();
+                
+                this.profesorSelected = "";
+                this.seccionId = 0L;
             }
         }
         else{
-            limpiarBloqueYprofesor();
+            
+            this.profesorSelected = "";
+            this.seccionId = 0L;
         }
     }
     
@@ -786,6 +803,18 @@ public class asignacionHoraria implements Serializable {
             JsfUtil.addErrorMessage("Ésta asignatura no posee secciones de laboratorio");
         }
         
+    }
+    
+    public boolean isSeccionSelected(){
+        try{
+            if(seccionId != 0L){
+                muestraBoton = true;
+            }
+            return seccionId != 0L;
+        }
+        catch(Exception e){
+        }
+        return false;
     }
     
     public asignacionHoraria() {
