@@ -31,4 +31,6 @@ public interface HorariosLocal {
     public List<Horario> findAsignadosByProfesorId(String rutProfesor);
     
     public Horario findBybloqueCarreraPlanNivelAnioYSemestre(String bloque, long idPlan, int nivel, int anio, int semestre);
+    
+    public Horario AsignadoByBloqueAndProfesor(String bloque, String rutProfesor);
 }

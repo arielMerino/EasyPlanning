@@ -120,7 +120,7 @@ public class EncuestaController implements Serializable {
     }
     
     public void precargar(String rutProfesor){
-        List<Horario> horarios = horarioBusiness.findBySeleccionados(rutProfesor);
+        List<Horario> horarios = horarioBusiness.findDisponiblesByProfesorId(rutProfesor);
         String[] bloques = new String[horarios.size()];
         for (int i = 0; i < horarios.size(); i++){
             bloques[i] = horarios.get(i).getBloque();
@@ -168,11 +168,18 @@ public class EncuestaController implements Serializable {
         }
     }
     
+    public boolean isBorrable(String bloque, String rutProfesor){
+        if(horarioBusiness.AsignadoByBloqueAndProfesor(bloque, rutProfesor) == null)
+            return true;
+        return false;
+    }
+    
     public void dropHorarios(String rutProfesor){
         List<Horario> horarios = horarioBusiness.findBySeleccionados(rutProfesor);
         if (horarios != null){
             for (Horario h : horarios){
-                horarioFacade.remove(h);
+                if (h.getSeccion()==null)
+                    horarioFacade.remove(h);
             }
         }
     }
