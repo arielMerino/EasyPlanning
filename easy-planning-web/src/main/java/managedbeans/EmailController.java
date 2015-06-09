@@ -126,25 +126,30 @@ public class EmailController implements Serializable {
         
         if(profesorController.getSelected() != null) {
             Profesor p = profesorController.getSelected();
-            String emailProfesor = p.getMail();
-            String nombre = "PAMELA AGUIRRE GUZMÁN";
-            String profesor = p.getNombre() + " " + p.getApellido();
-            String asunto = "Encuesta de disponibilidad horaria";
-            String contenido = "Profesor" + " " + profesor + " ";
-            contenido = contenido + "conteste la encuesta de disponibilidad horaria, por favor. http://localhost:8080/easy-planning-web/faces/profesor/encuesta.xhtml?id=";
-            contenido = contenido + p.getRutProfesor();
-            
-            ParamSemestreAno semAnho = getEjbSemAnio().find(Long.parseLong(1+""));
-            String rutProfesor = p.getRutProfesor();
             int semestre = ejbSemAnio.find(1L).getSemestreActual();
-            int anio = ejbSemAnio.find(1L).getAnoActual();            
+            int anio = ejbSemAnio.find(1L).getAnoActual(); 
+            String emailProfesor = p.getMail();
+            String nombre = "PAMELA AGUIRRE GUZMÁN";            
+            String asunto = "Encuesta de disponibilidad horaria";
+            String contenido = "Estimado Profesor:<br><br>";
+            contenido = contenido +
+            "El Comité de Docencia estará muy agradecido de que conteste la "
+            + "encuesta que se adjunta en el enlace para poder conocer su "
+            + "disponibilidad horaria y tener esta información para realizar"
+            + " la Planificación Docente del semestre " + semestre + " - " + 
+            anio + ".<br><br>http://localhost:8080/easy-planning-web/faces/profesor/"
+            + "encuesta.xhtml<br><br>Si el enlace no funciona correctamente, contáctese a la "
+            + "brevedad con su Coordinador(a) Docente<br><br>De antemano, "
+            + "gracias por su colaboración.<br>Saludos cordiales";                        
+                        
+            String rutProfesor = p.getRutProfesor();                       
             Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semestre, anio);
             
             if(encuesta == null){
                 encuesta = new Encuesta();
                 encuesta.setProfesor(p);            
-                encuesta.setAnio(semAnho.getAnoActual());
-                encuesta.setSemestre(semAnho.getSemestreActual());
+                encuesta.setAnio(anio);
+                encuesta.setSemestre(semestre);
                 getEjbEncuesta().create(encuesta);
                 
                 for(Asignatura asignatura : profesorController.getAsignaturasProfesor(rutProfesor)){
