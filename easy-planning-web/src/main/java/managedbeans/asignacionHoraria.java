@@ -522,109 +522,115 @@ public class asignacionHoraria implements Serializable {
     
     public void agregaSeccionTeoria(){
         Asignatura asignatura = getAsignaturaFacade().find(getAsignaturaSelected());
-        if(coordinacionesBusiness.findByAsignaturaAndAnioAndSemestre(asignatura, getAnioSelected(), getSemestreSelected()) == null){
-            Coordinacion coordinacion = new Coordinacion();
-            coordinacion.setAsignatura(asignatura);
-            coordinacion.setAnio(getAnioSelected());
-            coordinacion.setSemestre(getSemestreSelected());
-            coordinacion.setCantAlumnosEstimado(0);
-            coordinacion.setCantAlumnosReal(0);
-            coordinacionFacade.create(coordinacion);
+        if(asignatura.getTeoria() > 0 || asignatura.getEjercicios() > 0){
+            if(coordinacionesBusiness.findByAsignaturaAndAnioAndSemestre(asignatura, getAnioSelected(), getSemestreSelected()) == null){
+                Coordinacion coordinacion = new Coordinacion();
+                coordinacion.setAsignatura(asignatura);
+                coordinacion.setAnio(getAnioSelected());
+                coordinacion.setSemestre(getSemestreSelected());
+                coordinacion.setCantAlumnosEstimado(0);
+                coordinacion.setCantAlumnosReal(0);
+                coordinacionFacade.create(coordinacion);
+            }
+
+            Coordinacion coord = coordinacionesBusiness.findByAsignaturaAndAnioAndSemestre(asignatura, getAnioSelected(), getSemestreSelected());
+            List<Seccion> secciones = getSeccionesBusiness().findByAsignaturaAnioYSemestre(asignatura.getId(), getAnioSelected(), getSemestreSelected());
+            List<Seccion> seccionesTeoria = new ArrayList();
+            for(Seccion seccion : secciones){
+                if(seccion.getCodigo().equals("A-1") || seccion.getCodigo().equals("B-2") || seccion.getCodigo().equals("C-3") || seccion.getCodigo().equals("D-4") || seccion.getCodigo().equals("E-5") || seccion.getCodigo().equals("F-6") || seccion.getCodigo().equals("G-7") || seccion.getCodigo().equals("H-8") || seccion.getCodigo().equals("I-9") || seccion.getCodigo().equals("J-10")){
+                    seccionesTeoria.add(seccion);
+                }
+            }
+            switch(seccionesTeoria.size()){
+                case 0:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("A-1");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección A-1 creada con éxito");
+                    break;
+                }
+                case 1:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("B-2");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección B-2 creada con éxito");
+                    break;                
+                }
+                case 2:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("C-3");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección C-3 creada con éxito");
+                    break;                
+                }
+                case 3:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("D-4");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección D-4 creada con éxito");
+                    break;                
+                }
+                case 4:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("E-5");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección E-5 creada con éxito");
+                    break;                
+                }
+                case 5:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("F-6");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección F-6 creada con éxito");
+                    break;                
+                }
+                case 6:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("G-7");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección G-7 creada con éxito");
+                    break;                
+                }
+                case 7:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("H-8");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección H-8 creada con éxito");
+                    break;                
+                }
+                case 8:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("I-9");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección I-9 creada con éxito");
+                    break;                
+                }
+                case 9:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("J-10");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección J-10 creada con éxito");
+                    break;                
+                }
+                default:{
+                    JsfUtil.addErrorMessage("No se pueden agregar más secciones de teoría");
+                }
+            }    
+        }
+        else{
+            JsfUtil.addErrorMessage("Ésta asignatura no posee horas de teoría o ejercicios");
         }
         
-        Coordinacion coord = coordinacionesBusiness.findByAsignaturaAndAnioAndSemestre(asignatura, getAnioSelected(), getSemestreSelected());
-        List<Seccion> secciones = getSeccionesBusiness().findByAsignaturaAnioYSemestre(asignatura.getId(), getAnioSelected(), getSemestreSelected());
-        List<Seccion> seccionesTeoria = new ArrayList();
-        for(Seccion seccion : secciones){
-            if(seccion.getCodigo().equals("A-1") || seccion.getCodigo().equals("B-2") || seccion.getCodigo().equals("C-3") || seccion.getCodigo().equals("D-4") || seccion.getCodigo().equals("E-5") || seccion.getCodigo().equals("F-6") || seccion.getCodigo().equals("G-7") || seccion.getCodigo().equals("H-8") || seccion.getCodigo().equals("I-9") || seccion.getCodigo().equals("J-10")){
-                seccionesTeoria.add(seccion);
-            }
-        }
-        switch(seccionesTeoria.size()){
-            case 0:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("A-1");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección A-1 creada con éxito");
-                break;
-            }
-            case 1:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("B-2");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección B-2 creada con éxito");
-                break;                
-            }
-            case 2:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("C-3");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección C-3 creada con éxito");
-                break;                
-            }
-            case 3:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("D-4");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección D-4 creada con éxito");
-                break;                
-            }
-            case 4:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("E-5");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección E-5 creada con éxito");
-                break;                
-            }
-            case 5:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("F-6");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección F-6 creada con éxito");
-                break;                
-            }
-            case 6:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("G-7");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección G-7 creada con éxito");
-                break;                
-            }
-            case 7:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("H-8");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección H-8 creada con éxito");
-                break;                
-            }
-            case 8:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("I-9");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección I-9 creada con éxito");
-                break;                
-            }
-            case 9:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("J-10");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección J-10 creada con éxito");
-                break;                
-            }
-            default:{
-                JsfUtil.addErrorMessage("No se pueden agregar más secciones de teoría");
-            }
-        }
         
     }
     
@@ -643,116 +649,122 @@ public class asignacionHoraria implements Serializable {
             JsfUtil.addSuccessMessage("Última sección de teoría borrada con éxito");            
         }
         else{
-            JsfUtil.addErrorMessage("Ésta asignatura no posee secciones de teoría");
+            JsfUtil.addErrorMessage("Ésta asignatura no posee horas de teoría");
         }
         
     }
     
     public void agregaSeccionLaboratorio(){
         Asignatura asignatura = getAsignaturaFacade().find(getAsignaturaSelected());
-        if(coordinacionesBusiness.findByAsignaturaAndAnioAndSemestre(asignatura, getAnioSelected(), getSemestreSelected()) == null){
-            Coordinacion coordinacion = new Coordinacion();
-            coordinacion.setAsignatura(asignatura);
-            coordinacion.setAnio(getAnioSelected());
-            coordinacion.setSemestre(getSemestreSelected());
-            coordinacion.setCantAlumnosEstimado(0);
-            coordinacion.setCantAlumnosReal(0);
-            coordinacionFacade.create(coordinacion);
+        if(asignatura.getLaboratorio() > 0){
+            if(coordinacionesBusiness.findByAsignaturaAndAnioAndSemestre(asignatura, getAnioSelected(), getSemestreSelected()) == null){
+                Coordinacion coordinacion = new Coordinacion();
+                coordinacion.setAsignatura(asignatura);
+                coordinacion.setAnio(getAnioSelected());
+                coordinacion.setSemestre(getSemestreSelected());
+                coordinacion.setCantAlumnosEstimado(0);
+                coordinacion.setCantAlumnosReal(0);
+                coordinacionFacade.create(coordinacion);
+            }
+
+            Coordinacion coord = coordinacionesBusiness.findByAsignaturaAndAnioAndSemestre(asignatura, getAnioSelected(), getSemestreSelected());
+            List<Seccion> secciones = getSeccionesBusiness().findByAsignaturaAnioYSemestre(asignatura.getId(), getAnioSelected(), getSemestreSelected());
+            List<Seccion> seccionesLaboratorio = new ArrayList();
+            for(Seccion seccion : secciones){
+                if(seccion.getCodigo().equals("L-1") || seccion.getCodigo().equals("L-2") || seccion.getCodigo().equals("L-3") || seccion.getCodigo().equals("L-4") || seccion.getCodigo().equals("L-5") || seccion.getCodigo().equals("L-6") || seccion.getCodigo().equals("L-7") || seccion.getCodigo().equals("L-8") || seccion.getCodigo().equals("L-9") || seccion.getCodigo().equals("L-10")){
+                    seccionesLaboratorio.add(seccion);
+                }
+            }
+            switch(seccionesLaboratorio.size()){
+                case 0:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("L-1");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección L-1 creada con éxito");
+                    break;
+                }
+                case 1:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("L-2");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección L-2 creada con éxito");
+                    break;                
+                }
+                case 2:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("L-3");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección L-3 creada con éxito");
+                    break;                
+                }
+                case 3:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("L-4");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección L-4 creada con éxito");
+                    break;                
+                }
+                case 4:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("L-5");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección L-5 creada con éxito");
+                    break;                
+                }
+                case 5:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("L-6");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección L-6 creada con éxito");
+                    break;                
+                }
+                case 6:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("L-7");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección L-7 creada con éxito");
+                    break;                
+                }
+                case 7:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("L-8");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección L-8 creada con éxito");
+                    break;                
+                }
+                case 8:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("L-9");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección L-9 creada con éxito");
+                    break;                
+                }
+                case 9:{
+                    Seccion seccion = new Seccion();
+                    seccion.setCodigo("L-10");
+                    seccion.setCoordinacion(coord);
+                    getSeccionFacade().create(seccion);
+                    JsfUtil.addSuccessMessage("Sección L-10 creada con éxito");
+                    break;                
+                }
+                default:{
+                    JsfUtil.addErrorMessage("No se pueden agregar más secciones de laboratorio");
+                }
+            }    
+        }
+        else{
+            JsfUtil.addErrorMessage("Ésta asignatura no posee horas de laboratorio");
         }
         
-        Coordinacion coord = coordinacionesBusiness.findByAsignaturaAndAnioAndSemestre(asignatura, getAnioSelected(), getSemestreSelected());
-        List<Seccion> secciones = getSeccionesBusiness().findByAsignaturaAnioYSemestre(asignatura.getId(), getAnioSelected(), getSemestreSelected());
-        List<Seccion> seccionesLaboratorio = new ArrayList();
-        for(Seccion seccion : secciones){
-            if(seccion.getCodigo().equals("L-1") || seccion.getCodigo().equals("L-2") || seccion.getCodigo().equals("L-3") || seccion.getCodigo().equals("L-4") || seccion.getCodigo().equals("L-5") || seccion.getCodigo().equals("L-6") || seccion.getCodigo().equals("L-7") || seccion.getCodigo().equals("L-8") || seccion.getCodigo().equals("L-9") || seccion.getCodigo().equals("L-10")){
-                seccionesLaboratorio.add(seccion);
-            }
-        }
-        switch(seccionesLaboratorio.size()){
-            case 0:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("L-1");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección L-1 creada con éxito");
-                break;
-            }
-            case 1:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("L-2");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección L-2 creada con éxito");
-                break;                
-            }
-            case 2:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("L-3");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección L-3 creada con éxito");
-                break;                
-            }
-            case 3:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("L-4");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección L-4 creada con éxito");
-                break;                
-            }
-            case 4:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("L-5");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección L-5 creada con éxito");
-                break;                
-            }
-            case 5:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("L-6");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección L-6 creada con éxito");
-                break;                
-            }
-            case 6:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("L-7");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección L-7 creada con éxito");
-                break;                
-            }
-            case 7:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("L-8");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección L-8 creada con éxito");
-                break;                
-            }
-            case 8:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("L-9");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección L-9 creada con éxito");
-                break;                
-            }
-            case 9:{
-                Seccion seccion = new Seccion();
-                seccion.setCodigo("L-10");
-                seccion.setCoordinacion(coord);
-                getSeccionFacade().create(seccion);
-                JsfUtil.addSuccessMessage("Sección L-10 creada con éxito");
-                break;                
-            }
-            default:{
-                JsfUtil.addErrorMessage("No se pueden agregar más secciones de laboratorio");
-            }
-        }
         
     }
     
