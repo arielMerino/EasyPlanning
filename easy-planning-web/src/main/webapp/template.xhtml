@@ -16,6 +16,8 @@
         <h:outputScript library="js" name="bootstrap.min.js"/>
         <h:outputStylesheet library="css" name="style.css"/>
         <h:outputScript library="js" name="main.js"/>
+        <h:outputScript library="js" name="pace.min.js"/>
+        <h:outputStylesheet library="css" name="pace.css"/>
     </h:head>
 
     <h:body>
@@ -30,7 +32,7 @@
                     <div class="banner">
                         <div class="row">
                             <div class="col-md-2">
-                                <img src="#{resource['images/easyplanning_logo_blanco.png']}" class="img-responsive img-rounded img"/>
+                                <img src="#{resource['images/easyplanning_logo_blanco.png']}" class="img-responsive img-rounded img-easyplanning"/>
                             </div>
                             <div class="col-md-7">
                                 <br />
@@ -38,8 +40,8 @@
                                 <br />
                                 <h1 class="text-left"><strong>Easy Planning</strong></h1>
                             </div>
-                            <div class="col-md-2 col-md-offset-1">
-                                <img src="#{resource['images/UDS CGRS.png']}" class="img-responsive img-rounded img"></img>
+                            <div class="col-md-1 col-md-offset-2">
+                                <img src="#{resource['images/UDS TBCO.png']}" class="img-responsive img-rounded img-usach"></img>
                             </div>
                         </div>
                         <nav id="navbar" class="navbar navbar-default navbar-static-top menu-nav ">
@@ -48,7 +50,9 @@
                                 <div class="row">
                                     <div class="col-md-8">
                                         <ul class="nav navbar-nav menu-nav">
-                                            <li><a href="/easy-planning-web/faces/coordinador_docente/index.xhtml"><span class="glyphicon glyphicon-home" aria-hidden="true" ></span> Inicio</a></li>
+                                            <li>
+                                                <a href="/easy-planning-web/faces/coordinador_docente/index.xhtml"><span class="glyphicon glyphicon-home" aria-hidden="true" ></span> Inicio</a>
+                                            </li>
                                             <li class="dropdown">
                                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-education" aria-hidden="true" ></span> Profesores<span class="caret"></span></a>
                                                 <ul class="dropdown-menu" role="menu">
@@ -79,6 +83,9 @@
                                                   <li class="divider"></li>
                                                   <li><a href="/easy-planning-web/faces/coordinador_docente/profesor/profesor_asignatura.xhtml">Asignaturas con Profesor</a></li>
                                                 </ul>
+                                            </li>
+                                            <li>
+                                                <a href="/easy-planning-web/faces/coordinador_docente/ayuda.xhtml"><span class="glyphicon glyphicon-question-sign" aria-hidden="true"></span> Ayuda</a>
                                             </li>
                                         </ul>
                                     </div>

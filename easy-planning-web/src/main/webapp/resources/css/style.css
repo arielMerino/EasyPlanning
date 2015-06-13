@@ -5,6 +5,13 @@
 html .ui-layout-container{
     overflow-x: hidden ;
 }
+.ui-widget{
+    font-family: Helvetica, Arial, sans-serif;
+}
+body p a{
+    font-size: 14px !important;
+    line-height: 1.42857143;    
+}
 .horario-encuesta{
     font-weight: bold;
     text-align: center;
@@ -31,6 +38,7 @@ html .ui-layout-container{
 }
 .navbar-default .navbar-nav>li>a{
     color: #fff;
+    font-size: 16px;
 }
 .dropdown-menu{
     background-color: #ff7319;
@@ -99,9 +107,11 @@ html .ui-layout-container{
 .ui-state-hover a:hover{
     text-decoration: underline;
 }
-.img{
+.img-easyplanning{
     height: 10em;
-    width: 10em;
+}
+.img-usach{
+    width: 13em;
 }
 
 #horarioAsignacion{
@@ -264,7 +274,7 @@ html .ui-layout-container{
 }
 .panel-body-index>ul>li>a{
     color: #ff7319;
-    font-size: 1.2em;
+    font-size: 14px;
 }
 .panel-body-index>ul>li>a:hover{
     text-decoration: none;
@@ -300,4 +310,24 @@ html .ui-layout-container{
 .logut-link>form>a:hover{
     text-decoration: none;
     font-weight: bold;
+}
+#nav-scrollspy{
+    position: fixed;
+    top: 35%;
+    right: 0%;
+}
+.nav-side-fixed>li>a{
+    padding: 5px 15px;
+    color: #ff7319;
+}
+.nav-side-fixed>li>a:hover{
+    background-color: #ff7319;
+    color: #fff;
+}
+.title{
+    color: #ff7319;
+}
+.help-body{
+    color: #0052cc;
+    font-size: 14px;
 }
