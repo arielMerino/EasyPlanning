@@ -34,6 +34,10 @@ import sessionbeans.ChecklistFacadeLocal;
 import sessionbeans.EncuestaFacadeLocal;
 import sessionbeans.ParamSemestreAnioFacadeLocal;
 
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  *
  * @author alonso
@@ -42,6 +46,7 @@ import sessionbeans.ParamSemestreAnioFacadeLocal;
 @Named("emailController")
 @SessionScoped
 public class EmailController implements Serializable {
+    private final Logger logger = (Logger) LoggerFactory.getLogger(this.getClass());
     @Inject
     ProfesorController profesorController;
     
@@ -110,11 +115,11 @@ public class EmailController implements Serializable {
         
         JsfUtil.addSuccessMessage("El mensaje se ha enviado");
         } catch (AddressException e) {
-            e.printStackTrace();
+            logger.debug("Error con la dirección del correo", e);
             System.out.println(e.getMessage());
             JsfUtil.addSuccessMessage("AddressException");
         } catch (MessagingException e) {
-            e.printStackTrace();
+            logger.debug("Error en la red", e);
             System.out.println(e.getMessage());
             JsfUtil.addErrorMessage("Error en la red");
         }
