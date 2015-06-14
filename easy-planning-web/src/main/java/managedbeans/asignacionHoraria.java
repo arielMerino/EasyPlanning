@@ -31,6 +31,7 @@ import sessionbeans.CarreraFacadeLocal;
 import sessionbeans.ChecklistFacadeLocal;
 import sessionbeans.CoordinacionFacadeLocal;
 import sessionbeans.HorarioFacadeLocal;
+import sessionbeans.ParamSemestreAnioFacadeLocal;
 import sessionbeans.ProfesorFacadeLocal;
 import sessionbeans.SeccionFacadeLocal;
 import sessionbeans.VersionPlanFacadeLocal;
@@ -73,6 +74,8 @@ public class asignacionHoraria implements Serializable {
     private ProfesoresLocal profesoresBusiness;
     @EJB
     private VersionPlanFacadeLocal versionFacade;
+    @EJB
+    private ParamSemestreAnioFacadeLocal paramSemAno;
            
     private int carreraSelected = 0;
     private long planEstudioSelected = 0L; //version plan
@@ -91,6 +94,14 @@ public class asignacionHoraria implements Serializable {
 
     public boolean isMuestraBoton() {
         return muestraBoton;
+    }
+
+    public ParamSemestreAnioFacadeLocal getParamSemAno() {
+        return paramSemAno;
+    }
+
+    public void setParamSemAno(ParamSemestreAnioFacadeLocal paramSemAno) {
+        this.paramSemAno = paramSemAno;
     }
 
     public void setMuestraBoton(boolean muestraBoton) {
@@ -314,6 +325,7 @@ public class asignacionHoraria implements Serializable {
     }
     
     public int getAnioSelected() {
+        this.anioSelected = this.paramSemAno.find(1L).getAnoActual();
         return anioSelected;
     }
     
@@ -322,6 +334,7 @@ public class asignacionHoraria implements Serializable {
     }
 
     public int getSemestreSelected() {
+        this.semestreSelected = this.paramSemAno.find(1L).getSemestreActual();
         return this.semestreSelected;
     }
 

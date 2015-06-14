@@ -15,19 +15,22 @@
         <ui:define name="body">
             <div class="container-fluid">
                 <div class="row">
-                    <div class="col-md-11">
+                    <div class="col-md-10">
                         <ol class="breadcrumb">
                             <li><a href="/easy-planning-web/faces/coordinador_docente/index.xhtml">Inicio</a></li>
                             <li><a href="#">Profesores</a></li>
                             <li><a href="/easy-planning-web/faces/coordinador_docente/encuesta/lista_profesores.xhtml">Asignaturas Propuestas</a></li>
                             <li class="active">Editar Encuesta</li>
                         </ol>
-                    </div>  
-                    <div class="col-md-1 logut-link">
-                        <h:form>
-                            <p:commandLink action="#{usuarioController.logout()}" value="Salir"/>
-                        </h:form>
-                    </div>  
+                    </div>     
+                    <div class="col-md-2 logut-link">
+                        <div class="logout-div">
+                            <h:form>
+                                <p:commandLink action="#{usuarioController.logout()}" value="Cerrar Sesión"/>
+                                <span class="glyphicon glyphicon-log-out logut" aria-hidden="true"> </span>
+                            </h:form>
+                        </div>
+                    </div> 
                 </div>
                 
                 <c:set var="profesor_id" value="#{param['id']}" scope="request" />
