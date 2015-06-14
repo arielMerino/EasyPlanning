@@ -30,39 +30,13 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h:form enctype='multipart/form-data'>
-                            <h:outputLabel value="Seleccione la Carrera"/>
-                            <p:selectOneMenu value="#{seccionController.carrera}" required="true" requiredMessage="Debe indicar una carrera">
-                                <f:selectItem itemLabel="Seleccionar carrera" noSelectionOption="true" />
-                                <f:selectItems value="#{seccionController.carreraFacade.findAll()}" var="carrera" itemValue="#{carrera.id}" itemLabel="#{carrera.nombre}"/>
-                                <p:ajax process="@this" update="selectPlan" />
-                            </p:selectOneMenu>
-                            <br />
-                            <br />
-                            <h:outputLabel value="Plan de estudio a inicializar: "/>
-                            <p:selectOneMenu id="selectPlan" value="#{seccionController.planEstudio}" required="true" requiredMessage="Debe indicar el plan de estudios a inicializar">
-                                <f:selectItem itemLabel="Seleccionar plan de estudio" noSelectionOption="true" />
-                                <f:selectItems value="#{asignaturaController.getPlanesDeEstudio(seccionController.carrera)}" var="plan" itemValue="#{plan.id}" itemLabel="#{plan.planEstudio.codigo} - #{plan.anio}.#{plan.version} (#{cargarPlanDeEstudios.getJornada(plan.planEstudio.jornada)})"/>
-                            </p:selectOneMenu>
-                            <br />
-                            <br />
-                            <h:outputLabel value="Año a inicializar: "></h:outputLabel>
-                            <p:selectOneMenu id="console" value="#{seccionController.ano}" required="true" requiredMessage="Debe seleccionar el año a inicializar">
-                                <f:selectItem itemLabel="Elija un año" itemValue="" />
-                                <f:selectItem itemLabel="2015" itemValue="2015" />
-                                <f:selectItem itemLabel="2016" itemValue="2016" />
-                                <f:selectItem itemLabel="2017" itemValue="2017" />
-                            </p:selectOneMenu>
-                            <br />
-                            <br />
-                            <h:outputLabel value="Semestre a inicializar: "></h:outputLabel>
-                            <p:selectOneListbox value="#{seccionController.semestre}" required="true" requiredMessage="Debe indicar el semestre a inicializar">
-                                <f:selectItem itemLabel="1er Semestre" itemValue="1" />
-                                <f:selectItem itemLabel="2do Semestre" itemValue="2" />
-                            </p:selectOneListbox>
-                            <br />
-                            <p:commandButton value="Cargar" action="#{seccionController.generarSeccionesBasicas(seccionController.carrera,seccionController.planEstudio, seccionController.semestre, seccionController.ano)}" ajax="false"></p:commandButton>
+                            <h:outputLabel value="Seleccione las Carreras que va a planificar este semestre"/>
+                            <p:pickList value="#{cargarPlanDeEstudios.versionPickList}" var="vers" itemLabel="#{vers.planEstudio.carrera.nombre}-#{vers.planEstudio.codigo}.#{vers.anio}.#{vers.version} (#{cargarPlanDeEstudios.getJornada(vers.planEstudio.jornada)})" 
+                                        itemValue="#{vers}" showCheckbox="true" 
+                                        converter="VersionPlanConverter" showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains"/>
+                            
+                            <p:commandButton value="Iniciar Planificación" action="#{cargarPlanDeEstudios.iniciarPlanificacion()}" ajax="false"/>
                         </h:form>
-                        <p:outputLabel value="#{seccionController.mensaje}"></p:outputLabel>        
                     </div>
                 </div>
                 

@@ -31,9 +31,18 @@ public class VersionPlan implements Serializable {
     private Long id;
     private int anio;
     private int version;
+    private boolean planificado;
     
     @ManyToOne
     private PlanEstudio planEstudio;
+
+    public boolean isPlanificado() {
+        return planificado;
+    }
+
+    public void setPlanificado(boolean planificado) {
+        this.planificado = planificado;
+    }
 
     public PlanEstudio getPlanEstudio() {
         return planEstudio;

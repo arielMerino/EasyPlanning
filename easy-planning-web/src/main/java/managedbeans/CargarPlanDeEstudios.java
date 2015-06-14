@@ -11,6 +11,7 @@ import business.PlanesEstudioLocal;
 import business.VersionesPlanLocal;
 import entities.Asignatura;
 import entities.Carrera;
+import entities.ParamSemestreAno;
 import entities.PlanEstudio;
 import entities.VersionPlan;
 import java.io.BufferedReader;
@@ -33,14 +34,17 @@ import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import managedbeans.util.JsfUtil;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
 import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.NotOLE2FileException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.primefaces.model.DualListModel;
 import sessionbeans.AsignaturaFacadeLocal;
 import sessionbeans.CarreraFacadeLocal;
+import sessionbeans.ParamSemestreAnioFacadeLocal;
 import sessionbeans.PlanEstudioFacadeLocal;
 import sessionbeans.VersionPlanFacadeLocal;
 
@@ -77,6 +81,9 @@ public class CargarPlanDeEstudios implements Serializable {
     @EJB
     private VersionesPlanLocal versionesBusiness;
     
+    @EJB
+    private ParamSemestreAnioFacadeLocal paramFacade;
+    
     private int codigoPlan;
     private int versionPlan;
     private int anioPlan;
@@ -90,8 +97,34 @@ public class CargarPlanDeEstudios implements Serializable {
     private String aux;
     private boolean cargados = false;
     private List<Asignatura> asignaturasAñadidas = new ArrayList();
+    private DualListModel<VersionPlan> versionPickList;
+    //private List<VersionPlan> versionesSource;
+    //private List<VersionPlan> versionesTarget;
 
     public CargarPlanDeEstudios() {
+    }
+
+    public ParamSemestreAnioFacadeLocal getParamFacade() {
+        return paramFacade;
+    }
+
+    public void setParamFacade(ParamSemestreAnioFacadeLocal paramFacade) {
+        this.paramFacade = paramFacade;
+    }
+    
+    public DualListModel<VersionPlan> getVersionPickList() {
+        setVersionPickList();
+        return versionPickList;
+    }
+
+    public void setVersionPickList(DualListModel<VersionPlan> versionPickList) {
+        this.versionPickList = versionPickList;
+    }
+    
+    public void setVersionPickList(){
+        List<VersionPlan> versionesSource = getVersiones();
+        List<VersionPlan> versionesTarget = new ArrayList();
+        this.versionPickList = new DualListModel<>(versionesSource, versionesTarget);
     }
     
     public String getNombrePlan() {
@@ -433,5 +466,40 @@ public class CargarPlanDeEstudios implements Serializable {
     
     public AsignaturasLocal getBusiness(){
         return asignaturas;
+    }
+    
+    public void iniciarPlanificacion(){
+        if(this.versionPickList.getTarget().isEmpty()){
+            System.out.println("versionesTarget está vacío");
+            JsfUtil.addErrorMessage("No ha seleccionado ninguna carrera");
+        }
+        else{
+            System.out.println("VersionesTarget tiene contenido");
+            for(VersionPlan vp : this.versionPickList.getTarget()){
+                vp.setPlanificado(true);
+                this.version.edit(vp);
+            }
+            for(VersionPlan vp : this.versionPickList.getSource()){
+                vp.setPlanificado(false);
+                this.version.edit(vp);
+            }
+            avanzarSemestre();
+            JsfUtil.addSuccessMessage("Planificación iniciada correctamente para las carreras seleccionadas");
+        }
+    }
+    
+    public void avanzarSemestre(){
+        ParamSemestreAno paramSemAno = this.paramFacade.find(1L);
+        int sem = paramSemAno.getSemestreActual();
+        int ano = paramSemAno.getAnoActual();
+        if(sem == 1){
+            paramSemAno.setSemestreActual(2);
+            this.paramFacade.edit(paramSemAno);
+        }
+        else{
+            paramSemAno.setSemestreActual(1);
+            paramSemAno.setAnoActual(ano+1);
+            this.paramFacade.edit(paramSemAno);
+        }
     }
 }

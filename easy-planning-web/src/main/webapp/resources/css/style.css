@@ -111,7 +111,7 @@ body p a{
     height: 10em;
 }
 .img-usach{
-    width: 13em;
+    height: 10em;
 }
 
 #horarioAsignacion{
@@ -330,4 +330,7 @@ body p a{
 .help-body{
     color: #0052cc;
     font-size: 14px;
+}
+.ui-picklist .ui-picklist-list{
+    width: 35em !important;
 }

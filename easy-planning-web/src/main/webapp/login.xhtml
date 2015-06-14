@@ -28,7 +28,7 @@ and open the template in the editor.
             <div class="row">
                 <div class="col-md-12 banner">
                     <div class="col-md-2">
-                        <img src="#{resource['images/easyplanning_logo_blanco.png']}" class="img-responsive img-rounded img"/>
+                        <img src="#{resource['images/easyplanning_logo_blanco.png']}" class="img-responsive img-rounded img-easyplanning"/>
                     </div>
                     <div class="col-md-7">
                         <br />
@@ -37,13 +37,13 @@ and open the template in the editor.
                         <h1 class="text-left"><strong>Easy Planning</strong></h1>
                     </div>
                     <div class="col-md-2 col-md-offset-1">
-                        <img src="#{resource['images/UDS CGRS.png']}" class="img-responsive img-rounded img"></img>
+                        <img src="#{resource['images/UDS TBCO.png']}" class="img-responsive img-rounded img-usach"></img>
                     </div>
                 </div>
             </div>
-            <div class="row" id="banner-bottom">
-                
+            <div class="row" id="banner-bottom">                
             </div>
+            
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">
                     <div class="panel panel-default">
@@ -54,17 +54,16 @@ and open the template in the editor.
                             <h:form>
                                 <div class="form-group">
                                     <label for="inputUsername" class="label-form">Nombre de usuario</label>
-                                    <!--input type="text" class="form-control" id="inputUsername" placeholder="Nombre de usuario"/-->
                                     <h:inputText id="inputUsername" class="login-form form-control" value="#{usuarioController.nombre}"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPass" class="label-form">Contraseña</label>
-                                    <!--input type="password" class="form-control" id="inputPass" placeholder="Contraseña"/-->
                                     <h:inputSecret id="inputPass" class="login-form form-control" value="#{usuarioController.password}"/>
                                 </div>
-                                <div class="col-md-2 col-md-offset-9">
-                                    <!--button type="submit" class="btn btn-default"><strong>Ingresar</strong></button-->
-                                    <h:commandButton type="submit" class="btn btn-default" value="Ingresar" action="#{usuarioController.login()}"/>
+                                <div class="row">
+                                    <div class="col-md-2 col-md-offset-8">
+                                        <h:commandButton type="submit" class="btn btn-default" value="Ingresar" action="#{usuarioController.login()}"/>
+                                    </div>
                                 </div>
                             </h:form> 
                         </div>
