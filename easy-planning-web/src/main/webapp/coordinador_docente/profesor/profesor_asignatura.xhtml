@@ -64,28 +64,28 @@
                                                     
                                                 </p:row>
                                             </p:columnGroup>
-                                            <p:column>
+                                            <p:column class="column-center-text">
                                                 <h:outputText value="#{profesor.nombre}"/>
                                             </p:column>
-                                            <p:column>
+                                            <p:column class="column-center-text">
                                                 <h:outputText value="#{profesor.apellido}"/>
                                             </p:column>
-                                            <p:column>
+                                            <p:column class="column-center-text">
                                                 <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).codigo}"/>
                                             </p:column>
-                                            <p:column>
+                                            <p:column class="column-center-text">
                                                 <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).nombre}"/>
                                             </p:column>
-                                            <p:column>
+                                            <p:column class="column-center-text">
                                                 <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).alias}"/>
                                             </p:column>
-                                            <p:column>
+                                            <p:column class="column-center-text">
                                                 <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).versionplan.planEstudio.carrera.nombre}"/>
                                             </p:column>
-                                            <p:column>
+                                            <p:column class="column-center-text">
                                                 <h:outputText value="#{asignaturaController.getDatosPlan(asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).versionplan)}"/>
                                             </p:column>
-                                            <p:column  styleClass="panel-item">
+                                            <p:column class="column-center-text" styleClass="panel-item">
                                                 <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).nivel}"/>
                                             </p:column>
                                         </p:dataTable>
@@ -112,37 +112,49 @@
                                                     <p:column headerText="Código" filterBy="#{asignatura.codigo}" filterMatchMode="contains" sortBy="#{asignatura.codigo}"/>
                                                     <p:column headerText="Nombre" filterBy="#{asignatura.nombre}" filterMatchMode="contains" sortBy="#{asignatura.nombre}"/>
                                                     <p:column headerText="Alias" filterBy="#{asignatura.alias}" filterMatchMode="contains" sortBy="#{asignatura.alias}"/>
-                                                    <p:column headerText="Nivel" filterBy="#{asignatura.nivel}" filterMatchMode="contains" sortBy="#{asignatura.nivel}"/>
-                                                    <p:column headerText="Carrera" filterBy="#{asignatura.versionplan.planEstudio.carrera.nombre}" filterMatchMode="contains" sortBy="#{asignatura.versionplan.planEstudio.carrera.nombre}"/>
-                                                    <p:column headerText="Plan de Estudios" filterBy="#{asignaturaController.getDatosPlan(asignatura.versionplan)}" filterMatchMode="in">
+                                                    <p:column headerText="Nivel" filterBy="#{asignatura.nivel}" filterMatchMode="exact" sortBy="#{asignatura.nivel}">
+                                                        <f:facet name="filter">
+                                                            <p:spinner onchange="PF('asignaturasTable').filter()" min="1" max="12">
+                                                                <f:converter converterId="javax.faces.Integer" />
+                                                            </p:spinner>
+                                                        </f:facet>
+                                                    </p:column>
+                                                    <p:column headerText="Carrera" filterBy="#{asignatura.versionplan.planEstudio.carrera.nombre}" filterMatchMode="in" sortBy="#{asignatura.versionplan.planEstudio.carrera.nombre}">
+                                                        <f:facet name="filter">
+                                                            <p:selectCheckboxMenu label="Carreras" onchange="PF('asignaturasTable').filter()" scrollHeight="150">
+                                                                <f:selectItems value="#{carreraController.allCarreras}" var="carrera" itemLabel="#{carrera.nombre}" itemValue="#{carrera.nombre}"/>
+                                                            </p:selectCheckboxMenu>
+                                                        </f:facet>
+                                                        </p:column>
+                                                    <p:column headerText="Plan de Estudios" filterBy="#{asignatura.versionplan.anio}.#{asignatura.versionplan.version}" filterMatchMode="in">
                                                         <f:facet name="filter">
                                                             <p:selectCheckboxMenu label="Planes de Estudio" onchange="PF('asignaturasTable').filter()" scrollHeight="150">
-                                                                <f:selectItems value="#{asignaturaController.planesDeEstudio}" />
+                                                                <f:selectItems value="#{asignaturaController.planesEstudio}" var="plan" itemLabel="#{plan.anio}.#{plan.version}" itemValue="#{plan.anio}.#{plan.version}"/>
                                                             </p:selectCheckboxMenu>
                                                         </f:facet>
                                                     </p:column>
                                                     <p:column headerText="Nombre Apellido" colspan="1"/>
                                                 </p:row>
                                             </p:columnGroup>
-                                            <p:column>
+                                            <p:column class="column-center-text">
                                                 <h:outputText value="#{asignatura.codigo}"/>
                                             </p:column>
-                                            <p:column>
+                                            <p:column class="column-center-text">
                                                 <h:outputText value="#{asignatura.nombre}"/>
                                             </p:column>
-                                            <p:column>
+                                            <p:column class="column-center-text">
                                                 <h:outputText value="#{asignatura.alias}"/>
                                             </p:column>
-                                            <p:column>
+                                            <p:column class="column-center-text">
                                                 <h:outputText value="#{asignatura.nivel}"/>
                                             </p:column>
-                                            <p:column>
+                                            <p:column class="column-center-text">
                                                 <h:outputText value="#{asignatura.versionplan.planEstudio.carrera.nombre}"/>
                                             </p:column>
-                                            <p:column>
-                                                <h:outputText value="#{asignaturaController.getDatosPlan(asignatura.versionplan)}"/>
+                                            <p:column class="column-center-text">
+                                                <h:outputText value="#{asignatura.versionplan.anio}.#{asignatura.versionplan.version}"/>
                                             </p:column>
-                                            <p:column>
+                                            <p:column class="column-center-text">
                                                 <h:outputText value="#{profesorController.getProfesorAsignado(asignatura.id).nombre} #{profesorController.getProfesorAsignado(asignatura.id).apellido}"/>
                                             </p:column>
                                         </p:dataTable>

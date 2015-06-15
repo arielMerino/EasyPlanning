@@ -47,10 +47,7 @@
                                 <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton"/>
                                 <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton"/>
 
-                                <p:column>
-                                    <f:facet name="header">
-                                        <h:outputText value="Nombre"/>
-                                    </f:facet>
+                                <p:column headerText="Nombre">
                                     <h:outputText value="#{item.nombre}"/>
                                 </p:column>
                                 

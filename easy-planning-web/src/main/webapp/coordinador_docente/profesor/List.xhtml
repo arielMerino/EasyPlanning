@@ -49,19 +49,19 @@
                                 <p:ajax event="rowSelect"   update="createButton viewButton editButton deleteButton emailButton"/>
                                 <p:ajax event="rowUnselect" update="createButton viewButton editButton deleteButton emailButton"/>
 
-                                <p:column headerText="Nombre" filterBy="#{item.nombre}" filterMatchMode="contains" sortBy="#{item.nombre}">
+                                <p:column class="column-center-text" headerText="Nombre" filterBy="#{item.nombre}" filterMatchMode="contains" sortBy="#{item.nombre}">
                                     <h:outputText value="#{item.nombre}"/>
                                 </p:column>
-                                <p:column headerText="Apellido" filterBy="#{item.apellido}" filterMatchMode="contains" sortBy="#{item.apellido}">
+                                <p:column class="column-center-text" headerText="Apellido" filterBy="#{item.apellido}" filterMatchMode="contains" sortBy="#{item.apellido}">
                                     <h:outputText value="#{item.apellido}"/>
                                 </p:column>
-                                <p:column headerText="E-mail" filterBy="#{item.mail}" filterMatchMode="contains" sortBy="#{item.mail}">
+                                <p:column class="column-center-text" headerText="E-mail" filterBy="#{item.mail}" filterMatchMode="contains" sortBy="#{item.mail}">
                                     <h:outputText value="#{item.mail}"/>
                                 </p:column>
-                                <p:column headerText="RUT" filterBy="#{item.rutProfesor}" filterMatchMode="contains" sortBy="#{item.rutProfesor}">
+                                <p:column class="column-center-text" headerText="RUT" filterBy="#{item.rutProfesor}" filterMatchMode="contains" sortBy="#{item.rutProfesor}">
                                     <h:outputText value="#{item.rutProfesor}"/>
                                 </p:column>
-                                <p:column headerText="Alias" filterBy="#{item.alias}" filterMatchMode="contains" sortBy="#{item.alias}">
+                                <p:column class="column-center-text" headerText="Alias" filterBy="#{item.alias}" filterMatchMode="contains" sortBy="#{item.alias}">
                                     <h:panelGrid class="panel-no-border" columns="2">                                        
                                         <h:outputText value="#{item.alias}"/>
                                         <h:link class="btn-center-text" outcome="/faces/coordinador_docente/profesor/agregar_alias.xhtml">
@@ -70,7 +70,7 @@
                                         </h:link>
                                     </h:panelGrid>
                                 </p:column>
-                                <p:column headerText="Ver Encuesta">
+                                <p:column class="column-center-text" headerText="Ver Encuesta">
                                     <h:link outcome="/coordinador_docente/encuesta/resultado_encuesta" value="Ver Encuesta" >
                                         <f:param name="id" value="#{item.rutProfesor}" />
                                     </h:link>

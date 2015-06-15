@@ -5,6 +5,7 @@ import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
@@ -32,6 +33,10 @@ public class CarreraController implements Serializable {
     public CarreraController() {
     }
 
+    public List<Carrera> getAllCarreras(){
+        return getFacade().findAll();
+    }
+    
     public List<String> getCarreras() {
         List<Carrera> lista = ejbFacade.findAll();
         for(Carrera carrera : lista){
@@ -51,7 +56,7 @@ public class CarreraController implements Serializable {
     public void setSelected(Carrera selected) {
         this.selected = selected;
     }
-
+    
     protected void setEmbeddableKeys() {
     }
 

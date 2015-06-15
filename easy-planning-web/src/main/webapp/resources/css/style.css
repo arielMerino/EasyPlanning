@@ -8,7 +8,7 @@ html .ui-layout-container{
 .ui-widget{
     font-family: Helvetica, Arial, sans-serif;
 }
-body p a{
+body, p, a{
     font-size: 14px !important;
     line-height: 1.42857143;    
 }
@@ -344,10 +344,25 @@ body p a{
 .ui-picklist .ui-picklist-list{
     width: 35em !important;
 }
-.ui-selectonelistbox{
+.one-list-box{
     margin: 0;
     width: 100% !important;
 }
 .logut{
     color: #ff7319;
+}
+.column-center-text{
+    text-align: center;
+}
+.button-padding{
+    padding: 0.3em 0.7em;
+}
+.button-padding:hover{
+    text-shadow: none;
+}
+.tab-panel-link{
+    color: #ff7319 !important;
+}
+.well{
+    background-color: rgba(238, 238, 238, 0.4);
 }

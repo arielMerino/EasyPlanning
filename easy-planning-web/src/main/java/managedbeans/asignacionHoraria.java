@@ -675,8 +675,13 @@ public class asignacionHoraria implements Serializable {
         }
         int last = seccionesTeoria.size();
         if(last > 0){
-            getSeccionFacade().remove(seccionesTeoria.get(last-1));
-            JsfUtil.addSuccessMessage("Última sección de teoría borrada con éxito");            
+            try{
+                getSeccionFacade().remove(seccionesTeoria.get(last-1));
+                JsfUtil.addSuccessMessage("Última sección de teoría borrada con éxito");
+            }            
+            catch(Exception e){
+                JsfUtil.addErrorMessage("No se puede eliminar la última sección pues ésta fue asignada");
+            }
         }
         else{
             JsfUtil.addErrorMessage("Ésta asignatura no posee horas de teoría");
@@ -809,8 +814,13 @@ public class asignacionHoraria implements Serializable {
         }
         int last = seccionesLaboratorio.size();
         if(last > 0){
-            getSeccionFacade().remove(seccionesLaboratorio.get(last-1));
-            JsfUtil.addSuccessMessage("Última sección de laboratorio borrada con éxito");            
+            try{
+                getSeccionFacade().remove(seccionesLaboratorio.get(last-1));
+                JsfUtil.addSuccessMessage("Última sección de laboratorio borrada con éxito");
+            }
+            catch(Exception e){
+                JsfUtil.addErrorMessage("No se puede eliminar la última sección pues ésta fue asignada");
+            }
         }
         else{
             JsfUtil.addErrorMessage("Ésta asignatura no posee secciones de laboratorio");

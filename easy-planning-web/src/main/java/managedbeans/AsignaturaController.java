@@ -314,6 +314,10 @@ public class AsignaturaController implements Serializable {
         return planesEstudio;
     }
     
+    public List<VersionPlan> getPlanesEstudio(){
+        return versionFacade.findAll();
+    }
+    
     public ArrayList<Integer> getMaxNivel(){
         int nivel = 0;
         ArrayList<Integer> niveles = new ArrayList<>();
