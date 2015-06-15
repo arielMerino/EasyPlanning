@@ -169,6 +169,7 @@ public class ProfesorController implements Serializable {
 
     public void guardarAliasProfesor() throws IOException{
         getFacade().edit(profesor);
+        items = getFacade().findAll();
         FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/profesor/List.xhtml");        
     }
     

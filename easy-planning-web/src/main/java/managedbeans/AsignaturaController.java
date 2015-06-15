@@ -343,6 +343,7 @@ public class AsignaturaController implements Serializable {
     
     public void guardarAliasAsignatura() throws IOException{
         getFacade().edit(asignatura);
+        getAsignaturas();
         FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/asignaturas/listar_asignaturas.xhtml");
     }
     
