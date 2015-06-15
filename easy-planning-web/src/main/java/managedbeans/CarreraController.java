@@ -108,8 +108,10 @@ public class CarreraController implements Serializable {
                         getFacade().edit(selected);
                         JsfUtil.addSuccessMessage(successMessage);
                     }
-                    else
+                    else{
                         JsfUtil.addErrorMessage("Nombre de la carrera no debe estar vacio");
+                        items = getFacade().findAll();
+                    }
                 } else {
                     getFacade().remove(selected);
                     JsfUtil.addSuccessMessage(successMessage);
