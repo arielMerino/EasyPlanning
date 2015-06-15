@@ -99,12 +99,12 @@
                                         <c:if test="#{usuarioController.compruebaRoles()}">
                                             <c:choose>
                                                 <c:when test="#{coordinadorController.coordinadorOProfesor()}">
-                                                    <a id="btn-sesion" href="/easy-planning-web/faces/coordinador_docente/index.xhtml" class="btn btn-default" style="background-color: grey">Coord Doc</a> 
+                                                    <a id="btn-sesion" href="/easy-planning-web/faces/coordinador_docente/index.xhtml" class="btn btn-default btn-actual" >Coord Doc</a> 
                                                     <a class="btn btn-default" id="btn-sesion" href="/easy-planning-web/faces/profesor/index.xhtml">Profesor</a>
                                                 </c:when>
                                                 <c:otherwise>
                                                     <a id="btn-sesion" href="/easy-planning-web/faces/coordinador_docente/index.xhtml" class="btn btn-default">Coord Doc</a> 
-                                                    <a class="btn btn-default" id="btn-sesion" href="/easy-planning-web/faces/profesor/index.xhtml" style="background-color: grey">Profesor</a>
+                                                    <a class="btn btn-default btn-actual" id="btn-sesion" href="/easy-planning-web/faces/profesor/index.xhtml" >Profesor</a>
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:if>
