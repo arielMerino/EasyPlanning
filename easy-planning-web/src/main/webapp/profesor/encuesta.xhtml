@@ -29,7 +29,7 @@
                         </div>
                     </div>  
                 </div>
-                <h:form>
+                <h:form id="formEncuesta">
                     <c:set var="id" scope="request" value="#{usuarioController.nombre}"/>
                     <c:if test="#{id != 0}">
                         #{profesorController.setIdProfesor(id)}
@@ -74,11 +74,11 @@
                         </div>
                     </c:if>
                     <p:layout>
-
+                        
                         <p:layoutUnit position="east" resizable="true" minSize="400">
                             
                             <p:panel header="Asignaturas">
-                                #{encuestaController.precargarAsignaturas(profesorController.idProfesor)}
+                                
                                 <h:outputText value="Seleccione las asignaturas que desee continuar impartiendo"/>
                                 <p:selectManyCheckbox value="#{encuestaController.asignaturas}" layout="grid" columns="1">
                                     <f:selectItems value="#{profesorController.getAsignaturasChecklist(profesorController.idProfesor)}" var="check" itemLabel="#{check.asignatura.nombre}" itemValue="#{check.id}"/>
@@ -90,11 +90,11 @@
                                 </p:inputTextarea>
                             </p:panel>
                             <br />
-                            <p:commandButton value="Enviar" actionListener="#{encuestaController.resultadoEncuesta(profesorController.idProfesor)}" update=":growl"/>
+                            <p:commandButton value="Enviar" actionListener="#{encuestaController.resultadoEncuesta(profesorController.idProfesor)}" update=":growl, formEncuesta"/>
                         </p:layoutUnit>
 
                         <p:layoutUnit position="center" header="Horario">
-                            #{encuestaController.precargar(profesorController.idProfesor)}
+                            
                             <p:panelGrid  style="width: 100%;">
                                 <f:facet name="header">
                                     <p:row >
@@ -113,68 +113,446 @@
                                         <p:column class="horario-encuesta">1. 8:00-9:30</p:column>
                                         <p:column rowspan="9" colspan="6" >
                                             <p:selectManyCheckbox id="basic" value="#{encuestaController.horariosSeleccionados}" layout="grid" columns="6" style="width: 100%;">
-                                                <f:selectItem itemLabel="L1" itemValue="L1"/>                                                
-                                                <f:selectItem itemLabel="M1" itemValue="M1"/>
-                                                <f:selectItem itemLabel="W1" itemValue="W1"/>                     
-                                                <f:selectItem itemLabel="J1" itemValue="J1"/>
-                                                <f:selectItem itemLabel="V1" itemValue="V1"/>
-                                                <f:selectItem itemLabel="S1" itemValue="S1"/>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('L1', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="L1" itemValue="L1"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="L1" itemValue="L1" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('M1', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="M1" itemValue="M1"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="M1" itemValue="M1" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('W1', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="W1" itemValue="W1"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="W1" itemValue="W1" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('J1', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="J1" itemValue="J1"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="J1" itemValue="J1" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('V1', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="V1" itemValue="V1"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="V1" itemValue="V1" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('S1', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="S1" itemValue="S1"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="S1" itemValue="S1" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
 
-                                                <f:selectItem itemLabel="L2" itemValue="L2"/>
-                                                <f:selectItem itemLabel="M2" itemValue="M2"/>
-                                                <f:selectItem itemLabel="W2" itemValue="W2"/>
-                                                <f:selectItem itemLabel="J2" itemValue="J2"/>
-                                                <f:selectItem itemLabel="V2" itemValue="V2"/>
-                                                <f:selectItem itemLabel="S2" itemValue="S2"/>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('L2', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="L2" itemValue="L2"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="L2" itemValue="L2" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('M2', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="M2" itemValue="M2"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="M2" itemValue="M2" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('W2', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="W2" itemValue="W2"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="W2" itemValue="W2" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('J2', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="J2" itemValue="J2"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="J2" itemValue="J2" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('V2', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="V2" itemValue="V2"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="V2" itemValue="V2" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('S2', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="S2" itemValue="S2"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="S2" itemValue="S2" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
 
-                                                <f:selectItem itemLabel="L3" itemValue="L3"/>
-                                                <f:selectItem itemLabel="M3" itemValue="M3"/>
-                                                <f:selectItem itemLabel="W3" itemValue="W3"/>
-                                                <f:selectItem itemLabel="J3" itemValue="J3"/>
-                                                <f:selectItem itemLabel="V3" itemValue="V3"/>
-                                                <f:selectItem itemLabel="S3" itemValue="S3"/>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('L3', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="L3" itemValue="L3"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="L3" itemValue="L3" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('M3', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="M3" itemValue="M3"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="M3" itemValue="M3" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('W3', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="W3" itemValue="W3"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="W3" itemValue="W3" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('J3', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="J3" itemValue="J3"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="J3" itemValue="J3" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('V3', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="V3" itemValue="V3"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="V3" itemValue="V3" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('S3', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="S3" itemValue="S3"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="S3" itemValue="S3" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
 
-                                                <f:selectItem itemLabel="L4" itemValue="L4"/>
-                                                <f:selectItem itemLabel="M4" itemValue="M4"/>
-                                                <f:selectItem itemLabel="W4" itemValue="W4"/>
-                                                <f:selectItem itemLabel="J4" itemValue="J4"/>
-                                                <f:selectItem itemLabel="V4" itemValue="V4"/>
-                                                <f:selectItem itemLabel="S4" itemValue="S4"/>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('L4', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="L4" itemValue="L4"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="L4" itemValue="L4" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('M4', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="M4" itemValue="M4"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="M4" itemValue="M4" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('W4', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="W4" itemValue="W4"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="W4" itemValue="W4" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('J4', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="J4" itemValue="J4"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="J4" itemValue="J4" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('V4', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="V4" itemValue="V4"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="V4" itemValue="V4" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('S4', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="S4" itemValue="S4"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="S4" itemValue="S4" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
 
-                                                <f:selectItem itemLabel="L5" itemValue="L5"/>
-                                                <f:selectItem itemLabel="M5" itemValue="M5"/>
-                                                <f:selectItem itemLabel="W5" itemValue="W5"/>
-                                                <f:selectItem itemLabel="J5" itemValue="J5"/>
-                                                <f:selectItem itemLabel="V5" itemValue="V5"/>
-                                                <f:selectItem itemLabel="S5" itemValue="S5"/>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('L5', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="L5" itemValue="L5"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="L5" itemValue="L5" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('M5', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="M5" itemValue="M5"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="M5" itemValue="M5" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('W5', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="W5" itemValue="W5"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="W5" itemValue="W5" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('J5', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="J5" itemValue="J5"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="J5" itemValue="J5" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('V5', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="V5" itemValue="V5"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="V5" itemValue="V5" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('S5', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="S5" itemValue="S5"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="S5" itemValue="S5" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
 
-                                                <f:selectItem itemLabel="L6" itemValue="L6"/>
-                                                <f:selectItem itemLabel="M6" itemValue="M6"/>
-                                                <f:selectItem itemLabel="W6" itemValue="W6"/>
-                                                <f:selectItem itemLabel="J6" itemValue="J6"/>
-                                                <f:selectItem itemLabel="V6" itemValue="V6"/>
-                                                <f:selectItem itemLabel="S6" itemValue="S6"/>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('L6', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="L6" itemValue="L6"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="L6" itemValue="L6" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('M6', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="M6" itemValue="M6"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="M6" itemValue="M6" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('W1', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="W6" itemValue="W6"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="W6" itemValue="W6" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('J6', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="J6" itemValue="J6"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="J6" itemValue="J6" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('V6', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="V6" itemValue="V6"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="V6" itemValue="V6" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('S6', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="S6" itemValue="S6"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="S6" itemValue="S6" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
 
-                                                <f:selectItem itemLabel="L7" itemValue="L7"/>
-                                                <f:selectItem itemLabel="M7" itemValue="M7"/>
-                                                <f:selectItem itemLabel="W7" itemValue="W7"/>
-                                                <f:selectItem itemLabel="J7" itemValue="J7"/>
-                                                <f:selectItem itemLabel="V7" itemValue="V7"/>
-                                                <f:selectItem itemLabel="S7" itemValue="S7"/>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('L7', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="L7" itemValue="L7"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="L7" itemValue="L7" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('M7', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="M7" itemValue="M7"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="M7" itemValue="M7" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('W7', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="W7" itemValue="W7"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="W7" itemValue="W7" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('J7', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="J7" itemValue="J7"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="J7" itemValue="J7" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('V7', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="V7" itemValue="V7"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="V7" itemValue="V7" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('S7', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="S7" itemValue="S7"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="S7" itemValue="S7" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
 
-                                                <f:selectItem itemLabel="L8" itemValue="L8"/>
-                                                <f:selectItem itemLabel="M8" itemValue="M8"/>
-                                                <f:selectItem itemLabel="W8" itemValue="W8"/>
-                                                <f:selectItem itemLabel="J8" itemValue="J8"/>
-                                                <f:selectItem itemLabel="V8" itemValue="V8"/>
-                                                <f:selectItem itemLabel="S8" itemValue="S8"/>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('L8', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="L8" itemValue="L8"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="L8" itemValue="L8" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('M8', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="M8" itemValue="M8"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="M8" itemValue="M8" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('W8', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="W8" itemValue="W8"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="W8" itemValue="W8" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('J8', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="J8" itemValue="J8"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="J8" itemValue="J8" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('V8', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="V8" itemValue="V8"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="V8" itemValue="V8" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('S8', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="S8" itemValue="S8"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="S8" itemValue="S8" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
 
-                                                <f:selectItem itemLabel="L9" itemValue="L9"/>
-                                                <f:selectItem itemLabel="M9" itemValue="M9"/>
-                                                <f:selectItem itemLabel="W9" itemValue="W9"/>
-                                                <f:selectItem itemLabel="J9" itemValue="J9"/>
-                                                <f:selectItem itemLabel="V9" itemValue="V9"/>
-                                                <f:selectItem itemLabel="S9" itemValue="S9"/>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('L9', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="L9" itemValue="L9"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="L9" itemValue="L9" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('M9', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="M9" itemValue="M9"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="M9" itemValue="M9" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('W9', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="W9" itemValue="W9"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="W9" itemValue="W9" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('J9', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="J9" itemValue="J9"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="J9" itemValue="J9" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('V9', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="V9" itemValue="V9"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="V9" itemValue="V9" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
+                                                <c:choose>
+                                                    <c:when test="#{encuestaController.isDesSeleccionable('S9', profesorController.idProfesor)}">
+                                                        <f:selectItem itemLabel="S9" itemValue="S9"/>
+                                                    </c:when>
+                                                    <c:otherwise>
+                                                        <f:selectItem itemLabel="S9" itemValue="S9" itemDisabled="true"/>
+                                                    </c:otherwise>
+                                                </c:choose>
                                             </p:selectManyCheckbox>
                                         </p:column>
                                     </p:row>

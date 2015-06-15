@@ -3,11 +3,13 @@ package managedbeans;
 import business.ChecklistsLocal;
 import business.HorariosLocal;
 import business.ProfesoresLocal;
+import com.sun.javafx.scene.control.skin.VirtualFlow;
 import entities.Asignatura;
 import entities.Encuesta;
 import entities.Checklist;
 import entities.Horario;
 import entities.ParamSemestreAno;
+import java.io.IOException;
 
 import sessionbeans.EncuestaFacadeLocal;
 import sessionbeans.ChecklistFacadeLocal;
@@ -16,9 +18,11 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Objects;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
 import managedbeans.util.JsfUtil;
 import sessionbeans.HorarioFacadeLocal;
 import sessionbeans.ParamSemestreAnioFacadeLocal;
@@ -53,6 +57,7 @@ public class EncuestaController implements Serializable {
     private String comentario = "";
     private Long[] asignaturas;
     private String[] horariosSeleccionados;    
+    private List<String> noBorrables;
     
     public EncuestaController() {
     }
@@ -75,6 +80,14 @@ public class EncuestaController implements Serializable {
 
     public Long[] getAsignaturas() {
         return asignaturas;
+    }
+
+    public List<String> getNoBorrables() {
+        return noBorrables;
+    }
+
+    public void setNoBorrables(List<String> noBorrables) {
+        this.noBorrables = noBorrables;
     }
 
     public void setAsignaturas(Long[] asignaturas) {
@@ -121,11 +134,21 @@ public class EncuestaController implements Serializable {
     
     public void precargar(String rutProfesor){
         List<Horario> horarios = horarioBusiness.findDisponiblesByProfesorId(rutProfesor);
+        List<String> noBorrar = new ArrayList<>();
         String[] bloques = new String[horarios.size()];
         for (int i = 0; i < horarios.size(); i++){
             bloques[i] = horarios.get(i).getBloque();
         }
+        
+        if (bloques.length > 0) {
+            for (String bloque : bloques) {
+                if (!isBorrable(bloque, rutProfesor)) {
+                    noBorrar.add(bloque);
+                }
+            }
+        }
         setHorariosSeleccionados(bloques);
+        setNoBorrables(noBorrar);
     }
     
     public void precargarAsignaturas(String rutProfesor){
@@ -150,6 +173,11 @@ public class EncuestaController implements Serializable {
         }
     }
     
+    public void redirigir() throws IOException{
+        FacesContext context = FacesContext.getCurrentInstance();
+        context.getExternalContext().redirect("/easy-planning-web/faces/profesor/encuesta.xhtml");
+    }
+    
     public List<Asignatura> getAsignaturasRechazadas(String encuestaId){
         try{
             Long id = Long.parseLong(encuestaId);
@@ -166,6 +194,27 @@ public class EncuestaController implements Serializable {
         catch(Exception e){
             return null;
         }
+    }
+    
+    public boolean contenido(String[] lista, String str){
+        if(lista == null){
+            System.out.println("por que es null?");
+            return false;
+        }
+        for (String s : lista) {
+            if (s.equals(str)) {
+                return true;
+            }
+        }
+        return false;
+    }
+    
+    public boolean isDesSeleccionable(String bloque, String rutProfesor){
+        if (contenido (horariosSeleccionados, bloque)){
+            if (!isBorrable(bloque, rutProfesor))
+                return false;
+        }
+        return true;
     }
     
     public boolean isBorrable(String bloque, String rutProfesor){
@@ -199,6 +248,20 @@ public class EncuestaController implements Serializable {
             }
             setFalseChecklist(rutProfesor);
             dropHorarios(rutProfesor);
+            //inicio recuperacion
+            List<String> aux = new ArrayList<>();
+            aux.addAll(Arrays.asList(horariosSeleccionados));
+            for(String bloque : noBorrables){
+                if (!aux.contains(bloque))
+                    aux.add(bloque);
+            }
+            horariosSeleccionados = new String[aux.size()];
+            if (aux.size() > 0){
+                for (int i = 0; i < aux.size(); i++){
+                    horariosSeleccionados[i] = aux.get(i);
+                }
+            }
+            //fin recuperacion
             for(String bloque : horariosSeleccionados){
                 //if(horarioBusiness.findByBloqueAndProfesor(bloque, rutProfesor) == null){                    
                 Horario horario = new Horario();

@@ -39,6 +39,7 @@ public class Horarios implements HorariosLocal {
         }
     }
     
+    @Override
     public Horario AsignadoByBloqueAndProfesor(String bloque, String rutProfesor) {
         Query query = em.createNamedQuery("Horario.findAsignadoByBloqueAndProfesor").setParameter("bloque", bloque);
         query.setParameter("rutProfesor", rutProfesor);
