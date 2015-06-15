@@ -104,11 +104,16 @@ public class CarreraController implements Serializable {
             setEmbeddableKeys();
             try {
                 if (persistAction != PersistAction.DELETE) {
-                    getFacade().edit(selected);
+                    if(!selected.getNombre().trim().isEmpty()){
+                        getFacade().edit(selected);
+                        JsfUtil.addSuccessMessage(successMessage);
+                    }
+                    else
+                        JsfUtil.addErrorMessage("Nombre de la carrera no debe estar vacio");
                 } else {
                     getFacade().remove(selected);
-                }
-                JsfUtil.addSuccessMessage(successMessage);
+                    JsfUtil.addSuccessMessage(successMessage);
+                }                
             } catch (EJBException ex) {
                 String msg = "";
                 Throwable cause = ex.getCause();
