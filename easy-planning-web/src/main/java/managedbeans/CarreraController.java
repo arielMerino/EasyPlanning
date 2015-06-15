@@ -5,7 +5,6 @@ import managedbeans.util.JsfUtil;
 import managedbeans.util.JsfUtil.PersistAction;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.ResourceBundle;
 import java.util.logging.Level;
