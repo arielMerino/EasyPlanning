@@ -10,6 +10,8 @@ import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.faces.context.FacesContext;
+import javax.servlet.http.HttpServletRequest;
 import sessionbeans.ParamSemestreAnioFacadeLocal;
 
 /**
@@ -57,5 +59,21 @@ public class CoordinadorController implements Serializable {
         this.anio = anio;
         SemAn.setAnoActual(anio);
         anioSem.edit(SemAn);
+    }
+    
+    public String obtenerURL(){
+        HttpServletRequest request = (HttpServletRequest) FacesContext.getCurrentInstance().getExternalContext().getRequest();
+        return request.getRequestURI();
+    }
+    
+    public boolean coordinadorOProfesor(){
+        String[] url = obtenerURL().split("/");
+        try{
+            if (url[3].equals("coordinador_docente"))
+                return true;
+            return false;
+        }catch(Exception e){
+            return true;
+        }
     }
 }

@@ -364,3 +364,8 @@ body, p, a, li{
 .well{
     background-color: rgba(238, 238, 238, 0.4);
 }
+
+.btn-actual{
+    background-color: rgba(255, 255, 255, 0.7) !important;
+    color: rgba(255, 115, 25, 0.7) !important;
+}
