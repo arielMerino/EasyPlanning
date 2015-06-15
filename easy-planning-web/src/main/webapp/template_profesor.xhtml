@@ -16,22 +16,26 @@
         <h:outputScript library="js" name="bootstrap.min.js"/>
         <h:outputStylesheet library="css" name="style.css"/>
         <h:outputScript library="js" name="main.js"/>
+        <h:outputScript library="js" name="pace.min.js"/>
+        <h:outputStylesheet library="css" name="pace.css"/>
     </h:head>
 
     <h:body>
-        #{coordinadorController.getAnioActual()}
-        #{coordinadorController.getSemestreActual()}
+        <div class="hidden">
+            #{coordinadorController.getAnioActual()}
+            #{coordinadorController.getSemestreActual()}
+        </div>
         <p:growl id="growl" life="3000" />
 
         <p:layout fullPage="true" >
 
 
             <p:layoutUnit position="center" styleClass="new-body">
-                <div class="container-fluid" id="wraper">
+                <div class="container-fluid">
                     <div class="banner">
                         <div class="row">
                             <div class="col-md-2">
-                                <img src="#{resource['images/easyplanning_logo_blanco.png']}" class="img-responsive img-rounded img"/>
+                                <img src="#{resource['images/easyplanning_logo_blanco.png']}" class="img-responsive img-rounded img-easyplanning"/>
                             </div>
                             <div class="col-md-7">
                                 <br />
@@ -39,8 +43,8 @@
                                 <br />
                                 <h1 class="text-left"><strong>Easy Planning</strong></h1>
                             </div>
-                            <div class="col-md-2 col-md-offset-1">
-                                <img src="#{resource['images/UDS CGRS.png']}" class="img-responsive img-rounded img"></img>
+                            <div class="col-md-1 col-md-offset-2">
+                                <img src="#{resource['images/UDS TBCO.png']}" class="img-responsive img-rounded img-usach"></img>
                             </div>
                         </div>
                         <nav id="navbar" class="navbar navbar-default navbar-static-top menu-nav ">
@@ -66,17 +70,19 @@
                     <div class="row">
                         <ui:insert name="body"/>
                     </div>
+                    <!--div class="row">
+                        <footer class="col-md-10 col-md-offset-1" id="footer">
+                            <div class="container">
+                                <p>Universidad de Santiago de Chile. Avenida Ecuador #3659. Estación Central, Santiago de Chile.</p>
+                                <p>Teléfono (562) 2 718 09 00 - Correo: contacto@informatica.usach.cl</p>
+                            </div>
+                        </footer>
+                    </div-->
                     <!--div class="container-fluid"-->
                         
                     <!--/div-->
                 
                 </div>
-                <!--footer class="footer col-md-10 col-md-offset-1" id="footer">
-                    <div class="container">
-                        <p>Universidad de Santiago de Chile. Avenida Ecuador #3659. Estación Central, Santiago de Chile.</p>
-                        <p>Teléfono (562) 2 718 09 00 - Correo: contacto@informatica.usach.cl</p>
-                    </div>
-                </footer-->
             </p:layoutUnit>
                 
                 

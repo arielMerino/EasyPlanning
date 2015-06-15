@@ -840,6 +840,15 @@ public class asignacionHoraria implements Serializable {
         return false;
     }
     
+    public String getPrioridad(){
+        if(getNivelSelected() % 2 == 0){
+            return "tarde";
+        }
+        else{
+            return "mañana";
+        }
+    }
+    
     public asignacionHoraria() {
     }    
 }
