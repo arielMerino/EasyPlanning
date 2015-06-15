@@ -34,10 +34,11 @@
                 <div class="row">
                     <div class="col-md-12">
                         <h:form id="seleccionCarreraPlanAsignatura">
-                            <h4 class="title">Asignación de horarios</h4>
                             <p:panel id="horarioAsignacion">
                                 <div class="row">
                                     <div class="col-md-4">
+                                        <h4 class="title">Asignación de horarios</h4>
+                                        <hr/>
                                         <h:outputLabel>Seleccionar Carrera:</h:outputLabel>
                                         <p:selectOneMenu id="carrera" value="#{asignacionHoraria.carreraSelected}" style="width: 100%" immediate="true">
                                             <f:selectItem itemLabel="Carrera" noSelectionOption="true" />
@@ -56,7 +57,7 @@
                                         <p:selectOneMenu id="niveles" value="#{asignacionHoraria.nivelSelected}" style="width: 100%" immediate="true" >
                                             <f:selectItem itemLabel="Nivel" noSelectionOption="true" />
                                             <f:selectItems value="#{asignacionHoraria.asignaturasBusiness.findNivelesByPlan(asignacionHoraria.planEstudioSelected)}" var="nivel" itemLabel="#{nivel}" itemValue="#{nivel}"/>
-                                            <p:ajax process="@this" update="asignaturas, horarioAsignacion" />
+                                            <p:ajax process="@this" update="asignaturas, horarioAsignacion, prioridad-nivel" />
                                         </p:selectOneMenu>
                                         <hr/>
                                         <h:outputLabel style="white-space: normal;">Seleccionar Asignatura:</h:outputLabel>
@@ -86,6 +87,15 @@
                                         <h:outputLabel id="disponibilidades" style="white-space: normal;">#{asignacionHoraria.obtenerBloquesDisponibles()}</h:outputLabel>
                                     </div>
                                     <div class="col-md-8">
+                                        <c:if test="#{asignacionHoraria.nivelSelected != 0}">
+                                            <h5 class="title">
+                                                <h:outputText id="prioridad-nivel" value="Se debe priorizar la planificación en la #{asignacionHoraria.getPrioridad()} para el semestre #{asignacionHoraria.nivelSelected}"/>
+                                            </h5>                                        
+                                        </c:if>
+                                        <c:if test="#{asignacionHoraria.nivelSelected == 0}">
+                                            <h:outputLabel id="prioridad-nivel" value=""/>
+                                        </c:if>
+                                        <hr/>
                                         <div class="row">
                                             <p:panel class="col-md-2 headerBloque">
                                                 <p class="horario-title">Bloque</p>

@@ -8,7 +8,7 @@ html .ui-layout-container{
 .ui-widget{
     font-family: Helvetica, Arial, sans-serif;
 }
-body, p, a{
+body, p, a, li{
     font-size: 14px !important;
     line-height: 1.42857143;    
 }
@@ -158,8 +158,6 @@ body, p, a{
 #footer{
     background-color: #0052cc;
     color: #fff;
-    height: 60px;
-    margin-top: 20px;
 }
 #wraper{
     min-height: 100%;
@@ -299,7 +297,7 @@ body, p, a{
 }
 .opcion-profesor>a{
     color: #fff;
-    font-size: 1.5em;
+    font-size: 1.5em !important;
 }
 .opcion-profesor>a:hover{
     text-decoration: none;
