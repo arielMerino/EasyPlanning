@@ -24,6 +24,9 @@ and open the template in the editor.
     </h:head>
     
     <h:body>
+        <c:if test="#{usuarioController.error}">
+            #{usuarioController.setError(false)}
+        </c:if>
         <div class="container-fluid">
             <div class="row">
                 <div class="col-md-12 banner">
@@ -70,7 +73,7 @@ and open the template in the editor.
                     </div>
                 </div>
             </div>     
-            <c:if test="#{usuarioController.error}">            
+            <c:if test="#{usuarioController.error}">
                 <div class="row">
                     <div class="col-md-4 col-md-offset-4">
                         <div class="alert alert-danger text-center">
