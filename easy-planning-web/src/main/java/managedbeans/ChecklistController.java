@@ -154,7 +154,12 @@ public class ChecklistController implements Serializable {
                 check.setAsignatura(asig);
                 ejbFacade.create(check);
             }
-            context.addMessage(null, new FacesMessage("Resultado",  "Se han incluido las asignaturas exitósamente") );
+            if(asignaturas.size() > 0){
+                context.addMessage(null, new FacesMessage("Resultado",  "Se han incluido las asignaturas exitósamente") );
+            }
+            else{
+                context.addMessage(null, new FacesMessage("Resultado",  "No se ha seleccionado ninguna asignatura") );
+            }
         }
         else{
             context.addMessage(null, new FacesMessage("Advertencia",  "Una asignatura seleccionada ya esta incluida en la enceusta actual.") );
