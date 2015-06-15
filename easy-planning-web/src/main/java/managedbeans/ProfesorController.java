@@ -27,6 +27,7 @@ import javax.ejb.EJBException;
 import javax.el.ELException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -166,11 +167,29 @@ public class ProfesorController implements Serializable {
     public void deleteProfesor(Profesor profesor){
         selected = profesor;
     }
-
+    
+    public boolean aliasValido(String alias){
+        if (alias.length() > 0){
+            if (alias.length() > 10){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El alias debe contener un máximo de 10 caracteres."));
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El alias no debe estar vacío."));
+            return false;
+        }
+    }
+    
     public void guardarAliasProfesor() throws IOException{
-        getFacade().edit(profesor);
-        items = getFacade().findAll();
-        FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/profesor/List.xhtml");        
+        if(aliasValido(profesor.getAlias())){
+            getFacade().edit(profesor);
+            items = getFacade().findAll();
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/profesor/List.xhtml");        
+        }
     }
     
     private void persist(PersistAction persistAction, String successMessage) {

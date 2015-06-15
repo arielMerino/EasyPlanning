@@ -49,9 +49,9 @@ and open the template in the editor.
                             <b:inputText value="#{profesorController.profesor.nombre} #{profesorController.profesor.apellido}" disabled="true"/>
                             <br/>
                             <strong><h:outputText value="Alias"/></strong>
-                            <b:inputText  value="#{profesorController.profesor.alias}"/>
+                            <b:inputText  value="#{profesorController.profesor.alias}" maxlength="10"/>
                             <br/>
-                            <p:commandButton class="btn btn-default" value="Guardar" action="#{profesorController.guardarAliasProfesor()}"/>
+                            <p:commandButton class="btn btn-default" value="Guardar" action="#{profesorController.guardarAliasProfesor()}" update=":growl"/>
                         </h:form>
                     </div>
                 </div>    
