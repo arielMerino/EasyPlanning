@@ -155,10 +155,10 @@ public class ChecklistController implements Serializable {
                 ejbFacade.create(check);
             }
             if(asignaturas.size() > 0){
-                context.addMessage(null, new FacesMessage("Resultado",  "Se han incluido las asignaturas exitósamente") );
+                context.addMessage(null, new FacesMessage("Resultado",  "Se han incluido las asignaturas exitósamente.") );
             }
             else{
-                context.addMessage(null, new FacesMessage("Resultado",  "No se ha seleccionado ninguna asignatura") );
+                context.addMessage(null, new FacesMessage("Resultado",  "No se ha seleccionado ninguna asignatura para agregar.") );
             }
         }
         else{
@@ -185,17 +185,21 @@ public class ChecklistController implements Serializable {
             checklistBusiness.deleteChecklist(encuesta.getId(),asig.getId());
         }*/
         FacesContext context = FacesContext.getCurrentInstance();
-        
+        int contadorEliminados = 0;
         List<Checklist> checklists = getChecklistsBusiness().findChecklistByIdEncuesta(encuesta.getId());
         for(Checklist chk : checklists){
-            for(Asignatura asig : asignaturas){
-                
-                if(asig.getId()==chk.getAsignatura().getId()){
-                    this.selected = chk;
-                    this.destroy();
-                    /*context.addMessage(null, new FacesMessage("Resultado",  "Se han sacado las asignaturas exitósamente.") );*/
+                for(Asignatura asig : asignaturas){
+
+                    if(asig.getId()==chk.getAsignatura().getId()){
+                        this.selected = chk;
+                        this.destroy();
+                        contadorEliminados++;
+                        /*context.addMessage(null, new FacesMessage("Resultado",  "Se han sacado las asignaturas exitósamente.") );*/
+                    }
                 }
             }
+        if (contadorEliminados == 0){
+            context.addMessage(null, new FacesMessage("Resultado",  "No se han seleccionado asignaturas para quitar.") );
         }
     }
     
