@@ -153,7 +153,9 @@ public class ProfesorController implements Serializable {
     }
 
     public List<Profesor> getItems() {
-        items = getFacade().findAll();
+        if(items == null){
+            items = getFacade().findAll();
+        }
         return items;
     }
     

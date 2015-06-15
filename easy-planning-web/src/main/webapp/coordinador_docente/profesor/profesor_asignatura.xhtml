@@ -43,19 +43,21 @@
                                                      value="#{profesorController.items}"
                                                      var="profesor"
                                                     widgetVar="profesoresTable"
+                                                    sortBy="#{profesor.apellido}"
                                                     filteredValue="#{profesorController.profesoresFiltrados}"
                                                     emptyMessage="No se han encontrado profesores según los parámetros indicados">
 
                                             <p:columnGroup type="header">
                                                 <p:row>
                                                     <p:column colspan="2" headerText="Profesor"/>
-                                                    <p:column colspan="5" headerText="Asignatura"/>
+                                                    <p:column colspan="6" headerText="Asignatura"/>
                                                 </p:row>
                                                 <p:row>
-                                                    <p:column headerText="Nombre" filterBy="#{profesor.nombre}" filterMatchMode="contains"/>
-                                                    <p:column headerText="Apellido" filterBy="#{profesor.apellido}" filterMatchMode="contains"/>
+                                                    <p:column headerText="Nombre" filterBy="#{profesor.nombre}" filterMatchMode="contains" sortBy="#{profesor.nombre}"/>
+                                                    <p:column headerText="Apellido" filterBy="#{profesor.apellido}" filterMatchMode="contains" sortBy="#{profesor.apellido}"/>
                                                     <p:column headerText="Código" colspan="1"/>
                                                     <p:column headerText="Nombre" colspan="1"/>
+                                                    <p:column headerText="Alias" colspan="1"/>
                                                     <p:column headerText="Carrera" colspan="1"/>
                                                     <p:column headerText="Plan de Estudios" colspan="1"/>
                                                     <p:column headerText="Nivel" colspan="1"/>
@@ -75,6 +77,9 @@
                                                 <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).nombre}"/>
                                             </p:column>
                                             <p:column>
+                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).alias}"/>
+                                            </p:column>
+                                            <p:column>
                                                 <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).versionplan.planEstudio.carrera.nombre}"/>
                                             </p:column>
                                             <p:column>
@@ -91,22 +96,24 @@
                                 <h:form>
                                     <p:panel class="new-body">
                                         <p:dataTable id="datalist"
-                                                     value="#{asignaturaController.listaAsignaturas}"
+                                                     value="#{asignaturaController.items}"
                                                      var="asignatura"
                                                     widgetVar="asignaturasTable"
                                                     filteredValue="#{asignaturaController.asignaturasFiltradas}"
+                                                    sortBy="#{asignatura.codigo}"
                                                     emptyMessage="No se han encontrado asignaturas según los parámetros indicados">
 
                                             <p:columnGroup type="header">
                                                 <p:row>
-                                                    <p:column colspan="5" headerText="Asignatura"/>
+                                                    <p:column colspan="6" headerText="Asignatura"/>
                                                     <p:column colspan="1" headerText="Profesor"/>
                                                 </p:row>
                                                 <p:row>
-                                                    <p:column headerText="Código" filterBy="#{asignatura.codigo}" filterMatchMode="contains"/>
-                                                    <p:column headerText="Nombre" filterBy="#{asignatura.nombre}" filterMatchMode="contains"/>
-                                                    <p:column headerText="Nivel" filterBy="#{asignatura.nivel}" filterMatchMode="contains"/>
-                                                    <p:column headerText="Carrera" filterBy="#{asignatura.versionplan.planEstudio.carrera.nombre}" filterMatchMode="contains"/>
+                                                    <p:column headerText="Código" filterBy="#{asignatura.codigo}" filterMatchMode="contains" sortBy="#{asignatura.codigo}"/>
+                                                    <p:column headerText="Nombre" filterBy="#{asignatura.nombre}" filterMatchMode="contains" sortBy="#{asignatura.nombre}"/>
+                                                    <p:column headerText="Alias" filterBy="#{asignatura.alias}" filterMatchMode="contains" sortBy="#{asignatura.alias}"/>
+                                                    <p:column headerText="Nivel" filterBy="#{asignatura.nivel}" filterMatchMode="contains" sortBy="#{asignatura.nivel}"/>
+                                                    <p:column headerText="Carrera" filterBy="#{asignatura.versionplan.planEstudio.carrera.nombre}" filterMatchMode="contains" sortBy="#{asignatura.versionplan.planEstudio.carrera.nombre}"/>
                                                     <p:column headerText="Plan de Estudios" filterBy="#{asignaturaController.getDatosPlan(asignatura.versionplan)}" filterMatchMode="in">
                                                         <f:facet name="filter">
                                                             <p:selectCheckboxMenu label="Planes de Estudio" onchange="PF('asignaturasTable').filter()" scrollHeight="150">
@@ -122,6 +129,9 @@
                                             </p:column>
                                             <p:column>
                                                 <h:outputText value="#{asignatura.nombre}"/>
+                                            </p:column>
+                                            <p:column>
+                                                <h:outputText value="#{asignatura.alias}"/>
                                             </p:column>
                                             <p:column>
                                                 <h:outputText value="#{asignatura.nivel}"/>

@@ -103,7 +103,9 @@ public class AsignaturaController implements Serializable {
     }
 
     public List<Asignatura> getItems() {
-        getAsignaturas();
+        if(items == null){
+            getAsignaturas();
+        }
         return items;
     }
 
