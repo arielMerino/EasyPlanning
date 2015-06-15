@@ -26,6 +26,8 @@ and open the template in the editor.
     <h:body>
         <c:if test="#{usuarioController.error}">
             #{usuarioController.setError(false)}
+            #{usuarioController.setNombre("")}
+            #{usuarioController.setPassword("")}
         </c:if>
         <div class="container-fluid">
             <div class="row">
