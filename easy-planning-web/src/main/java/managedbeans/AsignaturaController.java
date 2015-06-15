@@ -303,12 +303,27 @@ public class AsignaturaController implements Serializable {
         }
     }
     
+    public boolean haveAsignaturas(VersionPlan vers){
+        try{
+            List<Asignatura> asignaturas = ejbFacade.findAll();
+            for (Asignatura a : asignaturas){
+                if (a.getVersionplan().getId() == vers.getId()){
+                    System.out.println(vers.getAnio()+"-"+vers.getVersion());
+                    return true;
+                }
+            }
+            return false;
+        }catch (Exception e){
+            return false;
+        }
+    }
+    
     //retorna una lista de enteros con los id de todos los planes de estudios correspondientes a una carrera dada
     public ArrayList<VersionPlan> getPlanesDeEstudio(int carreraId){
         ArrayList<VersionPlan> planesEstudio = new ArrayList<>();
         List<VersionPlan> versiones = versionFacade.findAll();
         for (VersionPlan v : versiones){
-            if (!planesEstudio.contains(v) && v.getPlanEstudio().getCarrera().getId().toString().equals(carreraId+"") && v.isPlanificado())
+            if (!planesEstudio.contains(v) && v.getPlanEstudio().getCarrera().getId().toString().equals(carreraId+"") && v.isPlanificado() && haveAsignaturas(v))
                 planesEstudio.add(v);
         }
         return planesEstudio;

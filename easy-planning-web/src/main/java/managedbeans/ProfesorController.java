@@ -169,8 +169,9 @@ public class ProfesorController implements Serializable {
     }
     
     public boolean aliasValido(String alias){
-        if (alias.length() > 0){
-            if (alias.length() > 10){
+        String trim = alias.trim();
+        if (trim.length() > 0){
+            if (trim.length() > 10){
                 FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El alias debe contener un máximo de 10 caracteres."));
                 return false;
             }
