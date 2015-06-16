@@ -22,6 +22,7 @@ import java.util.Objects;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.el.ELException;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import sessionbeans.AsignaturaFacadeLocal;
 import sessionbeans.ParamSemestreAnioFacadeLocal;
@@ -345,10 +346,15 @@ public class AsignaturaController implements Serializable {
         return asignaturaBusiness.findByAsignaturaAsignada(rutProfesor, semAnio.getAnoActual(), semAnio.getSemestreActual());
     }
     
-    public void guardarAliasAsignatura() throws IOException{
-        getFacade().edit(asignatura);
-        getAsignaturas();
-        FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/asignaturas/listar_asignaturas.xhtml");
+    public void guardarAliasAsignatura() throws IOException{        
+        if(!asignatura.getAlias().trim().isEmpty()){
+            getFacade().edit(asignatura);
+            getAsignaturas();
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/asignaturas/listar_asignaturas.xhtml");
+        }else{
+            getAsignaturas();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El alias no puede estar vacio"));
+        }
     }
     
     public boolean tieneAlias(String alias){

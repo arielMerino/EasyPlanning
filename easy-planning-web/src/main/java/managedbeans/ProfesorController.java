@@ -27,6 +27,7 @@ import javax.ejb.EJBException;
 import javax.el.ELException;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.component.UIComponent;
 import javax.faces.context.FacesContext;
 import javax.faces.convert.Converter;
@@ -167,10 +168,15 @@ public class ProfesorController implements Serializable {
         selected = profesor;
     }
 
-    public void guardarAliasProfesor() throws IOException{
-        getFacade().edit(profesor);
-        items = getFacade().findAll();
-        FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/profesor/List.xhtml");        
+    public void guardarAliasProfesor() throws IOException{        
+        if(!profesor.getAlias().trim().isEmpty()){
+            getFacade().edit(profesor);
+            items = getFacade().findAll();
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/profesor/List.xhtml");
+        }else{
+            items = getFacade().findAll();
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El alias no puede estar vacio"));
+        }        
     }
     
     private void persist(PersistAction persistAction, String successMessage) {
