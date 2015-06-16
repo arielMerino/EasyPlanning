@@ -76,7 +76,7 @@
                                                 <f:selectItems value="#{asignaturaController.planesEstudio}" var="plan" itemLabel="#{plan.anio}.#{plan.version}" itemValue="#{plan.anio}.#{plan.version}"/>
                                             </p:selectCheckboxMenu>
                                         </f:facet>
-                                        <h:outputText value="#{item.versionplan.anio}.#{item.versionplan.version}"/>
+                                        <h:outputText value="#{item.versionplan.planEstudio.codigo} - #{item.versionplan.anio}.#{item.versionplan.version}"/>
                                     </p:column>
                                     <p:column class="column-center-text" headerText="Alias" filterBy="#{item.alias}" filterMatchMode="contains" sortBy="#{item.alias}">
                                         <h:panelGrid class="panel-no-border" columns="2">
