@@ -145,7 +145,7 @@
                                                             </p:selectCheckboxMenu>
                                                         </f:facet>
                                                     </p:column>
-                                                    <p:column headerText="Nombre Apellido" colspan="1"/>
+                                                    <p:column headerText="Nombre Apellido" colspan="2"/>
                                                 </p:row>
                                             </p:columnGroup>
                                             <p:column class="column-center-text">
@@ -166,8 +166,10 @@
                                             <p:column class="column-center-text">
                                                 <h:outputText value="#{asignatura.versionplan.planEstudio.codigo} - #{asignatura.versionplan.anio}.#{asignatura.versionplan.version}"/>
                                             </p:column>
-                                            <p:column class="column-center-text">
-                                                <h:outputText value="#{profesorController.getProfesorAsignado(asignatura.id).nombre} #{profesorController.getProfesorAsignado(asignatura.id).apellido}"/>
+                                            <p:column class="column-center-text" colspan="2">
+                                                <ui:repeat value="#{profesorController.getProfesoresAsignados(asignatura.id)}" var="profesor">
+                                                    <ul><h:outputText value="#{profesor.nombre} #{profesor.apellido}"/></ul>
+                                                </ui:repeat>
                                             </p:column>
                                         </p:dataTable>
                                     </p:panel>

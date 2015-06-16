@@ -72,6 +72,18 @@ public class Profesores implements ProfesoresLocal{
             return null;
         }
     }
+    
+    @Override
+    public List<Profesor> getProfesoresByHorarioAsignado(Long id_asignatura, int anio, int semestre){
+        Query query = em.createNamedQuery("Profesor.getProfesorByHorarioAsignado").setParameter("anio", anio);
+        query.setParameter("semestre", semestre);
+        query.setParameter("id_asignatura", id_asignatura);
+        try{
+            return (List<Profesor>) query.getResultList();
+        }catch(NoResultException e){
+            return new ArrayList<>();
+        }
+    }
 
     /*@Override
     public Profesor getProfesorByRut(String rut) {

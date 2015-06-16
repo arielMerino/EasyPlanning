@@ -354,6 +354,11 @@ public class ProfesorController implements Serializable {
         return profesoresBusiness.getProfesorByHorarioAsignado(id_asignatura, semAnio.getAnoActual(), semAnio.getSemestreActual());
     }
     
+    public List<Profesor> getProfesoresAsignados(Long id_asignatura){
+        ParamSemestreAno semAnio = paramFacade.find(Long.parseLong(1+""));
+        return profesoresBusiness.getProfesoresByHorarioAsignado(id_asignatura, semAnio.getAnoActual(), semAnio.getSemestreActual());
+    }
+    
     public String[] getHorariosAsignado(){
         String asignaturas[] = new String[108];
         List<String> colores = new ArrayList<>();
