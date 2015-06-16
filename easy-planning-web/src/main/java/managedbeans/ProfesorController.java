@@ -168,7 +168,7 @@ public class ProfesorController implements Serializable {
         selected = profesor;
     }
     
-    public boolean aliasValido(String alias){
+    private boolean aliasValido(String alias){
         String trim = alias.trim();
         if (trim.length() > 0){
             if (trim.length() > 10){
