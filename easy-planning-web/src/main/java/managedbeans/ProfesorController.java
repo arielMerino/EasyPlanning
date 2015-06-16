@@ -193,6 +193,15 @@ public class ProfesorController implements Serializable {
         }
     }
     
+    public String formatoRut(String rut){
+        String inv = new StringBuilder(rut).reverse().toString();
+        String salida = "-"+inv.charAt(0);
+        for(int i = 1; i < rut.length(); i++){
+            salida = inv.charAt(i)+salida;
+        }
+        return salida;
+    }
+    
     private void persist(PersistAction persistAction, String successMessage) {
         if (selected != null) {
             setEmbeddableKeys();
