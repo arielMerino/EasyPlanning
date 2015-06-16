@@ -58,6 +58,7 @@ public class ProfesorController implements Serializable {
     private Profesor profesor;
     private Profesor selected;
     private List<Profesor> items;
+    private List<Profesor> profesorSeleccionado;
     private List<Profesor> profesoresFiltrados;    
     private String rutProfesor;
     private String[] horariosSeleccionados;
@@ -108,6 +109,14 @@ public class ProfesorController implements Serializable {
 
     public void setSelected(Profesor selected) {
         this.selected = selected;
+    }
+
+    public List<Profesor> getProfesorSeleccionado() {
+        return profesorSeleccionado;
+    }
+
+    public void setProfesorSeleccionado(List<Profesor> profesorSeleccionado) {
+        this.profesorSeleccionado = profesorSeleccionado;
     }
 
     protected void setEmbeddableKeys() {

@@ -9,16 +9,15 @@ import business.ProfesoresLocal;
 import entities.Asignatura;
 import entities.Checklist;
 import entities.Encuesta;
-import entities.ParamSemestreAno;
 import entities.Profesor;
 import java.io.Serializable;
 import java.io.UnsupportedEncodingException;
+import java.util.List;
 import java.util.Properties;
 import javax.ejb.EJB;
 import javax.enterprise.context.SessionScoped;
 import javax.inject.Inject;
 import javax.inject.Named;
-import javax.mail.BodyPart;
 import javax.mail.Message;
 import javax.mail.MessagingException;
 import javax.mail.Multipart;
@@ -48,8 +47,7 @@ import org.slf4j.LoggerFactory;
 public class EmailController implements Serializable {
     private final Logger logger = (Logger) LoggerFactory.getLogger(this.getClass());
     @Inject
-    ProfesorController profesorController;
-    
+    ProfesorController profesorController;    
     @EJB
     private ParamSemestreAnioFacadeLocal ejbSemAnio;
     @EJB
@@ -128,45 +126,58 @@ public class EmailController implements Serializable {
     public void enviarNotificacion() throws Exception {
         String origen = "coordinador.docente.diinf@gmail.com";
         String pass = "coordinador";                
+        List<Profesor> listaProfesor = profesorController.getProfesorSeleccionado();
         
-        if(profesorController.getSelected() != null) {
-            Profesor p = profesorController.getSelected();
+        if(!listaProfesor.isEmpty()) {
             int semestre = ejbSemAnio.find(1L).getSemestreActual();
-            int anio = ejbSemAnio.find(1L).getAnoActual(); 
-            String emailProfesor = p.getMail();
-            String nombre = "PAMELA AGUIRRE GUZMÁN";            
+            int anio = ejbSemAnio.find(1L).getAnoActual();
+            String nombre = "PAMELA AGUIRRE GUZMÁN";
             String asunto = "Encuesta de disponibilidad horaria";
-            String contenido = "Estimado Profesor:<br><br>";
-            contenido = contenido +
-            "El Comité de Docencia estará muy agradecido de que conteste la "
-            + "encuesta que se adjunta en el enlace para poder conocer su "
-            + "disponibilidad horaria y tener esta información para realizar"
-            + " la Planificación Docente del semestre " + semestre + " - " + 
-            anio + ".<br><br>http://localhost:8080/easy-planning-web/faces/profesor/"
-            + "encuesta.xhtml<br><br>Si el enlace no funciona correctamente, contáctese a la "
-            + "brevedad con su Coordinador(a) Docente<br><br>De antemano, "
-            + "gracias por su colaboración.<br>Saludos cordiales";                        
-                        
-            String rutProfesor = p.getRutProfesor();                       
-            Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semestre, anio);
             
-            if(encuesta == null){
-                encuesta = new Encuesta();
-                encuesta.setProfesor(p);            
-                encuesta.setAnio(anio);
-                encuesta.setSemestre(semestre);
-                getEjbEncuesta().create(encuesta);
+            for(Profesor p : listaProfesor){                
                 
-                for(Asignatura asignatura : profesorController.getAsignaturasProfesor(rutProfesor)){
-                    Checklist check = new Checklist();
-                    check.setAceptado(false);
-                    check.setAsignatura(asignatura);
-                    check.setEncuesta(encuesta);
-                    ejbCheck.create(check);
-                }                            
+                String emailProfesor = p.getMail();               
+                String contenido = "Estimado Profesor:<br><br>";
+                contenido = contenido +
+                "El Comité de Docencia estará muy agradecido de que conteste la "
+                + "encuesta que se adjunta en el enlace para poder conocer su "
+                + "disponibilidad horaria y tener esta información para realizar"
+                + " la Planificación Docente del semestre " + semestre + " - " + 
+                anio + ".<br><br>http://localhost:8080/easy-planning-web/faces/profesor/"
+                + "encuesta.xhtml<br><br>Si el enlace no funciona correctamente, contáctese a la "
+                + "brevedad con su Coordinador(a) Docente<br><br>De antemano, "
+                + "gracias por su colaboración.<br>Saludos cordiales";                        
+
+                String rutProfesor = p.getRutProfesor();                       
+                Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semestre, anio);
+
+                if(encuesta == null){
+                    encuesta = new Encuesta();
+                    encuesta.setProfesor(p);            
+                    encuesta.setAnio(anio);
+                    encuesta.setSemestre(semestre);
+                    getEjbEncuesta().create(encuesta);
+
+                    for(Asignatura asignatura : profesorController.getAsignaturasProfesor(rutProfesor)){
+                        Checklist check = new Checklist();
+                        check.setAceptado(false);
+                        check.setAsignatura(asignatura);
+                        check.setEncuesta(encuesta);
+                        ejbCheck.create(check);
+                    }                            
+                }
+                
+                if(emailProfesor != null){                    
+                    enviarEmail(origen, nombre, pass, emailProfesor, asunto, contenido);                    
+                }
+                else{                    
+                    String mensaje = "Profesor " + p.getNombre() + " " + p.getApellido();
+                    mensaje += " no tiene mail asociado";
+                    JsfUtil.addErrorMessage(mensaje);
+                }
             }
-            
-            enviarEmail(origen, nombre, pass, emailProfesor, asunto, contenido);                                    
+        }else{
+            JsfUtil.addErrorMessage("No has seleccionado ningún profesor");
         }
     }
 }
