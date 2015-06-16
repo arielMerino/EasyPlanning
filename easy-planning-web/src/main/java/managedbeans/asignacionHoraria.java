@@ -494,60 +494,66 @@ public class asignacionHoraria implements Serializable {
     }
     
     public void asignar(){
-        Horario h = horariosBusiness.findBybloqueCarreraPlanNivelAnioYSemestre(bloqueSelected, planEstudioSelected, nivelSelected, anioSelected, semestreSelected);
-        if (this.asignar != 0){
-            if (h == null){
-                h = new Horario();
-                h.setSeccion(seccionFacade.find(seccionId));
-                h.setBloque(bloqueSelected);
-                if (seccionFacade.find(seccionId).getCodigo().charAt(0)=='E')
-                    h.setTipo("E");
-                if (seccionFacade.find(seccionId).getCodigo().charAt(0)=='L')
-                    h.setTipo("L");
-                else
-                    h.setTipo("T");
-                if (profesorSelected != null){
-                    if (!"".equals(profesorSelected)) {
-                        h.setProfesor(profesorFacade.find(profesorSelected));
-                    } else {
+        try{
+            Horario h = horariosBusiness.findBybloqueCarreraPlanNivelAnioYSemestre(bloqueSelected, planEstudioSelected, nivelSelected, anioSelected, semestreSelected);
+            if (this.asignar != 0){
+                if (h == null){
+                    h = new Horario();
+                    h.setSeccion(seccionFacade.find(seccionId));
+                    h.setBloque(bloqueSelected);
+                    if (seccionFacade.find(seccionId).getCodigo().charAt(0)=='E')
+                        h.setTipo("E");
+                    if (seccionFacade.find(seccionId).getCodigo().charAt(0)=='L')
+                        h.setTipo("L");
+                    else
+                        h.setTipo("T");
+                    if (profesorSelected != null){
+                        if (!"".equals(profesorSelected)) {
+                            h.setProfesor(profesorFacade.find(profesorSelected));
+                        } else {
+                        }
                     }
+                    horarioFacade.create(h);
+                    this.asignar = 0;
+
+                    this.profesorSelected = "";
+                    this.seccionId = 0L;
                 }
-                horarioFacade.create(h);
-                this.asignar = 0;
-                
-                this.profesorSelected = "";
-                this.seccionId = 0L;
+                else{
+                    h.setBloque(bloqueSelected);
+                    h.setSeccion(seccionFacade.find(seccionId));
+                    if (seccionFacade.find(seccionId).getCodigo().charAt(0)=='E')
+                        h.setTipo("E");
+                    if (seccionFacade.find(seccionId).getCodigo().charAt(0)=='L')
+                        h.setTipo("L");
+                    else
+                        h.setTipo("T");
+                    if (profesorSelected != null){
+                        if (!"".equals(profesorSelected))
+                            h.setProfesor(profesorFacade.find(profesorSelected));
+                        if ("".equals(profesorSelected))
+                            h.setProfesor(null);
+                    }
+                    if (profesorSelected == null){
+                        h.setProfesor(null);
+                    }
+                    horarioFacade.edit(h);
+                    this.asignar = 0;
+
+                    this.profesorSelected = "";
+                    this.seccionId = 0L;
+                }
             }
             else{
-                h.setBloque(bloqueSelected);
-                h.setSeccion(seccionFacade.find(seccionId));
-                if (seccionFacade.find(seccionId).getCodigo().charAt(0)=='E')
-                    h.setTipo("E");
-                if (seccionFacade.find(seccionId).getCodigo().charAt(0)=='L')
-                    h.setTipo("L");
-                else
-                    h.setTipo("T");
-                if (profesorSelected != null){
-                    if (!"".equals(profesorSelected))
-                        h.setProfesor(profesorFacade.find(profesorSelected));
-                    if ("".equals(profesorSelected))
-                        h.setProfesor(null);
-                }
-                if (profesorSelected == null){
-                    h.setProfesor(null);
-                }
-                horarioFacade.edit(h);
-                this.asignar = 0;
-                
+
                 this.profesorSelected = "";
                 this.seccionId = 0L;
-            }
+            }    
         }
-        else{
-            
-            this.profesorSelected = "";
-            this.seccionId = 0L;
+        catch(Exception e){
+            JsfUtil.addErrorMessage("EEEEERRRROOOOOOR :C");
         }
+        
     }
     
     public void agregaSeccionTeoria(){
@@ -833,6 +839,9 @@ public class asignacionHoraria implements Serializable {
             if(seccionId != 0L){
                 muestraBoton = true;
             }
+            else{
+                muestraBoton = false;
+            }
             return seccionId != 0L;
         }
         catch(Exception e){
@@ -848,6 +857,26 @@ public class asignacionHoraria implements Serializable {
             return "mañana";
         }
     }
+    
+    public List<Profesor> getDisponibilidadProfesores(){
+        List<Profesor> profesores = new ArrayList();
+        List<String> profesoresAsignatura = checklistBusiness.findProfesorByAsgAnioSemestre(asignaturaSelected, anioSelected, semestreSelected);
+        
+        for(String id : profesoresAsignatura){
+            profesores.add(profesoresBusiness.findByRut(id));
+        }
+        
+        return profesores;
+    }
+    
+    public List<String> getHorariosProfesor(String id){
+        List<String> bloques = new ArrayList();
+        for(Horario horario : horariosBusiness.findDisponiblesByProfesorId(id)){
+            bloques.add(horario.getBloque());
+        }
+        bloques.sort(null);
+        return bloques;
+    }    
     
     public asignacionHoraria() {
     }    
