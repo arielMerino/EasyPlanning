@@ -103,16 +103,16 @@ public class Asignaturas implements AsignaturasLocal {
     }
     
     @Override
-    public Asignatura findByAsignaturaAsignada(String rutProfesor, int anio, int semestre) {
+    public List<Asignatura> findByAsignaturaAsignada(String rutProfesor, int anio, int semestre) {
         Query query = em.createNamedQuery("Asignatura.findByAsignaturaAsignada").setParameter("rutProfesor", rutProfesor);
         query.setParameter("anio", anio);
         query.setParameter("semestre", semestre);
         
         try{
-            return (Asignatura) query.getSingleResult();
+            return (List<Asignatura>) query.getResultList();
         }
         catch(Exception e){
-            return null;
+            return new ArrayList<>();
         }
     }
 }

@@ -56,10 +56,10 @@
                                                     <p:column headerText="Nombre" filterBy="#{profesor.nombre}" filterMatchMode="contains" sortBy="#{profesor.nombre}"/>
                                                     <p:column headerText="Apellido" filterBy="#{profesor.apellido}" filterMatchMode="contains" sortBy="#{profesor.apellido}"/>
                                                     <p:column headerText="Código" colspan="1"/>
-                                                    <p:column headerText="Nombre" colspan="1"/>
+                                                    <p:column headerText="Nombre" colspan="3"/>
                                                     <p:column headerText="Alias" colspan="1"/>
-                                                    <p:column headerText="Carrera" colspan="1"/>
-                                                    <p:column headerText="Plan de Estudios" colspan="1"/>
+                                                    <p:column headerText="Carrera" colspan="3"/>
+                                                    <p:column headerText="Plan de Estudios" colspan="2"/>
                                                     <p:column headerText="Nivel" colspan="1"/>
                                                     
                                                 </p:row>
@@ -71,22 +71,34 @@
                                                 <h:outputText value="#{profesor.apellido}"/>
                                             </p:column>
                                             <p:column class="column-center-text">
-                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).codigo}"/>
+                                                    <ui:repeat value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor)}" var="item">
+                                                        <ul><h:outputText value="#{item.codigo}"/></ul>
+                                                    </ui:repeat>
+                                            </p:column>
+                                            <p:column class="column-center-text" colspan="3">
+                                                    <ui:repeat value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor)}" var="item">
+                                                        <ul><h:outputText value="#{item.nombre}"/></ul>
+                                                    </ui:repeat>
                                             </p:column>
                                             <p:column class="column-center-text">
-                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).nombre}"/>
+                                                    <ui:repeat value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor)}" var="item">
+                                                        <ul><h:outputText value="#{item.alias}"/></ul>
+                                                    </ui:repeat>
                                             </p:column>
-                                            <p:column class="column-center-text">
-                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).alias}"/>
+                                            <p:column class="column-center-text" colspan="3">
+                                                    <ui:repeat value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor)}" var="item">
+                                                        <ul><h:outputText value="#{item.versionplan.planEstudio.carrera.nombre}"/></ul>
+                                                    </ui:repeat>
                                             </p:column>
-                                            <p:column class="column-center-text">
-                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).versionplan.planEstudio.carrera.nombre}"/>
-                                            </p:column>
-                                            <p:column class="column-center-text">
-                                                <h:outputText value="#{asignaturaController.getDatosPlan(asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).versionplan)}"/>
+                                            <p:column class="column-center-text" colspan="2">
+                                                    <ui:repeat value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor)}" var="item">
+                                                        <ul><h:outputText value="#{item.versionplan.planEstudio.codigo}-#{item.versionplan.anio}.#{item.versionplan.version}"/></ul>
+                                                    </ui:repeat>
                                             </p:column>
                                             <p:column class="column-center-text" styleClass="panel-item">
-                                                <h:outputText value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor).nivel}"/>
+                                                    <ui:repeat value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor)}" var="item">
+                                                        <ul><h:outputText value="#{item.nivel}" /></ul>
+                                                    </ui:repeat>
                                             </p:column>
                                         </p:dataTable>
                                     </p:panel>
@@ -152,7 +164,7 @@
                                                 <h:outputText value="#{asignatura.versionplan.planEstudio.carrera.nombre}"/>
                                             </p:column>
                                             <p:column class="column-center-text">
-                                                <h:outputText value="#{asignatura.versionplan.anio}.#{asignatura.versionplan.version}"/>
+                                                <h:outputText value="#{asignatura.versionplan.planEstudio.codigo} - #{asignatura.versionplan.anio}.#{asignatura.versionplan.version}"/>
                                             </p:column>
                                             <p:column class="column-center-text">
                                                 <h:outputText value="#{profesorController.getProfesorAsignado(asignatura.id).nombre} #{profesorController.getProfesorAsignado(asignatura.id).apellido}"/>
