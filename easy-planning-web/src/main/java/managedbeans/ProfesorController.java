@@ -167,16 +167,39 @@ public class ProfesorController implements Serializable {
     public void deleteProfesor(Profesor profesor){
         selected = profesor;
     }
-
-    public void guardarAliasProfesor() throws IOException{        
-        if(!profesor.getAlias().trim().isEmpty()){
+    
+    public boolean aliasValido(String alias){
+        String trim = alias.trim();
+        if (trim.length() > 0){
+            if (trim.length() > 10){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El alias debe contener un máximo de 10 caracteres."));
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El alias no debe estar vacío."));
+            return false;
+        }
+    }
+    
+    public void guardarAliasProfesor() throws IOException{
+        if(aliasValido(profesor.getAlias())){
             getFacade().edit(profesor);
             items = getFacade().findAll();
-            FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/profesor/List.xhtml");
-        }else{
-            items = getFacade().findAll();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El alias no puede estar vacio"));
-        }        
+            FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/profesor/List.xhtml");        
+        }
+    }
+    
+    public String formatoRut(String rut){
+        String inv = new StringBuilder(rut).reverse().toString();
+        String salida = "-"+inv.charAt(0);
+        for(int i = 1; i < rut.length(); i++){
+            salida = inv.charAt(i)+salida;
+        }
+        return salida;
     }
     
     private void persist(PersistAction persistAction, String successMessage) {
