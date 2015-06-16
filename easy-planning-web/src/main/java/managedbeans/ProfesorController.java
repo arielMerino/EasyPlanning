@@ -372,8 +372,8 @@ public class ProfesorController implements Serializable {
         Vector v = new Vector();
                 
         System.out.println("profesorController.getHorarioAsignado rut: " + rutProfesor);
-        
-        List<Horario> horarios = horariosBusiness.findAsignadosByProfesorId(rutProfesor);        
+        ParamSemestreAno p = paramFacade.find(1L);
+        List<Horario> horarios = horariosBusiness.findAsignadosActualesByProfesorId(rutProfesor,p.getAnoActual(),p.getSemestreActual());        
 
         for(Horario h : horarios){                        
             String alias = h.getSeccion().getCoordinacion().getAsignatura().getAlias();            

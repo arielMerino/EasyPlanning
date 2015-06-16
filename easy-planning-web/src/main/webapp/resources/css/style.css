@@ -373,3 +373,7 @@ body, p, a, li{
     background-color: rgba(255, 255, 255, 0.7) !important;
     color: rgba(255, 115, 25, 0.7) !important;
 }
+
+.asignatura-bloque{
+    font-size: 11px !important;
+}

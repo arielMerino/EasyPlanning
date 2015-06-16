@@ -218,9 +218,17 @@ public class EncuestaController implements Serializable {
     }
     
     public boolean isBorrable(String bloque, String rutProfesor){
-        if(horarioBusiness.AsignadoByBloqueAndProfesor(bloque, rutProfesor) == null)
+        ParamSemestreAno p = paramFacade.find(1L);
+        List<Horario> horarios = horarioBusiness.AsignadoByBloqueAndProfesor(bloque, rutProfesor);
+        try{
+            for (Horario h : horarios){
+                if (h.getSeccion().getCoordinacion().getSemestre() == p.getSemestreActual() && h.getSeccion().getCoordinacion().getAnio() == p.getAnoActual())
+                    return false;
+            }
             return true;
-        return false;
+        }catch(NullPointerException e){
+            return true;
+        }
     }
     
     public void dropHorarios(String rutProfesor){

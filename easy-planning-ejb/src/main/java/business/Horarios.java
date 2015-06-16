@@ -6,6 +6,7 @@
 package business;
 
 import entities.Horario;
+import entities.ParamSemestreAno;
 import entities.Seccion;
 import java.util.ArrayList;
 import java.util.List;
@@ -14,6 +15,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
+import sessionbeans.ParamSemestreAnioFacadeLocal;
 
 /**
  *
@@ -40,13 +42,13 @@ public class Horarios implements HorariosLocal {
     }
     
     @Override
-    public Horario AsignadoByBloqueAndProfesor(String bloque, String rutProfesor) {
+    public List<Horario> AsignadoByBloqueAndProfesor(String bloque, String rutProfesor) {
         Query query = em.createNamedQuery("Horario.findAsignadoByBloqueAndProfesor").setParameter("bloque", bloque);
         query.setParameter("rutProfesor", rutProfesor);
         try{
-            return (entities.Horario) query.getSingleResult();
+            return (List<Horario>) query.getResultList();
         }catch(NoResultException e){
-            return null;
+            return new ArrayList<>();
         }
     }
     
@@ -116,5 +118,17 @@ public class Horarios implements HorariosLocal {
             return null;
         }
         
+    }
+    
+    @Override
+    public List<Horario> findAsignadosActualesByProfesorId(String rutProfesor, int anio, int semestre){
+        Query query = em.createNamedQuery("Horario.findHorariosAsignadosByProfesorAndSemestre").setParameter("rutProfesor", rutProfesor);
+        query.setParameter("anio", anio);
+        query.setParameter("semestre", semestre);
+        try{
+            return (List<Horario>) query.getResultList();
+        }catch (NoResultException e){
+            return null;
+        }
     }
 }
