@@ -284,6 +284,7 @@ public class EncuestaController implements Serializable {
         }
         catch(Exception e){
             JsfUtil.addErrorMessage("Ha ocurrido un error");
+            e.printStackTrace();
         }
         
     }
