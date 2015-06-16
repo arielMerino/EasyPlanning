@@ -361,14 +361,28 @@ public class AsignaturaController implements Serializable {
         return asignaturaBusiness.findByAsignaturaAsignada(rutProfesor, semAnio.getAnoActual(), semAnio.getSemestreActual());
     }
     
-    public void guardarAliasAsignatura() throws IOException{        
-        if(!asignatura.getAlias().trim().isEmpty()){
+    private boolean aliasValido(String alias){
+        String trim = alias.trim();
+        if (trim.length() > 0){
+            if (trim.length() > 10){
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El alias debe contener un máximo de 10 caracteres."));
+                return false;
+            }
+            else{
+                return true;
+            }
+        }
+        else{
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El alias no debe estar vacío."));
+            return false;
+        }
+    }
+    
+    public void guardarAliasAsignatura() throws IOException{                
+        if(aliasValido(asignatura.getAlias())){
             getFacade().edit(asignatura);
             getAsignaturas();
             FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/asignaturas/listar_asignaturas.xhtml");
-        }else{
-            getAsignaturas();
-            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage("El alias no puede estar vacio"));
         }
     }
     
