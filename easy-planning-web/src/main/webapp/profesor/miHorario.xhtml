@@ -18,251 +18,283 @@
                             <li><a href="/easy-planning-web/faces/profesor/index.xhtml">Inicio</a></li>
                             <li class="active">Mi Horario Planificado</li>
                         </ol>
-                    </div> 
-                    <div class="col-md-2 logut-link">
-                        <div class="logout-div">
-                            <h:form>
-                                <p:commandLink action="#{usuarioController.logout()}" value="Cerrar Sesión"/>
-                                <span class="glyphicon glyphicon-log-out logut" aria-hidden="true"> </span>
-                            </h:form>
-                        </div>
                     </div>  
                 </div>
                 <div class="row">                    
                     <c:set var="lista" value="#{profesorController.getHorariosAsignado()}" scope="request"/>
 
-                    <p:panel id="horarioAsignacion">
+                    <p:panel id="horarioAsignacion" class="col-md-11">
                         <div class="row">
-                            <p:panel class="col-xs-2 headerBloque headerMyHorario">
+                            <p:panel class="col-md-2 headerBloque headerMyHorario">
                                 <p class="horario-title">Bloque</p>
                             </p:panel>  
-                            <p:panel class="col-xs-1 headerBloque headerMyHorario">
-                                <p class="horario-title">Luness</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 headerBloque headerMyHorario">
-                                <p class="horario-title">Martes</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 headerBloque headerMyHorario">
-                                <p class="horario-title">Miércoles</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 headerBloque headerMyHorario">
-                                <p class="horario-title">Jueve</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 headerBloque headerMyHorario">
-                                <p class="horario-title">Viernes</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 headerBloque headerMyHorario">
-                                <p class="horario-title">Sábado</p>
-                            </p:panel>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <p:panel class="col-md-2 headerBloque headerMyHorario">
+                                        <p class="horario-title">Luness</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 headerBloque headerMyHorario">
+                                        <p class="horario-title">Martes</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 headerBloque headerMyHorario">
+                                        <p class="horario-title">Miércoles</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 headerBloque headerMyHorario">
+                                        <p class="horario-title">Jueves</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 headerBloque headerMyHorario">
+                                        <p class="horario-title">Viernes</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 headerBloque headerMyHorario">
+                                        <p class="horario-title">Sábado</p>
+                                    </p:panel>
+                                </div>
+                            </div>
                         </div>
 
                         <div class="row">
-                            <p:panel class="col-xs-2 horarioBloque horarioprofesor">
+                            <p:panel class="col-md-2 horarioBloque horarioprofesor">
                                 <p class="horario-title-bloque"> 1 - 08:00 - 09:30</p>
-                            </p:panel>  
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[54]}">
-                                <p class="horario-title asignatura-bloque">#{lista[0]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[55]}">
-                                <p class="horario-title asignatura-bloque">#{lista[1]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[56]}">
-                                <p class="horario-title asignatura-bloque">#{lista[2]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[57]}">
-                                <p class="horario-title asignatura-bloque">#{lista[3]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[58]}">
-                                <p class="horario-title asignatura-bloque">#{lista[4]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[59]}">
-                                <p class="horario-title asignatura-bloque">#{lista[5]}</p>
-                            </p:panel>
+                            </p:panel> 
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[54]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[0]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[55]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[1]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[56]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[2]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[57]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[3]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[58]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[4]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[59]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[5]}</p>
+                                    </p:panel>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
-                            <p:panel class="col-xs-2 horarioBloque horarioprofesor">
+                            <p:panel class="col-md-2 horarioBloque horarioprofesor">
                                 <p class="horario-title-bloque"> 2 - 09:40 - 11:10</p>
                             </p:panel>  
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[60]}">
-                                <p class="horario-title asignatura-bloque">#{lista[6]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[61]}">
-                                <p class="horario-title asignatura-bloque">#{lista[7]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[62]}">
-                                <p class="horario-title asignatura-bloque">#{lista[8]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[63]}">
-                                <p class="horario-title asignatura-bloque">#{lista[9]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[64]}">
-                                <p class="horario-title asignatura-bloque">#{lista[10]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[65]}">
-                                <p class="horario-title asignatura-bloque">#{lista[11]}</p>
-                            </p:panel>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[60]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[6]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[61]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[7]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[62]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[8]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[63]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[9]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[64]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[10]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[65]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[11]}</p>
+                                    </p:panel>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
-                            <p:panel class="col-xs-2 horarioBloque horarioprofesor">
+                            <p:panel class="col-md-2 horarioBloque horarioprofesor">
                                 <p class="horario-title-bloque"> 3 - 11:20 - 12:50</p>
                             </p:panel>  
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[66]}">
-                                <p class="horario-title asignatura-bloque">#{lista[12]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[67]}">
-                                <p class="horario-title asignatura-bloque">#{lista[13]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[68]}">
-                                <p class="horario-title asignatura-bloque">#{lista[14]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[69]}">
-                                <p class="horario-title asignatura-bloque">#{lista[15]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[70]}">
-                                <p class="horario-title asignatura-bloque">#{lista[16]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[71]}">
-                                <p class="horario-title asignatura-bloque">#{lista[17]}</p>
-                            </p:panel>                    
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[66]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[12]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[67]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[13]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[68]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[14]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[69]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[15]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[70]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[16]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[71]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[17]}</p>
+                                    </p:panel>
+                                </div>
+                            </div>                    
                         </div>
                         <div class="row">
-                            <p:panel class="col-xs-2 horarioBloque horarioprofesor">
+                            <p:panel class="col-md-2 horarioBloque horarioprofesor">
                                 <p class="horario-title-bloque"> 4 - 13:50 - 15:20</p>
                             </p:panel> 
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[72]}">
-                                <p class="horario-title asignatura-bloque">#{lista[18]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[73]}">
-                                <p class="horario-title asignatura-bloque">#{lista[19]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[74]}">
-                                <p class="horario-title asignatura-bloque">#{lista[20]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[75]}">
-                                <p class="horario-title asignatura-bloque">#{lista[21]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[76]}">
-                                <p class="horario-title asignatura-bloque">#{lista[22]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[77]}">
-                                <p class="horario-title asignatura-bloque">#{lista[23]}</p>
-                            </p:panel>                    
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[72]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[18]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[73]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[19]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[74]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[20]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[75]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[21]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[76]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[22]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[77]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[23]}</p>
+                                    </p:panel>
+                                </div>
+                            </div>                    
                         </div>
                         <div class="row">
-                            <p:panel class="col-xs-2 horarioBloque horarioprofesor">
+                            <p:panel class="col-md-2 horarioBloque horarioprofesor">
                                 <p class="horario-title-bloque"> 5 - 15:30 - 17:00</p>
                             </p:panel> 
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[78]}">
-                                <p class="horario-title asignatura-bloque">#{lista[24]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[79]}">
-                                <p class="horario-title asignatura-bloque">#{lista[25]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[80]}">
-                                <p class="horario-title asignatura-bloque">#{lista[26]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[81]}">
-                                <p class="horario-title asignatura-bloque">#{lista[27]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[82]}">
-                                <p class="horario-title asignatura-bloque">#{lista[28]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[83]}">
-                                <p class="horario-title asignatura-bloque">#{lista[29]}</p>
-                            </p:panel>
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[78]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[24]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[79]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[25]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[80]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[26]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[81]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[27]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[82]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[28]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[83]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[29]}</p>
+                                    </p:panel>
+                                </div>
+                            </div>
 
                         </div>
                         <div class="row">
-                            <p:panel class="col-xs-2 horarioBloque horarioprofesor">
+                            <p:panel class="col-md-2 horarioBloque horarioprofesor">
                                 <p class="horario-title-bloque"> 6 - 17:10 - 18:40</p>
                             </p:panel>  
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[84]}">
-                                <p class="horario-title asignatura-bloque">#{lista[30]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[85]}">
-                                <p class="horario-title asignatura-bloque">#{lista[31]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[86]}">
-                                <p class="horario-title asignatura-bloque">#{lista[32]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[87]}">
-                                <p class="horario-title asignatura-bloque">#{lista[33]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[88]}">
-                                <p class="horario-title asignatura-bloque">#{lista[34]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[89]}">
-                                <p class="horario-title asignatura-bloque">#{lista[35]}</p>
-                            </p:panel>                                                                                                    
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[84]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[30]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[85]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[31]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[86]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[32]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[87]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[33]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[88]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[34]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[89]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[35]}</p>
+                                    </p:panel>
+                                </div>
+                            </div>                                                                                                    
                         </div>
                         <div class="row">
-                            <p:panel class="col-xs-2 horarioBloque horarioprofesor">
+                            <p:panel class="col-md-2 horarioBloque horarioprofesor">
                                 <p class="horario-title-bloque"> 7 - 19:00 - 20:10</p>
-                            </p:panel>                                                                                                     
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[90]}">
-                                <p class="horario-title asignatura-bloque">#{lista[36]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[91]}">
-                                <p class="horario-title asignatura-bloque">#{lista[37]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[92]}">
-                                <p class="horario-title asignatura-bloque">#{lista[38]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[93]}">
-                                <p class="horario-title asignatura-bloque">#{lista[39]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[94]}">
-                                <p class="horario-title asignatura-bloque">#{lista[40]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[95]}">
-                                <p class="horario-title asignatura-bloque">#{lista[41]}</p>
-                            </p:panel>
+                            </p:panel>    
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[90]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[36]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[91]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[37]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[92]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[38]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[93]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[39]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[94]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[40]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[95]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[41]}</p>
+                                    </p:panel>
+                                </div>
+                            </div>
                         </div>
                         <div class="row">
-                            <p:panel class="col-xs-2 horarioBloque horarioprofesor">
+                            <p:panel class="col-md-2 horarioBloque horarioprofesor">
                                 <p class="horario-title-bloque"> 8 - 20:20 - 22:00</p>
                             </p:panel>  
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[96]}">
-                                <p class="horario-title asignatura-bloque">#{lista[42]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[97]}">
-                                <p class="horario-title asignatura-bloque">#{lista[43]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[98]}">
-                                <p class="horario-title asignatura-bloque">#{lista[44]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[99]}">
-                                <p class="horario-title asignatura-bloque">#{lista[45]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[100]}">
-                                <p class="horario-title asignatura-bloque">#{lista[46]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[101]}">
-                                <p class="horario-title asignatura-bloque">#{lista[47]}</p>
-                            </p:panel>                                                                                                    
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[96]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[42]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[97]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[43]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[98]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[44]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[99]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[45]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[100]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[46]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[101]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[47]}</p>
+                                    </p:panel>
+                                </div>
+                            </div>                                                                                                    
                         </div>
                         <div class="row">
-                            <p:panel class="col-xs-2 horarioBloque horarioprofesor">
+                            <p:panel class="col-md-2 horarioBloque horarioprofesor">
                                 <p class="horario-title-bloque"> 9 - 22:00 - 23:00</p>
-                            </p:panel>                                                                                                      
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[102]}">
-                                <p class="horario-title asignatura-bloque">#{lista[48]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[103]}">
-                                <p class="horario-title asignatura-bloque">#{lista[49]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[104]}">
-                                <p class="horario-title asignatura-bloque">#{lista[50]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[105]}">
-                                <p class="horario-title asignatura-bloque">#{lista[51]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[106]}">
-                                <p class="horario-title asignatura-bloque">#{lista[52]}</p>
-                            </p:panel>
-                            <p:panel class="col-xs-1 bloqueVacio horarioprofesor" style="background-color:#{lista[107]}">
-                                <p class="horario-title asignatura-bloque">#{lista[53]}</p>
-                            </p:panel>
+                            </p:panel>  
+                            <div class="col-md-10">
+                                <div class="row">
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[102]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[48]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[103]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[49]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[104]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[50]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[105]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[51]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[106]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[52]}</p>
+                                    </p:panel>
+                                    <p:panel class="col-md-2 bloqueVacio horarioprofesor" style="background-color:#{lista[107]}">
+                                        <p class="horario-title asignatura-bloque">#{lista[53]}</p>
+                                    </p:panel>
+                                </div>
+                            </div>
                         </div>
                     </p:panel>        
                 </div>

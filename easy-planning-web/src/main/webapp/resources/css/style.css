@@ -203,7 +203,7 @@ body, p, a, li{
 #btn-sesion{
     background-color: #fff;
     color: #ff7319;
-    margin-top: 0.5em;
+    margin-top: 3%;
 }
 #btn-sesion:hover{
     background-color: #ff7319;
@@ -310,13 +310,13 @@ body, p, a, li{
     height: 60px !important;
 }
 .logut-link{
-    margin-top: 0.5em;
 }
 .logout-div{
-    margin-left: 30%;
+    margin-left: 15%;
+    margin-top: 5%;
 }
 .logut-link>.logout-div>form>a{
-    color: #ff7319;
+    color: #fff;
 }
 .logut-link>.logout-div>form>a:hover{
     text-decoration: none;
@@ -350,7 +350,7 @@ body, p, a, li{
     width: 100% !important;
 }
 .logut{
-    color: #ff7319;
+    color: #fff;
 }
 .column-center-text{
     text-align: center;
@@ -376,4 +376,9 @@ body, p, a, li{
 }
 #div-tabla-disponibilidad{
     padding: 0;
+}
+.index-profesor{
+    color: #fff;
+    font-size: 1.5em !important;
+    margin-right: 3%;
 }

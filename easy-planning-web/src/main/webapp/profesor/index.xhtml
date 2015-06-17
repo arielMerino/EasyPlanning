@@ -25,14 +25,6 @@ and open the template in the editor.
                         <ol class="breadcrumb">
                             <li class="active">Inicio</li>
                         </ol>
-                    </div> 
-                    <div class="col-md-2 logut-link">
-                        <div class="logout-div">
-                            <h:form>
-                                <p:commandLink action="#{usuarioController.logout()}" value="Cerrar Sesión"/>
-                                <span class="glyphicon glyphicon-log-out logut" aria-hidden="true"> </span>
-                            </h:form>
-                        </div>
                     </div>  
                 </div>
                 <div class="row">
@@ -43,6 +35,7 @@ and open the template in the editor.
                 <div class="row">
                     <div class="col-md-4 col-md-offset-2">
                         <div class="opcion-profesor">
+                            <span class="glyphicon glyphicon-check index-profesor" aria-hidden="true" ></span> 
                             <h:outputLink class="link-opcion-profesor" id="enc" value="/easy-planning-web/faces/profesor/cargaEncuesta.xhtml">
                                 <h:outputText value="Encuesta de Disponibilidad" />
                             </h:outputLink>
@@ -51,6 +44,7 @@ and open the template in the editor.
                     </div>
                     <div class="col-md-4">
                         <div class="opcion-profesor">
+                            <span class="glyphicon glyphicon-calendar index-profesor" aria-hidden="true" ></span>
                             <h:outputLink class="link-opcion-profesor" id="horario" value="/easy-planning-web/faces/profesor/miHorario.xhtml">
                                 <h:outputText value="Mi Horario Planificado" />
                             </h:outputLink>
