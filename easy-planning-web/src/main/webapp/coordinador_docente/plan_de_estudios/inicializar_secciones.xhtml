@@ -23,7 +23,7 @@
                     </div>                 
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-11 col-md-offset-1">
                         <h:form enctype='multipart/form-data'>
                             <h:outputLabel value="Seleccione las Carreras que va a planificar este semestre"/>
                             <p:pickList value="#{cargarPlanDeEstudios.versionPickList}" var="vers" itemLabel="#{vers.planEstudio.carrera.nombre}-#{vers.planEstudio.codigo}.#{vers.anio}.#{vers.version} (#{cargarPlanDeEstudios.getJornada(vers.planEstudio.jornada)})" 

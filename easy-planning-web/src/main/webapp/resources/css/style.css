@@ -343,7 +343,7 @@ body, p, a, li{
     font-size: 14px;
 }
 .ui-picklist .ui-picklist-list{
-    width: 35em !important;
+    width: 45em !important;
 }
 .one-list-box{
     margin: 0;
@@ -381,4 +381,15 @@ body, p, a, li{
     color: #fff;
     font-size: 1.5em !important;
     margin-right: 3%;
+}
+#panel-no-margin{
+    margin-top: 0;
+}
+.panel-title>a:hover{
+    text-decoration: none;
+    font-weight: bold;
+}
+.panel-title>a:focus{
+    text-decoration: none;
+    font-weight: normal;
 }

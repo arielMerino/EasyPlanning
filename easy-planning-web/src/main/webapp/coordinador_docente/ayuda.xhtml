@@ -19,232 +19,9 @@
                         </ol>
                     </div>              
                 </div>
-                <div class="row">
+                <!--div class="row">
                     <div class="col-md-8 col-md-offset-1">
-                        <div id="comenzando">
-                            <h1 class="title">
-                                Comenzando
-                            </h1>
-                            <hr/>
-                            <p class="text-justify help-body">
-                                El presente documento cuenta con la información necesaria para la utilización del Easy Planning, desarrollado como una herramienta de apoyo a planificación docente de cada semestre del Departamento de Ingeniería Informática de la Universidad de Santiago de Chile, facilitando la labor de los Coordinadores Docentes en términos de distribución horaria y solapamiento entre las asignaturas a las cuales no está esto permitido.
-                            </p>
-                            <p class="text-justify help-body">
-                                Se pretende detallar las formas de uso apropiadas para las funcionalidades contenidas en el software, con tal de servir de una guía adecuada para usuarios que se inicien en su uso y puedan así obtener el máximo beneficio en el menor tiempo posible.
-                            </p>
-                            <p class="text-justify help-body">
-                                Se muestran también posibles casos de errores y excepciones que pueden ocurrir durante la ejecución del software y que pueden complicar su uso, para lo cual se explica adecuadamente cómo solucionarlos y realizar lo que se necesita adecuadamente.
-                            </p>
-                        </div>
-                        <div id="cargarPlanes">
-                            <h1 class="title">
-                                Cargar Plan de Estudios
-                            </h1>
-                            <hr/>
-                            <p class="text-justify help-body">
-                                Para poder cargar un plan de estudio, se debe seleccionar la opción “Agregar Plan de Estudios” de la sección “Carreras” del menú de navegación o de la pantalla principal.
-                            </p>
-                            <p class="text-justify help-body">
-                                El primero de los campos corresponde a una lista con el nombre del plan de estudios que se desea agregar. El segundo campo corresponde a una entrada de archivo, donde al hacer click sobre el botón “Seleccionar archivo” se desplegará una ventana donde se podrá seleccionar el archivo que contiene el plan de estudios, tal como lo muestra la Figura 4.3. Una vez encontrado el archivo que se desea cargar, hacer doble click sobre él o apretar sobre la opción abrir para seleccionarlo.
-                            </p>
-                            <p class="text-justify help-body">
-                                Los formatos de archivo soportados por Easy Planning son CSV y XLS. Los campos que debe tener este archivo son: código asignatura, nombre asignatura, teoría, ejercicio, laboratorio, nivel y requisitos. Todos estos campos son absolutamente necesarios y la falta de alguno de ellos provocará excepciones en la aplicación.
-                            </p>
-                            <div class="alert alert-warning">
-                                <p class="text-justify">
-                                    <strong>IMPORTANTE:</strong> Todos los campos son requeridos y no se puede cargar un plan de estudios si uno de ellos falta.
-                                </p>
-                            </div>
-                            <p class="text-justify help-body">
-                                Una vez seleccionado el archivo, hacer click sobre el botón cargar para subir la información contenida en él al sistema. Si el archivo está en el formato correcto y con todos los campos adecuados en el orden correspondiente, se mostrará el mensaje “Archivo cargado con éxito” seguido de una tabla con todas las asignaturas cargadas correctamente en el sistema correspondiente al plan contenido en el archivo.
-                            </p>
-                            <div class="alert alert-warning">
-                                <p class="text-justify">
-                                    <strong>IMPORTANTE:</strong> Puede darse el caso de que el formato seleccionado sea el adecuado, pero por problemas de origen sea imposible cargar el archivo. En caso de que así ocurra, la aplicación enviará un mensaje al momento de intentar subir el archivo indicando la forma de solucionar el problema.
-                                </p>
-                            </div>
-                            <p class="text-justify help-body">
-                                Al ocurrir esta excepción, la aplicación mostrará un mensaje indicando los pasos a seguir en caso de que el formato del archivo sea el correcto (CSV o XLS), pero su codificación interna posee errores que la aplicación no puede reparar. En este caso, si el formato del archivo es el adecuado, este debe ser abierto con un editor de texto y guardado como un archivo csv o xls, con lo cual la aplicación podrá leer adecuadamente el archivo. Este mensaje también aparecerá en caso de que se suba un archivo cuyo formato no es válido, es decir, es un archivo distinto a CSV o XLS.
-                            </p>
-                            <div class="alert alert-warning">
-                                <p class="text-justify">
-                                    En caso que el archivo no cuente con los campos requeridos mencionados anteriormente, también se producirá una excepción, tal y como se mencionó con anterioridad. Si esto ocurre, la aplicación mostrará un mensaje de error indicando que el archivo no contiene los campos requeridos o estos no se encuentran en el orden correcto.
-                                </p>
-                            </div>
-                        </div>
-                        <div id="asignacionHoraria">
-                            <h1 class="title">
-                                Asignación Horaria
-                            </h1>
-                            <hr/>
-                            <p class="text-justify help-body">
-                                La asignación de horaria corresponde a la acción en la que se determinan los bloques horarios en los que un profesor realizará actividades académicas, ya sean de teoría, laboratorio o ejercicios, para una sección de una asignatura en particular, correspondiente a un plan de estudios específico. Para tales efectos es necesario contar con la información de disponibilidad horaria de los profesores, además de las asignaturas que deseen impartir en el semestre que se está planificando, datos que se obtienen a partir de una encuesta que cada profesor debe responder.
-                            </p>
-                            <p class="text-justify help-body">
-                                Para poder realizar la asignación horaria es necesario crear las secciones que contendrá cada asignatura en el semestre que se está planificando, para lo cual existe un módulo particular en la aplicación llamado “Iniciar Planificación” en la sección “Planificación Docente” del menú principal.
-                            </p>
-                            <p class="text-justify help-body">
-                                En la sección “Inicializar secciones” se encuentra un formulario con tres diferentes campos. El primero corresponde a una selección del plan de estudios a inicializar, donde se puede elegir entre aquellos planes de estudios registrados previamente en el sistema. Los siguientes campos corresponden al año y al semestre para los cuales se inicializan las secciones, en ambos hay que seleccionar una de las opciones que se entregan según sean las necesidades.
-                            </p>
-                            <p class="text-justify help-body">
-                                Una vez esté toda la información necesaria seleccionada, presionar el botón cargar, con lo que se crearán las secciones necesarias para cada asignatura para el plan de estudio, el año y el semestre indicados, indicando esto con un mensaje de éxito.
-                            </p>
-                            <p class="text-justify help-body">
-                                Una vez en la sección “Asignación horaria” se podrán apreciar varias secciones. En la parte superior se encuentran las selecciones de plan de estudio y nivel. En la primera de estas selecciones se encuentran todos los planes de estudios disponibles en el sistema, de los cuales se debe seleccionar aquel sobre el cual se desea realizar la planificación docente, para luego seleccionar el nivel sobre el cual se realizará la asignación horaria, esto con tal de volver más cómodo el proceso. 
-                            </p>
-                            <p class="text-justify help-body">
-                                Una vez se seleccione  año, el semestre, la carrera, el plan de estudios y el nivel que se está planificando, aparecerán todas las asignaturas correspondientes a los parámetros anteriores.
-                            </p>
-                            <p class="text-justify help-body">
-                                Aquí es posible seleccionar una de las asignaturas del nivel en particular que se está observando, para lo cual es necesario seleccionar la asignatura en particular de entre las que se encuentran disponibles en el respectivo nivel.
-                            </p>
-                            <p class="text-justify help-body">
-                                Una vez completada la acción anterior, se actualizará la información de las secciones que posee la asignatura seleccionada y los profesores que están disponibles para realizar la docencia de la misma. 
-                            </p>
-                            <p class="text-justify help-body">
-                                En este momento se está en condiciones de realizar la asignación horaria, para lo cual se debe seleccionar uno de los bloques horarios haciendo click sobre uno de ellos.
-                            </p>
-                            <p class="text-justify help-body">
-                                Al seleccionar uno de los bloques horarios se desplegará un menú para realizar la asignación horaria.
-                            </p>
-                            <p class="text-justify help-body">
-                                Una vez en éste menú se debe seleccionar en primer lugar la sección que ocupará ese bloque horario para ese nivel.
-                            </p>
-                            <p class="text-justify help-body">
-                                Seleccionada la sección existen dos opciones para realizar la asignación. Una es asignar a un profesor que cuente con disponibilidad para realizar la asignatura seleccionada en el bloque seleccionado.
-                            </p>
-                            <p class="text-justify help-body">
-                                Si no existe ningún profesor con disponibilidad horaria para esa asignatura en ese bloque horario se puede forzar a un profesor a realizar la asignatura en el bloque seleccionado. Para tales efectos, se debe buscar en el menú todos los profesores y ahí seleccionar a aquel docente que se desea realice la asignatura en el bloque indicado, haya este indicando disponibilidad horaria o no, lo cual se puede agilizar utilizando el filtro disponible en el menú.
-                            </p>
-                            <p class="text-justify help-body">
-                                Una vez seleccionado al profesor que se quiera asignar al bloque horario y la asignatura que se eligió anteriormente, se debe hacer click sobre el botón asignar para completar la acción.
-                            </p>
-                            <p class="text-justify help-body">
-                                Una vez hecho esto actualiza el horario mostrando la asignatura y el profesor asignados al bloque horario.
-                            </p>
-                            <div class="alert alert-warning">
-                                <p class="text-justify">
-                                    Si el profesor cuenta con un alias, la asignación lo mostrará junto con el código o alias de la asignatura.
-                                </p>
-                            </div>
-                            <p class="text-justify help-body">
-                                En caso que se quiera quitar una asignación realizada previamente, se debe seleccionar el bloque horario haciendo click sobre él, ante lo cual se desplegará un menú donde se deberá seleccionar la opción eliminar para liberar el bloque horario. Una vez realizada esta acción, el bloque horario quedará liberado.
-                            </p>
-                            <p class="text-justify help-body">
-                                Por si surgiese alguna duda con respecto a los códigos de las asignaturas y las secciones, en la parte inferior de esta sección se muestra un listado con las asignatura del nivel que se está planificando.
-                            </p>
-                            <div class="alert alert-warning">
-                                <p class="text-justify">
-                                    <strong>IMPORTANTE:</strong> En esta versión de la aplicación aún no se desarrolla la lógica necesaria para evitar solapamiento de horarios de diferentes asignaturas, puesto que esta funcionalidad estará disponible en versiones posteriores.
-                                </p>
-                            </div>
-                        </div>
-                        <div id="aliasProfesor">
-                            <h1 class="title">
-                                Agregar un alias a un Profesor
-                            </h1>
-                            <hr/>
-                            <p class="text-justify help-body">
-                                Para efectos prácticos, la aplicación cuenta con la funcionalidad de agregar un alias a un profesor por parte del coordinador docente, lo que visualmente facilita la identificación en la visualización de un nombre dentro de la aplicación. Para agregar un alias, se debe ingresar a la página del listado de profesores, seleccionando “Ver profesores” en la página principal de coordinador docente o seleccionandolo también en la barra de navegación en la sección “Profesores”.
-                            </p>
-                            <p class="text-justify help-body">
-                                Luego, se mostrará la página con todos los profesores registrados en el sistema. Para agregar un alias a un profesor, se debe seleccionar el icono de editar en que se encuentra en la columna “Alias”.
-                            </p>
-                            <p class="text-justify help-body">
-                                Luego, la aplicación mostrará el profesor al que se está agregando el alias y un campo para agregarlo. A continuación, solo se debe presionar “Guardar” y se mostrará el listado de profesores nuevamente, pero ahora se mostrará el alias que fue agregado. Para editar el alias se debe seguir el mismo procedimiento.
-                            </p>
-                        </div>
-                        <div id="aliasAsignatura">
-                            <h1 class="title">
-                                Agregar un alias a una Asignatura
-                            </h1>
-                            <hr/>
-                            <p class="text-justify help-body">
-                                La aplicación permite asignar un alias a una asignatura por parte del coordinador docente. Para llevar a cabo este proceso, el usuario debe dirigirse a la opción “Ver Asignatura” en la sección “Carreras”, en la barra de navegación o en la página principal de coordinador docente.
-                            </p>
-                            <p class="text-justify help-body">
-                                Luego, se mostrará la página en donde se listan todas las asignaturas del sistema. Para agregar un alias, se debe presionar el icono de editar que se encuentra en la columna “Alias”.
-                            </p>
-                            <p class="text-justify help-body">
-                                A continuación, se muestra el nombre de la asignatura a la cual se está agregando el alias y el campo para agregarlo. Al ingresar el alias y presionar el botón “Guardar”, la aplicación se dirigirá al listado de asignatura, donde se muestra el alias recién ingresado.
-                            </p>
-                        </div>
-                        <div id="notificacionEncuesta">
-                            <h1 class="title">
-                                Envío y notificación de Encuesta de Disponibilidad
-                            </h1>
-                            <hr/>
-                            <p class="text-justify help-body">
-                                Cuando comienza la planificación docente del semestre, uno de los primeros y más importantes pasos corresponde a completar la encuesta de disponibilidad horaria por parte de los profesores. Para tales efectos es necesario poder realizar el envío y notificación de esta encuesta a los profesores que se estime conveniente. Para tales efectos, es necesario dirigirse a la sección “Ver Profesores” ubicada en la sección “Profesores” del menú de navegación.
-                            </p>
-                            <p class="text-justify help-body">
-                                Una vez en la sección “Ver Profesores” se podrá apreciar una lista con los profesores registrados en el sistema, indicando sus datos personales, tales como el Nombre, el Apellido, su Mail (Correo electrónico), su RUT y una sección para visualizar lo que contestó en la encuesta de disponibilidad horaria. Si no ha contestado esta encuesta y se requiere que lo haga, se debe seleccionar al profesor al que se enviará la notificación y hacer click sobre el botón “Enviar notificación”.
-                            </p>
-                            <p class="text-justify help-body">
-                                Realizado esto, se enviará una notificación al correo que el profesor tiene registrado, indicando que debe completar la encuesta de disponibilidad y un enlace hacia la encuesta que debe responder.
-                            </p>
-                        </div>
-                        <div id="editarEncuesta">
-                            <h1 class="title">
-                                Editar Encuesta de Disponibilidad
-                            </h1>
-                            <hr/>
-                            <p class="text-justify help-body">
-                                Una vez que se ha enviado la encuesta a un profesor, el usuario coordinador docente puede editar las asignaturas que aparecen en la encuesta, para dar opción al profesor de elegir nuevas asignaturas para impartir.
-                            </p>
-                            <p class="text-justify help-body">
-                                Para poder editar una encuesta, se debe seleccionar la opción “Editar encuesta” de la sección “Profesor” del menú de navegación.
-                            </p>
-                            <p class="text-justify help-body">
-                                Tras ejecutar la acción anterior, se ingresará en la sección “Editar Encuesta” donde se muestran todos los profesores del sistema. Aquí se debe seleccionar el profesor al que se desea editar la encuesta.
-                            </p>
-                            <p class="text-justify help-body">
-                                Una vez seleccionado el profesor, se visualiza una tabla que muestra las asignaturas que actualmente se encuentran en la encuesta y una tabla que muestra la totalidad de las asignaturas del sistema.
-                            </p>
-                            <p class="text-justify help-body">
-                                La tabla donde se muestran las asignaturas del sistema permite al usuario coordinador docente agregar asignaturas a la encuesta del profesor. Para realizar esto, se debe(n) seleccionar la(s) asignatura(s) que se desea(n) agregar desde la tabla y luego presionar el botón “Agrega asignaturas”. Inmediatamente la tabla donde se encuentran las asignaturas de la encuesta incluirá las asignaturas recién añadidas.
-                            </p>
-                            <p class="text-justify help-body">
-                                En la tabla que muestra las asignaturas en la encuesta (en la parte superior de la página), corresponden a las asignaturas que el profesor tenía asignadas en el semestre anterior, así él tiene la opción de seguir impartiendo clases para las mismas asignaturas. Pero en caso de que el usuario coordinador docente no quiera ofrecer alguna asignatura para un profesor, tiene la posibilidad de sacar asignaturas de la encuesta, las que sólo se mostrarán al profesor si están en la tabla. Para llevar a cabo esta tarea, el usuario coordinador docente debe seleccionar la(s) asignatura(s) que desea sacar de la encuesta en la tabla y luego presionar el botón “Quitar Asignaturas”. Como resultado, las asignaturas ya no estarán en la tabla por lo que no se mostrarán al profesor en su encuesta.
-                            </p>
-                        </div>
-                        <div id="disponibilidadHoraria">
-                            <h1 class="title">
-                                Ver la Disponibilidad Horaria de un Profesor
-                            </h1>
-                            <hr/>
-                            <p class="text-justify help-body">
-                                Para el usuario Coordinador Docente es importante poder saber qué profesores contestaron la encuesta y poder visualizar cuales fueron las respuestas que entregaron. Esto se puede hacer dirigiéndose a la sección “Ver Profesores” de la opción “Profesores” en la vista principal del coordinador docente o en menú de navegación. 
-                            </p>
-                            <p class="text-justify help-body">
-                                Una vez allí se podrá observar el listado de los profesores registrados en el sistema. En la última columna se encuentra un enlace denominado “Ver Encuesta”.
-                            </p>
-                            <p class="text-justify help-body">
-                                Una vez se ha hecho click sobre uno de esos enlaces, se accede a las respuestas que el profesor hizo sobre la encuesta de disponibilidad.
-                            </p>
-                            <div class="alert alert-warning">
-                                <p class="text-justify">
-                                    En caso de que el profesor no haya contestado la encuesta, se mostrará un mensaje indicando ésta situación.
-                                </p>
-                            </div>
-                        </div>
-                        <div id="agregarSecciones">
-                            <h1 class="title">
-                                Agregar Secciones a una Asignatura
-                            </h1>
-                            <hr/>
-                            <p class="text-justify help-body">
-                                En el caso de querer agregar nuevas secciones, la aplicación permite hacerlo en el momento de asignar cursos a un profesor. En la ventana de asignación se visualizan los botones de “Agregar” para crear nuevas secciones, tanto de cátedra como de laboratorio.
-                            </p>
-                            <p class="text-justify help-body">
-                                Al presionar los botones, se crearán las correspondientes secciones y se mostrará una notificación indicando que sección fue creada recientemente.
-                            </p>
-                            <div class="alert alert-warning">
-                                <p class="text-justify">
-                                    Si la asignatura no cuenta con horas de laboratorio o teoría, no se creará otra sección correspondiente a éstos tipos.
-                                </p>
-                            </div>
-                        </div>
+                       
                     </div>
                     <div class="col-md-2" id="nav-scrollspy" role="tablist">
                         <ul class="nav nav-stacked nav-side-fixed">
@@ -258,6 +35,299 @@
                             <li><a href="#disponibilidadHoraria">Ver la Disponibilidad Horaria de un Profesor</a></li>
                             <li><a href="#agregarSecciones">Agregar Secciones a una Asignatura</a></li>
                         </ul>
+                    </div>
+                </div-->
+                <div class="row">
+                    <div class="col-md-10 col-md-offset-1">
+                        <div class="panel-group" id="accordion" role="tablist" aria-multiselectable="true">
+                            <div id="panel-no-margin" class="panel panel-default">
+                              <div class="panel-heading" role="tab" id="headingOne">
+                                <h4 class="panel-title">
+                                  <a role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
+                                    Comenzando
+                                  </a>
+                                </h4>
+                              </div>
+                              <div id="collapseOne" class="panel-collapse collapse in" role="tabpanel" aria-labelledby="headingOne">
+                                <div class="panel-body">
+                                    <p class="text-justify help-body">
+                                        El presente documento cuenta con la información necesaria para la utilización del Easy Planning, desarrollado como una herramienta de apoyo a planificación docente de cada semestre del Departamento de Ingeniería Informática de la Universidad de Santiago de Chile, facilitando la labor de los Coordinadores Docentes en términos de distribución horaria y solapamiento entre las asignaturas a las cuales no está esto permitido.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Se pretende detallar las formas de uso apropiadas para las funcionalidades contenidas en el software, con tal de servir de una guía adecuada para usuarios que se inicien en su uso y puedan así obtener el máximo beneficio en el menor tiempo posible.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Se muestran también posibles casos de errores y excepciones que pueden ocurrir durante la ejecución del software y que pueden complicar su uso, para lo cual se explica adecuadamente cómo solucionarlos y realizar lo que se necesita adecuadamente.
+                                    </p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="panel panel-default">
+                              <div class="panel-heading" role="tab" id="headingTwo">
+                                <h4 class="panel-title">
+                                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseTwo" aria-expanded="false" aria-controls="collapseTwo">
+                                    Cargar Plan de Estudios
+                                  </a>
+                                </h4>
+                              </div>
+                              <div id="collapseTwo" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingTwo">
+                                <div class="panel-body">
+                                    <p class="text-justify help-body">
+                                        Para poder cargar un plan de estudio, se debe seleccionar la opción “Agregar Plan de Estudios” de la sección “Carreras” del menú de navegación o de la pantalla principal.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        El primero de los campos corresponde a una lista con el nombre del plan de estudios que se desea agregar. El segundo campo corresponde a una entrada de archivo, donde al hacer click sobre el botón “Seleccionar archivo” se desplegará una ventana donde se podrá seleccionar el archivo que contiene el plan de estudios, tal como lo muestra la Figura 4.3. Una vez encontrado el archivo que se desea cargar, hacer doble click sobre él o apretar sobre la opción abrir para seleccionarlo.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Los formatos de archivo soportados por Easy Planning son CSV y XLS. Los campos que debe tener este archivo son: código asignatura, nombre asignatura, teoría, ejercicio, laboratorio, nivel y requisitos. Todos estos campos son absolutamente necesarios y la falta de alguno de ellos provocará excepciones en la aplicación.
+                                    </p>
+                                    <div class="alert alert-warning">
+                                        <p class="text-justify">
+                                            <strong>IMPORTANTE:</strong> Todos los campos son requeridos y no se puede cargar un plan de estudios si uno de ellos falta.
+                                        </p>
+                                    </div>
+                                    <p class="text-justify help-body">
+                                        Una vez seleccionado el archivo, hacer click sobre el botón cargar para subir la información contenida en él al sistema. Si el archivo está en el formato correcto y con todos los campos adecuados en el orden correspondiente, se mostrará el mensaje “Archivo cargado con éxito” seguido de una tabla con todas las asignaturas cargadas correctamente en el sistema correspondiente al plan contenido en el archivo.
+                                    </p>
+                                    <div class="alert alert-warning">
+                                        <p class="text-justify">
+                                            <strong>IMPORTANTE:</strong> Puede darse el caso de que el formato seleccionado sea el adecuado, pero por problemas de origen sea imposible cargar el archivo. En caso de que así ocurra, la aplicación enviará un mensaje al momento de intentar subir el archivo indicando la forma de solucionar el problema.
+                                        </p>
+                                    </div>
+                                    <p class="text-justify help-body">
+                                        Al ocurrir esta excepción, la aplicación mostrará un mensaje indicando los pasos a seguir en caso de que el formato del archivo sea el correcto (CSV o XLS), pero su codificación interna posee errores que la aplicación no puede reparar. En este caso, si el formato del archivo es el adecuado, este debe ser abierto con un editor de texto y guardado como un archivo csv o xls, con lo cual la aplicación podrá leer adecuadamente el archivo. Este mensaje también aparecerá en caso de que se suba un archivo cuyo formato no es válido, es decir, es un archivo distinto a CSV o XLS.
+                                    </p>
+                                    <div class="alert alert-warning">
+                                        <p class="text-justify">
+                                            En caso que el archivo no cuente con los campos requeridos mencionados anteriormente, también se producirá una excepción, tal y como se mencionó con anterioridad. Si esto ocurre, la aplicación mostrará un mensaje de error indicando que el archivo no contiene los campos requeridos o estos no se encuentran en el orden correcto.
+                                        </p>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="panel panel-default">
+                              <div class="panel-heading" role="tab" id="headingThree">
+                                <h4 class="panel-title">
+                                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapseThree" aria-expanded="false" aria-controls="collapseThree">
+                                    Asignación Horaria
+                                  </a>
+                                </h4>
+                              </div>
+                              <div id="collapseThree" class="panel-collapse collapse" role="tabpanel" aria-labelledby="headingThree">
+                                <div class="panel-body">
+                                    <p class="text-justify help-body">
+                                        La asignación de horaria corresponde a la acción en la que se determinan los bloques horarios en los que un profesor realizará actividades académicas, ya sean de teoría, laboratorio o ejercicios, para una sección de una asignatura en particular, correspondiente a un plan de estudios específico. Para tales efectos es necesario contar con la información de disponibilidad horaria de los profesores, además de las asignaturas que deseen impartir en el semestre que se está planificando, datos que se obtienen a partir de una encuesta que cada profesor debe responder.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Para poder realizar la asignación horaria es necesario crear las secciones que contendrá cada asignatura en el semestre que se está planificando, para lo cual existe un módulo particular en la aplicación llamado “Iniciar Planificación” en la sección “Planificación Docente” del menú principal.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        En la sección “Inicializar secciones” se encuentra un formulario con tres diferentes campos. El primero corresponde a una selección del plan de estudios a inicializar, donde se puede elegir entre aquellos planes de estudios registrados previamente en el sistema. Los siguientes campos corresponden al año y al semestre para los cuales se inicializan las secciones, en ambos hay que seleccionar una de las opciones que se entregan según sean las necesidades.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Una vez esté toda la información necesaria seleccionada, presionar el botón cargar, con lo que se crearán las secciones necesarias para cada asignatura para el plan de estudio, el año y el semestre indicados, indicando esto con un mensaje de éxito.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Una vez en la sección “Asignación horaria” se podrán apreciar varias secciones. En la parte superior se encuentran las selecciones de plan de estudio y nivel. En la primera de estas selecciones se encuentran todos los planes de estudios disponibles en el sistema, de los cuales se debe seleccionar aquel sobre el cual se desea realizar la planificación docente, para luego seleccionar el nivel sobre el cual se realizará la asignación horaria, esto con tal de volver más cómodo el proceso. 
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Una vez se seleccione  año, el semestre, la carrera, el plan de estudios y el nivel que se está planificando, aparecerán todas las asignaturas correspondientes a los parámetros anteriores.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Aquí es posible seleccionar una de las asignaturas del nivel en particular que se está observando, para lo cual es necesario seleccionar la asignatura en particular de entre las que se encuentran disponibles en el respectivo nivel.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Una vez completada la acción anterior, se actualizará la información de las secciones que posee la asignatura seleccionada y los profesores que están disponibles para realizar la docencia de la misma. 
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        En este momento se está en condiciones de realizar la asignación horaria, para lo cual se debe seleccionar uno de los bloques horarios haciendo click sobre uno de ellos.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Al seleccionar uno de los bloques horarios se desplegará un menú para realizar la asignación horaria.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Una vez en éste menú se debe seleccionar en primer lugar la sección que ocupará ese bloque horario para ese nivel.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Seleccionada la sección existen dos opciones para realizar la asignación. Una es asignar a un profesor que cuente con disponibilidad para realizar la asignatura seleccionada en el bloque seleccionado.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Si no existe ningún profesor con disponibilidad horaria para esa asignatura en ese bloque horario se puede forzar a un profesor a realizar la asignatura en el bloque seleccionado. Para tales efectos, se debe buscar en el menú todos los profesores y ahí seleccionar a aquel docente que se desea realice la asignatura en el bloque indicado, haya este indicando disponibilidad horaria o no, lo cual se puede agilizar utilizando el filtro disponible en el menú.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Una vez seleccionado al profesor que se quiera asignar al bloque horario y la asignatura que se eligió anteriormente, se debe hacer click sobre el botón asignar para completar la acción.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Una vez hecho esto actualiza el horario mostrando la asignatura y el profesor asignados al bloque horario.
+                                    </p>
+                                    <div class="alert alert-warning">
+                                        <p class="text-justify">
+                                            Si el profesor cuenta con un alias, la asignación lo mostrará junto con el código o alias de la asignatura.
+                                        </p>
+                                    </div>
+                                    <p class="text-justify help-body">
+                                        En caso que se quiera quitar una asignación realizada previamente, se debe seleccionar el bloque horario haciendo click sobre él, ante lo cual se desplegará un menú donde se deberá seleccionar la opción eliminar para liberar el bloque horario. Una vez realizada esta acción, el bloque horario quedará liberado.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Por si surgiese alguna duda con respecto a los códigos de las asignaturas y las secciones, en la parte inferior de esta sección se muestra un listado con las asignatura del nivel que se está planificando.
+                                    </p>
+                                    <div class="alert alert-warning">
+                                        <p class="text-justify">
+                                            <strong>IMPORTANTE:</strong> En esta versión de la aplicación aún no se desarrolla la lógica necesaria para evitar solapamiento de horarios de diferentes asignaturas, puesto que esta funcionalidad estará disponible en versiones posteriores.
+                                        </p>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="panel panel-default">
+                              <div class="panel-heading" role="tab" id="heading4">
+                                <h4 class="panel-title">
+                                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse4" aria-expanded="false" aria-controls="collapse4">
+                                    Agregar un Alias a un Profesor
+                                  </a>
+                                </h4>
+                              </div>
+                              <div id="collapse4" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading4">
+                                <div class="panel-body">
+                                    <p class="text-justify help-body">
+                                        Para efectos prácticos, la aplicación cuenta con la funcionalidad de agregar un alias a un profesor por parte del coordinador docente, lo que visualmente facilita la identificación en la visualización de un nombre dentro de la aplicación. Para agregar un alias, se debe ingresar a la página del listado de profesores, seleccionando “Ver profesores” en la página principal de coordinador docente o seleccionandolo también en la barra de navegación en la sección “Profesores”.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Luego, se mostrará la página con todos los profesores registrados en el sistema. Para agregar un alias a un profesor, se debe seleccionar el icono de editar en que se encuentra en la columna “Alias”.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Luego, la aplicación mostrará el profesor al que se está agregando el alias y un campo para agregarlo. A continuación, solo se debe presionar “Guardar” y se mostrará el listado de profesores nuevamente, pero ahora se mostrará el alias que fue agregado. Para editar el alias se debe seguir el mismo procedimiento.
+                                    </p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="panel panel-default">
+                              <div class="panel-heading" role="tab" id="heading5">
+                                <h4 class="panel-title">
+                                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse5" aria-expanded="false" aria-controls="collapse5">
+                                    Agregar Alias a una Asignatura
+                                  </a>
+                                </h4>
+                              </div>
+                              <div id="collapse5" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading5">
+                                <div class="panel-body">
+                                    <p class="text-justify help-body">
+                                        La aplicación permite asignar un alias a una asignatura por parte del coordinador docente. Para llevar a cabo este proceso, el usuario debe dirigirse a la opción “Ver Asignatura” en la sección “Carreras”, en la barra de navegación o en la página principal de coordinador docente.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Luego, se mostrará la página en donde se listan todas las asignaturas del sistema. Para agregar un alias, se debe presionar el icono de editar que se encuentra en la columna “Alias”.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        A continuación, se muestra el nombre de la asignatura a la cual se está agregando el alias y el campo para agregarlo. Al ingresar el alias y presionar el botón “Guardar”, la aplicación se dirigirá al listado de asignatura, donde se muestra el alias recién ingresado.
+                                    </p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="panel panel-default">
+                              <div class="panel-heading" role="tab" id="heading6">
+                                <h4 class="panel-title">
+                                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse6" aria-expanded="false" aria-controls="collapse6">
+                                    Envío y notificación de Encuesta de Disponibilidad
+                                  </a>
+                                </h4>
+                              </div>
+                              <div id="collapse6" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading6">
+                                <div class="panel-body">
+                                    <p class="text-justify help-body">
+                                        Cuando comienza la planificación docente del semestre, uno de los primeros y más importantes pasos corresponde a completar la encuesta de disponibilidad horaria por parte de los profesores. Para tales efectos es necesario poder realizar el envío y notificación de esta encuesta a los profesores que se estime conveniente. Para tales efectos, es necesario dirigirse a la sección “Ver Profesores” ubicada en la sección “Profesores” del menú de navegación.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Una vez en la sección “Ver Profesores” se podrá apreciar una lista con los profesores registrados en el sistema, indicando sus datos personales, tales como el Nombre, el Apellido, su Mail (Correo electrónico), su RUT y una sección para visualizar lo que contestó en la encuesta de disponibilidad horaria. Si no ha contestado esta encuesta y se requiere que lo haga, se debe seleccionar al profesor al que se enviará la notificación y hacer click sobre el botón “Enviar notificación”.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Realizado esto, se enviará una notificación al correo que el profesor tiene registrado, indicando que debe completar la encuesta de disponibilidad y un enlace hacia la encuesta que debe responder.
+                                    </p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="panel panel-default">
+                              <div class="panel-heading" role="tab" id="heading7">
+                                <h4 class="panel-title">
+                                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse7" aria-expanded="false" aria-controls="collapse7">
+                                    Editar Encuesta de Disponibilidad
+                                  </a>
+                                </h4>
+                              </div>
+                              <div id="collapse7" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading7">
+                                <div class="panel-body">
+                                    <p class="text-justify help-body">
+                                        Una vez que se ha enviado la encuesta a un profesor, el usuario coordinador docente puede editar las asignaturas que aparecen en la encuesta, para dar opción al profesor de elegir nuevas asignaturas para impartir.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Para poder editar una encuesta, se debe seleccionar la opción “Editar encuesta” de la sección “Profesor” del menú de navegación.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Tras ejecutar la acción anterior, se ingresará en la sección “Editar Encuesta” donde se muestran todos los profesores del sistema. Aquí se debe seleccionar el profesor al que se desea editar la encuesta.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Una vez seleccionado el profesor, se visualiza una tabla que muestra las asignaturas que actualmente se encuentran en la encuesta y una tabla que muestra la totalidad de las asignaturas del sistema.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        La tabla donde se muestran las asignaturas del sistema permite al usuario coordinador docente agregar asignaturas a la encuesta del profesor. Para realizar esto, se debe(n) seleccionar la(s) asignatura(s) que se desea(n) agregar desde la tabla y luego presionar el botón “Agrega asignaturas”. Inmediatamente la tabla donde se encuentran las asignaturas de la encuesta incluirá las asignaturas recién añadidas.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        En la tabla que muestra las asignaturas en la encuesta (en la parte superior de la página), corresponden a las asignaturas que el profesor tenía asignadas en el semestre anterior, así él tiene la opción de seguir impartiendo clases para las mismas asignaturas. Pero en caso de que el usuario coordinador docente no quiera ofrecer alguna asignatura para un profesor, tiene la posibilidad de sacar asignaturas de la encuesta, las que sólo se mostrarán al profesor si están en la tabla. Para llevar a cabo esta tarea, el usuario coordinador docente debe seleccionar la(s) asignatura(s) que desea sacar de la encuesta en la tabla y luego presionar el botón “Quitar Asignaturas”. Como resultado, las asignaturas ya no estarán en la tabla por lo que no se mostrarán al profesor en su encuesta.
+                                    </p>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="panel panel-default">
+                              <div class="panel-heading" role="tab" id="heading8">
+                                <h4 class="panel-title">
+                                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse8" aria-expanded="false" aria-controls="collapse8">
+                                    Ver la Disponibilidad Horaria de un Profesor
+                                  </a>
+                                </h4>
+                              </div>
+                              <div id="collapse8" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading8">
+                                <div class="panel-body">
+                                    <p class="text-justify help-body">
+                                        Para el usuario Coordinador Docente es importante poder saber qué profesores contestaron la encuesta y poder visualizar cuales fueron las respuestas que entregaron. Esto se puede hacer dirigiéndose a la sección “Ver Profesores” de la opción “Profesores” en la vista principal del coordinador docente o en menú de navegación. 
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Una vez allí se podrá observar el listado de los profesores registrados en el sistema. En la última columna se encuentra un enlace denominado “Ver Encuesta”.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Una vez se ha hecho click sobre uno de esos enlaces, se accede a las respuestas que el profesor hizo sobre la encuesta de disponibilidad.
+                                    </p>
+                                    <div class="alert alert-warning">
+                                        <p class="text-justify">
+                                            En caso de que el profesor no haya contestado la encuesta, se mostrará un mensaje indicando ésta situación.
+                                        </p>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div class="panel panel-default">
+                              <div class="panel-heading" role="tab" id="heading9">
+                                <h4 class="panel-title">
+                                  <a class="collapsed" role="button" data-toggle="collapse" data-parent="#accordion" href="#collapse9" aria-expanded="false" aria-controls="collapse9">
+                                    Agregar Secciones a una Asignatura
+                                  </a>
+                                </h4>
+                              </div>
+                              <div id="collapse9" class="panel-collapse collapse" role="tabpanel" aria-labelledby="heading9">
+                                <div class="panel-body">
+                                    <p class="text-justify help-body">
+                                        En el caso de querer agregar nuevas secciones, la aplicación permite hacerlo en el momento de asignar cursos a un profesor. En la ventana de asignación se visualizan los botones de “Agregar” para crear nuevas secciones, tanto de cátedra como de laboratorio.
+                                    </p>
+                                    <p class="text-justify help-body">
+                                        Al presionar los botones, se crearán las correspondientes secciones y se mostrará una notificación indicando que sección fue creada recientemente.
+                                    </p>
+                                    <div class="alert alert-warning">
+                                        <p class="text-justify">
+                                            Si la asignatura no cuenta con horas de laboratorio o teoría, no se creará otra sección correspondiente a éstos tipos.
+                                        </p>
+                                    </div>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
                     </div>
                 </div>
             </div>
