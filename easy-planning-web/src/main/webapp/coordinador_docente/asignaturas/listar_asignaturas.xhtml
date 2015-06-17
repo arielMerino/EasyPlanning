@@ -70,6 +70,15 @@
                                         </f:facet>
                                         <h:outputText value="#{item.versionplan.planEstudio.codigo} - #{item.versionplan.anio}.#{item.versionplan.version}"/>
                                     </p:column>
+                                    <c:set var="jornada" value="#{item.versionplan.planEstudio.jornada}" />
+                                    <p:column class="column-center-text" headerText="Jornada" filterBy="#{cargarPlanDeEstudios.getJornada(jornada)}" filterMatchMode="in">
+                                        <f:facet name="filter">
+                                            <p:selectCheckboxMenu label="Jornada" onchange="PF('asignaturasTable').filter()" scrollHeight="100">
+                                                <f:selectItems value="#{cargarPlanDeEstudios.allJornada}" var="jo" itemLabel="#{cargarPlanDeEstudios.getJornada(jo)}" itemValue="#{cargarPlanDeEstudios.getJornada(jo)}"/>
+                                            </p:selectCheckboxMenu>
+                                        </f:facet>                                        
+                                        <h:outputText value="#{cargarPlanDeEstudios.getJornada(jornada)}"/>
+                                    </p:column>
                                     <p:column class="column-center-text" headerText="Alias" filterBy="#{item.alias}" filterMatchMode="contains" sortBy="#{item.alias}">
                                         <h:panelGrid class="panel-no-border" columns="2">
                                             <h:outputText value="#{item.alias}"/>
