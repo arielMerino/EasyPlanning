@@ -43,12 +43,7 @@
                                     <p:column class="column-center-text" headerText="Asignatura" filterBy="#{item.nombre}" filterMatchMode="contains" sortBy="#{item.nombre}">
                                         <h:outputText value="#{item.nombre}"/>
                                     </p:column>
-                                    <p:column class="column-center-text" headerText="Nivel" filterBy="#{item.nivel}" filterMatchMode="exact" sortBy="#{item.nivel}">
-                                        <f:facet name="filter">
-                                            <p:spinner onchange="PF('asignaturasTable').filter()" min="1" max="12">
-                                                <f:converter converterId="javax.faces.Integer" />
-                                            </p:spinner>
-                                        </f:facet>
+                                    <p:column class="column-center-text" headerText="Nivel" filterBy="#{item.nivel}" filterMatchMode="exact" sortBy="#{item.nivel}">                                        
                                         <h:outputText value="#{item.nivel}"/>
                                     </p:column>
                                     <p:column class="column-center-text" headerText="T - E - L">
@@ -69,6 +64,15 @@
                                             </p:selectCheckboxMenu>
                                         </f:facet>
                                         <h:outputText value="#{item.versionplan.planEstudio.codigo} - #{item.versionplan.anio}.#{item.versionplan.version}"/>
+                                    </p:column>
+                                    <c:set var="jornada" value="#{item.versionplan.planEstudio.jornada}" />
+                                    <p:column class="column-center-text" headerText="Jornada" filterBy="#{cargarPlanDeEstudios.getJornada(jornada)}" filterMatchMode="in">
+                                        <f:facet name="filter">
+                                            <p:selectCheckboxMenu label="Jornada" onchange="PF('asignaturasTable').filter()" scrollHeight="100">
+                                                <f:selectItems value="#{cargarPlanDeEstudios.allJornada}" var="jo" itemLabel="#{cargarPlanDeEstudios.getJornada(jo)}" itemValue="#{cargarPlanDeEstudios.getJornada(jo)}"/>
+                                            </p:selectCheckboxMenu>
+                                        </f:facet>                                        
+                                        <h:outputText value="#{cargarPlanDeEstudios.getJornada(jornada)}"/>
                                     </p:column>
                                     <p:column class="column-center-text" headerText="Alias" filterBy="#{item.alias}" filterMatchMode="contains" sortBy="#{item.alias}">
                                         <h:panelGrid class="panel-no-border" columns="2">
