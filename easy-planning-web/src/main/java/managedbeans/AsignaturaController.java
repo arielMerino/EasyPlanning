@@ -104,10 +104,7 @@ public class AsignaturaController implements Serializable {
     }
 
     public List<Asignatura> getItems() {
-        if(items == null){
-            getAsignaturas();
-        }
-        return items;
+        return ejbFacade.findAll();
     }
 
     public void setItems(List<Asignatura> items) {
