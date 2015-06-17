@@ -67,16 +67,19 @@ public class VersionesPlanTest {
         versionPlan1.setId(Long.parseLong("1"));
         versionPlan1.setPlanEstudio(planEstudio);
         versionPlan1.setVersion(1);
+        versionPlan1.setPlanificado(true);
         
         versionPlan2 = new VersionPlan();
         versionPlan2.setAnio(2015);
         versionPlan2.setId(Long.parseLong("2"));
         versionPlan2.setPlanEstudio(planEstudio);
         versionPlan2.setVersion(2);
+        versionPlan2.setPlanificado(true);
         
         when(mockVersionesPlan.findByIdPlan(planEstudio.getId())).thenReturn(Arrays.asList(versionPlan1,versionPlan2));
         when(mockVersionesPlan.findByIdPlan(Long.parseLong("2"))).thenReturn(new ArrayList<VersionPlan>());
-        
+        when(mockVersionesPlan.findByPlanificado(true)).thenReturn(Arrays.asList(versionPlan1));
+        when(mockVersionesPlan.findByPlanificado(false)).thenReturn(new ArrayList<VersionPlan>());
     }
     
     @After
@@ -102,4 +105,18 @@ public class VersionesPlanTest {
         assertEquals(0, mockVersionesPlan.findByIdPlan(idPlan2).size());
     }
     
+    @Test
+    public void testTrueFindByPlanificado(){
+        System.out.println("testTrueFindByPlanificado");
+        
+        assertEquals(1, mockVersionesPlan.findByPlanificado(true).size());
+        
+    }
+    
+    @Test
+    public void testFalseFindByPlanificado(){
+        System.out.println("testFalseFindByPlanificado");
+        
+        assertEquals(0, mockVersionesPlan.findByPlanificado(false).size());
+    }
 }
