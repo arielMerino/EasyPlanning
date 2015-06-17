@@ -24,6 +24,7 @@ import javax.ejb.EJBException;
 import javax.el.ELException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
+import javax.persistence.NoResultException;
 import sessionbeans.AsignaturaFacadeLocal;
 import sessionbeans.ParamSemestreAnioFacadeLocal;
 import sessionbeans.SeccionFacadeLocal;
@@ -104,10 +105,7 @@ public class AsignaturaController implements Serializable {
     }
 
     public List<Asignatura> getItems() {
-        if(items == null){
-            getAsignaturas();
-        }
-        return items;
+        return ejbFacade.findAll();
     }
 
     public void setItems(List<Asignatura> items) {
@@ -138,6 +136,7 @@ public class AsignaturaController implements Serializable {
             this.items = getFacade().findAll();
             return true;
         } catch (Exception e) {
+            e.printStackTrace();
             return false;
         } 
     }

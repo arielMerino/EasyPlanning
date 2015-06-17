@@ -10,8 +10,6 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
-import javax.persistence.NamedQueries;
-import javax.persistence.NamedQuery;
 import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
 import javax.persistence.Query;
@@ -24,30 +22,6 @@ import javax.persistence.Query;
 public class Asignaturas implements AsignaturasLocal {
     @PersistenceContext(unitName = "cl.G2Pingeso_easy-planning-ejb_ejb_1.0-SNAPSHOTPU")
     private EntityManager em;
-    /*
-    @Override
-    public Asignatura findByCodigoAndPlan(String codigo, String plan) {
-        Query query = em.createNamedQuery("Asignatura.findByCodigoAndPlan").setParameter("codigo", codigo);
-        query.setParameter("plan", plan);
-        
-        try{
-            return (entities.Asignatura) query.getSingleResult();
-        }catch(NoResultException e){
-            return null;
-        }
-    }
-    */
-    /*@Override
-    public Asignatura findByCarreraAndCodigoAndPlan(int carrera, String codigo, String plan) {
-        Query query = em.createNamedQuery("Asignatura.findByCarreraAndCodigoAndPlan").setParameter("carrera", carrera);
-        query.setParameter("codigo", codigo);
-        query.setParameter("plan", plan);
-        try{
-            return (entities.Asignatura) query.getSingleResult();
-        }catch(NoResultException e){
-            return null;
-        }
-    }*/
     
     @Override
     public Asignatura findByCodigoAsgAndIdVersion(String codigo, long idVersion){

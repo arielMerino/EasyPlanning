@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:b="http://bootsfaces.net/ui"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
+    
+    <ui:composition template="/template.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Cargar Plan de Estudios - Easy Planning"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form>
+                <p:panel>
+                    <h:outputLabel value="Ingresar alias para los espejos:" for="alias"/><br/>
+                    <p:inputText id="alias" value="#{espejosController.alias}" required="true" requiredMessage="Debe ingresarse un alias."/>
+                    <br/>
+                </p:panel>
+                <p:panel>
+                    <h:outputLabel value="Ingeniería Civil Infromática:" /><br/><br/>
+                    <ui:repeat value="#{espejosController.versionesCivil}" var="civil">
+                        <h:outputLabel value="#{civil.planEstudio.codigo}-#{civil.anio}.#{civil.version}"/><br/>
+                    </ui:repeat>
+                </p:panel>
+                <p:panel>
+                    <h:outputLabel value="Ingeniería en Ejecución Infromática:" /><br/><br/>
+                    <ui:repeat value="#{espejosController.versioneseEjecucion}" var="ejecucion">
+                        <h:outputLabel value="#{ejecucion.planEstudio.codigo}-#{ejecucion.anio}.#{ejecucion.version}"/>
+                        <p:selectManyMenu class="dropdown dropdown-menu-right" value="#{espejosController.asignaturasSeleccionadas}">
+                            <f:selectItems value="#{espejosController.asignaturasByPlan(ejecucion.id)}" var="asignatura" itemValue="#{asignatura.id}" itemLabel="#{asignatura.nombre}" />
+                        </p:selectManyMenu>
+                        <br/>
+                    </ui:repeat>
+                </p:panel>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
