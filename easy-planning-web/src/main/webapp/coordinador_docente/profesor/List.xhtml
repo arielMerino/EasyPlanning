@@ -25,14 +25,6 @@
                             <li class="active">Ver Profesores</li>
                         </ol>
                     </div>   
-                    <div class="col-md-2 logut-link">
-                        <div class="logout-div">
-                            <h:form>
-                                <p:commandLink action="#{usuarioController.logout()}" value="Cerrar Sesión"/>
-                                <span class="glyphicon glyphicon-log-out logut" aria-hidden="true"> </span>
-                            </h:form>
-                        </div>
-                    </div>
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -44,10 +36,7 @@
                                          sortBy="#{item.apellido}"
                                          widgetVar="profesoresTable"
                                          filteredValue="#{profesorController.profesoresFiltrados}"
-                                         emptyMessage="No se han encontrado profesores según los parámetros indicados">
-
-                                <p:ajax event="rowSelect"   update="emailButton"/>
-                                <p:ajax event="rowUnselect" update="emailButton"/>
+                                         emptyMessage="No se han encontrado profesores según los parámetros indicados">                                
 
                                 <p:column class="column-center-text" headerText="Nombre" filterBy="#{item.nombre}" filterMatchMode="contains" sortBy="#{item.nombre}">
                                     <h:outputText value="#{item.nombre}"/>
@@ -75,9 +64,11 @@
                                         <f:param name="id" value="#{item.rutProfesor}" />
                                     </h:link>
                                 </p:column>
+                                <!--
                                 <f:facet name="footer" class="table-footer">                                    
                                     <p:commandButton id="emailButton" icon="ui-icon-mail-closed"  value="Enviar notificación" actionListener="#{emailController.enviarNotificacion}" update=":growl,datalist" disabled="#{empty profesorController.selected}"/>
                                 </f:facet>
+                                -->
                             </p:dataTable>
                         </h:form>
 

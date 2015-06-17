@@ -115,7 +115,7 @@ body, p, a, li{
 }
 
 #horarioAsignacion{
-    margin-left: 1%;
+    margin-left: 3%;
     padding-left: 1%;
 }
 
@@ -126,7 +126,7 @@ body, p, a, li{
     text-align: center;
 }
 .headerMyHorario{
-    margin-right: 1px !important;
+    margin-right: 0px !important;
 }
 
 .horarioBloque{
@@ -138,6 +138,7 @@ body, p, a, li{
     text-align: center;
     vertical-align: central;
     color: #fff !important;
+    padding: 0;
 }
 .ui-button {
     margin-right: 0 !important;
@@ -148,7 +149,6 @@ body, p, a, li{
 .horario-title-bloque{
     margin-top: 10%;
     color: #fff;
-    font-weight: bold;
 }
 .bloque{
     background-color: whitesmoke;
@@ -203,7 +203,7 @@ body, p, a, li{
 #btn-sesion{
     background-color: #fff;
     color: #ff7319;
-    margin-top: 0.5em;
+    margin-top: 3%;
 }
 #btn-sesion:hover{
     background-color: #ff7319;
@@ -247,10 +247,9 @@ body, p, a, li{
     background-color: #ffffff;
     height: 55px;
     margin-top: 0;
-    margin-left: 1px;
     margin-right: 0;
     margin-bottom: 0;
-    border: #777 solid 1px;
+    border: #ddd solid 1px;
     white-space: normal;
     text-align: center;
 }
@@ -311,13 +310,13 @@ body, p, a, li{
     height: 60px !important;
 }
 .logut-link{
-    margin-top: 0.5em;
 }
 .logout-div{
-    margin-left: 30%;
+    margin-left: 15%;
+    margin-top: 5%;
 }
 .logut-link>.logout-div>form>a{
-    color: #ff7319;
+    color: #fff;
 }
 .logut-link>.logout-div>form>a:hover{
     text-decoration: none;
@@ -344,14 +343,14 @@ body, p, a, li{
     font-size: 14px;
 }
 .ui-picklist .ui-picklist-list{
-    width: 35em !important;
+    width: 45em !important;
 }
 .one-list-box{
     margin: 0;
     width: 100% !important;
 }
 .logut{
-    color: #ff7319;
+    color: #fff;
 }
 .column-center-text{
     text-align: center;
@@ -368,12 +367,29 @@ body, p, a, li{
 .well{
     background-color: rgba(238, 238, 238, 0.4);
 }
-
 .btn-actual{
     background-color: rgba(255, 255, 255, 0.7) !important;
     color: rgba(255, 115, 25, 0.7) !important;
 }
-
 .asignatura-bloque{
     font-size: 11px !important;
+}
+#div-tabla-disponibilidad{
+    padding: 0;
+}
+.index-profesor{
+    color: #fff;
+    font-size: 1.5em !important;
+    margin-right: 3%;
+}
+#panel-no-margin{
+    margin-top: 0;
+}
+.panel-title>a:hover{
+    text-decoration: none;
+    font-weight: bold;
+}
+.panel-title>a:focus{
+    text-decoration: none;
+    font-weight: normal;
 }

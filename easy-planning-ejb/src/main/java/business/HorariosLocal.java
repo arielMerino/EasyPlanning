@@ -35,4 +35,6 @@ public interface HorariosLocal {
     public List<Horario> AsignadoByBloqueAndProfesor(String bloque, String rutProfesor);
     
     public List<Horario> findAsignadosActualesByProfesorId(String rutProfesor, int anio, int semestre);
+    
+    public List<Horario> findByVersionPlanAndSemestreAndAnioAndNivel(Long idPlan, int semestre, int anio, int nivel);
 }

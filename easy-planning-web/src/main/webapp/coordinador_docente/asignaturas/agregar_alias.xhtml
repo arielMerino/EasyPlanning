@@ -23,14 +23,6 @@
                             <li class="active">Agregar Alias a una Asignatura</li>
                         </ol>
                     </div>   
-                    <div class="col-md-2 logut-link">
-                        <div class="logout-div">
-                            <h:form>
-                                <p:commandLink action="#{usuarioController.logout()}" value="Cerrar Sesión"/>
-                                <span class="glyphicon glyphicon-log-out logut" aria-hidden="true"> </span>
-                            </h:form>
-                        </div>
-                    </div>
                 </div>
                 <c:set var="asignatura_id" value="#{param['id']}" scope="request"/>
                 <c:if test="#{not empty asignatura_id}">

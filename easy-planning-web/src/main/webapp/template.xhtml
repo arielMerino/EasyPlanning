@@ -82,6 +82,8 @@
                                                   <li><a href="/easy-planning-web/faces/coordinador_docente/asignacion_horaria/asignacion_horaria.xhtml">Asignación horaria</a></li>
                                                   <li class="divider"></li>
                                                   <li><a href="/easy-planning-web/faces/coordinador_docente/profesor/profesor_asignatura.xhtml">Asignaturas con Profesor</a></li>
+                                                  <li class="divider"></li>
+                                                  <li><a href="/easy-planning-web/faces/coordinador_docente/asignacion_horaria/horario_planificado.xhtml">Horario Planificado</a></li>
                                                 </ul>
                                             </li>
                                             <li>
@@ -95,7 +97,7 @@
                                         </p>
                                         <h4><strong><h:outputText value="#{coordinadorController.getSemestreActual()}" id="param-semestre"/> - <h:outputText value="#{coordinadorController.getAnioActual()}" id="param-anio"/></strong></h4>
                                     </div>
-                                    <div class="col-md-2">
+                                    <div class="col-md-2 logut-link">
                                         <c:if test="#{usuarioController.compruebaRoles()}">
                                             <c:choose>
                                                 <c:when test="#{coordinadorController.coordinadorOProfesor()}">
@@ -108,6 +110,12 @@
                                                 </c:otherwise>
                                             </c:choose>
                                         </c:if>
+                                        <div class="logout-div">
+                                            <h:form>
+                                                <p:commandLink action="#{usuarioController.logout()}" value="Cerrar Sesión"/>
+                                                <span class="glyphicon glyphicon-log-out logut" aria-hidden="true"> </span>
+                                            </h:form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>

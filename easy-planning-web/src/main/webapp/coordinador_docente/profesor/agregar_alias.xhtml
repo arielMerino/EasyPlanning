@@ -27,15 +27,7 @@ and open the template in the editor.
                             <li><a href="/easy-planning-web/faces/coordinador_docente/profesor/List.xhtml">Ver Profesores</a></li>
                             <li class="active">Agregar Alias a Profesor</li>
                         </ol>
-                    </div>   
-                    <div class="col-md-2 logut-link">
-                        <div class="logout-div">
-                            <h:form>
-                                <p:commandLink action="#{usuarioController.logout()}" value="Cerrar Sesión"/>
-                                <span class="glyphicon glyphicon-log-out logut" aria-hidden="true"> </span>
-                            </h:form>
-                        </div>
-                    </div>
+                    </div> 
                 </div>
                 <c:set var="profesor_id" value="#{param['id']}" scope="request"/>
                 <c:if test="#{not empty profesor_id}">

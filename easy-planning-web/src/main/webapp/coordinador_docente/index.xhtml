@@ -16,15 +16,7 @@
                         <ol class="breadcrumb">
                             <li class="active">Inicio</li>
                         </ol>
-                    </div>   
-                    <div class="col-md-2 logut-link">
-                        <div class="logout-div">
-                            <h:form>
-                                <p:commandLink action="#{usuarioController.logout()}" value="Cerrar Sesión"/>
-                                <span class="glyphicon glyphicon-log-out logut" aria-hidden="true"> </span>
-                            </h:form>
-                        </div>
-                    </div>
+                    </div> 
                 </div>
                 <div class="row">
                     <div class="col-md-12">
@@ -108,6 +100,12 @@
                                             <h:outputText value="Asignaturas con Profesor" />
                                         </h:outputLink>
                                         <p:tooltip class="tooltip-index" for="asig_prof" value="Sección para visualizar que asignaciones entre Profesor y Asignatura se han realizado durante la planificación, permitiendo también visualizar aquellas Asignaturas y Profesores a los cuales aún no se asignado nada" />                                        
+                                    </li>
+                                    <li>
+                                        <h:outputLink id="hor_planif" value="/easy-planning-web/faces/coordinador_docente/asignacion_horaria/horario_planificado.xhtml">
+                                            <h:outputText value="Horario Planificado" />
+                                        </h:outputLink>
+                                        <p:tooltip class="tooltip-index" for="hor_planif" value="Sección para visualizar los horarios de las asignaturas planificadas de cualquier nivel y plan de estudios" />                                        
                                     </li>
                                 </ul>
                             </div>

@@ -21,14 +21,6 @@
                             <li><a href="#">Planificación Docente</a></li>
                             <li class="active">Asignación Horaria</li>
                         </ol>
-                    </div>   
-                    <div class="col-md-2 logut-link">
-                        <div class="logout-div">
-                            <h:form>
-                                <p:commandLink action="#{usuarioController.logout()}" value="Cerrar Sesión"/>
-                                <span class="glyphicon glyphicon-log-out logut" aria-hidden="true"> </span>
-                            </h:form>
-                        </div>
                     </div>                 
                 </div>
                 <div class="row">
@@ -66,7 +58,7 @@
                                         <p:selectOneListbox id="asignaturas" class="one-list-box" value="#{asignacionHoraria.asignaturaSelected}" required="true" requiredMessage="Debe seleccionar una asignatura" immediate="true">                                        
                                             <f:selectItems value="#{asignacionHoraria.asignaturasBusiness.findByNivelAndPlan(asignacionHoraria.nivelSelected, asignacionHoraria.planEstudioSelected)}"
                                                            var="asg" itemLabel="#{asg.alias} - #{asg.teoria}-#{asg.ejercicios}-#{asg.laboratorio} - #{asg.nombre} - #{asg.codigo}" itemValue="#{asg.id}"/>
-                                            <p:ajax process="@this" update="disponibilidades, horarioAsignacion, :form2:formulario, secciones" />
+                                            <p:ajax process="@this" update="horarioAsignacion, :form2:formulario, secciones, tabla-disponibilidad" />
                                         </p:selectOneListbox>
                                         <hr/>
                                         <h:outputLabel value="Secciones"/>
@@ -81,21 +73,54 @@
                                             <p:commandButton class="button-padding" value="Agregar" action="#{asignacionHoraria.agregaSeccionLaboratorio()}" icon="ui-icon-plus" update=":growl, secciones"/>
                                             <p:commandButton class="button-padding" value="Quitar" action="#{asignacionHoraria.quitarSeccionLaboratorio()}" icon="ui-icon-trash" update=":growl, secciones"/>
                                         </p:panelGrid>
-                                        <hr/>
-                                        <h:outputLabel style="white-space: normal;">Bloques disponibles:</h:outputLabel>
-                                        <br/>
-                                        <h:outputLabel id="disponibilidades" style="white-space: normal;">#{asignacionHoraria.obtenerBloquesDisponibles()}</h:outputLabel>
                                     </div>
                                     <div class="col-md-8">
                                         <c:if test="#{asignacionHoraria.nivelSelected != 0}">
-                                            <h5 class="title">
-                                                <h:outputText id="prioridad-nivel" value="Se debe priorizar la planificación en la #{asignacionHoraria.getPrioridad()} para el semestre #{asignacionHoraria.nivelSelected}"/>
-                                            </h5>                                        
+                                            <div class="row">
+                                                <div class="col-md-12">
+                                                    <div class="alert alert-warning text-center">
+                                                        <h5>
+                                                            <strong><h:outputText id="prioridad-nivel" value="Se debe priorizar la planificación en la #{asignacionHoraria.getPrioridad()} para el semestre #{asignacionHoraria.nivelSelected}"/></strong>
+                                                        </h5>
+                                                    </div> 
+                                                </div>
+                                            </div>                                        
                                         </c:if>
                                         <c:if test="#{asignacionHoraria.nivelSelected == 0}">
                                             <h:outputLabel id="prioridad-nivel" value=""/>
                                         </c:if>
-                                        <hr/>
+                                        <c:if test="#{not empty asignacionHoraria.getDisponibilidadProfesores()}">                                        
+                                            <div class="row">
+                                                <div class="col-md-5">
+                                                    <h:outputLabel value="Profesores con disponibilidad horaria"/>
+                                                    <p:dataTable id="tabla-disponibilidad" var="prof" value="#{asignacionHoraria.getDisponibilidadProfesores()}">
+                                                        <p:column headerText="Profesor" colspan="2">
+                                                            <h:outputText value="#{prof.nombre} #{prof.apellido}"/>
+                                                        </p:column>
+                                                        <p:column headerText="Horarios Disponibles" colspan="3">
+                                                            <ui:repeat var="hor" value="#{asignacionHoraria.getHorariosProfesor(prof.rutProfesor)}">
+                                                                <h:outputText value="#{hor} "/>
+                                                            </ui:repeat>
+                                                        </p:column>
+                                                    </p:dataTable>
+                                                </div>
+                                            </div>
+                                            <hr/>
+                                        </c:if>
+                                        <c:if test="#{empty asignacionHoraria.getDisponibilidadProfesores()}">
+                                            <div class="hidden">
+                                                <p:dataTable id="tabla-disponibilidad" var="prof" value="#{asignacionHoraria.getDisponibilidadProfesores()}">
+                                                    <p:column headerText="Profesor">
+                                                        <h:outputText value="#{prof.nombre} #{prof.apellido}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Horarios Disponibles">
+                                                        <ui:repeat var="hor" value="#{asignacionHoraria.getHorariosProfesor(prof.rutProfesor)}">
+                                                            <h:outputText value="#{hor} "/>
+                                                        </ui:repeat>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </div>
+                                        </c:if>   
                                         <div class="row">
                                             <p:panel class="col-md-2 headerBloque">
                                                 <p class="horario-title">Bloque</p>
@@ -262,7 +287,7 @@
                                     </div>
 
                                 </div>
-                                
+                                <hr/>
                             </p:panel>
                             
                             

@@ -35,4 +35,15 @@ public class VersionesPlan implements VersionesPlanLocal {
             return new ArrayList<>();
         }
     }
+
+    @Override
+    public List<VersionPlan> findByPlanificado(boolean planificado) {
+        Query query = em.createNamedQuery("VersionPlan.findByPlanificado").setParameter("planificado", planificado);
+        try{
+            return (List<VersionPlan>) query.getResultList();
+        }
+        catch(NoResultException e){
+            return new ArrayList();
+        }
+    }
 }

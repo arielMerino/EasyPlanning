@@ -21,15 +21,7 @@
                             <li><a href="/easy-planning-web/faces/coordinador_docente/encuesta/lista_profesores.xhtml">Asignaturas Propuestas</a></li>
                             <li class="active">Editar Encuesta</li>
                         </ol>
-                    </div>     
-                    <div class="col-md-2 logut-link">
-                        <div class="logout-div">
-                            <h:form>
-                                <p:commandLink action="#{usuarioController.logout()}" value="Cerrar Sesión"/>
-                                <span class="glyphicon glyphicon-log-out logut" aria-hidden="true"> </span>
-                            </h:form>
-                        </div>
-                    </div> 
+                    </div>  
                 </div>
                 
                 <c:set var="profesor_id" value="#{param['id']}" scope="request" />

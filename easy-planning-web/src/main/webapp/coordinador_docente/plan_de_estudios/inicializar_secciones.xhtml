@@ -20,18 +20,10 @@
                             <li><a href="#">Planificación Docente</a></li>
                             <li class="active">Iniciar Planificación</li>
                         </ol>
-                    </div>     
-                    <div class="col-md-2 logut-link">
-                        <div class="logout-div">
-                            <h:form>
-                                <p:commandLink action="#{usuarioController.logout()}" value="Cerrar Sesión"/>
-                                <span class="glyphicon glyphicon-log-out logut" aria-hidden="true"> </span>
-                            </h:form>
-                        </div>
-                    </div>                
+                    </div>                 
                 </div>
                 <div class="row">
-                    <div class="col-md-12">
+                    <div class="col-md-11 col-md-offset-1">
                         <h:form enctype='multipart/form-data'>
                             <h:outputLabel value="Seleccione las Carreras que va a planificar este semestre"/>
                             <p:pickList value="#{cargarPlanDeEstudios.versionPickList}" var="vers" itemLabel="#{vers.planEstudio.carrera.nombre}-#{vers.planEstudio.codigo}.#{vers.anio}.#{vers.version} (#{cargarPlanDeEstudios.getJornada(vers.planEstudio.jornada)})" 

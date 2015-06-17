@@ -22,7 +22,10 @@ import javax.persistence.NamedQuery;
 @NamedQueries({
     @NamedQuery(
         name = "VersionPlan.findByIdPlan",
-        query = "SELECT vp FROM VersionPlan vp WHERE vp.planEstudio.id = :idPlan")
+        query = "SELECT vp FROM VersionPlan vp WHERE vp.planEstudio.id = :idPlan"),
+    @NamedQuery(
+        name = "VersionPlan.findByPlanificado",
+        query = "SELECT vp FROM VersionPlan vp WHERE vp.planificado = :planificado")
 })
 public class VersionPlan implements Serializable {
     private static final long serialVersionUID = 1L;
