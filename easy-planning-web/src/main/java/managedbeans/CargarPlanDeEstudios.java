@@ -248,6 +248,10 @@ public class CargarPlanDeEstudios implements Serializable {
         return version.findAll();
     }
     
+    public List<VersionPlan> getVersionesPlanificadas(){
+        return versionesBusiness.findByPlanificado(true);
+    }
+    
     public String getJornada(int jornada){
         if (jornada == 0)
             return "Diurno";

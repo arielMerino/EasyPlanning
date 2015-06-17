@@ -15,6 +15,7 @@ import business.SeccionesLocal;
 import entities.Asignatura;
 import entities.Coordinacion;
 import entities.Horario;
+import entities.ParamSemestreAno;
 import entities.Profesor;
 import entities.Seccion;
 import entities.VersionPlan;
@@ -24,6 +25,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.List;
+import java.util.Vector;
 import javax.ejb.EJB;
 import managedbeans.util.JsfUtil;
 import sessionbeans.AsignaturaFacadeLocal;
@@ -91,6 +93,15 @@ public class asignacionHoraria implements Serializable {
     private String bloqueSelected;
     private int asignar = 0;
     private boolean muestraBoton = false;
+    private long versionId=0L;
+
+    public long getVersionId() {
+        return versionId;
+    }
+
+    public void setVersionId(long versionId) {
+        this.versionId = versionId;
+    }
 
     public boolean isMuestraBoton() {
         return muestraBoton;
@@ -877,6 +888,64 @@ public class asignacionHoraria implements Serializable {
         bloques.sort(null);
         return bloques;
     }    
+    
+    public String[] getHorariosPlanificados(){
+        List<Horario> horarios = horariosBusiness.findByVersionPlanAndSemestreAndAnioAndNivel(versionId, getSemestreSelected(), getAnioSelected(), nivelSelected);        
+        String asignaturas[] = new String[108];
+        List<String> colores = new ArrayList<>();
+        colores.add("#449DED");
+        colores.add("#72A603");
+        colores.add("#E8541C");
+        colores.add("#FFD52F");
+        colores.add("#33A3BA");
+        colores.add("#FF893B");
+        colores.add("#998661");
+
+        Vector v = new Vector();
+
+        for(Horario h : horarios){                        
+            String alias = h.getSeccion().getCoordinacion().getAsignatura().getAlias();            
+            
+            if(alias == null){
+                alias = h.getSeccion().getCoordinacion().getAsignatura().getNombre();
+            }
+            
+            String dia = h.getBloque().substring(0, 1);
+            int fila = Integer.parseInt(h.getBloque().substring(1, 2)) - 1;
+            int columna;
+            int posicion;
+            int color_posicion;
+            
+            switch (dia) {
+                case "L":  columna = 0;
+                         break;
+                case "M":  columna = 1;
+                         break;
+                case "W":  columna = 2;
+                         break;
+                case "J":  columna = 3;
+                         break;
+                case "V":  columna = 4;
+                         break;
+                case "S":  columna = 5;
+                         break;               
+                default: columna = -1;
+                         break;
+            }
+            
+            posicion = fila * 6 + columna;
+            
+            if(v.indexOf(alias) == -1){
+                v.add(alias);                
+            }
+            
+            color_posicion = v.indexOf(alias) % 6;
+            asignaturas[posicion + 54] = colores.get(color_posicion);            
+            asignaturas[posicion] = alias;
+        }
+
+        return asignaturas;
+    }
     
     public asignacionHoraria() {
     }    

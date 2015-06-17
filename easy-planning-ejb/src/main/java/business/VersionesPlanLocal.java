@@ -16,4 +16,5 @@ import javax.ejb.Local;
 @Local
 public interface VersionesPlanLocal {
     public List<VersionPlan> findByIdPlan(long idPlan);
+    public List<VersionPlan> findByPlanificado(boolean planificado);
 }

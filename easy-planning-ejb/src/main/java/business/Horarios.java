@@ -131,4 +131,19 @@ public class Horarios implements HorariosLocal {
             return null;
         }
     }
+
+    @Override
+    public List<Horario> findByVersionPlanAndSemestreAndAnioAndNivel(Long idPlan, int semestre, int anio, int nivel){
+        Query query = em.createNamedQuery("Horario.findByVersionPlanAndSemestreAndAnio");
+        query.setParameter("idPlan", idPlan);
+        query.setParameter("semestre", semestre);
+        query.setParameter("anio", anio);
+        query.setParameter("nivel", nivel);
+        try{
+            return (List<Horario>) query.getResultList();
+        }
+        catch(NoResultException e){
+            return null;
+        }
+    }
 }
