@@ -38,7 +38,15 @@
                                         itemValue="#{vers}" showCheckbox="true" 
                                         converter="VersionPlanConverter" showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains"/>
                             
-                            <p:commandButton class="button-padding" value="Iniciar Planificación" action="#{cargarPlanDeEstudios.iniciarPlanificacion()}" ajax="false"/>
+                            <!--<p:commandButton class="button-padding" value="Iniciar Planificación" action="" ajax="false"/>-->
+                            <p:commandButton value="Iniciar Planificación" actionListener="#{cargarPlanDeEstudios.iniciarPlanificacion()}" update="@all">
+                                <p:confirm header="Atención" message="Una vez iniciada la planificación la selección de planes asociados al semestre no se podrá volver a modificar" icon="ui-icon-alert" />
+                            </p:commandButton>
+
+                            <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                <p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
+                                <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
+                            </p:confirmDialog>
                         </h:form>
                     </div>
                 </div>

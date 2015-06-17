@@ -29,6 +29,7 @@ import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.servlet.ServletException;
@@ -41,6 +42,7 @@ import org.apache.poi.hssf.usermodel.HSSFSheet;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.poifs.filesystem.NotOLE2FileException;
 import org.apache.poi.ss.usermodel.Cell;
+import org.primefaces.context.RequestContext;
 import org.primefaces.model.DualListModel;
 import sessionbeans.AsignaturaFacadeLocal;
 import sessionbeans.CarreraFacadeLocal;
@@ -260,6 +262,16 @@ public class CargarPlanDeEstudios implements Serializable {
                 return false;
         }
         return true;
+    }
+    
+    public void seleccionarComando(){
+        if (getTargetList().isEmpty()){
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR,"No se ha seleccionado ningún plan de estudio para la inicialización",null));
+        }
+        else{
+            RequestContext.getCurrentInstance().execute("PF('dialogo').show();");
+        }
+        
     }
     
     public void cargarArchivo() throws FileNotFoundException, IOException{
@@ -482,7 +494,16 @@ public class CargarPlanDeEstudios implements Serializable {
         return asignaturas;
     }
     
-    public void iniciarPlanificacion(){
+    public List<VersionPlan> getTargetList(){
+        try{
+            List<VersionPlan> tgt = this.versionPickList.getTarget();
+            return tgt;
+        }catch(NullPointerException e){
+            return new ArrayList<>();
+        }
+    }
+    
+    public void iniciarPlanificacion() throws IOException{
         if(this.versionPickList.getTarget().isEmpty()){
             System.out.println("versionesTarget está vacío");
             JsfUtil.addErrorMessage("No ha seleccionado ninguna carrera");
