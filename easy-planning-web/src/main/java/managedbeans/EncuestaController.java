@@ -28,13 +28,18 @@ import sessionbeans.HorarioFacadeLocal;
 import sessionbeans.ParamSemestreAnioFacadeLocal;
 import sessionbeans.ProfesorFacadeLocal;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  *
  * @author chien
  */
+
 @Named(value = "encuestaController")
 @SessionScoped
 public class EncuestaController implements Serializable {
+    private final Logger logger = (Logger) LoggerFactory.getLogger(this.getClass());
     
     @EJB
     private EncuestaFacadeLocal encuestaFacade;
@@ -283,8 +288,8 @@ public class EncuestaController implements Serializable {
             
         }
         catch(Exception e){
+            logger.debug("Ha ocurrido un error", e);
             JsfUtil.addErrorMessage("Ha ocurrido un error");
-            e.printStackTrace();
         }
         
     }

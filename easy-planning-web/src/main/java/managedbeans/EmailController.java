@@ -143,8 +143,8 @@ public class EmailController implements Serializable {
                 + "encuesta que se adjunta en el enlace para poder conocer su "
                 + "disponibilidad horaria y tener esta información para realizar"
                 + " la Planificación Docente del semestre " + semestre + " - " + 
-                anio + ".<br><br>http://localhost:8080/easy-planning-web/faces/profesor/"
-                + "encuesta.xhtml<br><br>Si el enlace no funciona correctamente, contáctese a la "
+                anio + ".<br><br>http://localhost:8080/easy-planning-web/"
+                + "<br><br>Si el enlace no funciona correctamente, contáctese a la "
                 + "brevedad con su Coordinador(a) Docente<br><br>De antemano, "
                 + "gracias por su colaboración.<br>Saludos cordiales";                        
 

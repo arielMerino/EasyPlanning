@@ -98,7 +98,7 @@ public class CargarPlanDeEstudios implements Serializable {
     private long idVersion = 0;
     private String aux;
     private boolean cargados = false;
-    private List<Asignatura> asignaturasAñadidas = new ArrayList();
+    private List<Asignatura> asignaturasAñadidas = new ArrayList();    
     private DualListModel<VersionPlan> versionPickList;
     private long nuevoPlan = -1L;
     private String jornada;
@@ -283,6 +283,13 @@ public class CargarPlanDeEstudios implements Serializable {
         if (jornada == 0)
             return "Diurno";
         return "Vespertino";
+    }
+    
+    public List<Integer> getAllJornada(){
+        List<Integer> jornadas = new ArrayList<>();
+        jornadas.add(0);
+        jornadas.add(1);        
+        return jornadas;    
     }
     
     public boolean posibleCarga(List<Asignatura> asigns, long idVersion){
