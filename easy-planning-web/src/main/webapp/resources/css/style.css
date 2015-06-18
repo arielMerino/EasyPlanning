@@ -393,3 +393,6 @@ body, p, a, li{
     text-decoration: none;
     font-weight: normal;
 }
+.ui-selectoneradio label{
+    margin-right: 2em;
+}

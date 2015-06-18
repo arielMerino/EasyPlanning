@@ -94,7 +94,7 @@ public class asignacionHoraria implements Serializable {
     private int asignar = 0;
     private boolean muestraBoton = false;
     private long versionId=0L;
-
+    
     public long getVersionId() {
         return versionId;
     }

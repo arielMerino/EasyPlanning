@@ -330,6 +330,16 @@ public class AsignaturaController implements Serializable {
         return planesEstudio;
     }
     
+    public ArrayList<VersionPlan> getAllPlanesDeEstudio(int carreraId){
+        ArrayList<VersionPlan> planesEstudio = new ArrayList<>();
+        List<VersionPlan> versiones = versionFacade.findAll();
+        for (VersionPlan v : versiones){
+            if (!planesEstudio.contains(v) && v.getPlanEstudio().getCarrera().getId().toString().equals(carreraId+""))
+                planesEstudio.add(v);
+        }
+        return planesEstudio;
+    }
+    
     public List<VersionPlan> getPlanesEstudio(){
         return versionFacade.findAll();
     }
