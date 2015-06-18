@@ -13,28 +13,46 @@
             <h:outputText value="Cargar Plan de Estudios - Easy Planning"></h:outputText>
         </ui:define>
         <ui:define name="body">
-            <h:form>
-                <p:panel>
-                    <h:outputLabel value="Ingresar alias para los espejos:" for="alias"/><br/>
-                    <p:inputText id="alias" value="#{espejosController.alias}" required="true" requiredMessage="Debe ingresarse un alias."/>
-                    <br/>
-                </p:panel>
-                <p:panel>
-                    <h:outputLabel value="Ingeniería Civil Infromática:" /><br/><br/>
-                    <ui:repeat value="#{espejosController.versionesCivil}" var="civil">
-                        <h:outputLabel value="#{civil.planEstudio.codigo}-#{civil.anio}.#{civil.version}"/><br/>
-                    </ui:repeat>
-                </p:panel>
-                <p:panel>
-                    <h:outputLabel value="Ingeniería en Ejecución Infromática:" /><br/><br/>
-                    <ui:repeat value="#{espejosController.versioneseEjecucion}" var="ejecucion">
-                        <h:outputLabel value="#{ejecucion.planEstudio.codigo}-#{ejecucion.anio}.#{ejecucion.version}"/>
-                        <p:selectManyMenu class="dropdown dropdown-menu-right" value="#{espejosController.asignaturasSeleccionadas}">
-                            <f:selectItems value="#{espejosController.asignaturasByPlan(ejecucion.id)}" var="asignatura" itemValue="#{asignatura.id}" itemLabel="#{asignatura.nombre}" />
-                        </p:selectManyMenu>
+            <h:form id="form">
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <p:panel class="col-md-8 ">
+                        <h4>Ingresar alias para los espejos:</h4>
+                        <p:inputText id="alias" style="width: 300px" value="#{espejosController.alias}" requiredMessage="Debe ingresarse un alias." required="true"/>
                         <br/>
-                    </ui:repeat>
-                </p:panel>
+                    </p:panel>
+                </div>
+                <div class="row">
+                    <div class="col-md-2"></div>
+                    <p:panel class="col-xs-4" style="height: 300px">
+                        <h4>Ingeniería Civil Infromática:</h4><br/>
+                        <ui:repeat value="#{espejosController.versionesCivil}" var="civil" >
+                            <h:outputLabel value="#{civil.planEstudio.codigo}-#{civil.anio}.#{civil.version}: " /><br/>
+                            <p:selectOneMenu style="width: 300px" value="#{espejosController.asignaturasSeleccionadas[civil.id]}" filter="true" filterMatchMode="contains" immediate="true">
+                                <f:selectItem itemLabel="ninguno" itemValue="#{0}" />
+                                <f:selectItems value="#{espejosController.asignaturasByPlan(civil.id)}" var="asignatura" itemLabel="#{asignatura.nombre}" itemValue="#{asignatura.id}" />
+                            </p:selectOneMenu>
+                            <br/>
+                            <br/>
+                        </ui:repeat>
+                    </p:panel>
+                    <p:panel class="col-xs-4" style="height: 300px">
+                        <h4>Ingeniería en Ejecución Infromática:</h4><br/>
+                        <ui:repeat value="#{espejosController.versionesEjecucion}" var="civil" >
+                            <h:outputLabel value="#{civil.planEstudio.codigo}-#{civil.anio}.#{civil.version}: " /><br/>
+                            <p:selectOneMenu style="width: 300px" value="#{espejosController.asignaturasSeleccionadas[civil.id]}" filter="true" filterMatchMode="contains" immediate="true">
+                                <f:selectItem itemLabel="ninguno" itemValue="#{0}" />
+                                <f:selectItems value="#{espejosController.asignaturasByPlan(civil.id)}" var="asignatura" itemLabel="#{asignatura.nombre}" itemValue="#{asignatura.id}" />
+                            </p:selectOneMenu>
+                            <br/>
+                            <br/>
+                        </ui:repeat>
+                    </p:panel>
+                </div>
+                <div class="col-md-2"></div>
+                <div>
+                    <p:commandButton class="btn btn-default" value="Seleccionar Espejos" actionListener="#{espejosController.setEspejos()}" update=":growl" ajax="false"/>
+                </div>
             </h:form>
         </ui:define>
     </ui:composition>
