@@ -17,8 +17,8 @@
                     <div class="col-md-10">
                         <ol class="breadcrumb">
                             <li><a href="/easy-planning-web/faces/coordinador_docente/index.xhtml">Inicio</a></li>
-                            <li><a href="#">Planificación Docente</a></li>
-                            <li class="active">Agergar Plan de Estudios</li>
+                            <li><a href="#">Carreras</a></li>
+                            <li class="active">Agregar Plan de Estudios</li>
                         </ol>
                     </div>                 
                 </div>
@@ -50,6 +50,16 @@
                                     <h:outputLabel value="Año"/>
                                     <br/>
                                     <p:spinner value="#{cargarPlanDeEstudios.anioPlan}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe ingresar el año" validatorMessage="El año no es válido" min="1900" max="2100"/>
+                                    <br/>
+                                    <br/>
+                                    <h:outputLabel value="Número resolución"/>
+                                    <br/>
+                                    <p:inputText value="#{cargarPlanDeEstudios.resolucion}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe ingresar el número de la resolución"/>
+                                    <br/>
+                                    <br/>
+                                    <h:outputLabel value="Año resolución"/>
+                                    <br/>
+                                    <p:spinner value="#{cargarPlanDeEstudios.anio_resolucion}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe ingresar el año de la resolución" min="1900" max="2100"/>
                                     <br/>
                                     <br/>
                                     <h:outputLabel value="Jornada"/>

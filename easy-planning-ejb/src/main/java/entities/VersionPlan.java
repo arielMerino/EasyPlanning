@@ -35,9 +35,27 @@ public class VersionPlan implements Serializable {
     private int anio;
     private int version;
     private boolean planificado;
+    private int resolucion;
+    private int anio_resolucion;
     
     @ManyToOne
     private PlanEstudio planEstudio;
+
+    public int getResolucion() {
+        return resolucion;
+    }
+
+    public void setResolucion(int resolucion) {
+        this.resolucion = resolucion;
+    }
+
+    public int getAnio_resolucion() {
+        return anio_resolucion;
+    }
+
+    public void setAnio_resolucion(int anio_resolucion) {
+        this.anio_resolucion = anio_resolucion;
+    }
 
     public boolean isPlanificado() {
         return planificado;

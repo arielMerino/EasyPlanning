@@ -67,7 +67,19 @@
                                         <p:tooltip class="tooltip-index" for="ver_asig" value="Sección en la que se pueden visualizar todas las asignaturas además de agregar y/o ediar el alias de cada una" />                                        
                                     </li>
                                     <li>
-                                        <h:outputLink id="add_plan" value="/easy-planning-web/faces/coordinador_docente/plan_de_estudios/cargar_plan_de_estudios.xhtml">
+                                        <h:outputLink id="add_malla" value="/easy-planning-web/faces/coordinador_docente/plan_de_estudios/cargar_plan_de_estudios.xhtml">
+                                            <h:outputText value="Cargar Malla" />
+                                        </h:outputLink>
+                                        <p:tooltip class="tooltip-index" for="add_malla" value="Sección dedicada a cargar la malla de los Planes de Estudio" />                                        
+                                    </li>
+                                    <li>
+                                        <h:outputLink id="asig_esp" value="/easy-planning-web/faces/coordinador_docente/plan_de_estudios/cargarPlanes.xhtml">
+                                            <h:outputText value="Asignar Cursos Espejo" />
+                                        </h:outputLink>
+                                        <p:tooltip class="tooltip-index" for="asig_esp" value="Sección dedicada a asignar los Cursos Espejo entre diferentes Planes" />                                        
+                                    </li>
+                                    <li>
+                                        <h:outputLink id="add_plan" value="/easy-planning-web/faces/coordinador_docente/plan_de_estudios/agregar_plan.xhtml">
                                             <h:outputText value="Agregar Plan de Estudios" />
                                         </h:outputLink>
                                         <p:tooltip class="tooltip-index" for="add_plan" value="Sección dedicada a agregar nuevos Planes de Estudio" />                                        

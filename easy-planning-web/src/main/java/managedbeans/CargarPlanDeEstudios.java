@@ -103,6 +103,24 @@ public class CargarPlanDeEstudios implements Serializable {
     private long nuevoPlan = -1L;
     private String jornada;
     private int codigo;
+    private int resolucion;
+    private int anio_resolucion;
+
+    public int getResolucion() {
+        return resolucion;
+    }
+
+    public void setResolucion(int resolucion) {
+        this.resolucion = resolucion;
+    }
+
+    public int getAnio_resolucion() {
+        return anio_resolucion;
+    }
+
+    public void setAnio_resolucion(int anio_resolucion) {
+        this.anio_resolucion = anio_resolucion;
+    }
 
     public int getCodigo() {
         return codigo;
@@ -613,6 +631,9 @@ public class CargarPlanDeEstudios implements Serializable {
             vp.setPlanEstudio(newPlan);
             vp.setPlanificado(false);
             vp.setVersion(1);
+            vp.setResolucion(resolucion);
+            vp.setAnio_resolucion(anio_resolucion);
+            vp.setId(1000L);
             plan.create(newPlan);
             version.create(vp);
             JsfUtil.addSuccessMessage("Nuevo plan agregado correctamente");
