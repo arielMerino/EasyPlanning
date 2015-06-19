@@ -37,9 +37,18 @@ public class VersionPlan implements Serializable {
     private boolean planificado;
     private int resolucion;
     private int anio_resolucion;
+    private int correlativo;
     
     @ManyToOne
     private PlanEstudio planEstudio;
+
+    public int getCorrelativo() {
+        return correlativo;
+    }
+
+    public void setCorrelativo(int correlativo) {
+        this.correlativo = correlativo;
+    }
 
     public int getResolucion() {
         return resolucion;

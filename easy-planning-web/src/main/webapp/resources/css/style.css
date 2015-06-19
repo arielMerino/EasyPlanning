@@ -396,3 +396,6 @@ body, p, a, li{
 .ui-selectoneradio label{
     margin-right: 2em;
 }
+.no-margin>.ui-button{
+    margin-top: 0;
+}

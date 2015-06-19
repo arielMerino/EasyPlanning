@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
+import javax.validation.constraints.Size;
 
 /**
  *
@@ -24,20 +25,48 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @NamedQueries({
-    @NamedQuery(name="Usuario.findByUsername",
-            query="SELECT u FROM Usuario u WHERE u.username = :username")
+    @NamedQuery(name = "Usuario.findByUid",
+            query = "SELECT u FROM Usuario u WHERE u.uid = :uid")
 })
 public class Usuario implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
-    private String username;
+    @Size(min=1, max=20)
+    private String rut_usuario;
+    @Size(min=1, max=20)
+    private String uid;
+    @Size(min=1, max=50)
     private String nombre_usuario;
+    @Size(min=1, max=50)
     private String apellido_usuario;
-    private String password;
     private boolean activo = true;
 
     @OneToMany
     private List<TipoUsuario> tipos;
+
+    public String getRut_usuario() {
+        return rut_usuario;
+    }
+
+    public void setRut_usuario(String rut_usuario) {
+        this.rut_usuario = rut_usuario;
+    }
+
+    public String getUid() {
+        return uid;
+    }
+
+    public void setUid(String uid) {
+        this.uid = uid;
+    }
+
+    public List<TipoUsuario> getTipos() {
+        return tipos;
+    }
+
+    public void setTipos(List<TipoUsuario> tipos) {
+        this.tipos = tipos;
+    }
 
     public List<TipoUsuario> getRoles() {
         return tipos;
@@ -45,14 +74,6 @@ public class Usuario implements Serializable {
 
     public void setRoles(List<TipoUsuario> roles) {
         this.tipos = roles;
-    }
-    
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
     }
 
     public String getNombre_usuario() {
@@ -77,13 +98,5 @@ public class Usuario implements Serializable {
 
     public void setActivo(boolean activo) {
         this.activo = activo;
-    }
-
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
     }
 }

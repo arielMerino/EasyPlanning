@@ -26,17 +26,17 @@
                     <div class="col-md-4 col-md-offset-4">
                         <h:form enctype='multipart/form-data'>                            
                             <h:outputLabel>Seleccionar Carrera:</h:outputLabel>
-                            <p:selectOneMenu id="carrera" value="#{cargarPlanDeEstudios.carreraSelected}" style="width: 100%" immediate="true">
+                            <p:selectOneMenu id="carrera" value="#{cargarPlanDeEstudios.carreraSelected}" style="width: 100%" immediate="true" required="true" requiredMessage="Debe seleccionar una Carrera">
                                 <f:selectItem itemLabel="Carrera" noSelectionOption="true" />
                                 <f:selectItems value="#{asignacionHoraria.carreraFacade.findAll()}" var="carrera" itemValue="#{carrera.id}" itemLabel="#{carrera.nombre}" />
                                 <p:ajax process="@this" update="planes, nuevo-plan" /> <!---->
                             </p:selectOneMenu>
                             <hr/>
                             <h:outputLabel style="white-space: normal;">Seleccionar Plan de Estudio:</h:outputLabel>
-                            <p:selectOneMenu id="planes" value="#{cargarPlanDeEstudios.idPlan}" style="width: 100%" immediate="true">
+                            <p:selectOneMenu id="planes" value="#{cargarPlanDeEstudios.idPlan}" style="width: 100%" immediate="true" required="true" requiredMessage="Debe seleccionar un Plan de Estudios">
                                 <f:selectItem itemLabel="Plan" noSelectionOption="true" />
                                 <f:selectItems value="#{asignaturaController.getAllPlanesDeEstudio(cargarPlanDeEstudios.carreraSelected)}" var="plan" itemLabel="#{asignaturaController.getDatosPlan(plan)}" itemValue="#{plan.id}"/>
-                                <f:selectItem itemLabel="Agergar nuevo..." itemValue="#{cargarPlanDeEstudios.nuevoPlan}"/>
+                                <f:selectItem itemLabel="Agregar nuevo..." itemValue="#{cargarPlanDeEstudios.nuevoPlan}"/>
                                 <p:ajax process="@this" update="nuevo-plan" /><!---->
                             </p:selectOneMenu>
                             <hr/>
@@ -49,18 +49,10 @@
                                     <br/>
                                     <h:outputLabel value="Año"/>
                                     <br/>
-                                    <p:spinner value="#{cargarPlanDeEstudios.anioPlan}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe ingresar el año" validatorMessage="El año no es válido" min="1900" max="2100"/>
+                                    <p:spinner class="no-margin" value="#{cargarPlanDeEstudios.anioPlan}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe ingresar el año" validatorMessage="El año no es válido" min="1900" max="2100"/>
                                     <br/>
                                     <br/>
                                     <h:outputLabel value="Número resolución"/>
-                                    <br/>
-                                    <p:inputText value="#{cargarPlanDeEstudios.resolucion}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe ingresar el número de la resolución"/>
-                                    <br/>
-                                    <br/>
-                                    <h:outputLabel value="Año resolución"/>
-                                    <br/>
-                                    <p:spinner value="#{cargarPlanDeEstudios.anio_resolucion}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe ingresar el año de la resolución" min="1900" max="2100"/>
-                                    <br/>
                                     <br/>
                                     <h:outputLabel value="Jornada"/>
                                     <p:selectOneRadio value="#{cargarPlanDeEstudios.jornada}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe indicar la jornada">
@@ -74,7 +66,18 @@
                                 <p:panel class="hidden" id="nuevo-plan">
                                 </p:panel>
                             </c:if>
+                            <p:panel class="panel-no-border">                                
+                                <p:inputText value="#{cargarPlanDeEstudios.resolucion}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe ingresar el número de la resolución"/>
+                                <br/>
+                                <br/>
+                                <h:outputLabel value="Año resolución"/>
+                                <br/>
+                                <p:spinner class="no-margin" value="#{cargarPlanDeEstudios.anio_resolucion}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe ingresar el año de la resolución" min="1900" max="2100"/>
+                                <br/>
+                                <br/>
+                            </p:panel>
                             <p:commandButton value="Agregar" action="#{cargarPlanDeEstudios.agregarPlanDeEstudios()}" update=":growl" ajax="false"/>
+                            <hr/>
                         </h:form>
                     </div>
                 </div>
