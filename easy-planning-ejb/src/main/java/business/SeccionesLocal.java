@@ -18,4 +18,8 @@ public interface SeccionesLocal {
     //public List<Seccion> findBySemestreAnioCarreraPlan(int codCarrera, String plan, int anio, int semestre);
     
     public List<Seccion> findByAsignaturaAnioYSemestre(long asg, int anio, int semestre);
+    
+    public List<String> findByIdVersion(long idVersion);
+    
+    public List<Long> findEspejos(String codigo, String alias, int anio, int semestre);
 }

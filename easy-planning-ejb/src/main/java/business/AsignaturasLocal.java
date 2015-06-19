@@ -35,4 +35,6 @@ public interface AsignaturasLocal {
     //public List<Integer> findNivelesByCodigoCarreraAndPlan(int codigoCarrera, String plan);
     
     public List<Asignatura> findByAsignaturaAsignada(String rutProfesor, int anio, int semestre);
+    
+    public List<Asignatura> getEspejos(String alias);
 }

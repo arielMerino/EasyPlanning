@@ -33,6 +33,16 @@ public class Asignaturas implements AsignaturasLocal {
             return null;
         }
     }
+    
+    @Override
+    public List<Asignatura> getEspejos(String alias){
+        Query query = em.createNamedQuery("Asignatura.getEspejos").setParameter("alias", alias);
+        try{
+            return (List<Asignatura>) query.getResultList();
+        }catch(NoResultException e){
+            return new ArrayList<>();
+        }
+    }
 
     @Override
     public List<Asignatura> getAllProfesorAsignatura() {

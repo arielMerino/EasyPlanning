@@ -53,6 +53,42 @@ public class EspejosController implements Serializable {
      * Métodos *
      *         */ 
     
+    
+    /**
+     * verifica si la asignatura tiene o no espejos
+     * @param idAsignatura
+     * @return true si la asignatura tiene espejos, false CC
+     */
+    
+    public boolean verificarEspejos(long idAsignatura){
+        if(idAsignatura != 0 ){
+            if(asignaturaFacade.find(idAsignatura).getAlias()==null)
+                return false;
+            List<Asignatura> asignaturas = asignaturaFacade.findAll();
+            for (Asignatura a : asignaturas){
+                if (! (a.getAlias() == null)){
+                    if(a.getAlias().equals(asignaturaFacade.find(idAsignatura).getAlias()) && a.getId() != idAsignatura){
+                        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_WARN, "La asignatura seleccionada tiene espejos, se deben seleccionar las secciones a mostrar para manejar topes de horario", null));
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+    
+    /**
+     * Elimina los alias de todas las asignaturas
+     */
+    public void limpiarEspejos(){
+        List<Asignatura> asignaturas = asignaturaFacade.findAll();
+        for (Asignatura a : asignaturas){
+            if(!a.getAlias().isEmpty())
+                a.setAlias("");
+        }
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Todos los alias han sido eliminados.", null));
+    }
+    
     public void redirigir() throws IOException{
         FacesContext context = FacesContext.getCurrentInstance();
         context.getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/plan_de_estudios/espejos.xhtml");
