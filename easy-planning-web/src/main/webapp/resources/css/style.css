@@ -399,3 +399,6 @@ body, p, a, li{
 .no-margin>.ui-button{
     margin-top: 0;
 }
+.ui-selectonelistbox .ui-selectlistbox-item{
+    border-bottom: solid 1px #eee !important;
+}
