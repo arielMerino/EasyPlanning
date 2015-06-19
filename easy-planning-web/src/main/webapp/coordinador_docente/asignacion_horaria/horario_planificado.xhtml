@@ -30,6 +30,7 @@
                                     <h:outputLabel value="Seleccione el Plan de Estudios"/>
                                     <br/>
                                     <p:selectOneMenu id="planes" value="#{asignacionHoraria.versionId}" required="true" requiredMessage="Debe seleccionar un plan de estudios" >
+                                        <f:selectItem itemLabel="Carrera" noSelectionOption="true" />
                                         <f:selectItems value="#{cargarPlanDeEstudios.versionesPlanificadas}" var="vers" itemLabel="#{vers.planEstudio.carrera.nombre}-#{vers.planEstudio.codigo}.#{vers.anio}.#{vers.version} (#{cargarPlanDeEstudios.getJornada(vers.planEstudio.jornada)})" itemValue="#{vers.id}" />
                                         <p:ajax process="@this" update="niveles, horarioAsignacion"/>
                                     </p:selectOneMenu>

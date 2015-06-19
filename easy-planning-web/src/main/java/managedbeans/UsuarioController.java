@@ -203,4 +203,9 @@ public class UsuarioController implements Serializable{
         return roles;
     }
     
+    public String getRut(){
+        Usuario user = usuarioBussines.findByUid(nombre);
+        return user.getRut_usuario();
+    }
+    
 }

@@ -22,7 +22,7 @@
                     </div>  
                 </div>
                 <h:form id="formEncuesta">
-                    <c:set var="id" scope="request" value="#{usuarioController.nombre}"/>
+                    <c:set var="id" scope="request" value="#{usuarioController.rut}"/>
                     <c:if test="#{id != 0}">
                         #{profesorController.setIdProfesor(id)}
                     </c:if>
