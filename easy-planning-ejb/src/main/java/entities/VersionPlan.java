@@ -27,6 +27,9 @@ import javax.persistence.NamedQuery;
         name = "VersionPlan.findByPlanificado",
         query = "SELECT vp FROM VersionPlan vp WHERE vp.planificado = :planificado"),
     @NamedQuery(
+        name="VersionPlan.findMaxCorrelativo",
+        query="SELECT MAX(vp.correlativo) FROM VersionPlan vp"),
+    @NamedQuery(
         name = "VersionPlan.findAll",
         query = "SELECT vp FROM VersionPlan vp")
 })
