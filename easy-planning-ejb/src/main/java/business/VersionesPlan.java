@@ -57,4 +57,14 @@ public class VersionesPlan implements VersionesPlanLocal {
             return -1;
         }
     }
+    
+    @Override
+    public List<VersionPlan> findAll(){
+        Query query = em.createNamedQuery("VersionPlan.findAll");
+        try{
+            return (List<VersionPlan>) query.getResultList();
+        }catch(NoResultException e){
+            return new ArrayList<>();
+        }
+    }
 }

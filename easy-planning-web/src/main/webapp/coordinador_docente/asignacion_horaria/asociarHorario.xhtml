@@ -53,7 +53,7 @@
                         </div>
                         <div class="row">
                             <p:commandButton class="btn btn-default col-xs-2" value="Cancelar" action="#{asignacionHoraria.limpiarBloqueYprofesor()}" onsuccess="PF('seccionProfesor').hide();" />
-                            <p:commandButton id="boton-asignar" class="btn btn-default col-xs-2" value="Asignar" action="#{asignacionHoraria.setAsignar(1)}" update="formulario, :seleccionCarreraPlanAsignatura" onsuccess="#{asignacionHoraria.asignar()};submit();" disabled="#{not asignacionHoraria.muestraBoton}"/>
+                            <p:commandButton id="boton-asignar" class="btn btn-default col-xs-2" value="Asignar" action="#{asignacionHoraria.setAsignar(1)}" update="formulario, :seleccionCarreraPlanAsignatura" onsuccess="#{asignacionHoraria.asignacion()};submit();" disabled="#{not asignacionHoraria.muestraBoton}"/>
                             <p:commandButton class="btn btn-default col-xs-2" value="Eliminar" action="#{asignacionHoraria.eliminarHorario()}" update="formulario, :seleccionCarreraPlanAsignatura" onsuccess="submit();" />
                         </div>
                     </c:if>

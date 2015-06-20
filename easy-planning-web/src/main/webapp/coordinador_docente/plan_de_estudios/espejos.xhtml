@@ -27,8 +27,8 @@
                     <p:panel class="col-xs-4" style="height: 300px">
                         <h4>Ingeniería Civil Infromática:</h4><br/>
                         <ui:repeat value="#{espejosController.versionesCivil}" var="civil" >
-                            <h:outputLabel value="#{civil.planEstudio.codigo}-#{civil.anio}.#{civil.version}: " /><br/>
-                            <p:selectOneMenu style="width: 300px" value="#{espejosController.asignaturasSeleccionadas[civil.id]}" filter="true" filterMatchMode="contains" immediate="true">
+                            <h:outputLabel value="#{civil.planEstudio.codigo}-#{civil.anio}.#{civil.version} (#{cargarPlanDeEstudios.getJornada(civil.planEstudio.jornada)}): " /><br/>
+                            <p:selectOneMenu style="width: 300px" value="#{espejosController.asignaturasSeleccionadas[civil.correlativo]}" filter="true" filterMatchMode="contains" immediate="true">
                                 <f:selectItem itemLabel="ninguno" itemValue="#{0}" />
                                 <f:selectItems value="#{espejosController.asignaturasByPlan(civil.id)}" var="asignatura" itemLabel="#{asignatura.nombre}" itemValue="#{asignatura.id}" />
                             </p:selectOneMenu>
@@ -39,8 +39,8 @@
                     <p:panel class="col-xs-4" style="height: 300px">
                         <h4>Ingeniería en Ejecución Infromática:</h4><br/>
                         <ui:repeat value="#{espejosController.versionesEjecucion}" var="civil" >
-                            <h:outputLabel value="#{civil.planEstudio.codigo}-#{civil.anio}.#{civil.version}: " /><br/>
-                            <p:selectOneMenu style="width: 300px" value="#{espejosController.asignaturasSeleccionadas[civil.id]}" filter="true" filterMatchMode="contains" immediate="true">
+                            <h:outputLabel value="#{civil.planEstudio.codigo}-#{civil.anio}.#{civil.version} (#{cargarPlanDeEstudios.getJornada(civil.planEstudio.jornada)}): " /><br/>
+                            <p:selectOneMenu style="width: 300px" value="#{espejosController.asignaturasSeleccionadas[civil.correlativo]}" filter="true" filterMatchMode="contains" immediate="true">
                                 <f:selectItem itemLabel="ninguno" itemValue="#{0}" />
                                 <f:selectItems value="#{espejosController.asignaturasByPlan(civil.id)}" var="asignatura" itemLabel="#{asignatura.nombre}" itemValue="#{asignatura.id}" />
                             </p:selectOneMenu>

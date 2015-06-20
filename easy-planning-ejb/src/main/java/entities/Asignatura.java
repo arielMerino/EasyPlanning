@@ -35,7 +35,9 @@ import javax.persistence.OneToMany;
     @NamedQuery(name="Asignatura.findByAsignaturaAsignada",
             query="SELECT DISTINCT a FROM Horario h, Seccion s, Coordinacion c, Asignatura a WHERE h.profesor.rutProfesor = :rutProfesor AND h.seccion.id = s.id AND s.coordinacion.id = c.id AND c.asignatura.id = a.id AND c.anio = :anio AND c.semestre = :semestre"),
     @NamedQuery(name = "Asignatura.findNivelesByPlan",
-            query = "SELECT DISTINCT a.nivel FROM Asignatura a WHERE a.versionplan.id = :versionPlan")
+            query = "SELECT DISTINCT a.nivel FROM Asignatura a WHERE a.versionplan.id = :versionPlan"),
+    @NamedQuery(name = "Asignatura.getEspejos",
+            query = "SELECT a FROM Asignatura a WHERE a.alias_asignatura = :alias AND a.versionplan.planificado = TRUE")
 })
 public class Asignatura implements Serializable {
     @OneToMany(mappedBy = "asignatura")
