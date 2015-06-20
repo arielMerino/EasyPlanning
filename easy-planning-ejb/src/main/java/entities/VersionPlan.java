@@ -45,6 +45,14 @@ public class VersionPlan implements Serializable {
     @ManyToOne
     private PlanEstudio planEstudio;
 
+    public int getCorrelativo() {
+        return correlativo;
+    }
+
+    public void setCorrelativo(int correlativo) {
+        this.correlativo = correlativo;
+    }
+
     public int getResolucion() {
         return resolucion;
     }
@@ -55,14 +63,6 @@ public class VersionPlan implements Serializable {
 
     public int getAnio_resolucion() {
         return anio_resolucion;
-    }
-
-    public int getCorrelativo() {
-        return correlativo;
-    }
-
-    public void setCorrelativo(int correlativo) {
-        this.correlativo = correlativo;
     }
 
     public void setAnio_resolucion(int anio_resolucion) {

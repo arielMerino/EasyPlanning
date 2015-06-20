@@ -17,7 +17,7 @@ and open the template in the editor.
             <h:outputText value="Inicio"/>
         </ui:define>
         <ui:define name="body">
-            <c:set var="rut" value="#{usuarioController.nombre}" />
+            <c:set var="rut" value="#{usuarioController.rut}" />
             #{profesorController.setIdProfesor(rut)}
             <div class="container-fluid">
                 <div class="row">

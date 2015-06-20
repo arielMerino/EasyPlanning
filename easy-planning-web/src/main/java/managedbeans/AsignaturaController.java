@@ -332,14 +332,35 @@ public class AsignaturaController implements Serializable {
         return planesEstudio;
     }
     
-    public ArrayList<VersionPlan> getAllPlanesDeEstudio(int carreraId){
-        ArrayList<VersionPlan> planesEstudio = new ArrayList<>();
+    public List<VersionPlan> getAllPlanesDeEstudio(int carreraId){
         List<VersionPlan> versiones = versionesBusiness.findAll();
+        List<VersionPlan> planesEstudio = new ArrayList<>();
         for (VersionPlan v : versiones){
             if (!planesEstudio.contains(v) && v.getPlanEstudio().getCarrera().getId().toString().equals(carreraId+""))
                 planesEstudio.add(v);
         }
-        return planesEstudio;
+        List<VersionPlan> ultimos = new ArrayList();
+        for(VersionPlan plan1 : planesEstudio){
+            VersionPlan last = new VersionPlan();
+            last.setVersion(0);
+            for(VersionPlan plan2 : planesEstudio){
+                if(plan1.getAnio() == plan2.getAnio()){
+                    if(plan2.getVersion() > last.getVersion()){
+                        last = plan2;
+                    }
+                }
+            }
+            boolean flag = false;
+            for(VersionPlan vp : ultimos){
+                if(vp.getAnio() == last.getAnio()){
+                    flag = true;
+                }
+            }
+            if(!flag){
+                ultimos.add(last);
+            }
+        }
+        return ultimos;
     }
     
     public List<VersionPlan> getPlanesEstudio(){
