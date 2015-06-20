@@ -96,13 +96,13 @@ public class EspejosController implements Serializable {
     
     public void inicializarAsignaturasSeleccionadas(){
         List<VersionPlan> versiones = versionPlanFacade.findAll();
-        long max = 0;
+        int max = 0;
         for (VersionPlan v : versiones){
-            if (v.getId() > max)
-                max = v.getId();
+            if (v.getCorrelativo() > max)
+                max = v.getCorrelativo();
         }
         System.out.println("max: "+max);
-        this.asignaturasSeleccionadas = new Long[Integer.valueOf(max+"")+1];
+        this.asignaturasSeleccionadas = new Long[max+1];
         if (max > 0){
             System.out.println("super aqui");
             for (int i = 0; i < max+1; i++){

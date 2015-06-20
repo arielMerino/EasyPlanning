@@ -25,7 +25,10 @@ import javax.persistence.NamedQuery;
         query = "SELECT vp FROM VersionPlan vp WHERE vp.planEstudio.id = :idPlan"),
     @NamedQuery(
         name = "VersionPlan.findByPlanificado",
-        query = "SELECT vp FROM VersionPlan vp WHERE vp.planificado = :planificado")
+        query = "SELECT vp FROM VersionPlan vp WHERE vp.planificado = :planificado"),
+    @NamedQuery(
+        name = "VersionPlan.findAll",
+        query = "SELECT vp FROM VersionPlan vp")
 })
 public class VersionPlan implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -35,9 +38,36 @@ public class VersionPlan implements Serializable {
     private int anio;
     private int version;
     private boolean planificado;
+    private int resolucion;
+    private int anio_resolucion;
+    private int correlativo;
     
     @ManyToOne
     private PlanEstudio planEstudio;
+
+    public int getResolucion() {
+        return resolucion;
+    }
+
+    public void setResolucion(int resolucion) {
+        this.resolucion = resolucion;
+    }
+
+    public int getAnio_resolucion() {
+        return anio_resolucion;
+    }
+
+    public int getCorrelativo() {
+        return correlativo;
+    }
+
+    public void setCorrelativo(int correlativo) {
+        this.correlativo = correlativo;
+    }
+
+    public void setAnio_resolucion(int anio_resolucion) {
+        this.anio_resolucion = anio_resolucion;
+    }
 
     public boolean isPlanificado() {
         return planificado;

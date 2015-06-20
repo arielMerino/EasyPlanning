@@ -98,7 +98,6 @@ public class asignacionHoraria implements Serializable {
     private String[] seccionesMostrar;
     private List<Horario> horariosPlan;
     
-
     public long getVersionId() {
         return versionId;
     }
@@ -186,8 +185,8 @@ public class asignacionHoraria implements Serializable {
     public void loadSeccionesMostrar(){
         int index = 0;
         for(VersionPlan v : versionFacade.findAll()){
-            if (v.getId().intValue() > index)
-                index = v.getId().intValue();
+            if (v.getCorrelativo() > index)
+                index = v.getCorrelativo();
         }
         seccionesMostrar = new String[index+1];
         System.out.println("ready");

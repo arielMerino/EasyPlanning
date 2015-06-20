@@ -23,7 +23,26 @@ import javax.persistence.ManyToOne;
 public class TipoUsuario implements Serializable {    
     private static final long serialVersionUID = 1L;
     @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private Long id_tipo;
     private String nombre_tipo;
+    private String pass;
+
+    public Long getId() {
+        return id_tipo;
+    }
+
+    public void setId(Long id) {
+        this.id_tipo = id;
+    }
+
+    public String getPass() {
+        return pass;
+    }
+
+    public void setPass(String pass) {
+        this.pass = pass;
+    }
     
     public String getTipo() {
         return nombre_tipo;

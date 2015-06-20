@@ -5,17 +5,16 @@
  */
 package business;
 
-import entities.VersionPlan;
+import entities.Usuario;
 import java.util.List;
 import javax.ejb.Local;
 
 /**
  *
- * @author ariel-linux
+ * @author jano
  */
 @Local
-public interface VersionesPlanLocal {
-    public List<VersionPlan> findByIdPlan(long idPlan);
-    public List<VersionPlan> findByPlanificado(boolean planificado);
-    public List<VersionPlan> findAll();
+public interface UsuariosLocal {
+    
+    public Usuario findByUid(String uid);
 }

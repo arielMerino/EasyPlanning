@@ -6,6 +6,7 @@
 package managedbeans;
 
 import business.AsignaturasLocal;
+import business.VersionesPlanLocal;
 import entities.Asignatura;
 import entities.Coordinacion;
 import entities.ParamSemestreAno;
@@ -47,6 +48,8 @@ public class AsignaturaController implements Serializable {
     private ParamSemestreAnioFacadeLocal ejbParam;
     @EJB
     private VersionPlanFacadeLocal versionFacade;
+    @EJB
+    private VersionesPlanLocal versionesBusiness;
     
     private List<Asignatura> items = null;
     private Asignatura selected;
@@ -321,7 +324,7 @@ public class AsignaturaController implements Serializable {
     //retorna una lista de enteros con los id de todos los planes de estudios correspondientes a una carrera dada
     public ArrayList<VersionPlan> getPlanesDeEstudio(int carreraId){
         ArrayList<VersionPlan> planesEstudio = new ArrayList<>();
-        List<VersionPlan> versiones = versionFacade.findAll();
+        List<VersionPlan> versiones = versionesBusiness.findAll();
         for (VersionPlan v : versiones){
             if (!planesEstudio.contains(v) && v.getPlanEstudio().getCarrera().getId().toString().equals(carreraId+"") && v.isPlanificado() && haveAsignaturas(v))
                 planesEstudio.add(v);
@@ -329,8 +332,18 @@ public class AsignaturaController implements Serializable {
         return planesEstudio;
     }
     
+    public ArrayList<VersionPlan> getAllPlanesDeEstudio(int carreraId){
+        ArrayList<VersionPlan> planesEstudio = new ArrayList<>();
+        List<VersionPlan> versiones = versionesBusiness.findAll();
+        for (VersionPlan v : versiones){
+            if (!planesEstudio.contains(v) && v.getPlanEstudio().getCarrera().getId().toString().equals(carreraId+""))
+                planesEstudio.add(v);
+        }
+        return planesEstudio;
+    }
+    
     public List<VersionPlan> getPlanesEstudio(){
-        return versionFacade.findAll();
+        return versionesBusiness.findAll();
     }
     
     public ArrayList<Integer> getMaxNivel(){

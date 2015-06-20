@@ -29,6 +29,7 @@ import javax.ejb.EJBException;
 import javax.inject.Named;
 import javax.enterprise.context.Dependent;
 import javax.enterprise.context.RequestScoped;
+import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
@@ -56,7 +57,7 @@ import sessionbeans.VersionPlanFacadeLocal;
  */
 @Named(value = "cargarPlanDeEstudios")
 //@Dependent
-@RequestScoped
+@SessionScoped
 public class CargarPlanDeEstudios implements Serializable {
 
     @EJB
@@ -95,13 +96,55 @@ public class CargarPlanDeEstudios implements Serializable {
     private String nombrePlan;
     private long idPlan = 0;
     private long idVersion = 0;
-    //private Asignatura asignatura; //TODO interfaces para la persistencia
     private String aux;
     private boolean cargados = false;
     private List<Asignatura> asignaturasAñadidas = new ArrayList();    
     private DualListModel<VersionPlan> versionPickList;
-    //private List<VersionPlan> versionesSource;
-    //private List<VersionPlan> versionesTarget;
+    private long nuevoPlan = -1L;
+    private String jornada;
+    private int codigo;
+    private int resolucion;
+    private int anio_resolucion;
+
+    public int getResolucion() {
+        return resolucion;
+    }
+
+    public void setResolucion(int resolucion) {
+        this.resolucion = resolucion;
+    }
+
+    public int getAnio_resolucion() {
+        return anio_resolucion;
+    }
+
+    public void setAnio_resolucion(int anio_resolucion) {
+        this.anio_resolucion = anio_resolucion;
+    }
+
+    public int getCodigo() {
+        return codigo;
+    }
+
+    public void setCodigo(int codigo) {
+        this.codigo = codigo;
+    }
+
+    public String getJornada() {
+        return jornada;
+    }
+
+    public void setJornada(String jornada) {
+        this.jornada = jornada;
+    }
+
+    public long getNuevoPlan() {
+        return nuevoPlan;
+    }
+
+    public void setNuevoPlan(long nuevoPlan) {
+        this.nuevoPlan = nuevoPlan;
+    }
 
     public CargarPlanDeEstudios() {
     }
@@ -550,6 +593,52 @@ public class CargarPlanDeEstudios implements Serializable {
             paramSemAno.setSemestreActual(1);
             paramSemAno.setAnoActual(ano+1);
             this.paramFacade.edit(paramSemAno);
+        }
+    }
+    
+    public boolean agregaPlan(){
+        if(carreraSelected != 0 && idPlan == -1L){
+            return true;
+        }
+        else{
+            return false;
+        }
+    }
+    
+    public void agregarPlanDeEstudios(){
+        if(!agregaPlan()){
+            VersionPlan vp = version.find(idPlan);
+            VersionPlan newVp = new VersionPlan();
+            newVp.setAnio(vp.getAnio());
+            newVp.setPlanEstudio(vp.getPlanEstudio());
+            newVp.setPlanificado(false);
+            newVp.setVersion(vp.getVersion()+1);
+            version.create(newVp);
+            JsfUtil.addSuccessMessage("Nueva versión del plan "+vp.getPlanEstudio().getCodigo()+" creada con éxito");
+        }
+        else{
+            PlanEstudio newPlan = new PlanEstudio();
+            newPlan.setCarrera(carreraFacade.find(carreraSelected));
+            newPlan.setCodigo(codigo);
+            if(jornada.equals("diurno")){
+                newPlan.setJornada(0);
+            }
+            else{
+                newPlan.setJornada(1);
+            }
+            VersionPlan vp = new VersionPlan();
+            vp.setAnio(anioPlan);
+            vp.setPlanEstudio(newPlan);
+            vp.setPlanificado(false);
+            vp.setVersion(1);
+            vp.setResolucion(resolucion);
+            vp.setAnio_resolucion(anio_resolucion);
+            vp.setId(1000L);
+            plan.create(newPlan);
+            version.create(vp);
+            JsfUtil.addSuccessMessage("Nuevo plan agregado correctamente");
+            carreraSelected = 0L;
+            idPlan = 0L;
         }
     }
 }

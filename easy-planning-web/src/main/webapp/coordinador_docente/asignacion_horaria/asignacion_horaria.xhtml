@@ -129,7 +129,7 @@
                                                         <h3>Planes con espejos: </h3>
                                                         <ui:repeat value="#{asignacionHoraria.espejos}" varStatus="indice" var="espejo" >
                                                             <h:outputLabel>#{espejo.versionplan.planEstudio.codigo}-#{espejo.versionplan.anio}.#{espejo.versionplan.version} (#{cargarPlanDeEstudios.getJornada(espejo.versionplan.planEstudio.jornada)}):</h:outputLabel><br/>
-                                                            <p:selectOneMenu style="width: 300px" value="#{asignacionHoraria.seccionesMostrar[espejo.versionplan.id]}" immediate="true">
+                                                            <p:selectOneMenu style="width: 300px" value="#{asignacionHoraria.seccionesMostrar[espejo.versionplan.correlativo]}" immediate="true">
                                                                 <f:selectItem itemLabel="ninguna" itemValue="#{null}" />
                                                                 <f:selectItems value="#{asignacionHoraria.seccionesVersion(espejo.versionplan.id)}" var="asignatura" itemLabel="#{asignatura}" itemValue="#{asignatura}" />
                                                                 <p:ajax process="@this" update=":seleccionCarreraPlanAsignatura:botones" />
