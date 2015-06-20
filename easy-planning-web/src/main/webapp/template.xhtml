@@ -54,27 +54,15 @@
                                                 <a href="/easy-planning-web/faces/coordinador_docente/index.xhtml"><span class="glyphicon glyphicon-home" aria-hidden="true" ></span> Inicio</a>
                                             </li>
                                             <li class="dropdown">
-                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-education" aria-hidden="true" ></span> Profesores<span class="caret"></span></a>
-                                                <ul class="dropdown-menu" role="menu">
-                                                    <li><a href="/easy-planning-web/faces/coordinador_docente/profesor/List.xhtml">Ver Profesores</a></li>
-                                                  <li class="divider"></li>
-                                                  <!--li><a href="/easy-planning-web/faces/profesor/encuesta.xhtml">Encuesta Profesor</a></li>
-                                                  <li class="divider"></li-->
-                                                  <li><a href="/easy-planning-web/faces/coordinador_docente/encuesta/lista_profesores.xhtml">Asignaturas Propuestas</a></li>
-                                                </ul>
-                                            </li>
-                                            <li class="dropdown">
                                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-book" aria-hidden="true" ></span> Carreras<span class="caret"></span></a>
                                                 <ul class="dropdown-menu" role="menu">
                                                   <li><a href="/easy-planning-web/faces/coordinador_docente/carrera/List.xhtml">Ver Carreras</a></li>
                                                   <li class="divider"></li>
-                                                  <li><a href="/easy-planning-web/faces/coordinador_docente/asignaturas/listar_asignaturas.xhtml">Ver Asignaturas</a></li>
+                                                  <li><a href="/easy-planning-web/faces/coordinador_docente/plan_de_estudios/agregar_plan.xhtml">Agregar Plan de Estudios</a></li>
                                                   <li class="divider"></li>
                                                   <li><a href="/easy-planning-web/faces/coordinador_docente/plan_de_estudios/cargar_plan_de_estudios.xhtml">Cargar Malla</a></li>
                                                   <li class="divider"></li>
-                                                  <li><a href="/easy-planning-web/faces/coordinador_docente/plan_de_estudios/cargarPlanes.xhtml">Asignar Cursos Espejos</a></li>
-                                                  <li class="divider"></li>
-                                                  <li><a href="/easy-planning-web/faces/coordinador_docente/plan_de_estudios/agregar_plan.xhtml">Agregar Plan de Estudios</a></li>
+                                                  <li><a href="/easy-planning-web/faces/coordinador_docente/asignaturas/listar_asignaturas.xhtml">Ver Asignaturas</a></li>
                                                 </ul>
                                             </li>
                                             
@@ -83,11 +71,21 @@
                                                 <ul class="dropdown-menu" role="menu">
                                                   <li><a href="/easy-planning-web/faces/coordinador_docente/plan_de_estudios/inicializar_secciones.xhtml">Iniciar Planificación</a></li>
                                                   <li class="divider"></li>
+                                                  <li><a href="/easy-planning-web/faces/coordinador_docente/plan_de_estudios/cargarPlanes.xhtml">Asignar Cursos Espejos</a></li>
+                                                  <li class="divider"></li>
                                                   <li><a href="/easy-planning-web/faces/coordinador_docente/asignacion_horaria/carga_secciones.xhtml">Asignación horaria</a></li>
                                                   <li class="divider"></li>
                                                   <li><a href="/easy-planning-web/faces/coordinador_docente/profesor/profesor_asignatura.xhtml">Asignaturas con Profesor</a></li>
                                                   <li class="divider"></li>
                                                   <li><a href="/easy-planning-web/faces/coordinador_docente/asignacion_horaria/horario_planificado.xhtml">Horario Planificado</a></li>
+                                                </ul>
+                                            </li>
+                                            <li class="dropdown">
+                                                <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false"><span class="glyphicon glyphicon-education" aria-hidden="true" ></span> Profesores<span class="caret"></span></a>
+                                                <ul class="dropdown-menu" role="menu">
+                                                    <li><a href="/easy-planning-web/faces/coordinador_docente/profesor/List.xhtml">Ver Profesores</a></li>
+                                                    <li class="divider"></li>
+                                                    <li><a href="/easy-planning-web/faces/coordinador_docente/encuesta/lista_profesores.xhtml">Enviar Encuesta</a></li>
                                                 </ul>
                                             </li>
                                             <li>
@@ -113,13 +111,21 @@
                                                     <a class="btn btn-default btn-actual" id="btn-sesion" href="/easy-planning-web/faces/profesor/index.xhtml" >Profesor</a>
                                                 </c:otherwise>
                                             </c:choose>
+                                            <div class="logout-div">
+                                                <h:form>
+                                                    <p:commandLink action="#{usuarioController.logout()}" value="Cerrar Sesión"/>
+                                                    <span class="glyphicon glyphicon-log-out logut" aria-hidden="true"> </span>
+                                                </h:form>
+                                            </div>
                                         </c:if>
-                                        <div class="logout-div">
-                                            <h:form>
-                                                <p:commandLink action="#{usuarioController.logout()}" value="Cerrar Sesión"/>
-                                                <span class="glyphicon glyphicon-log-out logut" aria-hidden="true"> </span>
-                                            </h:form>
-                                        </div>
+                                        <c:if test="#{not usuarioController.compruebaRoles()}">
+                                            <div class="logout-div-two">
+                                                <h:form>
+                                                    <p:commandLink action="#{usuarioController.logout()}" value="Cerrar Sesión"/>
+                                                    <span class="glyphicon glyphicon-log-out logut" aria-hidden="true"> </span>
+                                                </h:form>
+                                            </div>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>

@@ -1031,9 +1031,12 @@ public class asignacionHoraria implements Serializable {
         colores.add("#72A603");
         colores.add("#E8541C");
         colores.add("#FFD52F");
-        colores.add("#33A3BA");
+        colores.add("#287F91");
         colores.add("#FF893B");
         colores.add("#998661");
+        colores.add("#BE21E8");
+        colores.add("#30FF9D");
+        colores.add("#DEFF00");
 
         Vector v = new Vector();
 
@@ -1042,6 +1045,18 @@ public class asignacionHoraria implements Serializable {
             
             if(alias == null){
                 alias = h.getSeccion().getCoordinacion().getAsignatura().getNombre();
+                
+            }
+            
+            alias += "-"+h.getSeccion().getCodigo();
+            
+            if(h.getProfesor() != null){
+                if(h.getProfesor().getAlias() == null){
+                    alias += " - "+h.getProfesor().getNombre() + h.getProfesor().getApellido();
+                }
+                else{
+                    alias += " - "+h.getProfesor().getAlias();
+                }    
             }
             
             String dia = h.getBloque().substring(0, 1);
@@ -1073,7 +1088,7 @@ public class asignacionHoraria implements Serializable {
                 v.add(alias);                
             }
             
-            color_posicion = v.indexOf(alias) % 6;
+            color_posicion = v.indexOf(alias) % 10;
             asignaturas[posicion + 54] = colores.get(color_posicion);            
             asignaturas[posicion] = alias;
         }
