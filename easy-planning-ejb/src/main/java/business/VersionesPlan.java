@@ -46,4 +46,15 @@ public class VersionesPlan implements VersionesPlanLocal {
             return new ArrayList();
         }
     }
+
+    @Override
+    public int findMaxCorrelativo() {
+        Query query = em.createNamedQuery("VersionPlan.findMaxCorrelativo");
+        try{
+            return (int) query.getSingleResult();
+        }
+        catch(NoResultException e){
+            return -1;
+        }
+    }
 }

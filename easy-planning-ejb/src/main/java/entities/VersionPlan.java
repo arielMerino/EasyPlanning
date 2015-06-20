@@ -25,7 +25,10 @@ import javax.persistence.NamedQuery;
         query = "SELECT vp FROM VersionPlan vp WHERE vp.planEstudio.id = :idPlan"),
     @NamedQuery(
         name = "VersionPlan.findByPlanificado",
-        query = "SELECT vp FROM VersionPlan vp WHERE vp.planificado = :planificado")
+        query = "SELECT vp FROM VersionPlan vp WHERE vp.planificado = :planificado"),
+    @NamedQuery(
+        name="VersionPlan.findMaxCorrelativo",
+        query="SELECT MAX(vp.correlativo) FROM VersionPlan vp")
 })
 public class VersionPlan implements Serializable {
     private static final long serialVersionUID = 1L;

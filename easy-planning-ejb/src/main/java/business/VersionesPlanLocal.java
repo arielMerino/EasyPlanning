@@ -17,4 +17,5 @@ import javax.ejb.Local;
 public interface VersionesPlanLocal {
     public List<VersionPlan> findByIdPlan(long idPlan);
     public List<VersionPlan> findByPlanificado(boolean planificado);
+    public int findMaxCorrelativo();
 }

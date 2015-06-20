@@ -52,8 +52,6 @@
                                     <p:spinner class="no-margin" value="#{cargarPlanDeEstudios.anioPlan}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe ingresar el año" validatorMessage="El año no es válido" min="1900" max="2100"/>
                                     <br/>
                                     <br/>
-                                    <h:outputLabel value="Número resolución"/>
-                                    <br/>
                                     <h:outputLabel value="Jornada"/>
                                     <p:selectOneRadio value="#{cargarPlanDeEstudios.jornada}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe indicar la jornada">
                                         <f:selectItem itemLabel="Diurno" itemValue="diurno"/>
@@ -67,6 +65,8 @@
                                 </p:panel>
                             </c:if>
                             <p:panel class="panel-no-border">                                
+                                <h:outputLabel value="Número resolución"/>
+                                <br/>
                                 <p:inputText value="#{cargarPlanDeEstudios.resolucion}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe ingresar el número de la resolución"/>
                                 <br/>
                                 <br/>

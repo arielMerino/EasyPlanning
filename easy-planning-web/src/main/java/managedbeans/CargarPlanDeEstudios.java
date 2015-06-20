@@ -625,6 +625,7 @@ public class CargarPlanDeEstudios implements Serializable {
             newVp.setPlanEstudio(vp.getPlanEstudio());
             newVp.setPlanificado(false);
             newVp.setVersion(vp.getVersion()+1);
+            newVp.setCorrelativo(versionesBusiness.findMaxCorrelativo()+1);
             version.create(newVp);
             JsfUtil.addSuccessMessage("Nueva versión del plan "+vp.getPlanEstudio().getCodigo()+" creada con éxito");
         }
@@ -646,6 +647,7 @@ public class CargarPlanDeEstudios implements Serializable {
                 vp.setVersion(1);
                 vp.setResolucion(resolucion);
                 vp.setAnio_resolucion(anio_resolucion);
+                vp.setCorrelativo(versionesBusiness.findMaxCorrelativo()+1);
                 plan.create(newPlan);
                 version.create(vp);
                 JsfUtil.addSuccessMessage("Nuevo plan agregado correctamente");                
