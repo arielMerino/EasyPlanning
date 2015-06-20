@@ -32,13 +32,19 @@
                 
                 <c:if test="#{empty profesor_id}">
                     <c:set var="hayEncuesta" value="#{profesorController.hayEncuesta(checklistController.rutProfesor)}" scope="request"/>
+                    <c:if test="#{!hayEncuesta}">
+                        #{encuestaController.crearEncuesta(checklistController.rutProfesor)}
+                    </c:if>
                 </c:if>
                 <c:if test="#{not empty profesor_id}">
                     <c:set var="hayEncuesta" value="#{profesorController.hayEncuesta(profesor_id)}" scope="request"/>
+                    <c:if test="#{!hayEncuesta}">
+                        #{encuestaController.crearEncuesta(profesor_id)}
+                    </c:if>
                 </c:if>
                 
                 
-                <c:if test="#{hayEncuesta}">
+                
                 <div class="row">
                     <div class="col-md-12">
                         <br/>
@@ -148,14 +154,8 @@
         
                     </div>
                 </div>
-                </c:if>
-                <c:if test="#{!hayEncuesta}">
-                    <div class="col-md-12">
-                        <div class="alert alert-warning text-center">                                        
-                            <h5><strong>A este profesor aún no se le ha enviado la encuesta</strong></h5>
-                        </div>
-                    </div>                                
-                </c:if>
+                
+                
                 
             </div>
         </ui:define>

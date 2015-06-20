@@ -151,8 +151,8 @@ public class EmailController implements Serializable {
                 String rutProfesor = p.getRutProfesor();                       
                 Encuesta encuesta = profesorBusiness.getEncuestaBySemestreAndAnio(rutProfesor, semestre, anio);
 
-                if(encuesta == null){
-                    encuesta = new Encuesta();
+                if(encuesta != null){
+                    /*encuesta = new Encuesta();
                     encuesta.setProfesor(p);            
                     encuesta.setAnio(anio);
                     encuesta.setSemestre(semestre);
@@ -164,17 +164,23 @@ public class EmailController implements Serializable {
                         check.setAsignatura(asignatura);
                         check.setEncuesta(encuesta);
                         ejbCheck.create(check);
-                    }                            
+                    } */                           
+                    if(emailProfesor != null){                    
+                        enviarEmail(origen, nombre, pass, emailProfesor, asunto, contenido);                    
+                    }
+                    else{                    
+                        String mensaje = "Profesor " + p.getNombre() + " " + p.getApellido();
+                        mensaje += " no tiene mail asociado";
+                        JsfUtil.addErrorMessage(mensaje);
+                    }
+                }
+                else{
+                    String mensaje = "Profesor " + p.getNombre() + " " + p.getApellido();
+                        mensaje += " no tiene encuesta para enviar.";
+                        JsfUtil.addErrorMessage(mensaje);
                 }
                 
-                if(emailProfesor != null){                    
-                    enviarEmail(origen, nombre, pass, emailProfesor, asunto, contenido);                    
-                }
-                else{                    
-                    String mensaje = "Profesor " + p.getNombre() + " " + p.getApellido();
-                    mensaje += " no tiene mail asociado";
-                    JsfUtil.addErrorMessage(mensaje);
-                }
+                
             }
         }else{
             JsfUtil.addErrorMessage("No has seleccionado ningún profesor");

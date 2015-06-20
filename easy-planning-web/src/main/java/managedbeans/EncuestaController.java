@@ -119,6 +119,42 @@ public class EncuestaController implements Serializable {
         return checklistsBusiness;
     }
     
+    public void crearEncuesta(String rut){
+        int semestreAnterior;
+        int anioAnterior;
+        
+        ParamSemestreAno actual = new ParamSemestreAno();
+        actual = paramFacade.findAll().get(0);
+        Encuesta encuesta = new Encuesta();
+        encuesta.setAnio(actual.getAnoActual());
+        encuesta.setSemestre(actual.getSemestreActual());
+        encuesta.setProfesor(profesorFacade.find(rut));
+        encuestaFacade.create(encuesta);
+        
+        if(actual.getSemestreActual()==1){
+            semestreAnterior = 2;
+            anioAnterior = actual.getAnoActual()-1;
+        }
+        else{
+            semestreAnterior = 1;
+            anioAnterior = actual.getAnoActual();
+        }
+
+        for(Encuesta e : encuestaFacade.findAll()){
+            if(e.getProfesor().getRutProfesor().equals(rut) && e.getAnio()==anioAnterior && e.getSemestre()==semestreAnterior){
+                for(Checklist c : e.getListaAsignaturas()){
+                    if(c.isAceptado()){
+                        Checklist check = new Checklist();
+                        check.setAceptado(false);
+                        check.setEncuesta(encuesta);
+                        check.setAsignatura(c.getAsignatura());
+                        checklistFacade.create(check);
+                    }
+                }
+            }
+        }
+    }
+    
     public ArrayList<Asignatura> getAsignaturasAceptadas(String encuestaId){
         try{
             Long id = Long.parseLong(encuestaId);
