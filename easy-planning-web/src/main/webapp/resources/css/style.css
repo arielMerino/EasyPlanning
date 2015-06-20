@@ -255,7 +255,10 @@ body, p, a, li{
 }
 
 .panel-no-border{
-    border-color: transparent !important;
+    border-color: rgba(255,255,255,0) !important;
+}
+.panel-no-border tbody tr td{
+    border-color: rgba(255,255,255,0);
 }
 .panel-no-border>.ui-widget-content{
     border: none;
