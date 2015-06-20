@@ -11,7 +11,7 @@ and open the template in the editor.
       
     
     <h:head>
-        <title><ui:insert name="title">Sin permiso</ui:insert></title>
+        <title><ui:insert name="title">Sin autorización</ui:insert></title>
         <link rel="shortcut icon" href="#{resource['images/easyplanning_favicon.png']}" type="image/png"/>
         <h:outputStylesheet library="css" name="jsfcrud.css"/>
         <h:outputStylesheet library="css" name="bootstrap.min.css"/>
@@ -43,8 +43,11 @@ and open the template in the editor.
             </div>            
             <div class="row">
                 <div class="col-md-4 col-md-offset-4">
-                    <p>Usted no tiene la autorización para acceder a esta página</p>
-                    <a class="btn btn-default" onclick="history.go(-1)">Click aquí para volver</a>
+                    <div class="panel-body error-page text-center">
+                        <div class="glyphicon glyphicon-ban-circle error-icon"  aria-hidden="true"></div>
+                        <h4 class="title">Usted no posee autorización para acceder a esta página</h4>
+                        <p><a class="btn btn-default" onclick="history.go(-1)">Click aquí para volver</a></p>
+                    </div>
                 </div>
                 
             </div>

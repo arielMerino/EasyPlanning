@@ -69,13 +69,21 @@
                                                     <a class="btn btn-default btn-actual" id="btn-sesion" href="/easy-planning-web/faces/profesor/index.xhtml" >Profesor</a>
                                                 </c:otherwise>
                                             </c:choose>
+                                            <div class="logout-div">
+                                                <h:form>
+                                                    <p:commandLink action="#{usuarioController.logout()}" value="Cerrar Sesión"/>
+                                                    <span class="glyphicon glyphicon-log-out logut" aria-hidden="true"> </span>
+                                                </h:form>
+                                            </div>
                                         </c:if>
-                                        <div class="logout-div">
-                                            <h:form>
-                                                <p:commandLink action="#{usuarioController.logout()}" value="Cerrar Sesión"/>
-                                                <span class="glyphicon glyphicon-log-out logut" aria-hidden="true"> </span>
-                                            </h:form>
-                                        </div>
+                                        <c:if test="#{not usuarioController.compruebaRoles()}">
+                                            <div class="logout-div-two">
+                                                <h:form>
+                                                    <p:commandLink action="#{usuarioController.logout()}" value="Cerrar Sesión"/>
+                                                    <span class="glyphicon glyphicon-log-out logut" aria-hidden="true"> </span>
+                                                </h:form>
+                                            </div>
+                                        </c:if>
                                     </div>
                                 </div>
                             </div>

@@ -402,3 +402,23 @@ body, p, a, li{
 .ui-selectonelistbox .ui-selectlistbox-item{
     border-bottom: solid 1px #eee !important;
 }
+.logout-div-two{
+    margin-top: 1.5em;
+    margin-left: 15%;
+}
+.logout-div-two>form>a{
+    color: #fff;
+}
+.logout-div-two>form>a:hover{
+    text-decoration: none;
+    font-weight: bold;
+}
+.error-page{
+    background-color: #fff !important;
+    //border: solid 1px #ff7319;
+}
+.error-icon{
+    color: #ff7319;
+    font-size: 23em;
+    margin: 5% 0%;
+}
