@@ -156,10 +156,11 @@ public class ChecklistController implements Serializable {
             }
             if(asignaturas.size() > 0){
                 context.addMessage(null, new FacesMessage("Resultado",  "Se han incluido las asignaturas exitósamente.") );
+                asignaturas.clear();
             }
             else{
                 context.addMessage(null, new FacesMessage("Resultado",  "No se ha seleccionado ninguna asignatura para agregar.") );
-            }
+            }            
         }
         else{
             context.addMessage(null, new FacesMessage("Advertencia",  "Una asignatura seleccionada ya esta incluida en la enceusta actual.") );
