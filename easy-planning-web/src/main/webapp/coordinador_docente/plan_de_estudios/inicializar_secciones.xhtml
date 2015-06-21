@@ -36,14 +36,22 @@
                         <p:growl id="message" showDetail="true" />
                         <h:form enctype='multipart/form-data'>
                             <h:outputLabel value="Seleccione las Carreras que va a planificar este semestre"/>
-                            <p:pickList value="#{cargarPlanDeEstudios.versionPickList}" var="vers" itemLabel="#{vers.planEstudio.carrera.nombre}-#{vers.planEstudio.codigo}.#{vers.anio}.#{vers.version} (#{cargarPlanDeEstudios.getJornada(vers.planEstudio.jornada)})" 
-                                        itemValue="#{vers}" showCheckbox="true" 
-                                        converter="VersionPlanConverter" showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains"/>
-                            
+                            <div class="row">
+                                <div class="col-md-10 picklist">
+                                    <p:pickList value="#{cargarPlanDeEstudios.versionPickList}" var="vers" itemLabel="#{vers.planEstudio.carrera.nombre}-#{vers.planEstudio.codigo}.#{vers.anio}.#{vers.version} (#{cargarPlanDeEstudios.getJornada(vers.planEstudio.jornada)})" 
+                                                itemValue="#{vers}" showCheckbox="true" 
+                                                converter="VersionPlanConverter" showSourceFilter="true" showTargetFilter="true" filterMatchMode="contains" />
+
+                                </div>
+                            </div>
                             <!--<p:commandButton class="button-padding" value="Iniciar Planificación" action="" ajax="false"/>-->
-                            <p:commandButton class="button-padding" value="Iniciar Planificación" actionListener="#{cargarPlanDeEstudios.iniciarPlanificacion()}" update="message, :growl">
-                                <p:confirm header="Atención" message="Una vez iniciada la planificación la selección de planes asociados al semestre no se podrá volver a modificar" icon="ui-icon-alert" />
-                            </p:commandButton>
+                            <div class="row">
+                                <div class="col-md-2 col-md-offset-8">
+                                    <p:commandButton class="boton-inicializar button-padding" value="Iniciar Planificación" actionListener="#{cargarPlanDeEstudios.iniciarPlanificacion()}" update="message, :growl">
+                                        <p:confirm header="Atención" message="Una vez iniciada la planificación la selección de planes asociados al semestre no se podrá volver a modificar" icon="ui-icon-alert" />
+                                    </p:commandButton>
+                                </div>
+                            </div>
 
                             <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                 <p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update=":growl"/>

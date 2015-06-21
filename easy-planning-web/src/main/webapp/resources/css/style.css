@@ -346,7 +346,7 @@ body, p, a, li{
     font-size: 14px;
 }
 .ui-picklist .ui-picklist-list{
-    width: 45em !important;
+    width: 100% !important;
 }
 .one-list-box{
     margin: 0;
@@ -430,4 +430,7 @@ body, p, a, li{
 }
 .ui-state-hover, .ui-widget-content .ui-state-hover{
     text-shadow: none;
+}
+.boton-inicializar{
+    margin-top: 3em;
 }
