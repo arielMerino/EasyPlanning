@@ -582,6 +582,10 @@ public class asignacionHoraria implements Serializable {
     }
     
     public void asignacion(){
+        if(seccionId == null){
+            System.out.println("no se por que estoy aqui");
+            seccionId = 0L;
+        }
         if(seccionId != 0L){
             Horario h = buscarHorario(bloqueSelected,seccionId);  //busco el horario que se seleccionó
             List<Long> seccionesConEspejos = obtenerEspejosPorSeccion(seccionId);

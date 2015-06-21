@@ -49,7 +49,7 @@
                                         <p:selectOneMenu id="niveles" value="#{asignacionHoraria.nivelSelected}" style="width: 100%" immediate="true" >
                                             <f:selectItem itemLabel="Nivel" noSelectionOption="true" />
                                             <f:selectItems value="#{asignacionHoraria.asignaturasBusiness.findNivelesByPlan(asignacionHoraria.planEstudioSelected)}" var="nivel" itemLabel="#{nivel}" itemValue="#{nivel}"/>
-                                            <p:ajax process="@this" update="asignaturas, prioridad-nivel" />
+                                            <p:ajax process="@this" update="asignaturas, prioridad-nivel, seleccionCarreraPlanAsignatura:horario" />
                                         </p:selectOneMenu>
                                         <hr/>
                                         <h:outputLabel style="white-space: normal;">Seleccionar Asignatura:</h:outputLabel>
