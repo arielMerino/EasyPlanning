@@ -41,12 +41,12 @@
 
                                             <p:columnGroup type="header">
                                                 <p:row>
-                                                    <p:column colspan="2" headerText="Profesor"/>
-                                                    <p:column colspan="6" headerText="Asignatura"/>
+                                                    <p:column colspan="4" headerText="Profesor"/>
+                                                    <p:column colspan="11" headerText="Asignatura"/>
                                                 </p:row>
                                                 <p:row>
-                                                    <p:column headerText="Nombre" filterBy="#{profesor.nombre}" filterMatchMode="contains" sortBy="#{profesor.nombre}"/>
-                                                    <p:column headerText="Apellido" filterBy="#{profesor.apellido}" filterMatchMode="contains" sortBy="#{profesor.apellido}"/>
+                                                    <p:column headerText="Nombre" filterBy="#{profesor.nombre}" filterMatchMode="contains" sortBy="#{profesor.nombre}" colspan="2"/>
+                                                    <p:column headerText="Apellido" filterBy="#{profesor.apellido}" filterMatchMode="contains" sortBy="#{profesor.apellido}" colspan="2"/>
                                                     <p:column headerText="Código" colspan="1"/>
                                                     <p:column headerText="Nombre" colspan="3"/>
                                                     <p:column headerText="Alias" colspan="1"/>
@@ -56,10 +56,10 @@
                                                     
                                                 </p:row>
                                             </p:columnGroup>
-                                            <p:column class="column-center-text">
+                                            <p:column class="column-center-text" colspan="2">
                                                 <h:outputText value="#{profesor.nombre}"/>
                                             </p:column>
-                                            <p:column class="column-center-text">
+                                            <p:column class="column-center-text" colspan="2">
                                                 <h:outputText value="#{profesor.apellido}"/>
                                             </p:column>
                                             <p:column class="column-center-text">
@@ -110,7 +110,7 @@
                                             <p:columnGroup type="header">
                                                 <p:row>
                                                     <p:column colspan="6" headerText="Asignatura"/>
-                                                    <p:column colspan="1" headerText="Profesor"/>
+                                                    <p:column colspan="2" headerText="Profesor"/>
                                                 </p:row>
                                                 <p:row>
                                                     <p:column headerText="Código" filterBy="#{asignatura.codigo}" filterMatchMode="contains" sortBy="#{asignatura.codigo}"/>

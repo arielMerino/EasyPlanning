@@ -49,6 +49,11 @@
                                 <p:commandButton value="Confirmar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" update=":growl"/>
                                 <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                             </p:confirmDialog>
+                            
+                            <p:blockUI block=":growl" trigger=":growl">
+                                <img src="#{resource['images/easyplanning_logo_blanco.png']}" class="img-responsive img-rounded img-easyplanning"/>
+                                <!--p:graphicImage name="demo/images/ajaxloadingbar.gif"/-->
+                            </p:blockUI>
                         </h:form>
                     </div>
                 </div>

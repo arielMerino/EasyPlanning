@@ -35,9 +35,13 @@
                                         <br/>
                                         <h:inputFile styleClass="ui-button-text ui-c ui-state-default ui-widget-content ui-widget-header" label="Seleccionar archivo" value="#{cargarPlanDeEstudios.ruta}" required="true" requiredMessage="Debe seleccionar un archivo"></h:inputFile>
                                         <br/>
-                                        <h:commandButton styleClass="ui-button-text ui-c ui-state-default ui-widget-content ui-widget-header button-padding" value="Cargar" actionListener="#{cargarPlanDeEstudios.cargarArchivo()}" onclick="submit()" />
+                                        <h:commandButton id="action" styleClass="ui-button-text ui-c ui-state-default ui-widget-content ui-widget-header button-padding" value="Cargar" actionListener="#{cargarPlanDeEstudios.cargarArchivo()}" onclick="submit()" />
                                     </div>
 
+                                    <p:blockUI block=":growl" trigger="action">
+                                        <img src="#{resource['images/easyplanning_logo_blanco.png']}" class="img-responsive img-rounded img-easyplanning"/>
+                                        <!--p:graphicImage name="demo/images/ajaxloadingbar.gif"/-->
+                                    </p:blockUI>
                                 </h:form>
                                 <p>
                                     <h:outputText value="#{cargarPlanDeEstudios.aux}"></h:outputText>
