@@ -637,7 +637,7 @@ public class CargarPlanDeEstudios implements Serializable {
                 PlanEstudio newPlan = new PlanEstudio();
                 newPlan.setCarrera(carreraFacade.find(carreraSelected));
                 newPlan.setCodigo(codigo);
-                if(jornada.equals("diurno")){
+                if(jornada.equals("Diurno")){
                     newPlan.setJornada(0);
                 }
                 else{
