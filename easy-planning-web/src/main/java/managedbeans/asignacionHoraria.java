@@ -209,16 +209,18 @@ public class asignacionHoraria implements Serializable {
         FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/asignacion_horaria/asignacion_horaria.xhtml");
     }
     
-    public void cargarHorariosPlan(){
+    public void cargarHorariosPlan(){ //Reparado 
         List<Horario> horarios = horarioFacade.findAll();
         horariosPlan = new ArrayList<>();
         for (Horario h : horarios){
             System.out.println(h.getBloque()+" "+h.getId());
-            if(h.getSeccion().getCoordinacion().getAnio()==paramSemAno.find(1L).getAnoActual() && h.getSeccion().getCoordinacion().getSemestre()==paramSemAno.find(1L).getSemestreActual() && h.getSeccion().getCoordinacion().getAsignatura().getVersionplan().getId()==planEstudioSelected){
-                System.out.println("OK");
-                horariosPlan.add(h);
-            }else{
-                System.out.println("BAD");
+            if(h.getSeccion() != null){ //reparacion para evitar que trate de leer los horarios de disponibilidad
+                if(h.getSeccion().getCoordinacion().getAnio()==paramSemAno.find(1L).getAnoActual() && h.getSeccion().getCoordinacion().getSemestre()==paramSemAno.find(1L).getSemestreActual() && h.getSeccion().getCoordinacion().getAsignatura().getVersionplan().getId()==planEstudioSelected){
+                    System.out.println("OK");
+                    horariosPlan.add(h);
+                }else{
+                    System.out.println("BAD");
+                }
             }
         }
     }

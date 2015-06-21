@@ -49,7 +49,7 @@
                                         <p:selectOneMenu id="niveles" value="#{asignacionHoraria.nivelSelected}" style="width: 100%" immediate="true" >
                                             <f:selectItem itemLabel="Nivel" noSelectionOption="true" />
                                             <f:selectItems value="#{asignacionHoraria.asignaturasBusiness.findNivelesByPlan(asignacionHoraria.planEstudioSelected)}" var="nivel" itemLabel="#{nivel}" itemValue="#{nivel}"/>
-                                            <p:ajax process="@this" update="asignaturas, horarioAsignacion, prioridad-nivel" />
+                                            <p:ajax process="@this" update="asignaturas, prioridad-nivel" />
                                         </p:selectOneMenu>
                                         <hr/>
                                         <h:outputLabel style="white-space: normal;">Seleccionar Asignatura:</h:outputLabel>
@@ -58,7 +58,7 @@
                                         <p:selectOneListbox id="asignaturas" class="one-list-box" value="#{asignacionHoraria.asignaturaSelected}" required="true" requiredMessage="Debe seleccionar una asignatura" immediate="true">                                        
                                             <f:selectItems value="#{asignacionHoraria.asignaturasBusiness.findByNivelAndPlan(asignacionHoraria.nivelSelected, asignacionHoraria.planEstudioSelected)}"
                                                            var="asg" itemLabel="#{asg.alias} - #{asg.teoria}-#{asg.ejercicios}-#{asg.laboratorio} - #{asg.nombre} - #{asg.codigo}" itemValue="#{asg.id}"/>
-                                            <p:ajax process="@this" update="horarioAsignacion, :form2:formulario, secciones, tabla-disponibilidad, espejos" />
+                                            <p:ajax process="@this" update=":form2:formulario, secciones, tabla-disponibilidad, espejos" />
                                         </p:selectOneListbox>
                                         <hr/>
                                         <h:outputLabel value="Secciones"/>
