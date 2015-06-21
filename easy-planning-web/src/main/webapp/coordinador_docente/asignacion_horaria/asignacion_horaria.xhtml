@@ -62,7 +62,7 @@
                                         </p:selectOneListbox>
                                         <hr/>
                                         <h:outputLabel value="Secciones"/>
-                                        <p:selectOneListbox id="secciones" value="#{asignacionHoraria.seccionId}" immediate="true">
+                                        <p:selectOneListbox id="secciones" value="#{asignacionHoraria.seccionId}" immediate="true" disabled="true">
                                             <f:selectItems value="#{asignacionHoraria.seccionesBusiness.findByAsignaturaAnioYSemestre(asignacionHoraria.asignaturaFacade.find(asignacionHoraria.asignaturaSelected).getId(), asignacionHoraria.anioSelected, asignacionHoraria.semestreSelected)}" var="seccion" itemLabel="#{seccion.codigo}" itemValue="#{seccion.id}"/>    
                                         </p:selectOneListbox>
                                         <p:panelGrid class="panel-no-border" columns="3" layout="grid">
@@ -122,7 +122,7 @@
                                             </div>
                                         </c:if>
                                         <p:panel id="espejos" class="panel-no-border" >
-                                            <c:if test="#{espejosController.verificarEspejos(asignacionHoraria.asignaturaSelected)}">
+                                            <c:if test="#{false}">
                                                 <div class="row col-md-12">
                                                     <div class="col-md-6">
                                                     <p:panel>
@@ -311,7 +311,27 @@
                                                         <p:commandButton class="col-md-2 btn btn-default bloque" value="#{asignacionHoraria.getCodigoAsgSeccionByBloque('S9')}" action="#{asignacionHoraria.setBloqueSelected('S9')}" update=":form2" onsuccess="PF('seccionProfesor').show();" immediate="true"/>
                                                     </div>
                                                 </div>
-                                            </div> 
+                                            </div>
+                                            <p:panel>
+                                                <h4>Profesores por sección</h4>
+                                                <p:dataTable disabledSelection="true" value="#{asignacionHoraria.obtenerHorariosNivel()}" var="bloq"  >
+                                                    <p:column headerText="Bloque">
+                                                        <h:outputText value="#{bloq.bloque}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Alias">
+                                                        <h:outputText value="#{asignacionHoraria.sigla(bloq.seccion.coordinacion.asignatura.nombre)}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Asignatura">
+                                                        <h:outputText value="#{bloq.seccion.coordinacion.asignatura.nombre}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Sección">
+                                                        <h:outputText value="#{bloq.seccion.codigo}"/>
+                                                    </p:column>
+                                                    <p:column headerText="Profesor">
+                                                        <h:outputText value="#{bloq.profesor.nombre} #{bloq.profesor.apellido}"/>
+                                                    </p:column>
+                                                </p:dataTable>
+                                            </p:panel>
                                         </p:panel>
                                     </div>
                                 </div>

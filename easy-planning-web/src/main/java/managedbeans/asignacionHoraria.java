@@ -441,6 +441,29 @@ public class asignacionHoraria implements Serializable {
         return "ejercicios";
     }
     
+    public List<Horario> obtenerHorariosNivel(){
+        ArrayList<Horario> salida = new ArrayList<>();
+        if (nivelSelected == 0)
+            return salida;
+        for (Horario h : horariosPlan){
+            if (h.getSeccion() != null){
+                if (h.getSeccion().getCoordinacion().getAsignatura().getNivel() == nivelSelected)
+                    salida.add(h);
+            }
+        }
+        return salida;
+    }
+    
+    public String obtenerAliasOsigla(){
+        if(asignaturaSelected != 0L){
+            Asignatura a = asignaturaFacade.find(asignaturaSelected);
+            if (a.getAlias() == null)
+                return a.getNombre();
+            return a.getAlias();
+        }
+        return "";
+    }
+    
     public List<Integer> aniosDisponibles(){
         Calendar fecha = Calendar.getInstance();
         List<Integer> anios = new ArrayList<>();
@@ -463,7 +486,7 @@ public class asignacionHoraria implements Serializable {
                     salida += a.getAlias() + "-" +h.getSeccion().getCodigo()+" ";
                 }
                 else{
-                    salida += a.getNombre() + "-" +h.getSeccion().getCodigo()+" ";
+                    salida += sigla(a.getNombre()) + "-" +h.getSeccion().getCodigo()+" ";
                 }
             }
         }
@@ -579,6 +602,25 @@ public class asignacionHoraria implements Serializable {
             }
         }
         return null;
+    }
+    
+    public String sigla(String nombre){
+        if (nombre == null){
+            System.out.println("aqui 1");
+            return "";
+        }
+        if (nombre.equals("")){
+            System.out.println("aqui 2");
+            return "";
+        }
+        String[] palabras = nombre.split(" ");
+        String salida = "";
+        for (String p : palabras){
+            System.out.println(p);
+            salida += (p.charAt(0)+"").toUpperCase();
+        }
+        System.out.println("salida: "+salida);
+        return salida;
     }
     
     public void asignacion(){

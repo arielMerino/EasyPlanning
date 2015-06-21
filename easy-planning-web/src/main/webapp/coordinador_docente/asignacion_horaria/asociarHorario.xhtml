@@ -16,7 +16,7 @@
                     </c:if>
                     <c:if test="#{asignacionHoraria.validarAsignatura()}" >
                         <div>
-                            <h4>Seleccionar sección:</h4>
+                            <h4>Seleccionar sección de #{asignacionHoraria.obtenerAliasOsigla()} para el bloque #{asignacionHoraria.bloqueSelected}:</h4>
                             <div class="row">
                                 <div class="col-xs-4">
                                     <h:outputLabel style="white-space: normal;width: 50%">sección:</h:outputLabel>
@@ -53,8 +53,8 @@
                         </div>
                         <div class="row">
                             <p:commandButton class="btn btn-default col-xs-2" value="Cancelar" action="#{asignacionHoraria.limpiarBloqueYprofesor()}" onsuccess="PF('seccionProfesor').hide();" />
-                            <p:commandButton id="boton-asignar" class="btn btn-default col-xs-2" value="Asignar" action="#{asignacionHoraria.setAsignar(1)}" update="formulario, :seleccionCarreraPlanAsignatura" onsuccess="#{asignacionHoraria.asignacion()};submit();" disabled="#{not asignacionHoraria.muestraBoton}"/>
-                            <p:commandButton class="btn btn-default col-xs-2" value="Eliminar" action="#{asignacionHoraria.eliminarHorario()}" update="formulario, :seleccionCarreraPlanAsignatura" onsuccess="submit();" />
+                            <p:commandButton id="boton-asignar" class="btn btn-default col-xs-2" value="Asignar" action="#{asignacionHoraria.setAsignar(1)}" update="formulario, :seleccionCarreraPlanAsignatura:horario" onsuccess="#{asignacionHoraria.asignacion()};submit();" disabled="#{not asignacionHoraria.muestraBoton}"/>
+                            <p:commandButton class="btn btn-default col-xs-2" value="Eliminar" action="#{asignacionHoraria.eliminarHorario()}" update="formulario, :seleccionCarreraPlanAsignatura:horario" onsuccess="submit();" />
                         </div>
                     </c:if>
                 </p:panel>
