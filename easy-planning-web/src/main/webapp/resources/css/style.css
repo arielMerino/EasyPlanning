@@ -425,3 +425,9 @@ body, p, a, li{
     font-size: 23em;
     margin: 5% 0%;
 }
+.ui-state-active, .ui-widget-content .ui-state-active{
+    color: #ff7319;
+}
+.ui-state-hover, .ui-widget-content .ui-state-hover{
+    text-shadow: none;
+}

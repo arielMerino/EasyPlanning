@@ -9,7 +9,7 @@
     
     <ui:composition template="/template.xhtml">
         <ui:define name="title">
-            <h:outputText value="Agergar Plan de Estudios - Easy Planning"></h:outputText>
+            <h:outputText value="Agregar Plan de Estudios - Easy Planning"></h:outputText>
         </ui:define>
         <ui:define name="body">
             <div class="container-fluid">
@@ -34,33 +34,37 @@
                             <hr/>
                             <h:outputLabel style="white-space: normal;">Seleccionar Plan de Estudio:</h:outputLabel>
                             <p:selectOneMenu id="planes" value="#{cargarPlanDeEstudios.idPlan}" style="width: 100%" immediate="true" required="true" requiredMessage="Debe seleccionar un Plan de Estudios">
-                                <f:selectItem itemLabel="Plan" noSelectionOption="true" />
+                                <f:selectItem itemLabel="Plan" itemValue="#{cargarPlanDeEstudios.nuevoPlan}" />
                                 <f:selectItems value="#{asignaturaController.getAllPlanesDeEstudio(cargarPlanDeEstudios.carreraSelected)}" var="plan" itemLabel="#{asignaturaController.getDatosPlan(plan)}" itemValue="#{plan.id}"/>
-                                <f:selectItem itemLabel="Agregar nuevo..." itemValue="#{cargarPlanDeEstudios.nuevoPlan}"/>
-                                <p:ajax process="@this" update="nuevo-plan" /><!---->
+                                <p:ajax process="@this" update="nuevo-plan, opcion"/>
                             </p:selectOneMenu>
+                            <p:selectOneButton id="opcion" value="#{cargarPlanDeEstudios.opcion}" immediate="true">
+                                <f:selectItem itemLabel="Agregar Versión" itemValue="false" />
+                                <f:selectItem itemLabel="Agregar nuevo Plan" itemValue="true" itemDisabled="#{cargarPlanDeEstudios.agregaPlan()}"/>
+                                <p:ajax process="@this" update="nuevo-plan" />
+                            </p:selectOneButton>
                             <hr/>
-                            <c:if test="#{cargarPlanDeEstudios.agregaPlan()}">
+                            <c:if test="#{cargarPlanDeEstudios.opcion}">
                                 <p:panel id="nuevo-plan" class="panel-no-border">
                                     <h:outputLabel value="Código"/>
                                     <br/>
-                                    <p:inputText value="#{cargarPlanDeEstudios.codigo}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe indicar el código del nuevo plan"/>
+                                    <p:inputText value="#{cargarPlanDeEstudios.codigo}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe indicar el código del nuevo plan" disabled="#{cargarPlanDeEstudios.agregaPlan()}"/>
                                     <br/>
                                     <br/>
                                     <h:outputLabel value="Año"/>
                                     <br/>
-                                    <p:spinner class="no-margin" value="#{cargarPlanDeEstudios.anioPlan}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe ingresar el año" validatorMessage="El año no es válido" min="1900" max="2100"/>
+                                    <p:spinner class="no-margin" value="#{cargarPlanDeEstudios.anioPlan}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe ingresar el año" disabled="#{cargarPlanDeEstudios.agregaPlan()}" min="1900" max="2100"/>
                                     <br/>
                                     <br/>
                                     <h:outputLabel value="Jornada"/>
-                                    <p:selectOneRadio value="#{cargarPlanDeEstudios.jornada}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe indicar la jornada">
+                                    <p:selectOneRadio value="#{cargarPlanDeEstudios.jornada}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe indicar la jornada" disabled="#{cargarPlanDeEstudios.agregaPlan()}">
                                         <f:selectItem itemLabel="Diurno" itemValue="diurno"/>
                                         <f:selectItem itemLabel="Vespertino" itemValue="vespertino"/>
                                     </p:selectOneRadio>
                                 </p:panel>
                                 <hr/>
                             </c:if>
-                            <c:if test="#{not cargarPlanDeEstudios.agregaPlan()}">
+                            <c:if test="#{not cargarPlanDeEstudios.opcion}">
                                 <p:panel class="hidden" id="nuevo-plan">
                                 </p:panel>
                             </c:if>

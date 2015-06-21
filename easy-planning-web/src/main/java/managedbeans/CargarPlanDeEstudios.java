@@ -10,7 +10,6 @@ import business.CarrerasLocal;
 import business.PlanesEstudioLocal;
 import business.VersionesPlanLocal;
 import entities.Asignatura;
-import entities.Carrera;
 import entities.ParamSemestreAno;
 import entities.PlanEstudio;
 import entities.VersionPlan;
@@ -21,21 +20,15 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Arrays;
+import java.util.Calendar;
 import java.util.Iterator;
 import java.util.List;
 import javax.ejb.EJB;
 import javax.ejb.EJBException;
 import javax.inject.Named;
-import javax.enterprise.context.Dependent;
-import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.application.FacesMessage;
-import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletException;
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 import managedbeans.util.JsfUtil;
 import org.apache.poi.hssf.usermodel.HSSFCell;
 import org.apache.poi.hssf.usermodel.HSSFRow;
@@ -89,7 +82,7 @@ public class CargarPlanDeEstudios implements Serializable {
     
     private int codigoPlan;
     private int versionPlan;
-    private int anioPlan;
+    private int anioPlan  = Calendar.getInstance().get(Calendar.YEAR);
     private long carreraSelected = 0;
     private String ruta;
     private HSSFWorkbook workbook;
@@ -100,12 +93,21 @@ public class CargarPlanDeEstudios implements Serializable {
     private boolean cargados = false;
     private List<Asignatura> asignaturasAñadidas = new ArrayList();    
     private DualListModel<VersionPlan> versionPickList;
-    private long nuevoPlan = -1L;
+    private long nuevoPlan = 0L;
     private String jornada;
     private int codigo;
     private int resolucion;
-    private int anio_resolucion;
+    private int anio_resolucion = Calendar.getInstance().get(Calendar.YEAR);
     private boolean iniciado = false;
+    private boolean opcion = false;
+
+    public boolean isOpcion() {
+        return opcion;
+    }
+
+    public void setOpcion(boolean opcion) {
+        this.opcion = opcion;
+    }
 
     public boolean isIniciado() {
         return iniciado;
@@ -609,7 +611,8 @@ public class CargarPlanDeEstudios implements Serializable {
     }
     
     public boolean agregaPlan(){
-        if(carreraSelected != 0 && idPlan == -1L){
+        if(idPlan != 0L){
+            opcion = false;
             return true;
         }
         else{
@@ -618,7 +621,7 @@ public class CargarPlanDeEstudios implements Serializable {
     }
     
     public void agregarPlanDeEstudios(){
-        if(!agregaPlan()){
+        if(!opcion){
             VersionPlan vp = version.find(idPlan);
             VersionPlan newVp = new VersionPlan();
             newVp.setAnio(vp.getAnio());
@@ -649,18 +652,22 @@ public class CargarPlanDeEstudios implements Serializable {
                 vp.setAnio_resolucion(anio_resolucion);
                 vp.setCorrelativo(versionesBusiness.findMaxCorrelativo()+1);
                 plan.create(newPlan);
-                version.create(vp);
-                JsfUtil.addSuccessMessage("Nuevo plan agregado correctamente");                
+                version.create(vp);                
                 carreraSelected = 0;
                 idPlan = 0L;
                 codigo=0;
                 anioPlan=0;
                 resolucion=0;
                 anio_resolucion=0;
+                JsfUtil.addSuccessMessage("Nuevo plan agregado correctamente");
             }
             else{
                 JsfUtil.addErrorMessage("Alguno de los parámetros indicados no es correcto");
             }
         }
+    }
+    
+    public void recargaPagina() throws IOException{
+        FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/plan_de_estudios/agregar_plan.xhtml");
     }
 }
