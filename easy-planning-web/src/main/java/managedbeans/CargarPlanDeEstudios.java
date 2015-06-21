@@ -636,6 +636,7 @@ public class CargarPlanDeEstudios implements Serializable {
             anioPlan=0;
             resolucion=0;
             anio_resolucion=0;
+            jornada = null;
             JsfUtil.addSuccessMessage("Nueva versión del plan "+vp.getPlanEstudio().getCodigo()+" creada con éxito");
             recargaPagina();
         }
@@ -666,6 +667,7 @@ public class CargarPlanDeEstudios implements Serializable {
                 anioPlan=0;
                 resolucion=0;
                 anio_resolucion=0;
+                jornada = null;
                 JsfUtil.addSuccessMessage("Nuevo plan agregado correctamente");
                 recargaPagina();
             }
