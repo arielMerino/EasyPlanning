@@ -552,11 +552,12 @@ public class asignacionHoraria implements Serializable {
                 ids.add(v.getId());
         }
         return ids;
-    }
-    
+    }    
     
     public void eliminarHorario(){
-        Horario h = horariosBusiness.findBybloqueCarreraPlanNivelAnioYSemestre(bloqueSelected, planEstudioSelected, nivelSelected, anioSelected, semestreSelected);
+        System.out.println("Seleccion: bloque: "+bloqueSelected+"; seccion: "+seccionId);
+        Horario h = buscarHorario(bloqueSelected, seccionId);
+        
         Seccion seccion = h.getSeccion();
         List<Long> idsSeccionesEspejo = obtenerEspejosPorSeccion(seccion.getId());
         for(long l : idsSeccionesEspejo){
@@ -571,14 +572,17 @@ public class asignacionHoraria implements Serializable {
     public Horario buscarHorario(String bloque, long idSeccion){
         List<Horario> horarios = horarioFacade.findAll();
         for (Horario h : horarios){
-            if (h.getBloque().equals(bloque) && h.getSeccion().getId()==idSeccion)
-                return h;
+            if(h.getSeccion() != null){
+                System.out.println("bloque: "+h.getBloque()+"; seccion: "+h.getSeccion().getCodigo());
+                if (h.getBloque().equals(bloque) && h.getSeccion().getId()==idSeccion)
+                    return h;
+            }
         }
         return null;
     }
     
     public void asignacion(){
-        try{
+        if(seccionId != 0L){
             Horario h = buscarHorario(bloqueSelected,seccionId);  //busco el horario que se seleccionó
             List<Long> seccionesConEspejos = obtenerEspejosPorSeccion(seccionId);
             if (this.asignar != 0){ //verifico si el click corresponde o si se disparó solo
@@ -639,11 +643,8 @@ public class asignacionHoraria implements Serializable {
 
                 this.profesorSelected = "";
                 this.seccionId = 0L;
-            }    
+            } 
         }
-        catch(Exception e){
-        }
-        
     }
     
     public List<Asignatura> getEspejos(){
@@ -658,9 +659,14 @@ public class asignacionHoraria implements Serializable {
     
     
     
-    public List<Long> obtenerEspejosPorSeccion(long idSeccion){
+    public List<Long> obtenerEspejosPorSeccion(long idSeccion){//Reparado
+        if(idSeccion == 0L)
+            return new ArrayList<>();
         Seccion s = seccionFacade.find(idSeccion);
-        List<Long> secciones = seccionesBusiness.findEspejos(s.getCodigo(), s.getCoordinacion().getAsignatura().getAlias(), paramSemAno.find(1L).getAnoActual(), paramSemAno.find(1L).getSemestreActual());
+        List<Long> secciones = new ArrayList<>();
+        Asignatura a = s.getCoordinacion().getAsignatura();
+        if(a.getAlias() != null) //debía verificarse el alias antes de buscarlo
+            secciones = seccionesBusiness.findEspejos(s.getCodigo(), a.getAlias(), paramSemAno.find(1L).getAnoActual(), paramSemAno.find(1L).getSemestreActual());
         if(secciones.isEmpty())
             secciones.add(s.getId());
         return secciones;

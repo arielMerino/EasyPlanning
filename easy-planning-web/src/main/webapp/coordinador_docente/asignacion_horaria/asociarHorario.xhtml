@@ -23,7 +23,7 @@
                                     <br/>
                                     <!--p:selectOneMenu required="true" value="#//{asignacionHoraria.seccionId}" requiredMessage="Debe seleccionar una seccion" style="width: 50%"-->
                                     <p:selectOneMenu value="#{asignacionHoraria.seccionId}" style="width: 50%">
-                                        <f:selectItem itemLabel="Seccion" noSelectionOption="true" />
+                                        <f:selectItem itemLabel="Seccion" itemValue="#{0}" />
                                         <f:selectItems value="#{asignacionHoraria.seccionesBusiness.findByAsignaturaAnioYSemestre(asignacionHoraria.asignaturaFacade.find(asignacionHoraria.asignaturaSelected).getId(), asignacionHoraria.anioSelected, asignacionHoraria.semestreSelected)}" var="seccion" itemLabel="#{seccion.codigo}" itemValue="#{seccion.id}"/>
                                         <p:ajax listener="#{asignacionHoraria.isSeccionSelected()}" update="boton-asignar, form2, formulario"/>
                                     </p:selectOneMenu>
