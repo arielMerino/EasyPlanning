@@ -110,8 +110,7 @@ public class EmailController implements Serializable {
         Transport transport = session.getTransport("smtp");
         transport.connect("smtp.gmail.com", origen, pass);
         transport.sendMessage(message, message.getAllRecipients());
-        
-        JsfUtil.addSuccessMessage("El mensaje se ha enviado");
+                
         } catch (AddressException e) {
             logger.debug("Error con la dirección del correo", e);
             System.out.println(e.getMessage());
@@ -127,6 +126,7 @@ public class EmailController implements Serializable {
         String origen = "coordinador.docente.diinf@gmail.com";
         String pass = "coordinador";                
         List<Profesor> listaProfesor = profesorController.getProfesorSeleccionado();
+        boolean envioCorrecto = false;
         
         if(!listaProfesor.isEmpty()) {
             int semestre = ejbSemAnio.find(1L).getSemestreActual();
@@ -166,7 +166,8 @@ public class EmailController implements Serializable {
                         ejbCheck.create(check);
                     } */                           
                     if(emailProfesor != null){                    
-                        enviarEmail(origen, nombre, pass, emailProfesor, asunto, contenido);                    
+                        enviarEmail(origen, nombre, pass, emailProfesor, asunto, contenido);
+                        envioCorrecto = true;
                     }
                     else{                    
                         String mensaje = "Profesor " + p.getNombre() + " " + p.getApellido();
@@ -179,9 +180,11 @@ public class EmailController implements Serializable {
                         mensaje += " no tiene encuesta para enviar.";
                         JsfUtil.addErrorMessage(mensaje);
                 }
-                
-                
             }
+            
+            if(envioCorrecto)
+                JsfUtil.addSuccessMessage("Los mensajes se han enviado");
+            
         }else{
             JsfUtil.addErrorMessage("No has seleccionado ningún profesor");
         }
