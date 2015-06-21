@@ -10,6 +10,8 @@
 
         <p:dialog id="CarreraEditDlg" widgetVar="CarreraEditDialog" modal="true" resizable="false" appendTo="@(body)" header="#{bundle.EditCarreraTitle}">
             <h:form id="CarreraEditForm">
+                PRECAUCIÓN: Al cambiar el nombre de esta carrera, otras aplicaciones podrían verse afectadas,<br/>
+                por favor asegurese de que el cambio que desea realizar no generará conflictos futuros.
                 <h:panelGroup id="display">
                     <p:panelGrid columns="2" rendered="#{carreraController.selected != null}">
                         <p:outputLabel value="#{bundle.EditCarreraLabel_nombre}" for="nombre" />
