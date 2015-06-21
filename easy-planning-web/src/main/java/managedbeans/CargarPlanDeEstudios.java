@@ -620,7 +620,7 @@ public class CargarPlanDeEstudios implements Serializable {
         }
     }
     
-    public void agregarPlanDeEstudios(){
+    public void agregarPlanDeEstudios() throws IOException{
         if(!opcion){
             VersionPlan vp = version.find(idPlan);
             VersionPlan newVp = new VersionPlan();
@@ -630,7 +630,14 @@ public class CargarPlanDeEstudios implements Serializable {
             newVp.setVersion(vp.getVersion()+1);
             newVp.setCorrelativo(versionesBusiness.findMaxCorrelativo()+1);
             version.create(newVp);
+            carreraSelected = 0;
+            idPlan = 0L;
+            codigo=0;
+            anioPlan=0;
+            resolucion=0;
+            anio_resolucion=0;
             JsfUtil.addSuccessMessage("Nueva versión del plan "+vp.getPlanEstudio().getCodigo()+" creada con éxito");
+            recargaPagina();
         }
         else{
             if(!(codigo == 0 || anioPlan < 1900  || resolucion == 0 || anio_resolucion < 1900) ){
@@ -660,6 +667,7 @@ public class CargarPlanDeEstudios implements Serializable {
                 resolucion=0;
                 anio_resolucion=0;
                 JsfUtil.addSuccessMessage("Nuevo plan agregado correctamente");
+                recargaPagina();
             }
             else{
                 JsfUtil.addErrorMessage("Alguno de los parámetros indicados no es correcto");
