@@ -111,6 +111,12 @@ public class EspejosController implements Serializable {
         }
     }
     
+    private void limpiarFormulario(){
+        for(int i=0; i<this.asignaturasSeleccionadas.length; i++){
+            this.asignaturasSeleccionadas[i] = 0L;
+        }
+    }
+    
     public void setEspejos(){
         for (long l : this.asignaturasSeleccionadas){
             if (l > 0L){
@@ -119,7 +125,9 @@ public class EspejosController implements Serializable {
                 asignaturaFacade.edit(a);
             }
         }
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Los espejos han sido seteados correctamente.", null));
+        alias = "";
+        limpiarFormulario();
+        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Curso Espejo agregado correctamente", null));
     }
     
     public void mostrarSeleccionados(){

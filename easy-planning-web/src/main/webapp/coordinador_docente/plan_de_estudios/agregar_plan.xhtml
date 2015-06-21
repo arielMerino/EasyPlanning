@@ -49,7 +49,7 @@
                                 <p:panel id="nuevo-plan" class="panel-no-border">
                                     <h:outputLabel value="Código"/>
                                     <br/>
-                                    <p:inputText value="#{cargarPlanDeEstudios.codigo}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe indicar el código del nuevo plan" disabled="#{cargarPlanDeEstudios.agregaPlan()}"/>
+                                    <p:inputText value="#{cargarPlanDeEstudios.codigo}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe indicar el código del nuevo plan" disabled="#{cargarPlanDeEstudios.agregaPlan()}" />
                                     <br/>
                                     <br/>
                                     <h:outputLabel value="Año"/>
@@ -85,29 +85,7 @@
                                 <p:confirm header="Confirmación" message="Es necesario que confirme la información que está a punto de ingresar, ya que una vez que seleccione agregar la información que se muestra a continuación no podrá ser modificada." icon="ui-icon-alert" />
                             </p:commandButton>
                             <hr/>
-                            <p:confirmDialog id="confirmar" global="true" showEffect="fade" hideEffect="fade" width="300">                                
-                                <c:if test="#{cargarPlanDeEstudios.opcion}">
-                                    <p:panelGrid columns="2">
-                                        <h:outputLabel value="Código:"/>
-                                        <h:outputText value="#{cargarPlanDeEstudios.codigo}"/>
-                                        <h:outputLabel value="Año:"/>
-                                        <h:outputText value="#{cargarPlanDeEstudios.anioPlan}"/>
-                                        <h:outputLabel value="Jornada:"/>
-                                        <h:outputText value="#{cargarPlanDeEstudios.jornada}"/>
-                                        <h:outputLabel value="N° Resolución:"/>
-                                        <h:outputText value="#{cargarPlanDeEstudios.resolucion}"/>
-                                        <h:outputLabel value="Año Resolución:"/>
-                                        <h:outputText value="#{cargarPlanDeEstudios.anio_resolucion}"/>
-                                    </p:panelGrid>
-                                </c:if>
-                                <c:if test="#{not cargarPlanDeEstudios.opcion}">
-                                    <p:panelGrid columns="2">
-                                        <h:outputLabel value="N° Resolución:"/>
-                                        <h:outputText value="#{cargarPlanDeEstudios.resolucion}"/>
-                                        <h:outputLabel value="Año Resolución:"/>
-                                        <h:outputText value="#{cargarPlanDeEstudios.anio_resolucion}"/>
-                                    </p:panelGrid>
-                                </c:if>                                    
+                            <p:confirmDialog id="confirmar" global="true" showEffect="fade" hideEffect="fade" width="300">                                                                                    
                                 <p:commandButton value="Agregar" type="button" styleClass="ui-confirmdialog-yes" icon="ui-icon-check" />
                                 <p:commandButton value="Cancelar" type="button" styleClass="ui-confirmdialog-no" icon="ui-icon-close" />
                             </p:confirmDialog>
