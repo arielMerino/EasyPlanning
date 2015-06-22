@@ -245,7 +245,7 @@ body, p, a, li{
 
 .bloqueVacio{
     background-color: #ffffff;
-    height: 55px;
+    height: 70px;
     margin-top: 0;
     margin-right: 0;
     margin-bottom: 0;
@@ -311,6 +311,9 @@ body, p, a, li{
 }
 .horarioprofesor{
     height: 60px !important;
+}
+.horarioprofesor2{
+    height: 70px !important;
 }
 .logut-link{
 }

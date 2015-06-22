@@ -146,4 +146,14 @@ public class Horarios implements HorariosLocal {
             return null;
         }
     }
+    
+    @Override
+    public List<Horario> findAll(){
+        Query query = em.createNamedQuery("Horario.finall");
+        try{
+            return (List<Horario>) query.getResultList();
+        }catch(NoResultException e){
+            return new ArrayList<>();
+        }
+    }
 }

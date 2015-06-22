@@ -479,10 +479,12 @@ public class asignacionHoraria implements Serializable {
             if (h.getBloque().equals(bloque) && h.getSeccion().getCoordinacion().getAsignatura().getNivel() == nivelSelected){
                 Asignatura a = h.getSeccion().getCoordinacion().getAsignatura();
                 if (a.getAlias()!=null){
-                    salida += a.getAlias() + "-" +h.getSeccion().getCodigo()+" ";
+                    if(!salida.contains(a.getAlias() + "-" +h.getSeccion().getCodigo()+" "))
+                        salida += a.getAlias() + "-" +h.getSeccion().getCodigo()+" ";
                 }
                 else{
-                    salida += sigla(a.getNombre()) + "-" +h.getSeccion().getCodigo()+" ";
+                    if(!salida.contains(sigla(a.getNombre()) + "-" +h.getSeccion().getCodigo()+" "))
+                        salida += sigla(a.getNombre()) + "-" +h.getSeccion().getCodigo()+" ";
                 }
             }
         }
@@ -1085,20 +1087,20 @@ public class asignacionHoraria implements Serializable {
             String alias = h.getSeccion().getCoordinacion().getAsignatura().getAlias();            
             
             if(alias == null){
-                alias = h.getSeccion().getCoordinacion().getAsignatura().getNombre();
-                
+                //alias = h.getSeccion().getCoordinacion().getAsignatura().getNombre();
+                alias = sigla(h.getSeccion().getCoordinacion().getAsignatura().getNombre());
             }
             
             alias += "-"+h.getSeccion().getCodigo();
             
             if(h.getProfesor() != null){
                 if(h.getProfesor().getAlias() == null){
-                    alias += " - "+h.getProfesor().getNombre() + h.getProfesor().getApellido();
+                    alias += "   "+h.getProfesor().getNombre() + h.getProfesor().getApellido();
                 }
                 else{
-                    alias += " - "+h.getProfesor().getAlias();
+                    alias += "   "+h.getProfesor().getAlias();
                 }    
-            }
+            }         
             
             String dia = h.getBloque().substring(0, 1);
             int fila = Integer.parseInt(h.getBloque().substring(1, 2)) - 1;
@@ -1127,14 +1129,31 @@ public class asignacionHoraria implements Serializable {
             
             if(v.indexOf(alias) == -1){
                 v.add(alias);                
-            }
+            }                
             
             color_posicion = v.indexOf(alias) % 10;
-            asignaturas[posicion + 54] = colores.get(color_posicion);            
-            asignaturas[posicion] = alias;
+            asignaturas[posicion + 54] = colores.get(color_posicion);      
+            if(asignaturas[posicion] != null){
+                if(!asignaturas[posicion].contains(alias))
+                    asignaturas[posicion] += "  "+alias;
+            }
+            else
+                asignaturas[posicion] = alias;
         }
 
         return asignaturas;
+    }
+    
+    public String AliasHorario(Horario h){
+        try{
+            if(h.getSeccion().getCoordinacion().getAsignatura().getAlias().trim().isEmpty()){
+                return sigla(h.getSeccion().getCoordinacion().getAsignatura().getNombre());
+            }
+                
+            return h.getSeccion().getCoordinacion().getAsignatura().getAlias();
+        }catch(NullPointerException e){
+            return sigla(h.getSeccion().getCoordinacion().getAsignatura().getNombre());
+        }
     }
     
     public asignacionHoraria() {

@@ -183,8 +183,12 @@ public class EncuestaController implements Serializable {
         
         if (bloques.length > 0) {
             for (String bloque : bloques) {
+                System.out.printf("es borrable: "+bloque+" ");
                 if (!isBorrable(bloque, rutProfesor)) {
+                    System.out.printf("false\n");
                     noBorrar.add(bloque);
+                }else{
+                    System.out.printf("true\n");
                 }
             }
         }
@@ -258,26 +262,39 @@ public class EncuestaController implements Serializable {
         return true;
     }
     
+    public List<Horario> obtenerHorariosAsignadosPorBloqueYProfesor(String bloque, String rutProfesor){
+        List<Horario> horarios = horarioBusiness.findAll();
+        List<Horario> salida = new ArrayList<>();
+        for(Horario h : horarios){
+            if(h.getSeccion() != null){
+                if(h.getProfesor() != null){
+                    if(h.getBloque().equals(bloque) && h.getProfesor().getRutProfesor().equals(rutProfesor))
+                        salida.add(h);
+                }
+            }
+        }
+        return salida;
+    }
+    
     public boolean isBorrable(String bloque, String rutProfesor){
         ParamSemestreAno p = paramFacade.find(1L);
-        List<Horario> horarios = horarioBusiness.AsignadoByBloqueAndProfesor(bloque, rutProfesor);
-        try{
-            for (Horario h : horarios){
-                if (h.getSeccion().getCoordinacion().getSemestre() == p.getSemestreActual() && h.getSeccion().getCoordinacion().getAnio() == p.getAnoActual())
-                    return false;
-            }
-            return true;
-        }catch(NullPointerException e){
-            return true;
+        List<Horario> horarios = obtenerHorariosAsignadosPorBloqueYProfesor(bloque, rutProfesor);
+        System.out.println("cantidad de horarios : "+horarios.size());
+        for (Horario h : horarios){
+            if (h.getSeccion().getCoordinacion().getAnio()==p.getAnoActual() && h.getSeccion().getCoordinacion().getSemestre()==p.getSemestreActual())
+                return false;
         }
+        return true;
     }
     
     public void dropHorarios(String rutProfesor){
         List<Horario> horarios = horarioBusiness.findBySeleccionados(rutProfesor);
         if (horarios != null){
             for (Horario h : horarios){
-                if (h.getSeccion()==null)
-                    horarioFacade.remove(h);
+                if (h.getSeccion()==null){
+                    if (isBorrable(h.getBloque(), rutProfesor))
+                        horarioFacade.remove(h);
+                }
             }
         }
     }
@@ -298,6 +315,7 @@ public class EncuestaController implements Serializable {
             setFalseChecklist(rutProfesor);
             dropHorarios(rutProfesor);
             //inicio recuperacion
+            
             List<String> aux = new ArrayList<>();
             aux.addAll(Arrays.asList(horariosSeleccionados));
             for(String bloque : noBorrables){
