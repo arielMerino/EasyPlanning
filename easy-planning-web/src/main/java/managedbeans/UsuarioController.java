@@ -29,7 +29,10 @@ import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.primefaces.json.JSONObject;
-
+import org.apache.commons.lang.StringEscapeUtils;
+import static org.apache.commons.lang.StringEscapeUtils.escapeHtml;
+import static org.apache.commons.lang.StringEscapeUtils.escapeJavaScript;
+import static org.apache.commons.lang.StringEscapeUtils.escapeSql;
 /**
  *
  * @author jano
@@ -106,7 +109,10 @@ public class UsuarioController implements Serializable{
         FacesContext context = FacesContext.getCurrentInstance();
         ExternalContext externalContext = context.getExternalContext();
         HttpServletRequest request = (HttpServletRequest) externalContext.getRequest();
-
+        
+        String clean_nombre = escapeHtml(escapeJavaScript(escapeSql(nombre)));
+        String clean_password = escapeHtml(escapeJavaScript(escapeSql(password)));
+        
         try {
             if(!hasIdentity()) {
                 //Autenticación con LDAP
@@ -115,8 +121,8 @@ public class UsuarioController implements Serializable{
 
                 // Add your data
                 List<BasicNameValuePair> nameValuePairs = new ArrayList<>(2);
-                nameValuePairs.add(new BasicNameValuePair("user", nombre));
-                nameValuePairs.add(new BasicNameValuePair("pass", password));
+                nameValuePairs.add(new BasicNameValuePair("user", clean_nombre));
+                nameValuePairs.add(new BasicNameValuePair("pass", clean_password));
                 nameValuePairs.add(new BasicNameValuePair("keyapi", MD5("c55ecd5c60a5a5b2bea1c92bbc45f8ab")));
                 httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
 
@@ -125,13 +131,13 @@ public class UsuarioController implements Serializable{
 
                 String responseString = new BasicResponseHandler().handleResponse(response);
                 System.out.println(responseString);
-                
+
                 /*
                 JSONParser parser = new JSONParser(null, null)
 
                 Object obj = parser.parse(responseString);
                 */
-                
+
                 JSONObject jsonObject = new JSONObject(responseString);
 
                 Boolean valido_response = (Boolean) jsonObject.get("pass_ok");
@@ -139,14 +145,14 @@ public class UsuarioController implements Serializable{
                     valido_response = false;
                 }
                 System.out.println("Datos Validos: " + valido_response);               
-                
+
                 //FIN AUTENTICACIÓN LDAP
-                
-                
+
+
                 request.login(nombre, jsonObject.getString("pass_ok"));
                 System.out.println("SessionUtil: SessionScope created for " + nombre);
                 JsfUtil.addSuccessMessage("Logeado con éxito");
-                Usuario usuario = usuarioBussines.findByUid(nombre);
+                Usuario usuario = usuarioBussines.findByUid(clean_nombre);
                 setRoles(usuario.getRoles());
                 System.out.println("nombre de usuario: "+usuario.getNombre_usuario()+" - rol: "+usuario.getRoles().get(0).getTipo());
                 if(usuario.getRoles().get(0).getTipo().equals("COORDINADOR DOCENTE")){
@@ -164,13 +170,15 @@ public class UsuarioController implements Serializable{
                 System.out.println("SessionUtil: User allready logged");
                 error = false;
             }
-            
+
         } 
         catch (Exception e) {
             System.out.println("SessionUtil: User or password not found");
             JsfUtil.addErrorMessage("El usuario y/o la contraseña no coinciden");
             error = true;
-        }
+        }    
+        
+        
     }
     
     public boolean hasIdentity(){
@@ -204,7 +212,7 @@ public class UsuarioController implements Serializable{
     }
     
     public String getRut(){
-        Usuario user = usuarioBussines.findByUid(nombre);
+        Usuario user = usuarioBussines.findByUid(escapeHtml(escapeJavaScript(escapeSql(nombre))));
         return user.getRut_usuario();
     }
     

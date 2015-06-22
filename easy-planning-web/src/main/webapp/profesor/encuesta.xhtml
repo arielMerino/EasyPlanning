@@ -107,7 +107,7 @@
                                     <p:row>:
                                         <p:column class="horario-encuesta">1. 8:00-9:30</p:column>
                                         <p:column rowspan="9" colspan="6" >
-                                            <p:selectManyCheckbox id="basic" value="#{encuestaController.horariosSeleccionados}" layout="grid" columns="6" style="width: 100%;">
+                                            <p:selectManyCheckbox id="basic" class="table" value="#{encuestaController.horariosSeleccionados}" layout="grid" columns="6" style="width: 100%;">
                                                 <c:choose>
                                                     <c:when test="#{encuestaController.isDesSeleccionable('L1', profesorController.idProfesor)}">
                                                         <f:selectItem itemLabel="L1" itemValue="L1"/>

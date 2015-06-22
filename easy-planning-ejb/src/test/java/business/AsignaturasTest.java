@@ -12,8 +12,6 @@ import entities.Profesor;
 import entities.VersionPlan;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.List;
-import javax.ejb.embeddable.EJBContainer;
 import org.junit.After;
 import org.junit.AfterClass;
 import org.junit.Before;
@@ -88,13 +86,15 @@ public class AsignaturasTest {
         versionPlan1.setAnio(2001);
         versionPlan1.setId(Long.parseLong("3"));
         versionPlan1.setPlanEstudio(plan);
-        versionPlan1.setVersion(3);   
+        versionPlan1.setVersion(3);
+        versionPlan1.setPlanificado(true);
         
         versionPlan2 = new VersionPlan();
         versionPlan2.setAnio(2001);
         versionPlan2.setId(Long.parseLong("2"));
         versionPlan2.setPlanEstudio(plan);
         versionPlan2.setVersion(2);   
+        versionPlan2.setPlanificado(false);
         
         asignatura1 = new Asignatura();
         asignatura1.setCodigo("10101");
@@ -323,9 +323,10 @@ public class AsignaturasTest {
         
     }
     
-    /*@Test
-    public void testFindByAsignaturaAsignada(){
-        System.out.println("findByAsignaturaAsignada");
+    @Test
+    public void testFindByVersionPlanificado(){
+        System.out.println("findByVersionPlanificado");
         
-    }*/
+        assertEquals(0, mockAsignaturas.findByVersionPlanificado().size());
+    }
 }
