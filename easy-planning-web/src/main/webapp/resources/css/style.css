@@ -444,3 +444,7 @@ body, p, a, li{
     border: 1px solid #aaa;
     border-radius: 3px;
 }
+
+.ui-picklist .ui-picklist-list{
+    min-width: 526px !important;
+}
