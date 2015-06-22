@@ -427,8 +427,13 @@ public class ProfesorController implements Serializable {
             }
             
             color_posicion = v.indexOf(alias) % 6;
-            asignaturas[posicion + 54] = colores.get(color_posicion);            
-            asignaturas[posicion] = alias;
+            asignaturas[posicion + 54] = colores.get(color_posicion);
+            if(asignaturas[posicion] != null){
+                if(!asignaturas[posicion].contains(alias)){
+                    asignaturas[posicion] += "  "+alias;
+                }
+            }else
+                asignaturas[posicion] = alias;
         }
 
         return asignaturas;
