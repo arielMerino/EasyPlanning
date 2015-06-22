@@ -448,3 +448,8 @@ body, p, a, li{
 .ui-picklist .ui-picklist-list{
     min-width: 526px !important;
 }
+
+#infoAsignatura{
+    padding-left: 4%;
+    padding-right: 6%;
+}
