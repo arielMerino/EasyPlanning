@@ -8,7 +8,9 @@ package sessionbeans;
 import entities.Encuesta;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceContext;
+import javax.persistence.Query;
 
 /**
  *
@@ -26,6 +28,18 @@ public class EncuestaFacade extends AbstractFacade<Encuesta> implements Encuesta
 
     public EncuestaFacade() {
         super(Encuesta.class);
+    }
+
+    @Override
+    public Encuesta findByProfesor(String rut_profesor) {
+        Query query = em.createNamedQuery("Encuesta.findByProfesor").setParameter("rut_profesor", rut_profesor);
+        
+        try{
+            return (Encuesta) query.getSingleResult();
+        }
+        catch(NoResultException e){
+            return null;
+        }
     }
     
 }

@@ -150,6 +150,9 @@ body, p, a, li{
     margin-top: 10%;
     color: #fff;
 }
+.horarioBloque>.ui-panel-content{
+    padding: 0px !important;
+}
 .bloque{
     background-color: whitesmoke;
     height: 55px;
@@ -447,6 +450,7 @@ body, p, a, li{
 
 .ui-picklist .ui-picklist-list{
     min-width: 526px !important;
+    min-width: 480px !important;
 }
 
 #infoAsignatura{

@@ -2,6 +2,7 @@ package entities;
 
 import java.io.Serializable;
 import java.util.List;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -39,7 +40,7 @@ import javax.persistence.OneToMany;
     @NamedQuery(name = "Asignatura.getEspejos",
             query = "SELECT a FROM Asignatura a WHERE a.alias_asignatura = :alias AND a.versionplan.planificado = TRUE"),
     @NamedQuery(name = "Asignatura.findByVersionPlanificada",
-            query = "SELECT a FROM Asignatura a WHERE a.versionplan.planificado = :bool")
+            query = "SELECT a FROM Asignatura a WHERE a.versionplan.planificado = :bool"),
 })
 public class Asignatura implements Serializable {
     @OneToMany(mappedBy = "asignatura")
@@ -60,7 +61,7 @@ public class Asignatura implements Serializable {
     @ManyToOne
     private VersionPlan versionplan;
     
-    @OneToMany
+    @OneToMany(cascade = CascadeType.REMOVE)
     private List<Asignatura> prerequisitos;
     
     @ManyToMany
