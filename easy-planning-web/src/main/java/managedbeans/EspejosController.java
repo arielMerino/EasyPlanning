@@ -118,16 +118,21 @@ public class EspejosController implements Serializable {
     }
     
     public void setEspejos(){
+        int contador  = 0;
         for (long l : this.asignaturasSeleccionadas){
             if (l > 0L){
                 Asignatura a = asignaturaFacade.find(l);
                 a.setAlias(alias);
                 asignaturaFacade.edit(a);
+                contador++;
             }
         }
         alias = "";
         limpiarFormulario();
-        FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Curso Espejo agregado correctamente", null));
+        if (contador == 0)
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se ha seleccionado ningun curso.", null));
+        else
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "Curso Espejo agregado correctamente", null));
     }
     
     public void mostrarSeleccionados(){

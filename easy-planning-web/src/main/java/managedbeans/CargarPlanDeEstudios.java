@@ -691,7 +691,6 @@ public class CargarPlanDeEstudios implements Serializable {
                 int contador = 0;
                 for(Asignatura a : asignaturasMalla){
                     if (!a.getCoordinaciones().isEmpty()){
-                        System.out.println("aquiiiiiiiiiiiiii!!!!!!!");
                         contador++;
                     }
                 }
