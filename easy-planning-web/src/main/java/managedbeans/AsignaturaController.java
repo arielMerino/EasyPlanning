@@ -60,6 +60,14 @@ public class AsignaturaController implements Serializable {
     private List<Asignatura> asignaturaEncuestas;
     private List<Asignatura> asignaturasSemestrePasado;
 
+    public AsignaturasLocal getAsignaturaBusiness() {
+        return asignaturaBusiness;
+    }
+
+    public void setAsignaturaBusiness(AsignaturasLocal asignaturaBusiness) {
+        this.asignaturaBusiness = asignaturaBusiness;
+    }
+
     public List<Asignatura> getAsignaturasSemestrePasado() {
         return asignaturasSemestrePasado;
     }
@@ -365,6 +373,10 @@ public class AsignaturaController implements Serializable {
     
     public List<VersionPlan> getPlanesEstudio(){
         return versionesBusiness.findAll();
+    }
+    
+    public List<VersionPlan> getPlanificados(){
+        return versionesBusiness.findByPlanificado(true);
     }
     
     public ArrayList<Integer> getMaxNivel(){

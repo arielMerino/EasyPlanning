@@ -189,7 +189,6 @@ public class asignacionHoraria implements Serializable {
                 index = v.getCorrelativo();
         }
         seccionesMostrar = new String[index+1];
-        System.out.println("ready");
     }
     
     public int getPosicion(Asignatura a){
@@ -213,13 +212,10 @@ public class asignacionHoraria implements Serializable {
         List<Horario> horarios = horarioFacade.findAll();
         horariosPlan = new ArrayList<>();
         for (Horario h : horarios){
-            System.out.println(h.getBloque()+" "+h.getId());
             if(h.getSeccion() != null){ //reparacion para evitar que trate de leer los horarios de disponibilidad
                 if(h.getSeccion().getCoordinacion().getAnio()==paramSemAno.find(1L).getAnoActual() && h.getSeccion().getCoordinacion().getSemestre()==paramSemAno.find(1L).getSemestreActual() && h.getSeccion().getCoordinacion().getAsignatura().getVersionplan().getId()==planEstudioSelected){
-                    System.out.println("OK");
                     horariosPlan.add(h);
                 }else{
-                    System.out.println("BAD");
                 }
             }
         }
@@ -578,7 +574,6 @@ public class asignacionHoraria implements Serializable {
     }    
     
     public void eliminarHorario(){
-        System.out.println("Seleccion: bloque: "+bloqueSelected+"; seccion: "+seccionId);
         Horario h = buscarHorario(bloqueSelected, seccionId);
         
         Seccion seccion = h.getSeccion();
@@ -596,7 +591,6 @@ public class asignacionHoraria implements Serializable {
         List<Horario> horarios = horarioFacade.findAll();
         for (Horario h : horarios){
             if(h.getSeccion() != null){
-                System.out.println("bloque: "+h.getBloque()+"; seccion: "+h.getSeccion().getCodigo());
                 if (h.getBloque().equals(bloque) && h.getSeccion().getId()==idSeccion)
                     return h;
             }
@@ -606,26 +600,21 @@ public class asignacionHoraria implements Serializable {
     
     public String sigla(String nombre){
         if (nombre == null){
-            System.out.println("aqui 1");
             return "";
         }
         if (nombre.equals("")){
-            System.out.println("aqui 2");
             return "";
         }
         String[] palabras = nombre.split(" ");
         String salida = "";
         for (String p : palabras){
-            System.out.println(p);
             salida += (p.charAt(0)+"").toUpperCase();
         }
-        System.out.println("salida: "+salida);
         return salida;
     }
     
     public void asignacion(){
         if(seccionId == null){
-            System.out.println("no se por que estoy aqui");
             seccionId = 0L;
         }
         if(seccionId != 0L){
@@ -733,13 +722,12 @@ public class asignacionHoraria implements Serializable {
             asignaturas.add(asign);
         else
             asignaturas = asignaturasBusiness.getEspejos(asign.getAlias());
-        System.out.println("voy a agregar "+asignaturas.size()+" secciones");
         for (Asignatura asignatura : asignaturas){
             if(asignatura.getTeoria() > 0 || asignatura.getEjercicios() > 0){
                 if(coordinacionesBusiness.findByAsignaturaAndAnioAndSemestre(asignatura, getAnioSelected(), getSemestreSelected()) == null){
                     Coordinacion coordinacion = new Coordinacion();
                     coordinacion.setAsignatura(asignatura);
-                    coordinacion.setAnio(getAnioSelected());
+                    coordinacion.setAnio(getAnioSelected());                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
                     coordinacion.setSemestre(getSemestreSelected());
                     coordinacion.setCantAlumnosEstimado(0);
                     coordinacion.setCantAlumnosReal(0);
@@ -1059,8 +1047,7 @@ public class asignacionHoraria implements Serializable {
     
     public List<Profesor> getDisponibilidadProfesores(){
         List<Profesor> profesores = new ArrayList();
-        List<String> profesoresAsignatura = checklistBusiness.findProfesorByAsgAnioSemestre(asignaturaSelected, anioSelected, semestreSelected);
-        
+        List<String> profesoresAsignatura = checklistBusiness.findProfesorByAsgAnioSemestre(asignaturaSelected, paramSemAno.find(1L).getAnoActual(), paramSemAno.find(1L).getSemestreActual());
         for(String id : profesoresAsignatura){
             profesores.add(profesoresBusiness.findByRut(id));
         }

@@ -434,3 +434,10 @@ body, p, a, li{
 .boton-inicializar{
     margin-top: 3em;
 }
+.panel-secciones{
+    width: 5em;
+    text-align: center;
+    box-shadow: inset 0 2px 2px #8f8f8f !important;
+    border: 1px solid #aaa;
+    border-radius: 3px;
+}

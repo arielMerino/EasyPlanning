@@ -99,12 +99,21 @@
                                     </p:column>
 
                                 </p:dataTable>
-
                                 <br/>
+                                <br/>
+                                <div class="row">
+                                    <div class="col-md-12 text-center">
+                                        <div class="alert alert-warning">
+                                            <p>
+                                                <strong>IMPORTANTE: </strong>Recuerde agregar sólo las asignaturas correspondientes a la Carrera y al Plan de Estudios que está planificando
+                                            </p>
+                                        </div>
+                                    </div>
+                                </div>
                                 <h5>Todas las asignaturas</h5>
                                 <p:commandButton actionListener="#{checklistController.asignaturasParaEncuestas(asignaturaController.asignaturaEncuestas,checklistController.rutProfesor)}" value="Agregar Asignaturas" update=":form" />
 
-                                <p:dataTable id="tablaAsignaturas2" value="#{asignaturaController.facade.findAll()}" 
+                                <p:dataTable id="tablaAsignaturas2" value="#{asignaturaController.asignaturaBusiness.findByVersionPlanificado()}" 
                                     var="item"
                                     sortBy="#{item.nivel}" 
                                     selection="#{asignaturaController.asignaturaEncuestas}"

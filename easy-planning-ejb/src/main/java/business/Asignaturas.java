@@ -99,4 +99,16 @@ public class Asignaturas implements AsignaturasLocal {
             return new ArrayList<>();
         }
     }
+
+    @Override
+    public List<Asignatura> findByVersionPlanificado() {
+        Query query = em.createNamedQuery("Asignatura.findByVersionPlanificada").setParameter("bool", true);
+        
+        try{
+            return (List<Asignatura>) query.getResultList();
+        }
+        catch(NoResultException e){
+            return new ArrayList();
+        }
+    }
 }

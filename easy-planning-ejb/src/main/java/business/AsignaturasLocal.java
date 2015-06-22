@@ -37,4 +37,6 @@ public interface AsignaturasLocal {
     public List<Asignatura> findByAsignaturaAsignada(String rutProfesor, int anio, int semestre);
     
     public List<Asignatura> getEspejos(String alias);
+    
+    public List<Asignatura> findByVersionPlanificado();
 }
