@@ -368,6 +368,7 @@ public class ProfesorController implements Serializable {
         return profesoresBusiness.getProfesoresByHorarioAsignado(id_asignatura, semAnio.getAnoActual(), semAnio.getSemestreActual());
     }
     
+    // Esta en funcion en realidad debe llamarse getAliasAsignaturasAsignado
     public String[] getHorariosAsignado(){
         String asignaturas[] = new String[108];
         List<String> colores = new ArrayList<>();
@@ -375,21 +376,28 @@ public class ProfesorController implements Serializable {
         colores.add("#72A603");
         colores.add("#E8541C");
         colores.add("#FFD52F");
-        colores.add("#33A3BA");
+        colores.add("#287F91");
         colores.add("#FF893B");
+        colores.add("#998661");
+        colores.add("#BE21E8");
+        colores.add("#30FF9D");
+        colores.add("#DEFF00");
 
         Vector v = new Vector();
                 
         System.out.println("profesorController.getHorarioAsignado rut: " + rutProfesor);
         ParamSemestreAno p = paramFacade.find(1L);
-        List<Horario> horarios = horariosBusiness.findAsignadosActualesByProfesorId(rutProfesor,p.getAnoActual(),p.getSemestreActual());        
+        List<Horario> horarios = horariosBusiness.findAsignadosActualesByProfesorId(rutProfesor,p.getAnoActual(),p.getSemestreActual());
 
         for(Horario h : horarios){                        
             String alias = h.getSeccion().getCoordinacion().getAsignatura().getAlias();            
             System.out.println("alias = " + alias);
             if(alias == null)
-                alias = h.getSeccion().getCoordinacion().getAsignatura().getNombre();
+                alias = h.getSeccion().getCoordinacion().getAsignatura().getCodigo();
             
+            String seccion = h.getSeccion().getCodigo();
+            
+            alias = alias + " " + seccion;
             
             System.out.println("bloque = " + h.getBloque());
             
@@ -429,6 +437,23 @@ public class ProfesorController implements Serializable {
             color_posicion = v.indexOf(alias) % 6;
             asignaturas[posicion + 54] = colores.get(color_posicion);        
             asignaturas[posicion] = alias;
+        }
+
+        return asignaturas;
+    }
+
+    public List<Asignatura> getAsignaturasAsignado(){
+        
+        List<Asignatura> asignaturas = new ArrayList<>();        
+
+        System.out.println("profesorController.getAsignaturasAsignado rut: " + rutProfesor);
+        ParamSemestreAno p = paramFacade.find(1L);
+        List<Horario> horarios = horariosBusiness.findAsignadosActualesByProfesorId(rutProfesor,p.getAnoActual(),p.getSemestreActual());
+
+        for(Horario h : horarios){                        
+            Asignatura a = h.getSeccion().getCoordinacion().getAsignatura();
+            if(!asignaturas.contains(a))
+                asignaturas.add(a);
         }
 
         return asignaturas;

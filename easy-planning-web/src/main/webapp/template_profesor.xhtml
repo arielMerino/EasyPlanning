@@ -50,12 +50,18 @@
                         <nav id="navbar" class="navbar navbar-default navbar-static-top menu-nav ">
                             <div class="container-fluid">
                                 <div class="row">
-                                    <div class="col-md-10">
+                                    <div class="col-md-9">
                                         <ul class="nav navbar-nav menu-nav">
                                             <li><a href="/easy-planning-web/faces/profesor/index.xhtml"><span class="glyphicon glyphicon-home" aria-hidden="true" ></span> Inicio</a></li>
                                             <li><a href="/easy-planning-web/faces/profesor/cargaEncuesta.xhtml"><span class="glyphicon glyphicon-check" aria-hidden="true" ></span> Encuesta de Disponibilidad</a></li>
                                             <li><a href="/easy-planning-web/faces/profesor/miHorario.xhtml"><span class="glyphicon glyphicon-calendar" aria-hidden="true" ></span>  Mi Horario Planificado</a></li>
                                         </ul>
+                                    </div>
+                                    <div class="col-md-1" id="semestre-año">
+                                        <p>
+                                            Semestre 
+                                        </p>
+                                        <h4><strong><h:outputText value="#{coordinadorController.getSemestreActual()}" id="param-semestre"/> - <h:outputText value="#{coordinadorController.getAnioActual()}" id="param-anio"/></strong></h4>
                                     </div>
                                     <div class="col-md-2 logut-link">
                                         <c:if test="#{usuarioController.compruebaRoles()}">

@@ -38,6 +38,13 @@ public class AsignaturasTest {
     private static Asignatura asignatura8;
     private static Asignatura asignatura9;
     private static Asignatura asignatura10;
+    private static Asignatura asignatura11;
+    private static Asignatura asignatura12;
+    private static Asignatura asignatura13;
+    private static Asignatura asignatura14;
+    private static Asignatura asignatura15;
+    private static Asignatura asignatura16;
+    
     private static PlanEstudio plan;
     private static VersionPlan versionPlan1;
     private static VersionPlan versionPlan2;
@@ -86,7 +93,7 @@ public class AsignaturasTest {
         versionPlan1.setAnio(2001);
         versionPlan1.setId(Long.parseLong("3"));
         versionPlan1.setPlanEstudio(plan);
-        versionPlan1.setVersion(3);
+        versionPlan1.setVersion(3);   
         versionPlan1.setPlanificado(true);
         
         versionPlan2 = new VersionPlan();
@@ -207,6 +214,84 @@ public class AsignaturasTest {
         asignatura10.setVersionplan(versionPlan1);
         asignatura10.setProfesores(null);
         
+        asignatura11 = new Asignatura();
+        asignatura11.setCodigo("10111");
+        asignatura11.setCoordinaciones(null);
+        asignatura11.setEjercicios(0);
+        asignatura11.setId(Long.parseLong("12"));
+        asignatura11.setLaboratorio(4);
+        asignatura11.setNivel(5);
+        asignatura11.setNombre("FUNDAMENTOS DE INGENIERÍA DE SOFTWARE");
+        asignatura11.setTeoria(2);
+        asignatura11.setVersionplan(versionPlan2);
+        asignatura11.setProfesores(null);
+        asignatura11.setAlias("FINGESO");
+        
+        asignatura12 = new Asignatura();
+        asignatura12.setCodigo("10112");
+        asignatura12.setCoordinaciones(null);
+        asignatura12.setEjercicios(0);
+        asignatura12.setId(Long.parseLong("13"));
+        asignatura12.setLaboratorio(0);
+        asignatura12.setNivel(4);
+        asignatura12.setNombre("FUNDAMENTOS DE INGENIERÍA DE SOFTWARE");
+        asignatura12.setTeoria(2);
+        asignatura12.setVersionplan(versionPlan1);
+        asignatura12.setProfesores(null);
+        asignatura12.setAlias("FINGESO");
+        
+        asignatura13 = new Asignatura();
+        asignatura13.setCodigo("10111");
+        asignatura13.setCoordinaciones(null);
+        asignatura13.setEjercicios(2);
+        asignatura13.setId(Long.parseLong("14"));
+        asignatura13.setLaboratorio(2);
+        asignatura13.setNivel(5);
+        asignatura13.setNombre("ORGANIZACIÓN DE COMPUTADORES");
+        asignatura13.setTeoria(4);
+        asignatura13.setVersionplan(versionPlan2);
+        asignatura13.setProfesores(null);
+        asignatura13.setAlias("ORGA");
+        
+        asignatura14 = new Asignatura();
+        asignatura14.setCodigo("10118");
+        asignatura14.setCoordinaciones(null);
+        asignatura14.setEjercicios(0);
+        asignatura14.setId(Long.parseLong("15"));
+        asignatura14.setLaboratorio(2);
+        asignatura14.setNivel(2);
+        asignatura14.setNombre("ORGANIZACIÓN DE COMPUTADORES");
+        asignatura14.setTeoria(4);
+        asignatura14.setVersionplan(versionPlan1);
+        asignatura14.setProfesores(null);
+        asignatura14.setAlias("ORGA");
+        
+        asignatura15 = new Asignatura();
+        asignatura15.setCodigo("101309");
+        asignatura15.setCoordinaciones(null);
+        asignatura15.setEjercicios(0);
+        asignatura15.setId(Long.parseLong("16"));
+        asignatura15.setLaboratorio(2);
+        asignatura15.setNivel(2);
+        asignatura15.setNombre("DIRECCIÓN Y GESTIÓN DE EMPRESAS");
+        asignatura15.setTeoria(4);
+        asignatura15.setVersionplan(versionPlan2);
+        asignatura15.setProfesores(null);
+        asignatura15.setAlias("DGE");
+        
+        asignatura16 = new Asignatura();
+        asignatura16.setCodigo("101400");
+        asignatura16.setCoordinaciones(null);
+        asignatura16.setEjercicios(0);
+        asignatura16.setId(Long.parseLong("17"));
+        asignatura16.setLaboratorio(2);
+        asignatura16.setNivel(2);
+        asignatura16.setNombre("FUNDAMENTOS DE PROCESOS PRODUCTIVOS");
+        asignatura16.setTeoria(4);
+        asignatura16.setVersionplan(versionPlan1);
+        asignatura16.setProfesores(null);
+        asignatura16.setAlias("FPP");
+       
         asignatura7.setPrerequisitos(Arrays.asList(asignatura1));
         
         asignatura8.setPrerequisitos(Arrays.asList(asignatura2));
@@ -236,8 +321,10 @@ public class AsignaturasTest {
         when(mockAsignaturas.findByNivelAndPlan(1, Long.parseLong("4"))).thenReturn(new ArrayList<Asignatura>());
         when(mockAsignaturas.findNivelesByPlan(versionPlan1.getId())).thenReturn(Arrays.asList(1,2));
         when(mockAsignaturas.findNivelesByPlan(versionPlan2.getId())).thenReturn(new ArrayList<Integer>());
-        
-        
+        when(mockAsignaturas.getEspejos("FPP")).thenReturn(Arrays.asList(asignatura16));
+        when(mockAsignaturas.getEspejos("ORGA")).thenReturn(Arrays.asList(asignatura13,asignatura14));
+        when(mockAsignaturas.getEspejos("FINGESO")).thenReturn(Arrays.asList(asignatura11,asignatura12));
+        when(mockAsignaturas.getEspejos("ALGUN ALIAS")).thenReturn(new ArrayList<Asignatura>());
     }
     
     @After
@@ -324,9 +411,17 @@ public class AsignaturasTest {
     }
     
     @Test
+    public void testGetEspejos(){
+        System.out.println("getEspejos");
+        assertNotNull(mockAsignaturas.getEspejos("ALGUN ALIAS"));
+        assertNotNull(mockAsignaturas.getEspejos("ORGA"));
+        assertNotNull(mockAsignaturas.getEspejos("FINGESO"));
+        assertNotNull(mockAsignaturas.getEspejos("FPP"));
+    }
+    
+    @Test
     public void testFindByVersionPlanificado(){
         System.out.println("findByVersionPlanificado");
-        
         assertEquals(0, mockAsignaturas.findByVersionPlanificado().size());
     }
 }

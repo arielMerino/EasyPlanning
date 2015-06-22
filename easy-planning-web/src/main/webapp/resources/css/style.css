@@ -449,6 +449,7 @@ body, p, a, li{
 }
 
 .ui-picklist .ui-picklist-list{
+    min-width: 526px !important;
     min-width: 480px !important;
 }
 .table>tbody>tr>td{
@@ -456,4 +457,9 @@ body, p, a, li{
 }
 .table{
     margin-bottom: 0;
+}
+
+#infoAsignatura{
+    padding-left: 4%;
+    padding-right: 6%;
 }
