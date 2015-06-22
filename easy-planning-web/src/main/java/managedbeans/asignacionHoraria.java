@@ -483,8 +483,8 @@ public class asignacionHoraria implements Serializable {
                         salida += a.getAlias() + "-" +h.getSeccion().getCodigo()+" ";
                 }
                 else{
-                    if(!salida.contains(sigla(a.getNombre()) + "-" +h.getSeccion().getCodigo()+" "))
-                        salida += sigla(a.getNombre()) + "-" +h.getSeccion().getCodigo()+" ";
+                    if(!salida.contains(a.getCodigo() + "-" +h.getSeccion().getCodigo()+" "))
+                        salida += a.getCodigo() + "-" +h.getSeccion().getCodigo()+" ";
                 }
             }
         }
@@ -1088,7 +1088,7 @@ public class asignacionHoraria implements Serializable {
             
             if(alias == null){
                 //alias = h.getSeccion().getCoordinacion().getAsignatura().getNombre();
-                alias = sigla(h.getSeccion().getCoordinacion().getAsignatura().getNombre());
+                alias = h.getSeccion().getCoordinacion().getAsignatura().getCodigo();
             }
             
             alias += "-"+h.getSeccion().getCodigo();
@@ -1147,12 +1147,12 @@ public class asignacionHoraria implements Serializable {
     public String AliasHorario(Horario h){
         try{
             if(h.getSeccion().getCoordinacion().getAsignatura().getAlias().trim().isEmpty()){
-                return sigla(h.getSeccion().getCoordinacion().getAsignatura().getNombre());
+                return h.getSeccion().getCoordinacion().getAsignatura().getCodigo();
             }
                 
             return h.getSeccion().getCoordinacion().getAsignatura().getAlias();
         }catch(NullPointerException e){
-            return sigla(h.getSeccion().getCoordinacion().getAsignatura().getNombre());
+            return h.getSeccion().getCoordinacion().getAsignatura().getCodigo();
         }
     }
     
