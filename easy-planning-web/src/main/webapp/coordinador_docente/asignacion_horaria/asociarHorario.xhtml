@@ -13,6 +13,11 @@
                 <p:panel id="formulario" style="width: 100%;">
                     <c:if test="#{not asignacionHoraria.validarAsignatura()}" >
                         <p>Debe seleccionar una asignatura</p>
+                        <div class="hidden">
+                            <p:commandButton id="boton-cancelar" class="btn btn-default col-xs-2" value="Cancelar" action="#{asignacionHoraria.limpiarBloqueYprofesor()}" onsuccess="PF('seccionProfesor').hide();" />
+                            <p:commandButton id="boton-asignar" class="btn btn-default col-xs-2" value="Asignar" action="#{asignacionHoraria.setAsignar(1)}" update="formulario, :seleccionCarreraPlanAsignatura:horario" onsuccess="#{asignacionHoraria.asignacion()};submit();" disabled="#{not asignacionHoraria.muestraBoton}"/>
+                            <p:commandButton id="boton-eliminar" class="btn btn-default col-xs-2" value="Eliminar" action="#{asignacionHoraria.eliminarHorario()}" update="formulario, :seleccionCarreraPlanAsignatura:horario" onsuccess="submit();" />
+                        </div>
                     </c:if>
                     <c:if test="#{asignacionHoraria.validarAsignatura()}" >
                         <div>
@@ -52,12 +57,17 @@
                             </div>
                         </div>
                         <div class="row">
-                            <p:commandButton class="btn btn-default col-xs-2" value="Cancelar" action="#{asignacionHoraria.limpiarBloqueYprofesor()}" onsuccess="PF('seccionProfesor').hide();" />
+                            <p:commandButton id="boton-cancelar" class="btn btn-default col-xs-2" value="Cancelar" action="#{asignacionHoraria.limpiarBloqueYprofesor()}" onsuccess="PF('seccionProfesor').hide();" />
                             <p:commandButton id="boton-asignar" class="btn btn-default col-xs-2" value="Asignar" action="#{asignacionHoraria.setAsignar(1)}" update="formulario, :seleccionCarreraPlanAsignatura:horario" onsuccess="#{asignacionHoraria.asignacion()};submit();" disabled="#{not asignacionHoraria.muestraBoton}"/>
-                            <p:commandButton class="btn btn-default col-xs-2" value="Eliminar" action="#{asignacionHoraria.eliminarHorario()}" update="formulario, :seleccionCarreraPlanAsignatura:horario" onsuccess="submit();" />
+                            <p:commandButton id="boton-eliminar" class="btn btn-default col-xs-2" value="Eliminar" action="#{asignacionHoraria.eliminarHorario()}" update="formulario, :seleccionCarreraPlanAsignatura:horario" onsuccess="submit();" />
                         </div>
                     </c:if>
+                    
                 </p:panel>
+                
+                <p:blockUI block="selSeccionProfesor" trigger="boton-cancelar, boton-asignar, boton-eliminar">
+                    <p:graphicImage library="images" name="339.GIF"/>
+                </p:blockUI>
             </h:form>
         </p:dialog>
     </ui:composition>

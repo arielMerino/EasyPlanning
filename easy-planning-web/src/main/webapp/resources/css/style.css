@@ -150,6 +150,9 @@ body, p, a, li{
     margin-top: 10%;
     color: #fff;
 }
+.horarioBloque>.ui-panel-content{
+    padding: 0px !important;
+}
 .bloque{
     background-color: whitesmoke;
     height: 55px;

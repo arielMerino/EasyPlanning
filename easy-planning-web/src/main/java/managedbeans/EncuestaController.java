@@ -67,6 +67,14 @@ public class EncuestaController implements Serializable {
     public EncuestaController() {
     }
 
+    public EncuestaFacadeLocal getEncuestaFacade() {
+        return encuestaFacade;
+    }
+
+    public void setEncuestaFacade(EncuestaFacadeLocal encuestaFacade) {
+        this.encuestaFacade = encuestaFacade;
+    }
+
     public ParamSemestreAnioFacadeLocal getParamFacade() {
         return paramFacade;
     }
@@ -404,5 +412,9 @@ public class EncuestaController implements Serializable {
             //Horario dropHorario = horarioBusiness.findByBloqueAndProfesor(drop, id_profesor);
             horarioFacade.remove(drop);
         }
+    }
+    
+    public Encuesta getEncuestaProfesor(String rut){
+        return encuestaFacade.findByProfesor(rut);
     }
 }
