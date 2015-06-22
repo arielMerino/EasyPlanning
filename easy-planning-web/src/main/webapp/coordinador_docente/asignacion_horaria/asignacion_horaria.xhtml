@@ -61,18 +61,24 @@
                                             <p:ajax process="@this" update=":form2:formulario, secciones, tabla-disponibilidad, espejos, info" />
                                         </p:selectOneListbox>
                                         <hr/>
-                                        <h:outputLabel value="Secciones"/>
-                                        <p:dataList id="secciones" class="panel-secciones" value="#{asignacionHoraria.seccionesBusiness.findByAsignaturaAnioYSemestre(asignacionHoraria.asignaturaFacade.find(asignacionHoraria.asignaturaSelected).getId(), asignacionHoraria.anioSelected, asignacionHoraria.semestreSelected)}" var="seccion" type="none" emptyMessage=" ">
-                                            #{seccion.codigo}
-                                        </p:dataList>
-                                        <p:panelGrid class="panel-no-border" columns="3" layout="grid">
-                                            <h:outputText value="Sección de Teoría y Ejercicios"/>
-                                            <p:commandButton class="button-padding" value="Agregar" action="#{asignacionHoraria.agregaSeccionTeoria()}" icon="ui-icon-plus" update=":growl, secciones, espejos, :form2"/>
-                                            <p:commandButton class="button-padding" value="Quitar" action="#{asignacionHoraria.quitarSeccionTeoria()}" icon="ui-icon-trash" update=":growl, secciones, espejos, :form2"/>
-                                            <h:outputText value="Sección de Laboratorio"/>
-                                            <p:commandButton class="button-padding" value="Agregar" action="#{asignacionHoraria.agregaSeccionLaboratorio()}" icon="ui-icon-plus" update=":growl, secciones, espejos, :form2"/>
-                                            <p:commandButton class="button-padding" value="Quitar" action="#{asignacionHoraria.quitarSeccionLaboratorio()}" icon="ui-icon-trash" update=":growl, secciones, espejos, :form2"/>
-                                        </p:panelGrid>
+                                        <div class="row col-md-12">
+                                            <div class="col-md-2">
+                                            <h:outputLabel value="Secciones"/>
+                                            <p:dataList id="secciones" class="panel-secciones" value="#{asignacionHoraria.seccionesBusiness.findByAsignaturaAnioYSemestre(asignacionHoraria.asignaturaFacade.find(asignacionHoraria.asignaturaSelected).getId(), asignacionHoraria.anioSelected, asignacionHoraria.semestreSelected)}" var="seccion" type="none" emptyMessage=" ">
+                                                <h:outputLabel style="font-size: 14px">#{seccion.codigo}</h:outputLabel><br/>
+                                            </p:dataList>
+                                            </div>
+                                            <div class="col-md-10">
+                                            <p:panelGrid class="panel-no-border" columns="3" layout="grid">
+                                                <h:outputText value="Sección de Teoría y Ejercicios"/>
+                                                <p:commandButton class="button-padding" value="Agregar" action="#{asignacionHoraria.agregaSeccionTeoria()}" icon="ui-icon-plus" update=":growl, secciones, espejos, :form2"/>
+                                                <p:commandButton class="button-padding" value="Quitar" action="#{asignacionHoraria.quitarSeccionTeoria()}" icon="ui-icon-trash" update=":growl, secciones, espejos, :form2"/>
+                                                <h:outputText value="Sección de Laboratorio"/>
+                                                <p:commandButton class="button-padding" value="Agregar" action="#{asignacionHoraria.agregaSeccionLaboratorio()}" icon="ui-icon-plus" update=":growl, secciones, espejos, :form2"/>
+                                                <p:commandButton class="button-padding" value="Quitar" action="#{asignacionHoraria.quitarSeccionLaboratorio()}" icon="ui-icon-trash" update=":growl, secciones, espejos, :form2"/>
+                                            </p:panelGrid>
+                                            </div>
+                                        </div>
                                     </div>
                                     <div class="col-md-8">
                                         <p:panel class="panel-no-border" id="info">
