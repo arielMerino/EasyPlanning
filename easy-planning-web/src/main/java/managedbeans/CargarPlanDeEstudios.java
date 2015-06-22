@@ -677,6 +677,15 @@ public class CargarPlanDeEstudios implements Serializable {
         }
     }
     
+    public int obtenerNivelMayor(List<Asignatura> asignaturas){
+        int mayor = 0;
+        for (Asignatura a : asignaturas){
+            if (mayor < a.getNivel())
+                mayor = a.getNivel();
+        }
+        return mayor;
+    }
+    
     public void eliminarMalla(){
         if (idVersion == 0)
             FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se ha seleccionado ningún plan de estudios.", null));
@@ -695,8 +704,14 @@ public class CargarPlanDeEstudios implements Serializable {
                     }
                 }
                 if (contador == 0){
-                    for (Asignatura a : asignaturasMalla){
-                        ejbFacade.remove(a);
+                    int nivel = obtenerNivelMayor(asignaturasMalla);
+                    while(nivel > 0){
+                        for (Asignatura a : asignaturasMalla){
+                            if (a.getNivel() == nivel){
+                                ejbFacade.remove(a);
+                            }
+                            nivel--;
+                        }
                     }
                     FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "La malla del plan de estudios seleccionado ha sido eliminada con éxito.", null));
                 }

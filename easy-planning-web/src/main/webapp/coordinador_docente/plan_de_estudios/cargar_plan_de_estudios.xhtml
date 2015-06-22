@@ -27,29 +27,24 @@
                     <div class="col-md-12">
                         <div class="row">
                             <div class="col-md-6 col-md-offset-3 well">
-                                <h:form enctype='multipart/form-data' id="cargaPlan">
-                                    <div class="form-group">
-                                        <p:selectOneMenu id="planes" value="#{cargarPlanDeEstudios.idVersion}" required="true" requiredMessage="Debe seleccionar un plan de estudios" immediate="true">
-                                            <f:selectItems value="#{cargarPlanDeEstudios.versiones}" var="vers" itemLabel="#{vers.planEstudio.carrera.nombre}-#{vers.planEstudio.codigo}.#{vers.anio}.#{vers.version} (#{cargarPlanDeEstudios.getJornada(vers.planEstudio.jornada)})" itemValue="#{vers.id}" />
-                                        </p:selectOneMenu>
-                                        <br/>
-                                        <h:inputFile styleClass="ui-button-text ui-c ui-state-default ui-widget-content ui-widget-header" label="Seleccionar archivo" value="#{cargarPlanDeEstudios.ruta}" required="true" requiredMessage="Debe seleccionar un archivo"></h:inputFile>
-                                        <br/>
-                                        <h:commandButton id="action" styleClass="ui-button-text ui-c ui-state-default ui-widget-content ui-widget-header button-padding" value="Cargar" actionListener="#{cargarPlanDeEstudios.cargarArchivo()}" onclick="submit();" />
-                                        <c:if test="#{false}">
-                                            <h:commandButton id="eliminar" styleClass="ui-button ui-c ui-state-default ui-widget-content ui-widget-header button-padding" value="Eliminar Malla del Plan" actionListener="#{cargarPlanDeEstudios.eliminarMalla()}" onclick="submit();" />
-                                        </c:if>
-                                    </div>
-
-                                        <p:blockUI block="form-cargar-plan" trigger="action">
-                                            <p:graphicImage library="images" name="339.GIF"/>
-                                        </p:blockUI>
+                                <p:panel class="panel-no-border" id="cargaPlan">
+                                    <h:form enctype='multipart/form-data'>
+                                        <div class="form-group">
+                                            <p:selectOneMenu id="planes" value="#{cargarPlanDeEstudios.idVersion}" required="true" requiredMessage="Debe seleccionar un plan de estudios" immediate="true">
+                                                <f:selectItems value="#{cargarPlanDeEstudios.versiones}" var="vers" itemLabel="#{vers.planEstudio.carrera.nombre}-#{vers.planEstudio.codigo}.#{vers.anio}.#{vers.version} (#{cargarPlanDeEstudios.getJornada(vers.planEstudio.jornada)})" itemValue="#{vers.id}" />
+                                            </p:selectOneMenu>
+                                            <br/>
+                                            <h:inputFile styleClass="ui-button-text ui-c ui-state-default ui-widget-content ui-widget-header" label="Seleccionar archivo" value="#{cargarPlanDeEstudios.ruta}" required="true" requiredMessage="Debe seleccionar un archivo"></h:inputFile>
+                                            <br/>
+                                            <h:commandButton id="action" styleClass="ui-button-text ui-c ui-state-default ui-widget-content ui-widget-header button-padding" value="Cargar" actionListener="#{cargarPlanDeEstudios.cargarArchivo()}" onclick="submit();" />
+                                        </div>
                                     </h:form>
                                 </p:panel>
                                 <p>
                                     <h:outputText value="#{cargarPlanDeEstudios.aux}"></h:outputText>
                                 </p>
                             </div>
+                            
                         </div>
                         <p:panel id="tablaPlan" header="Plan de Estudios #{cargarPlanDeEstudios.nombrePlan} registrado" rendered="#{cargarPlanDeEstudios.cargados}" >
                             <p:dataTable id="tablaAsignaturas" value="#{cargarPlanDeEstudios.asignaturasAñadidas}" var="item"

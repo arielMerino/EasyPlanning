@@ -20,15 +20,10 @@ import javax.persistence.OneToMany;
  */
 @Entity
 @NamedQueries({
-    /*@NamedQuery(name="Asignatura.findByCodigoAndPlan", 
-            query="SELECT a FROM Asignatura a WHERE a.codigo = :codigo AND a.versionplan = :plan"),*/
     @NamedQuery(name="Asignatura.getAllProfesorAsignatura",
             query="SELECT a, p FROM Asignatura a JOIN a.profesores p"),
     @NamedQuery (name="Asignatura.findByVersionPlan",
             query="SELECT a FROM Asignatura a WHERE a.versionplan = :plan"),
-    /*
-    @NamedQuery (name="Asignatura.findByNivelAndCarreraAndPlan",
-            query="SELECT a FROM Asignatura a WHERE a.nivel = :nivel AND a.carrera.nombre = :carrera AND a.versionplan = :plan"),*/
     @NamedQuery(name = "Asignatura.findByNivelAndPlan",
             query="SELECT a FROM Asignatura a WHERE a.nivel = :nivel AND a.versionplan.id = :idVersion"),
     @NamedQuery (name="Asignatura.findByCodigoAsgAndIdVersion",
@@ -61,7 +56,7 @@ public class Asignatura implements Serializable {
     @ManyToOne
     private VersionPlan versionplan;
     
-    @OneToMany(cascade = CascadeType.REMOVE)
+    @OneToMany(cascade = CascadeType.REMOVE, orphanRemoval = true)
     private List<Asignatura> prerequisitos;
     
     @ManyToMany
