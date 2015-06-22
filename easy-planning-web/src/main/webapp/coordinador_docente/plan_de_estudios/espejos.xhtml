@@ -24,7 +24,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-2"></div>
-                    <p:panel class="col-xs-4" style="height: 300px">
+                    <p:panel class="col-xs-4" style="min-height: 300px">
                         <h4>Ingeniería Civil Infromática:</h4><br/>
                         <ui:repeat value="#{espejosController.versionesCivil}" var="civil" >
                             <h:outputLabel value="#{civil.planEstudio.codigo}-#{civil.anio}.#{civil.version} (#{cargarPlanDeEstudios.getJornada(civil.planEstudio.jornada)}): " /><br/>
@@ -36,7 +36,7 @@
                             <br/>
                         </ui:repeat>
                     </p:panel>
-                    <p:panel class="col-xs-4" style="height: 300px">
+                    <p:panel class="col-xs-4" style="min-height: 300px">
                         <h4>Ingeniería en Ejecución Infromática:</h4><br/>
                         <ui:repeat value="#{espejosController.versionesEjecucion}" var="civil" >
                             <h:outputLabel value="#{civil.planEstudio.codigo}-#{civil.anio}.#{civil.version} (#{cargarPlanDeEstudios.getJornada(civil.planEstudio.jornada)}): " /><br/>
