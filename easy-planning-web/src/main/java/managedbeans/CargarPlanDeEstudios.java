@@ -677,6 +677,39 @@ public class CargarPlanDeEstudios implements Serializable {
         }
     }
     
+    public void eliminarMalla(){
+        if (idVersion == 0)
+            FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "No se ha seleccionado ningún plan de estudios.", null));
+        else{
+            System.out.println("idVersion: "+idVersion);
+            List<Asignatura> asignaturasMalla = new ArrayList<>();
+            for(Asignatura a : ejbFacade.findAll()){
+                if (a.getVersionplan().getId() == idVersion)
+                    asignaturasMalla.add(a);
+            }
+            if(!asignaturasMalla.isEmpty()){
+                int contador = 0;
+                for(Asignatura a : asignaturasMalla){
+                    if (!a.getCoordinaciones().isEmpty()){
+                        System.out.println("aquiiiiiiiiiiiiii!!!!!!!");
+                        contador++;
+                    }
+                }
+                if (contador == 0){
+                    for (Asignatura a : asignaturasMalla){
+                        ejbFacade.remove(a);
+                    }
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_INFO, "La malla del plan de estudios seleccionado ha sido eliminada con éxito.", null));
+                }
+                else{
+                    FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "La malla del plan de estudios seleccionado ya tiene datos cargados y no se puede borrar.", null));
+                }
+            }
+            else
+                FacesContext.getCurrentInstance().addMessage(null, new FacesMessage(FacesMessage.SEVERITY_ERROR, "La malla seleccionada no contiene ninguna asignatura", null));
+        }
+    }
+    
     public void recargaPagina() throws IOException{
         FacesContext.getCurrentInstance().getExternalContext().redirect("/easy-planning-web/faces/coordinador_docente/plan_de_estudios/agregar_plan.xhtml");
     }

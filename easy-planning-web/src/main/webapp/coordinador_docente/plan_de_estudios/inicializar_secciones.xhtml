@@ -38,7 +38,7 @@
                             <h3>Seleccione las Carreras que va a planificar este semestre.</h3>
                             <div class="row">
                                 <p:panel class="alert alert-warning warning col-md-10">
-                                    <h:outputText style="font-size: 20px"  class="text-warning warning" value="Sólo los planes de estudios puestos en la sección de la derecha serán agregados a la planificaión del próximo semestre" />
+                                    <h:outputText style="font-size: 20px"  class="text-warning warning" value="Sólo los planes de estudios puestos en la sección de la derecha serán agregados a la planificación del próximo semestre" />
                                 </p:panel>
                                 <div class="col-md-10 picklist">
                                     <p:pickList value="#{cargarPlanDeEstudios.versionPickList}" var="vers" itemLabel="#{vers.planEstudio.carrera.nombre}-#{vers.planEstudio.codigo}.#{vers.anio}.#{vers.version} (#{cargarPlanDeEstudios.getJornada(vers.planEstudio.jornada)})" 
