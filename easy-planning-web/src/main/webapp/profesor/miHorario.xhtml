@@ -301,7 +301,8 @@
                     <p:panel class="row" id="infoAsignatura">
                         
                         <h4>Detalle Asignatura</h4>
-                        <p:dataTable disabledSelection="true" value="#{profesorController.getAsignaturasAsignado()}" var="asignatura"  >
+                        <p:dataTable disabledSelection="true" value="#{profesorController.getAsignaturasAsignado()}" var="asignatura" 
+                                     emptyMessage="Sin asignaturas">
                             <p:column class="column-center-text" headerText="Código">
                                 <h:outputText value="#{asignatura.codigo}"/>
                             </p:column>                            

@@ -30,5 +30,5 @@ public interface EncuestaFacadeLocal {
 
     int count();
     
-    Encuesta findByProfesor(String rut_profesor);
+    Encuesta findByProfesor(String rut_profesor, int anio, int semestre);
 }

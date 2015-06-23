@@ -31,8 +31,10 @@ public class EncuestaFacade extends AbstractFacade<Encuesta> implements Encuesta
     }
 
     @Override
-    public Encuesta findByProfesor(String rut_profesor) {
+    public Encuesta findByProfesor(String rut_profesor, int anio, int semestre) {
         Query query = em.createNamedQuery("Encuesta.findByProfesor").setParameter("rut_profesor", rut_profesor);
+        query.setParameter("anio", anio);
+        query.setParameter("semestre", semestre);
         
         try{
             return (Encuesta) query.getSingleResult();

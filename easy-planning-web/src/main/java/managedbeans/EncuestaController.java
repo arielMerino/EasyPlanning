@@ -415,6 +415,7 @@ public class EncuestaController implements Serializable {
     }
     
     public Encuesta getEncuestaProfesor(String rut){
-        return encuestaFacade.findByProfesor(rut);
+        ParamSemestreAno param = paramFacade.find(1L);
+        return encuestaFacade.findByProfesor(rut, param.getAnoActual(), param.getSemestreActual());
     }
 }

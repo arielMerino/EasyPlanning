@@ -23,7 +23,7 @@ import javax.persistence.OneToMany;
 @Entity
 @NamedQueries({
     @NamedQuery(name = "Encuesta.findByProfesor",
-            query = "SELECT e FROM Encuesta e WHERE e.profesor.rutProfesor = :rut_profesor")
+            query = "SELECT e FROM Encuesta e WHERE e.profesor.rutProfesor = :rut_profesor AND e.anio = :anio AND e.semestre = :semestre")
 })
 public class Encuesta implements Serializable {
     private static final long serialVersionUID = 1L;
