@@ -26,6 +26,8 @@ import javax.el.ELException;
 import javax.faces.application.FacesMessage;
 import javax.faces.context.FacesContext;
 import javax.persistence.NoResultException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import sessionbeans.AsignaturaFacadeLocal;
 import sessionbeans.ParamSemestreAnioFacadeLocal;
 import sessionbeans.SeccionFacadeLocal;
@@ -38,6 +40,7 @@ import sessionbeans.VersionPlanFacadeLocal;
 @Named(value = "asignaturaController")
 @SessionScoped
 public class AsignaturaController implements Serializable {
+    private final Logger logger = (Logger) LoggerFactory.getLogger(this.getClass());
     @EJB
     private AsignaturaFacadeLocal ejbFacade;
     @EJB
@@ -147,7 +150,7 @@ public class AsignaturaController implements Serializable {
             this.items = getFacade().findAll();
             return true;
         } catch (Exception e) {
-            e.printStackTrace();
+            logger.debug("Se ha producido un error", e);
             return false;
         } 
     }
