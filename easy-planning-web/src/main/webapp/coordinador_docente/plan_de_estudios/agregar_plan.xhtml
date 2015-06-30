@@ -36,13 +36,13 @@
                             <p:selectOneButton id="opcion" value="#{cargarPlanDeEstudios.opcion}" immediate="true">
                                 <f:selectItem itemLabel="Agregar Versión" itemValue="false" />
                                 <f:selectItem itemLabel="Agregar nuevo Plan" itemValue="true" itemDisabled="#{cargarPlanDeEstudios.agregaPlan()}"/>
-                                <p:ajax process="@this" update="nuevo-plan, confirmar" />
+                                <p:ajax process="@this" update="nuevo-plan, confirmar, planes" />
                             </p:selectOneButton>
                             <hr/>
                             <c:if test="#{cargarPlanDeEstudios.opcion}">
                                 <p:panel id="nuevo-plan" class="panel-no-border">
                                     <div class="hidden">
-                                        <p:selectOneMenu id="planes" value="#{cargarPlanDeEstudios.idPlan}" style="width: 100%" immediate="true" required="true" requiredMessage="Debe seleccionar un Plan de Estudios">
+                                        <p:selectOneMenu id="planes" value="#{cargarPlanDeEstudios.idPlan}" style="width: 100%" immediate="true">
                                         </p:selectOneMenu>
                                     </div>
                                     <h:outputLabel value="Código Plan"/>
@@ -66,7 +66,7 @@
                             <c:if test="#{not cargarPlanDeEstudios.opcion}">
                                 <p:panel class="panel-no-border" id="nuevo-plan">
                                     <h:outputLabel style="white-space: normal;">Seleccionar Plan de Estudio:</h:outputLabel>
-                                    <p:selectOneMenu id="planes" value="#{cargarPlanDeEstudios.idPlan}" style="width: 100%" immediate="true" required="true" requiredMessage="Debe seleccionar un Plan de Estudios">
+                                    <p:selectOneMenu id="planes" value="#{cargarPlanDeEstudios.idPlan}" style="width: 100%" immediate="true" required="#{not cargarPlanDeEstudios.opcion}" requiredMessage="Debe seleccionar un Plan de Estudios">
                                         <f:selectItem itemLabel="Plan" itemValue="#{cargarPlanDeEstudios.nuevoPlan}" />
                                         <f:selectItems value="#{asignaturaController.getAllPlanesDeEstudio(cargarPlanDeEstudios.carreraSelected)}" var="plan" itemLabel="#{asignaturaController.getDatosPlan(plan)}" itemValue="#{plan.id}"/>
                                         <p:ajax process="@this" update="nuevo-plan, opcion"/>

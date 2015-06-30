@@ -622,23 +622,28 @@ public class CargarPlanDeEstudios implements Serializable {
     
     public void agregarPlanDeEstudios() throws IOException{
         if(!opcion){
-            VersionPlan vp = version.find(idPlan);
-            VersionPlan newVp = new VersionPlan();
-            newVp.setAnio(vp.getAnio());
-            newVp.setPlanEstudio(vp.getPlanEstudio());
-            newVp.setPlanificado(false);
-            newVp.setVersion(vp.getVersion()+1);
-            newVp.setCorrelativo(versionesBusiness.findMaxCorrelativo()+1);
-            version.create(newVp);
-            carreraSelected = 0;
-            idPlan = 0L;
-            codigo=0;
-            anioPlan=0;
-            resolucion=0;
-            anio_resolucion=0;
-            jornada = null;
-            JsfUtil.addSuccessMessage("Nueva versión del plan "+vp.getPlanEstudio().getCodigo()+" creada con éxito");
-            recargaPagina();
+            if(idPlan != 0L){
+                VersionPlan vp = version.find(idPlan);
+                VersionPlan newVp = new VersionPlan();
+                newVp.setAnio(vp.getAnio());
+                newVp.setPlanEstudio(vp.getPlanEstudio());
+                newVp.setPlanificado(false);
+                newVp.setVersion(vp.getVersion()+1);
+                newVp.setCorrelativo(versionesBusiness.findMaxCorrelativo()+1);
+                version.create(newVp);
+                carreraSelected = 0;
+                idPlan = 0L;
+                codigo = 0;
+                anioPlan = Calendar.getInstance().get(Calendar.YEAR);
+                resolucion = 0;
+                anio_resolucion = Calendar.getInstance().get(Calendar.YEAR);
+                jornada = null;
+                JsfUtil.addSuccessMessage("Nueva versión del plan "+vp.getPlanEstudio().getCodigo()+" creada con éxito");
+                recargaPagina();
+            }
+            else{
+                JsfUtil.addErrorMessage("Debe seleccionar un Plan de Estudios");
+            }
         }
         else{
             if(!(codigo == 0 || anioPlan < 1900  || resolucion == 0 || anio_resolucion < 1900) ){
@@ -663,10 +668,10 @@ public class CargarPlanDeEstudios implements Serializable {
                 version.create(vp);                
                 carreraSelected = 0;
                 idPlan = 0L;
-                codigo=0;
-                anioPlan=0;
+                codigo = 0;
+                anioPlan = Calendar.getInstance().get(Calendar.YEAR);
                 resolucion=0;
-                anio_resolucion=0;
+                anio_resolucion = Calendar.getInstance().get(Calendar.YEAR);
                 jornada = null;
                 JsfUtil.addSuccessMessage("Nuevo plan agregado correctamente");
                 recargaPagina();

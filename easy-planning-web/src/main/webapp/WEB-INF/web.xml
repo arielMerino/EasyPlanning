@@ -14,9 +14,7 @@
         <url-pattern>/faces/*</url-pattern>
     </servlet-mapping>
     <session-config>
-        <session-timeout>
-            30
-        </session-timeout>
+        <session-timeout>240</session-timeout>
     </session-config>
     <welcome-file-list>
         <welcome-file>faces/coordinador_docente/index.xhtml</welcome-file>
@@ -32,6 +30,10 @@
     <error-page>
         <error-code>500</error-code>
         <location>/faces/500.xhtml</location>
+    </error-page>
+    <error-page>
+        <exception-type>javax.faces.application.ViewExpiredException</exception-type>
+        <location>/faces/sesion_expirada.xhtml</location>
     </error-page>
     <security-constraint>
         <display-name>paginas_coordinador_docente</display-name>
