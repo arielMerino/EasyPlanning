@@ -81,7 +81,11 @@
     </login-config>
     <security-role>
         <description/>
-        <role-name>COORDINADOR DOCENTE</role-name>
+        <role-name>ADMINISTRADOR</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>PROFESOR</role-name>
     </security-role>
     <security-role>
         <description/>
@@ -89,6 +93,10 @@
     </security-role>
     <security-role>
         <description/>
-        <role-name>PROFESOR</role-name>
+        <role-name>COORDINADOR_OKEVENT</role-name>
+    </security-role>
+    <security-role>
+        <description/>
+        <role-name>COORDINADOR DOCENTE</role-name>
     </security-role>
 </web-app>
