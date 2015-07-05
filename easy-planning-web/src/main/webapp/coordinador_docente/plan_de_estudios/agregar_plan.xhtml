@@ -40,7 +40,7 @@
                             </p:selectOneButton>
                             <hr/>
                             <c:if test="#{cargarPlanDeEstudios.opcion}">
-                                <p:panel id="nuevo-plan" class="panel-no-border">
+                                <p:panel id="nuevo-plan" styleClass="panel-no-border">
                                     <div class="hidden">
                                         <p:selectOneMenu id="planes" value="#{cargarPlanDeEstudios.idPlan}" style="width: 100%" immediate="true">
                                         </p:selectOneMenu>
@@ -52,7 +52,7 @@
                                     <br/>
                                     <h:outputLabel value="Año Plan"/>
                                     <br/>
-                                    <p:spinner class="no-margin" value="#{cargarPlanDeEstudios.anioPlan}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe ingresar el año" disabled="#{cargarPlanDeEstudios.agregaPlan()}" min="1900" max="2100"/>
+                                    <p:spinner styleClass="no-margin" value="#{cargarPlanDeEstudios.anioPlan}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe ingresar el año" disabled="#{cargarPlanDeEstudios.agregaPlan()}" min="1900" max="2100"/>
                                     <br/>
                                     <br/>
                                     <h:outputLabel value="Jornada"/>
@@ -64,7 +64,7 @@
                                 <hr/>
                             </c:if>
                             <c:if test="#{not cargarPlanDeEstudios.opcion}">
-                                <p:panel class="panel-no-border" id="nuevo-plan">
+                                <p:panel styleClass="panel-no-border" id="nuevo-plan">
                                     <h:outputLabel style="white-space: normal;">Seleccionar Plan de Estudio:</h:outputLabel>
                                     <p:selectOneMenu id="planes" value="#{cargarPlanDeEstudios.idPlan}" style="width: 100%" immediate="true" required="#{not cargarPlanDeEstudios.opcion}" requiredMessage="Debe seleccionar un Plan de Estudios">
                                         <f:selectItem itemLabel="Plan" itemValue="#{cargarPlanDeEstudios.nuevoPlan}" />
@@ -73,7 +73,7 @@
                                     </p:selectOneMenu>
                                 </p:panel>
                             </c:if>
-                            <p:panel class="panel-no-border">                                
+                            <p:panel styleClass="panel-no-border">                                
                                 <h:outputLabel value="Número resolución"/>
                                 <br/>
                                 <p:inputText value="#{cargarPlanDeEstudios.resolucion}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe ingresar el número de la resolución"/>
@@ -81,7 +81,7 @@
                                 <br/>
                                 <h:outputLabel value="Año resolución"/>
                                 <br/>
-                                <p:spinner class="no-margin" value="#{cargarPlanDeEstudios.anio_resolucion}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe ingresar el año de la resolución" min="1900" max="2100"/>
+                                <p:spinner styleClass="no-margin" value="#{cargarPlanDeEstudios.anio_resolucion}" required="#{cargarPlanDeEstudios.agregaPlan()}" requiredMessage="Debe ingresar el año de la resolución" min="1900" max="2100"/>
                                 <br/>
                                 <br/>
                             </p:panel>

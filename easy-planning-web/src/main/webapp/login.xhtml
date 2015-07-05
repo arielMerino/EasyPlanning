@@ -59,15 +59,15 @@ and open the template in the editor.
                             <h:form>
                                 <div class="form-group">
                                     <label for="inputUsername" class="label-form">Nombre de usuario</label>
-                                    <h:inputText id="inputUsername" class="login-form form-control" value="#{usuarioController.nombre}"/>
+                                    <h:inputText id="inputUsername" styleClass="login-form form-control" value="#{usuarioController.nombre}"/>
                                 </div>
                                 <div class="form-group">
                                     <label for="inputPass" class="label-form">Contraseña</label>
-                                    <h:inputSecret id="inputPass" class="login-form form-control" value="#{usuarioController.password}"/>
+                                    <h:inputSecret id="inputPass" styleClass="login-form form-control" value="#{usuarioController.password}"/>
                                 </div>
                                 <div class="row">
                                     <div class="col-md-2 col-md-offset-8">
-                                        <h:commandButton type="submit" class="btn btn-default" value="Ingresar" action="#{usuarioController.login()}"/>
+                                        <h:commandButton type="submit" styleClass="btn btn-default" value="Ingresar" action="#{usuarioController.login()}"/>
                                     </div>
                                 </div>
                             </h:form> 

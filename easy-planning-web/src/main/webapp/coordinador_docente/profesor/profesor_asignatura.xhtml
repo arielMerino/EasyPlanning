@@ -30,7 +30,7 @@
                         <div class="tab-content">
                             <div role="tabpanel" class="tab-pane active" id="prof-asig">
                                 <h:form>
-                                    <p:panel class="new-body">
+                                    <p:panel styleClass="new-body">
                                         <p:dataTable id="datalist"
                                                      value="#{profesorController.items}"
                                                      var="profesor"
@@ -56,38 +56,38 @@
                                                     
                                                 </p:row>
                                             </p:columnGroup>
-                                            <p:column class="column-center-text" colspan="2">
+                                            <p:column styleClass="column-center-text" colspan="2">
                                                 <h:outputText value="#{profesor.nombre}"/>
                                             </p:column>
-                                            <p:column class="column-center-text" colspan="2">
+                                            <p:column styleClass="column-center-text" colspan="2">
                                                 <h:outputText value="#{profesor.apellido}"/>
                                             </p:column>
-                                            <p:column class="column-center-text">
+                                            <p:column styleClass="column-center-text">
                                                     <ui:repeat value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor)}" var="item">
                                                         <ul><h:outputText value="#{item.codigo}"/></ul>
                                                     </ui:repeat>
                                             </p:column>
-                                            <p:column class="column-center-text" colspan="3">
+                                            <p:column styleClass="column-center-text" colspan="3">
                                                     <ui:repeat value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor)}" var="item">
                                                         <ul><h:outputText value="#{item.nombre}"/></ul>
                                                     </ui:repeat>
                                             </p:column>
-                                            <p:column class="column-center-text">
+                                            <p:column styleClass="column-center-text">
                                                     <ui:repeat value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor)}" var="item">
                                                         <ul><h:outputText value="#{item.alias}"/></ul>
                                                     </ui:repeat>
                                             </p:column>
-                                            <p:column class="column-center-text" colspan="3">
+                                            <p:column styleClass="column-center-text" colspan="3">
                                                     <ui:repeat value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor)}" var="item">
                                                         <ul><h:outputText value="#{item.versionplan.planEstudio.carrera.nombre}"/></ul>
                                                     </ui:repeat>
                                             </p:column>
-                                            <p:column class="column-center-text" colspan="2">
+                                            <p:column styleClass="column-center-text" colspan="2">
                                                     <ui:repeat value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor)}" var="item">
                                                         <ul><h:outputText value="#{item.versionplan.planEstudio.codigo}-#{item.versionplan.anio}.#{item.versionplan.version}"/></ul>
                                                     </ui:repeat>
                                             </p:column>
-                                            <p:column class="column-center-text" styleClass="panel-item">
+                                            <p:column styleClass="column-center-text panel-item">
                                                     <ui:repeat value="#{asignaturaController.findByAsignaturaAsignada(profesor.rutProfesor)}" var="item">
                                                         <ul><h:outputText value="#{item.nivel}" /></ul>
                                                     </ui:repeat>
@@ -98,7 +98,7 @@
                             </div>
                             <div role="tabpanel" class="tab-pane" id="asig-prof">
                                 <h:form>
-                                    <p:panel class="new-body">
+                                    <p:panel styleClass="new-body">
                                         <p:dataTable id="datalist"
                                                      value="#{asignaturaController.items}"
                                                      var="asignatura"
@@ -140,25 +140,25 @@
                                                     <p:column headerText="Nombre Apellido" colspan="2"/>
                                                 </p:row>
                                             </p:columnGroup>
-                                            <p:column class="column-center-text">
+                                            <p:column styleClass="column-center-text">
                                                 <h:outputText value="#{asignatura.codigo}"/>
                                             </p:column>
-                                            <p:column class="column-center-text">
+                                            <p:column styleClass="column-center-text">
                                                 <h:outputText value="#{asignatura.nombre}"/>
                                             </p:column>
-                                            <p:column class="column-center-text">
+                                            <p:column styleClass="column-center-text">
                                                 <h:outputText value="#{asignatura.alias}"/>
                                             </p:column>
-                                            <p:column class="column-center-text">
+                                            <p:column styleClass="column-center-text">
                                                 <h:outputText value="#{asignatura.nivel}"/>
                                             </p:column>
-                                            <p:column class="column-center-text">
+                                            <p:column styleClass="column-center-text">
                                                 <h:outputText value="#{asignatura.versionplan.planEstudio.carrera.nombre}"/>
                                             </p:column>
-                                            <p:column class="column-center-text">
+                                            <p:column styleClass="column-center-text">
                                                 <h:outputText value="#{asignatura.versionplan.planEstudio.codigo} - #{asignatura.versionplan.anio}.#{asignatura.versionplan.version}"/>
                                             </p:column>
-                                            <p:column class="column-center-text" colspan="2">
+                                            <p:column styleClass="column-center-text" colspan="2">
                                                 <ui:repeat value="#{profesorController.getProfesoresAsignados(asignatura.id)}" var="profesor">
                                                     <ul><h:outputText value="#{profesor.nombre} #{profesor.apellido}"/></ul>
                                                 </ui:repeat>

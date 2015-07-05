@@ -14,7 +14,7 @@
             <h:outputText value="Asignaturas ofrecidas a Profesores - Easy Planning"></h:outputText>
         </ui:define>
         <ui:define name="body">
-            <p:panel id="all" class="panel-no-border">
+            <p:panel id="all" styleClass="panel-no-border">
                 <div class="container-fluid">
                     <div class="row">
                         <div class="col-md-10">
@@ -51,7 +51,7 @@
                                     </f:facet>
                                     <p:column style="text-align: center" width="10%" selectionMode="multiple">                                    
                                     </p:column>
-                                    <p:column class="column-center-text" filterBy="#{item.nombre} #{item.apellido}" filterMatchMode="contains" colspan="2" sortBy="#{item.apellido}">
+                                    <p:column styleClass="column-center-text" filterBy="#{item.nombre} #{item.apellido}" filterMatchMode="contains" colspan="2" sortBy="#{item.apellido}">
                                         <f:facet name="header">
                                             <h:outputText value="Profesor"/>
                                         </f:facet>
@@ -65,7 +65,7 @@
                                         </ul>
                                     </p:column>
                                     <p:column headerText="Modificar" colspan="1" >
-                                        <h:link outcome="/coordinador_docente/encuesta/editar_encuesta.xhtml" class="btn-center">                 
+                                        <h:link outcome="/coordinador_docente/encuesta/editar_encuesta.xhtml" styleClass="btn-center">                 
                                             <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                             <f:param name="id" value="#{item.rutProfesor}" />
                                         </h:link>

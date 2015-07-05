@@ -8,15 +8,15 @@
       xmlns:c="http://xmlns.jcp.org/jsp/jstl/core">
 
     <ui:composition>
-        <p:dialog class="panel panel-default" widgetVar="seccionProfesor" id="selSeccionProfesor" width="600px" modal="true" appendTo="@(body)" resizable="false" style="margin: 0; ">
+        <p:dialog styleClass="panel panel-default" widgetVar="seccionProfesor" id="selSeccionProfesor" width="600px" modal="true" appendTo="@(body)" resizable="false" style="margin: 0; ">
             <h:form id="form2">
                 <p:panel id="formulario" style="width: 100%;">
                     <c:if test="#{not asignacionHoraria.validarAsignatura()}" >
                         <p>Debe seleccionar una asignatura</p>
                         <div class="hidden">
-                            <p:commandButton id="boton-cancelar" class="btn btn-default col-xs-2" value="Cancelar" action="#{asignacionHoraria.limpiarBloqueYprofesor()}" onsuccess="PF('seccionProfesor').hide();" />
-                            <p:commandButton id="boton-asignar" class="btn btn-default col-xs-2" value="Asignar" action="#{asignacionHoraria.setAsignar(1)}" update="formulario, :seleccionCarreraPlanAsignatura:horario" onsuccess="#{asignacionHoraria.asignacion()};submit();" disabled="#{not asignacionHoraria.muestraBoton}"/>
-                            <p:commandButton id="boton-eliminar" class="btn btn-default col-xs-2" value="Eliminar" action="#{asignacionHoraria.eliminarHorario()}" update="formulario, :seleccionCarreraPlanAsignatura:horario" onsuccess="submit();" />
+                            <p:commandButton id="boton-cancelar" styleClass="btn btn-default col-xs-2" value="Cancelar" action="#{asignacionHoraria.limpiarBloqueYprofesor()}" onsuccess="PF('seccionProfesor').hide();" />
+                            <p:commandButton id="boton-asignar" styleClass="btn btn-default col-xs-2" value="Asignar" action="#{asignacionHoraria.setAsignar(1)}" update="formulario, :seleccionCarreraPlanAsignatura:horario" onsuccess="#{asignacionHoraria.asignacion()};submit();" disabled="#{not asignacionHoraria.muestraBoton}"/>
+                            <p:commandButton id="boton-eliminar" styleClass="btn btn-default col-xs-2" value="Eliminar" action="#{asignacionHoraria.eliminarHorario()}" update="formulario, :seleccionCarreraPlanAsignatura:horario" onsuccess="submit();" />
                         </div>
                     </c:if>
                     <c:if test="#{asignacionHoraria.validarAsignatura()}" >
@@ -57,9 +57,9 @@
                             </div>
                         </div>
                         <div class="row">
-                            <p:commandButton id="boton-cancelar" class="btn btn-default col-xs-2" value="Cancelar" action="#{asignacionHoraria.limpiarBloqueYprofesor()}" onsuccess="PF('seccionProfesor').hide();" />
-                            <p:commandButton id="boton-asignar" class="btn btn-default col-xs-2" value="Asignar" action="#{asignacionHoraria.setAsignar(1)}" update="formulario, :seleccionCarreraPlanAsignatura:horario" onsuccess="#{asignacionHoraria.asignacion()};submit();" disabled="#{not asignacionHoraria.muestraBoton}"/>
-                            <p:commandButton id="boton-eliminar" class="btn btn-default col-xs-2" value="Eliminar" action="#{asignacionHoraria.eliminarHorario()}" update="formulario, :seleccionCarreraPlanAsignatura:horario" onsuccess="submit();" />
+                            <p:commandButton id="boton-cancelar" styleClass="btn btn-default col-xs-2" value="Cancelar" action="#{asignacionHoraria.limpiarBloqueYprofesor()}" onsuccess="PF('seccionProfesor').hide();" />
+                            <p:commandButton id="boton-asignar" styleClass="btn btn-default col-xs-2" value="Asignar" action="#{asignacionHoraria.setAsignar(1)}" update="formulario, :seleccionCarreraPlanAsignatura:horario" onsuccess="#{asignacionHoraria.asignacion()};submit();" disabled="#{not asignacionHoraria.muestraBoton}"/>
+                            <p:commandButton id="boton-eliminar" styleClass="btn btn-default col-xs-2" value="Eliminar" action="#{asignacionHoraria.eliminarHorario()}" update="formulario, :seleccionCarreraPlanAsignatura:horario" onsuccess="submit();" />
                         </div>
                     </c:if>
                     

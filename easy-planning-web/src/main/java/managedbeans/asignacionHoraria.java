@@ -550,7 +550,7 @@ public class asignacionHoraria implements Serializable {
             }
         }
         
-        disponibles.sort(null);
+        //disponibles.sort(null);
 
         for (String s : disponibles){
             salida += s+" ";
@@ -1062,7 +1062,7 @@ public class asignacionHoraria implements Serializable {
         for(Horario horario : horariosBusiness.findDisponiblesByProfesorId(id)){
             bloques.add(horario.getBloque());
         }
-        bloques.sort(null);
+        //bloques.sort(null);
         return bloques;
     }    
     

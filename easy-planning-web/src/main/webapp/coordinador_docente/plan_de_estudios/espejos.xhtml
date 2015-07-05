@@ -16,7 +16,7 @@
             <h:form id="form">
                 <div class="row">
                     <div class="col-md-2"></div>
-                    <p:panel class="col-md-8 ">
+                    <p:panel styleClass="col-md-8 ">
                         <h4>Ingresar alias para los espejos:</h4>
                         <p:inputText id="alias" style="width: 300px" value="#{espejosController.alias}" requiredMessage="Debe ingresarse un alias." required="true"/>
                         <br/>
@@ -24,7 +24,7 @@
                 </div>
                 <div class="row">
                     <div class="col-md-2"></div>
-                    <p:panel class="col-xs-4" style="min-height: 300px">
+                    <p:panel styleClass="col-xs-4" style="min-height: 300px">
                         <h4>Ingeniería Civil Infromática:</h4><br/>
                         <ui:repeat value="#{espejosController.versionesCivil}" var="civil" >
                             <h:outputLabel value="#{civil.planEstudio.codigo}-#{civil.anio}.#{civil.version} (#{cargarPlanDeEstudios.getJornada(civil.planEstudio.jornada)}): " /><br/>
@@ -36,7 +36,7 @@
                             <br/>
                         </ui:repeat>
                     </p:panel>
-                    <p:panel class="col-xs-4" style="min-height: 300px">
+                    <p:panel styleClass="col-xs-4" style="min-height: 300px">
                         <h4>Ingeniería en Ejecución Infromática:</h4><br/>
                         <ui:repeat value="#{espejosController.versionesEjecucion}" var="civil" >
                             <h:outputLabel value="#{civil.planEstudio.codigo}-#{civil.anio}.#{civil.version} (#{cargarPlanDeEstudios.getJornada(civil.planEstudio.jornada)}): " /><br/>
@@ -51,7 +51,7 @@
                 </div>
                 <div class="col-md-2"></div>
                 <div>
-                    <p:commandButton class="btn btn-default" value="Seleccionar Espejos" actionListener="#{espejosController.setEspejos()}" update=":growl" ajax="false"/>
+                    <p:commandButton styleClass="btn btn-default" value="Seleccionar Espejos" actionListener="#{espejosController.setEspejos()}" update=":growl" ajax="false"/>
                 </div>
             </h:form>
         </ui:define>

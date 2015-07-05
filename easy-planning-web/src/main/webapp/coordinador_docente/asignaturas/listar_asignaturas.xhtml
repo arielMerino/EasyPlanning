@@ -37,19 +37,19 @@
                                     filteredValue="#{asignaturaController.asignaturasFiltradas}"
                                     emptyMessage="No se han encontrado asignaturas según los parámetros indicados"
                                     >
-                                    <p:column class="column-center-text" headerText="Código" filterBy="#{item.codigo}" filterMatchMode="contains" sortBy="#{item.codigo}">
+                                    <p:column styleClass="column-center-text" headerText="Código" filterBy="#{item.codigo}" filterMatchMode="contains" sortBy="#{item.codigo}">
                                         <h:outputText value="#{item.codigo}"/>
                                     </p:column>
-                                    <p:column class="column-center-text" headerText="Asignatura" filterBy="#{item.nombre}" filterMatchMode="contains" sortBy="#{item.nombre}">
+                                    <p:column styleClass="column-center-text" headerText="Asignatura" filterBy="#{item.nombre}" filterMatchMode="contains" sortBy="#{item.nombre}">
                                         <h:outputText value="#{item.nombre}"/>
                                     </p:column>
-                                    <p:column class="column-center-text" headerText="Nivel" filterBy="#{item.nivel}" filterMatchMode="exact" sortBy="#{item.nivel}">                                        
+                                    <p:column styleClass="column-center-text" headerText="Nivel" filterBy="#{item.nivel}" filterMatchMode="exact" sortBy="#{item.nivel}">                                        
                                         <h:outputText value="#{item.nivel}"/>
                                     </p:column>
-                                    <p:column class="column-center-text" headerText="T - E - L">
+                                    <p:column styleClass="column-center-text" headerText="T - E - L">
                                         <h:outputText value="#{item.teoria} - #{item.ejercicios} - #{item.laboratorio}"/>
                                     </p:column>
-                                    <p:column class="column-center-text" headerText="Carrera" filterBy="#{item.versionplan.planEstudio.carrera.nombre}" filterMatchMode="in" sortBy="#{item.versionplan.planEstudio.carrera.nombre}">
+                                    <p:column styleClass="column-center-text" headerText="Carrera" filterBy="#{item.versionplan.planEstudio.carrera.nombre}" filterMatchMode="in" sortBy="#{item.versionplan.planEstudio.carrera.nombre}">
                                         <f:facet name="filter">
                                             <p:selectCheckboxMenu label="Carreras" onchange="PF('asignaturasTable').filter()" scrollHeight="150">
                                                 <f:selectItems value="#{carreraController.allCarreras}" var="carrera" itemLabel="#{carrera.nombre}" itemValue="#{carrera.nombre}"/>
@@ -57,7 +57,7 @@
                                         </f:facet>
                                         <h:outputText value="#{item.versionplan.planEstudio.carrera.nombre}"/>
                                     </p:column>
-                                    <p:column class="column-center-text" headerText="Plan de Estudios" filterBy="#{item.versionplan.anio}.#{item.versionplan.version}" filterMatchMode="in">
+                                    <p:column styleClass="column-center-text" headerText="Plan de Estudios" filterBy="#{item.versionplan.anio}.#{item.versionplan.version}" filterMatchMode="in">
                                         <f:facet name="filter">
                                             <p:selectCheckboxMenu label="Planes de Estudio" onchange="PF('asignaturasTable').filter()" scrollHeight="150">
                                                 <f:selectItems value="#{asignaturaController.planesEstudio}" var="plan" itemLabel="#{plan.anio}.#{plan.version}" itemValue="#{plan.anio}.#{plan.version}"/>
@@ -66,7 +66,7 @@
                                         <h:outputText value="#{item.versionplan.planEstudio.codigo} - #{item.versionplan.anio}.#{item.versionplan.version}"/>
                                     </p:column>
                                     <c:set var="jornada" value="#{item.versionplan.planEstudio.jornada}" />
-                                    <p:column class="column-center-text" headerText="Jornada" filterBy="#{cargarPlanDeEstudios.getJornada(jornada)}" filterMatchMode="in">
+                                    <p:column styleClass="column-center-text" headerText="Jornada" filterBy="#{cargarPlanDeEstudios.getJornada(jornada)}" filterMatchMode="in">
                                         <f:facet name="filter">
                                             <p:selectCheckboxMenu label="Jornada" onchange="PF('asignaturasTable').filter()" scrollHeight="100">
                                                 <f:selectItems value="#{cargarPlanDeEstudios.allJornada}" var="jo" itemLabel="#{cargarPlanDeEstudios.getJornada(jo)}" itemValue="#{cargarPlanDeEstudios.getJornada(jo)}"/>
@@ -74,10 +74,10 @@
                                         </f:facet>                                        
                                         <h:outputText value="#{cargarPlanDeEstudios.getJornada(jornada)}"/>
                                     </p:column>
-                                    <p:column class="column-center-text" headerText="Alias" filterBy="#{item.alias}" filterMatchMode="contains" sortBy="#{item.alias}">
-                                        <h:panelGrid class="panel-no-border" columns="2">
+                                    <p:column styleClass="column-center-text" headerText="Alias" filterBy="#{item.alias}" filterMatchMode="contains" sortBy="#{item.alias}">
+                                        <h:panelGrid styleClass="panel-no-border" columns="2">
                                             <h:outputText value="#{item.alias}"/>
-                                            <h:link class="btn-center-text" outcome="/faces/coordinador_docente/asignaturas/agregar_alias.xhtml">
+                                            <h:link styleClass="btn-center-text" outcome="/faces/coordinador_docente/asignaturas/agregar_alias.xhtml">
                                                 <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
                                                 <f:param name="id" value="#{item.id}"/>
                                             </h:link>

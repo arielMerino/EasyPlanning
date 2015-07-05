@@ -79,7 +79,13 @@ public class Asignaturas implements AsignaturasLocal {
         Query query = em.createNamedQuery("Asignatura.findNivelesByPlan").setParameter("versionPlan", idVersionPlan);
         try{
             List<Integer> result = (List<Integer>) query.getResultList();
-            result.sort(null);
+            List<Integer> salida = new ArrayList<>();
+            int aux = 1;
+            for (Integer i : result){
+                salida.add(aux);
+                aux++;
+            }
+            //result.sort(null);
             return result;
         }catch(NoResultException e){
             return new ArrayList<>();
